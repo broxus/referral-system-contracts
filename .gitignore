@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+
+#TON
+compiled/
+TON-Solidity-Compiler/
+TVM-linker/
+
+#KEYS
+*.key
+*.env

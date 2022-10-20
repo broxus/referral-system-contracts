@@ -1,0 +1,3 @@
+[submodule "bridge-contracts"]
+	path = bridge-contracts
+	url = git@gitlab.broxus.com:bridge/contracts.git
