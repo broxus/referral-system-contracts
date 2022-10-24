@@ -1,0 +1,2274 @@
+.version sol 0.57.1
+
+.macro constructor
+DROP
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+GETGLOB 6
+THROWIF 51
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 56
+THROW 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro acceptUpgrade
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 59
+LDREF
+LDU 8
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $acceptUpgrade_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro acceptUpgrade_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 50
+GETGLOB 9
+GETGLOB 12
+SDEQ
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 52
+PUSHCONT {
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 63
+	GETGLOB 13
+	OVER
+	EQUAL
+	PUSHCONT {
+		DROP2
+	}
+	IFJMP
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 65
+	GETGLOB 15
+	GETGLOB 10
+	GETGLOB 16
+	GETGLOB 14
+	ROLL 4
+	GETGLOB 11
+	GETGLOB 12
+	NEWC
+	STSLICE
+	STU 256
+	STU 8
+	STDICT
+	ROLLREV 3
+	NEWC
+	STSLICE
+	ROTREV
+	NEWC
+	STSLICE
+	SWAP
+	NEWC
+	STSLICE
+	STBREFR
+	STBREFR
+	STBREFR
+	ENDC
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 75
+	OVER
+	SETCODE
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 76
+	SWAP
+	CTOS
+	DUP
+	PUSHSLICE x8adb35
+	SDEQ
+	PUSHCONT {
+		PLDREFIDX 1
+		CTOS
+	}
+	IF
+	PLDREF
+	CTOS
+	BLESS
+	POP C3
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 78
+	CALLREF {
+		CALL $:onCodeUpgrade$
+	}
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 59
+}
+CALLX
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.internal-alias :onCodeUpgrade, 2
+.internal :onCodeUpgrade
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 84
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+SETGLOB 10
+PUSHINT 0
+SETGLOB 11
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+SETGLOB 12
+PUSHINT 0
+SETGLOB 13
+NEWDICT
+SETGLOB 14
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+SETGLOB 15
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+SETGLOB 16
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 86
+CTOS
+LDMSGADDR
+LDU 256
+LDU 8
+LDU 32
+LDDICT
+ROTREV
+PAIR
+SWAP
+LDREF
+ENDS
+CTOS
+LDU 256
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 99
+ROLL 6
+SETGLOB 12
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 100
+ROLL 5
+SETGLOB 11
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 101
+ROLL 4
+SETGLOB 13
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 103
+PUSH S3
+FIRST
+GTINT 0
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 104
+GETGLOB 9
+GETGLOB 12
+SDEQ
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 105
+PUSH2 S2, S3
+FIRST
+DEC
+UFITS 256
+LEQ
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 107
+ROT
+PUSH S3
+SECOND
+PUSHINT 32
+DICTUGET
+THROWIFNOT 50
+SETGLOB 16
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 109
+SWAP
+CALLREF {
+	CALL $setOwnership_internal_macro$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 111
+SETGLOB 15
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 114
+SECOND
+PUSHINT 0
+NULL
+PUSHCONT {
+	PUSH2 S1, S2
+	PUSHINT 32
+	DICTUGET
+	NULLSWAPIFNOT
+	DROP
+	DUP
+	POP S2
+	ISNULL
+	NOT
+}
+PUSHCONT {
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 115
+	PUSHINT 0
+	DUP
+	PAIR
+	OVER
+	GETGLOB 14
+	ROT
+	CALLREF {
+		UNPAIR
+		SWAP
+		NEWC
+		STU 8
+		STI 1
+	}
+	ROTREV
+	PUSHINT 267
+	DICTSETB
+	SETGLOB 14
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 120
+	DUP
+	CALLREF {
+		CALL $_requestTokenDecimals_internal_macro$
+	}
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+	OVER
+	INC
+	POP S2
+}
+WHILE
+BLKDROP 3
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+COMMIT
+THROW 0
+
+.macro receiveTokenDecimals
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 124
+LDU 8
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $receiveTokenDecimals_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro receiveTokenDecimals_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 124
+GETGLOB 9
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 38
+GETGLOB 14
+PUSHINT 267
+DICTGET
+NULLSWAPIFNOT
+NIP
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 127
+GETGLOB 9
+GETGLOB 14
+DUP2
+PUSHINT 267
+DICTGET
+IFREFELSEREF
+{
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+{
+	PUSHINT 0
+	DUP
+	PAIR
+}
+ROLL 3
+SETINDEX 0
+CALLREF {
+	UNPAIR
+	SWAP
+	NEWC
+	STU 8
+	STI 1
+}
+ROTREV
+PUSHINT 267
+DICTSETB
+SETGLOB 14
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro setManager
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 130
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $setManager_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro setManager_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+GETGLOB 9
+GETGLOB 10
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+}
+IF
+THROWIFNOT 1101
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 57
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 133
+SETGLOB 15
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
+GETGLOB 9
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro removeToken
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 141
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $removeToken_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro removeToken_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 44
+GETGLOB 9
+GETGLOB 10
+SDEQ
+GETGLOB 9
+GETGLOB 15
+SDEQ
+OR
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 57
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 144
+DUP
+GETGLOB 14
+PUSHINT 267
+DICTGET
+NULLSWAPIFNOT
+NIP
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 145
+DUP
+GETGLOB 16
+SDEQ
+THROWIF 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 147
+GETGLOB 14
+PUSHINT 267
+DICTDEL
+DROP
+SETGLOB 14
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
+GETGLOB 9
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro addToken
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 154
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $addToken_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro addToken_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 44
+GETGLOB 9
+GETGLOB 10
+SDEQ
+GETGLOB 9
+GETGLOB 15
+SDEQ
+OR
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 157
+DUP
+GETGLOB 14
+PUSHINT 267
+DICTGET
+NULLSWAPIFNOT
+NIP
+THROWIF 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 159
+PUSHINT 0
+DUP
+PAIR
+OVER
+GETGLOB 14
+ROT
+CALLREF {
+	UNPAIR
+	SWAP
+	NEWC
+	STU 8
+	STI 1
+}
+ROTREV
+PUSHINT 267
+DICTSETB
+SETGLOB 14
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 164
+CALLREF {
+	CALL $_requestTokenDecimals_internal_macro$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro setCanon
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 170
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $setCanon_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro setCanon_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 44
+GETGLOB 9
+GETGLOB 10
+SDEQ
+GETGLOB 9
+GETGLOB 15
+SDEQ
+OR
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 46
+DUP
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 38
+GETGLOB 14
+PUSHINT 267
+DICTGET
+NULLSWAPIFNOT
+NIP
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 57
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 173
+DUP
+GETGLOB 14
+PUSHINT 267
+DICTGET
+IFREFELSEREF
+{
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+{
+	PUSHINT 0
+	DUP
+	PAIR
+}
+SECOND
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 175
+SETGLOB 16
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
+GETGLOB 9
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro enableToken
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 182
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $enableToken_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.globl	enableToken_internal
+.type	enableToken_internal, @function
+CALL $enableToken_internal_macro$
+
+.macro enableToken_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 44
+GETGLOB 9
+GETGLOB 10
+SDEQ
+GETGLOB 9
+GETGLOB 15
+SDEQ
+OR
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 57
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 185
+TRUE
+CALLREF {
+	CALL $_setTokenStatus_internal_macro$
+}
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
+GETGLOB 9
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro enableAll
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 188
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $enableAll_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro enableAll_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 44
+GETGLOB 9
+GETGLOB 10
+SDEQ
+GETGLOB 9
+GETGLOB 15
+SDEQ
+OR
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 57
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 189
+GETGLOB 14
+DUP
+PUSHINT 267
+DICTMIN
+PUSHCONT {
+	NULL
+	BLKPUSH 2, 0
+}
+IFREFELSE {
+	DUP
+	ROT
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+PUSHCONT {
+	PUSH S2
+	ISNULL
+	NOT
+}
+PUSHCONT {
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 190
+	DROP
+	TRUE
+	CALLREF {
+		CALL $_setTokenStatus_internal_macro$
+	}
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+	PUSH2 S0, S1
+	PUSHINT 267
+	DICTGETNEXT
+	PUSHCONT {
+		NULL
+		BLKPUSH 2, 0
+	}
+IFREFELSE {
+		DUP
+		ROT
+		LDU 8
+		LDI 1
+		ENDS
+		PAIR
+}
+	BLKDROP2 1, 3
+}
+WHILE
+BLKDROP 4
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
+GETGLOB 9
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro disableToken
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 199
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $disableToken_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.globl	disableToken_internal
+.type	disableToken_internal, @function
+CALL $disableToken_internal_macro$
+
+.macro disableToken_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 44
+GETGLOB 9
+GETGLOB 10
+SDEQ
+GETGLOB 9
+GETGLOB 15
+SDEQ
+OR
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 57
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 202
+FALSE
+CALLREF {
+	CALL $_setTokenStatus_internal_macro$
+}
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
+GETGLOB 9
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro disableAll
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 205
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $disableAll_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro disableAll_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 44
+GETGLOB 9
+GETGLOB 10
+SDEQ
+GETGLOB 9
+GETGLOB 15
+SDEQ
+OR
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 57
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 206
+GETGLOB 14
+DUP
+PUSHINT 267
+DICTMIN
+PUSHCONT {
+	NULL
+	BLKPUSH 2, 0
+}
+IFREFELSE {
+	DUP
+	ROT
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+PUSHCONT {
+	PUSH S2
+	ISNULL
+	NOT
+}
+PUSHCONT {
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 207
+	DROP
+	FALSE
+	CALLREF {
+		CALL $_setTokenStatus_internal_macro$
+	}
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+	PUSH2 S0, S1
+	PUSHINT 267
+	DICTGETNEXT
+	PUSHCONT {
+		NULL
+		BLKPUSH 2, 0
+	}
+IFREFELSE {
+		DUP
+		ROT
+		LDU 8
+		LDI 1
+		ENDS
+		PAIR
+}
+	BLKDROP2 1, 3
+}
+WHILE
+BLKDROP 4
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
+GETGLOB 9
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro getCanon
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 213
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $getCanon_internal_macro$
+}
+PUSH S2
+PUSHCONT {
+	PUSH S4
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 1
+	STUR 98
+	XCHG S2
+	NEWC
+	STSLICECONST xa0884dd6
+	STSLICE
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 8
+	STI 1
+	STBREFR
+	ENDC
+	PUSHINT 0
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	THIRD
+	GETGLOB 9
+	ROLL 3
+	SECOND
+	NEWC
+	PUSHINT 2
+	STZEROES
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 1
+	STUR 106
+	XCHG S2
+	NEWC
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STSLICE
+	SWAP
+	UNPAIR
+	XCHG S2
+	STU 8
+	STI 1
+	STBREFR
+	ENDC
+	GETGLOB 4
+	INDEX 4
+}
+IFELSE
+SENDRAWMSG
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro getCanon_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 214
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+FALSE
+SETINDEXQ 1
+PUSHINT 64
+SETINDEXQ 4
+SETGLOB 4
+GETGLOB 16
+DUP
+GETGLOB 14
+PUSHINT 267
+DICTGET
+IFREFELSEREF
+{
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+{
+	PUSHINT 0
+	DUP
+	PAIR
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro getTokens
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 220
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $getTokens_internal_macro$
+}
+PUSH S2
+PUSHCONT {
+	PUSH S4
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 1
+	STUR 98
+	XCHG S2
+	NEWC
+	STSLICECONST x8d88e013
+	STDICT
+	STSLICE
+	STBREFR
+	ENDC
+	PUSHINT 0
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	THIRD
+	GETGLOB 9
+	ROLL 3
+	SECOND
+	NEWC
+	PUSHINT 2
+	STZEROES
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 1
+	STUR 106
+	XCHG S2
+	NEWC
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STDICT
+	STSLICE
+	STBREFR
+	ENDC
+	GETGLOB 4
+	INDEX 4
+}
+IFELSE
+SENDRAWMSG
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro getTokens_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 224
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+FALSE
+SETINDEXQ 1
+PUSHINT 64
+SETINDEXQ 4
+SETGLOB 4
+GETGLOB 14
+GETGLOB 16
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.macro onAcceptTokensBurn
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 233
+OVER
+PUSHCONT {
+	LDU 128
+	LDREF
+	ENDS
+	CTOS
+}
+PUSHCONT {
+	LDU 128
+}
+IFELSE
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+CALLREF {
+	CALL $onAcceptTokensBurn_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro onAcceptTokensBurn_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 233
+GETGLOB 9
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 38
+GETGLOB 14
+PUSHINT 267
+DICTGET
+NULLSWAPIFNOT
+NIP
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 21
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 240
+CTOS
+LDU 8
+OVER
+GTINT 1
+THROWIF 73
+LDMSGADDR
+LDREF
+ENDS
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 246
+PUSH S6
+GETGLOB 9
+PUSH S3
+CALLREF {
+	CALL $_convertDecimals_internal_macro$
+}
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 252
+PUSH S2
+GETGLOB 14
+PUSHINT 267
+DICTGET
+IFREFELSEREF
+{
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+{
+	PUSHINT 0
+	DUP
+	PAIR
+}
+SECOND
+FALSE
+EQUAL
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	GETGLOB 14
+	PUSHINT 267
+	DICTGET
+IFREFELSEREF
+{
+		LDU 8
+		LDI 1
+		ENDS
+		PAIR
+}
+{
+		PUSHINT 0
+		DUP
+		PAIR
+}
+	SECOND
+	FALSE
+	EQUAL
+}
+IFNOT
+PUSHCONT {
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 256
+	GETGLOB 9
+	BLKPUSH 2, 8
+	PUSH S7
+	CALLREF {
+		CALL $_mintTokens_internal_macro$
+	}
+}
+PUSHCONT {
+	DUP
+	PUSHCONT {
+		PUSH S3
+		EQINT 1
+		PUSHCONT {
+			.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 264
+			PUSH3 S2, S0, S6
+			PUSH S7
+			CALLREF {
+				CALL $_mintTokens_internal_macro$
+			}
+		}
+		PUSHCONT {
+			.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 268
+			OVER
+			CTOS
+			LDU 160
+			ENDS
+			.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 270
+			PUXC S5, S-1
+			PUSH2 S2, S4
+			GETGLOB 11
+			GETGLOB 12
+			FALSE
+			NEWC
+			STSLICECONST x6_
+			STI 1
+			PUSHINT 3
+			STZEROES
+			STSLICE
+			PUSHINT 1
+			STUR 111
+			ROLLREV 5
+			NEWC
+			STSLICECONST x4617bd82
+			STU 256
+			STSLICE
+			STU 128
+			ROTREV
+			NEWC
+			STU 160
+			STSLICE
+			STBREFR
+			STBREFR
+			ENDC
+			PUSHINT 128
+			SENDRAWMSG
+		}
+		IFELSE
+	}
+	PUSHCONT {
+		.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 260
+		GETGLOB 9
+		BLKPUSH 2, 8
+		PUSH S7
+		CALLREF {
+			CALL $_mintTokens_internal_macro$
+		}
+	}
+	IFELSE
+}
+IFELSE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+BLKDROP 8
+
+.globl	_requestTokenDecimals_internal
+.type	_requestTokenDecimals_internal, @function
+CALL $_requestTokenDecimals_internal_macro$
+
+.macro _requestTokenDecimals_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 285
+FALSE
+NEWC
+STSLICECONST x6_
+STI 1
+PUSHINT 3
+STZEROES
+STSLICE
+PUSHSLICE x411e1a300000000000000000000000000000a63d8ef8336b7beb_
+STSLICER
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.globl	_mintTokens_internal
+.type	_mintTokens_internal, @function
+CALL $_mintTokens_internal_macro$
+
+.macro _mintTokens_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 298
+REVERSE 4, 0
+GETGLOB 11
+GETGLOB 12
+FALSE
+NEWC
+STSLICECONST x6_
+STI 1
+PUSHINT 3
+STZEROES
+STSLICE
+PUSHINT 1
+STUR 111
+ROLLREV 5
+NEWC
+STSLICECONST x124e8d91
+STU 256
+STSLICE
+STU 128
+ROTREV
+NEWC
+STSLICE
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+STBREFR
+ENDC
+PUSHINT 128
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.globl	_convertDecimals_internal
+.type	_convertDecimals_internal, @function
+CALL $_convertDecimals_internal_macro$
+
+.macro _convertDecimals_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 311
+PUSHINT 0
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 316
+PUSH S2
+GETGLOB 14
+PUSHINT 267
+DICTGET
+IFREFELSEREF
+{
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+{
+	PUSHINT 0
+	DUP
+	PAIR
+}
+FIRST
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 317
+PUSH S2
+GETGLOB 14
+PUSHINT 267
+DICTGET
+IFREFELSEREF
+{
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+{
+	PUSHINT 0
+	DUP
+	PAIR
+}
+FIRST
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 319
+PUSHINT 10
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 321
+BLKPUSH 2, 2
+EQUAL
+PUSHCONT {
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 322
+	BLKDROP 6
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+}
+PUSHCONT {
+	BLKPUSH 2, 2
+	GREATER
+	PUSHCONT {
+		.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 324
+		ROT
+		ROLL 6
+		XCHG S3
+		SUB
+		UFITS 8
+		DUP2
+		OR
+		THROWIFNOT 69
+		CALLREF {
+			CALL $__exp_macro$
+		}
+		UFITS 128
+		DIV
+		BLKDROP2 3, 1
+		.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+	}
+	PUSHCONT {
+		.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 326
+		ROLL 6
+		REVERSE 4, 0
+		SUB
+		UFITS 8
+		DUP2
+		OR
+		THROWIFNOT 69
+		CALLREF {
+			CALL $__exp_macro$
+		}
+		UFITS 128
+		MUL
+		UFITS 128
+		BLKDROP2 3, 1
+		.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+	}
+	IFELSE
+}
+IFELSE
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.globl	_setTokenStatus_internal
+.type	_setTokenStatus_internal, @function
+CALL $_setTokenStatus_internal_macro$
+
+.macro _setTokenStatus_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 331
+OVER
+GETGLOB 14
+PUSHINT 267
+DICTGET
+NULLSWAPIFNOT
+NIP
+THROWIFNOT 100
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 333
+DUP
+TRUE
+EQUAL
+PUSHCONT {
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 334
+	OVER
+	GETGLOB 14
+	PUSHINT 267
+	DICTGET
+IFREFELSEREF
+{
+		LDU 8
+		LDI 1
+		ENDS
+		PAIR
+}
+{
+		PUSHINT 0
+		DUP
+		PAIR
+}
+	FIRST
+	GTINT 0
+	THROWIFNOT 100
+	.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+}
+IF
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 337
+SWAP
+GETGLOB 14
+DUP2
+PUSHINT 267
+DICTGET
+IFREFELSEREF
+{
+	LDU 8
+	LDI 1
+	ENDS
+	PAIR
+}
+{
+	PUSHINT 0
+	DUP
+	PAIR
+}
+ROLL 3
+SETINDEX 1
+CALLREF {
+	UNPAIR
+	SWAP
+	NEWC
+	STU 8
+	STI 1
+}
+ROTREV
+PUSHINT 267
+DICTSETB
+SETGLOB 14
+.loc ../../bridge-contracts/everscale/contracts/bridge/alien-token-merge/MergePool.sol, 0
+
+.globl	transferAll_internal
+.type	transferAll_internal, @function
+CALL $transferAll_internal_macro$
+
+.macro transferAll_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 17
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 111
+STZEROES
+ENDC
+PUSHINT 129
+SENDRAWMSG
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 0
+
+.globl	_reserveAtLeastTargetBalance_internal
+.type	_reserveAtLeastTargetBalance_internal, @function
+CALL $_reserveAtLeastTargetBalance_internal_macro$
+
+.macro _reserveAtLeastTargetBalance_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 26
+GETPARAM 7
+FIRST
+DEPTH
+ADDCONST -2
+PICK
+SUB
+UFITS 128
+CALLREF {
+	CALL $_targetBalance_internal_macro$
+}
+MAX
+PUSHINT 2
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 0
+
+.globl	_reserveTargetBalance_internal
+.type	_reserveTargetBalance_internal, @function
+CALL $_reserveTargetBalance_internal_macro$
+
+.macro _reserveTargetBalance_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 53
+CALLREF {
+	CALL $_targetBalance_internal_macro$
+}
+PUSHINT 0
+RAWRESERVE
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 0
+
+.globl	_targetBalance_internal
+.type	_targetBalance_internal, @function
+CALL $_targetBalance_internal_macro$
+
+.macro _targetBalance_internal_macro
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 69
+PUSHINT 1000000000
+.loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 0
+
+.globl	setOwnership_internal
+.type	setOwnership_internal, @function
+CALL $setOwnership_internal_macro$
+
+.macro setOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 24
+GETGLOB 10
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 26
+OVER
+SETGLOB 10
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 28
+PUSHSLICE xc0000000000000000000000001
+NEWC
+STSLICE
+ROTREV
+NEWC
+STSLICECONST x6115f072
+STSLICE
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+
+.macro transferOwnership
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 34
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+CALLREF {
+	CALL $transferOwnership_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro transferOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+GETGLOB 9
+GETGLOB 10
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+}
+IF
+THROWIFNOT 1101
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 37
+DUP
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+SDEQ
+THROWIF 1102
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 39
+CALLREF {
+	CALL $setOwnership_internal_macro$
+}
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+
+.macro renounceOwnership
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 45
+ENDS
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+CALLREF {
+	CALL $renounceOwnership_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro renounceOwnership_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+GETGLOB 9
+GETGLOB 10
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+}
+IF
+THROWIFNOT 1101
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 46
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 48
+CALLREF {
+	CALL $setOwnership_internal_macro$
+}
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 0
+
+.macro c4_to_c7
+PUSHROOT
+CTOS
+LDU 256 ; pubkey c4
+LDU 64 ; pubkey timestamp c4
+LDU 1 ; ctor flag
+NIP
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDU 256
+LDMSGADDR
+LDU 8
+LDDICT
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+ENDS
+SETGLOB 16
+SETGLOB 15
+SETGLOB 14
+SETGLOB 13
+SETGLOB 12
+SETGLOB 11
+SETGLOB 10
+SETGLOB 3
+SETGLOB 2
+
+.macro c4_to_c7_with_init_storage
+PUSHROOT
+CTOS
+SBITS
+GTINT 1
+PUSHCONT {
+	PUSHINT 0
+	PUSHROOT
+	CTOS
+	PLDDICT ; D
+	PUSHREFSLICE {
+		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
+	PUSHINT 1
+	PUSH S2
+	PUSHINT 64
+	DICTUGET
+	PUSHCONT {
+		PLDU 256
+	}
+	PUSHCONT {
+		PUSHINT 0
+	}
+	IFELSE
+	PUSHINT 2
+	PUSH S3
+	PUSHINT 64
+	DICTUGET
+	PUSHCONT {
+		PUSHREFSLICE {
+			.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+		}
+	}
+	IFNOT
+	PUSHINT 0
+	NEWDICT
+	PUSHREFSLICE {
+		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
+	DUP
+	SETGLOB 16
+	SETGLOB 15
+	SETGLOB 14
+	SETGLOB 13
+	SETGLOB 12
+	SETGLOB 11
+	SETGLOB 10
+	PUSHINT 64
+	DICTUGET
+	THROWIFNOT 61
+	PLDU 256
+	SETGLOB 2
+	PUSHINT 0 ; timestamp
+	SETGLOB 3
+}
+IFREFELSE {
+	CALL $c4_to_c7$
+}
+
+.macro c7_to_c4
+GETGLOB 16
+GETGLOB 15
+GETGLOB 14
+GETGLOB 13
+GETGLOB 12
+GETGLOB 11
+GETGLOB 10
+GETGLOB 3
+GETGLOB 2
+NEWC
+STU 256
+STU 64
+STONE
+STSLICE
+ROLLREV 6
+NEWC
+STU 256
+STSLICE
+STU 8
+STDICT
+ROTREV
+NEWC
+STSLICE
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+STBREFR
+ENDC
+POPROOT
+
+.macro upd_only_time_in_c4
+PUSHROOT
+CTOS
+LDU 256
+LDU 64
+NIP
+GETGLOB 3
+ROT
+NEWC
+STU 256
+STU 64
+STSLICE
+ENDC
+POPROOT
+
+.internal-alias :main_internal, 0
+.internal :main_internal
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSH S2
+CTOS
+LDU 4 ; bounced tail
+LDMSGADDR ; bounced src tail
+DROP
+SETGLOB 9
+MODPOW2 1
+GETGLOB 4
+TRUE
+SETINDEXQ 1
+PUSHINT 10000000
+SETINDEXQ 2
+NULL
+SETINDEXQ 3
+PUSHINT 0
+SETINDEXQ 4
+SETGLOB 4
+IFRET
+OVER
+SEMPTY ; isEmpty
+IFJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+OVER
+LDUQ 32  ; [funcId] body' ok
+THROWIFNOT 60
+OVER
+IFNOTJMPREF {
+	GETGLOB 6
+	THROWIFNOT 76
+}
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+THROW 60
+
+.internal-alias :main_external, -1
+.internal :main_external
+PUSHROOT
+CTOS
+SBITS
+NEQINT 1
+SETGLOB 6
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+SETGLOB 9
+OVER
+CALLREF {
+	CALL $c4_to_c7_with_init_storage$
+}
+LDU 1 ; haveSign msgSlice
+SWAP
+PUSHCONT {
+	PUSHINT 512
+	LDSLICEX ; signatureSlice msgSlice
+	DUP
+	HASHSU ; signatureSlice msgSlice hashMsgSlice
+	SWAP
+	LDU 1 ; signatureSlice hashMsgSlice havePubkey msgSlice
+	SWAP
+	PUSHCONT {
+		LDU 256 ; signatureSlice hashMsgSlice pubkey msgSlice
+		XCHG S3
+		SWAP
+	}
+	PUSHCONT {
+		XCHG S2
+		GETGLOB 2
+	}
+	IFELSE
+	CHKSIGNU ; msgSlice isSigned
+	THROWIFNOT 40
+}
+PUSHCONT {
+	LDU 1 ; havePubkey msgSlice
+	SWAP
+	THROWIF 58
+}
+IFELSE
+LDU 64 ; timestamp msgSlice
+SWAP
+CALL $replay_protection_macro$
+LDU 32 ; funcId body
+SWAP
+CALLREF {
+	CALL $public_function_selector$
+}
+THROW 60
+
+.macro owner
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 10
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000df0bcfde
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+THROW 0
+
+.macro _randomNonce
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 11
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000bb53331f
+	NEWC
+	STSLICE
+	STU 256
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+THROW 0
+
+.macro version
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 13
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000cf96d954
+	NEWC
+	STSLICE
+	STU 8
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+THROW 0
+
+.macro manager
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 15
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000dfd7a949
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+THROW 0
+
+.macro public_function_selector
+DUP
+PUSHINT 1745391003
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 373149767
+	LEQ
+	IFJMPREF {
+		DUP
+		PUSHINT 27519108
+		EQUAL
+		IFJMPREF {
+			CALL $acceptUpgrade$
+		}
+		DUP
+		PUSHINT 227074067
+		EQUAL
+		IFJMPREF {
+			CALL $getTokens$
+		}
+		DUP
+		PUSHINT 235197086
+		EQUAL
+		IFJMPREF {
+			CALL $transferOwnership$
+		}
+		DUP
+		PUSHINT 373149767
+		EQUAL
+		IFJMPREF {
+			CALL $enableToken$
+		}
+	}
+	DUP
+	PUSHINT 995308319
+	LEQ
+	IFJMPREF {
+		DUP
+		PUSHINT 431341045
+		EQUAL
+		IFJMPREF {
+			CALL $receiveTokenDecimals$
+		}
+		DUP
+		PUSHINT 545803734
+		EQUAL
+		IFJMPREF {
+			CALL $getCanon$
+		}
+		DUP
+		PUSHINT 906110572
+		EQUAL
+		IFJMPREF {
+			CALL $disableToken$
+		}
+		DUP
+		PUSHINT 995308319
+		EQUAL
+		IFJMPREF {
+			CALL $_randomNonce$
+		}
+	}
+	DUP
+	PUSHINT 1477726552
+	LEQ
+	IFJMPREF {
+		DUP
+		PUSHINT 1200513929
+		EQUAL
+		IFJMPREF {
+			CALL $setCanon$
+		}
+		DUP
+		PUSHINT 1320360074
+		EQUAL
+		IFJMPREF {
+			CALL $setManager$
+		}
+		DUP
+		PUSHINT 1335286100
+		EQUAL
+		IFJMPREF {
+			CALL $version$
+		}
+		DUP
+		PUSHINT 1477726552
+		EQUAL
+		IFJMPREF {
+			CALL $removeToken$
+		}
+	}
+	DUP
+	PUSHINT 1745391003
+	LEQ
+	IFJMPREF {
+		DUP
+		PUSHINT 1594609630
+		EQUAL
+		IFJMPREF {
+			CALL $owner$
+		}
+		DUP
+		PUSHINT 1607969097
+		EQUAL
+		IFJMPREF {
+			CALL $manager$
+		}
+		DUP
+		PUSHINT 1729444094
+		EQUAL
+		IFJMPREF {
+			CALL $renounceOwnership$
+		}
+		DUP
+		PUSHINT 1745391003
+		EQUAL
+		IFJMPREF {
+			CALL $onAcceptTokensBurn$
+		}
+	}
+}
+DUP
+PUSHINT 2146916094
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 1756716863
+	EQUAL
+	IFJMPREF {
+		CALL $constructor$
+	}
+	DUP
+	PUSHINT 2018501029
+	EQUAL
+	IFJMPREF {
+		CALL $disableAll$
+	}
+	DUP
+	PUSHINT 2021957900
+	EQUAL
+	IFJMPREF {
+		CALL $addToken$
+	}
+	DUP
+	PUSHINT 2146916094
+	EQUAL
+	IFJMPREF {
+		CALL $enableAll$
+	}
+}
+
