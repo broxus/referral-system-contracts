@@ -4,15 +4,15 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 
-import "./../interfaces/IProxyExtended.sol";
-import "./../interfaces/multivault/IProxyMultiVaultNative.sol";
-import "./../interfaces/event-configuration-contracts/IEverscaleEventConfiguration.sol";
+import "./../modules/bridge/interfaces/IProxyExtended.sol";
+import "./../modules/bridge/interfaces/multivault/IProxyMultiVaultNative.sol";
+import "./../modules/bridge/interfaces/event-configuration-contracts/IEverscaleEventConfiguration.sol";
 
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensTransferCallback.sol";
 import "ton-eth-bridge-token-contracts/contracts/interfaces/ITokenWallet.sol";
 
-import "./../../utils/ErrorCodes.sol";
-import "./../../utils/TransferUtils.sol";
+import "./../modules/utils/ErrorCodes.sol";
+import "./../modules/utils/TransferUtils.sol";
 
 
 import '@broxus/contracts/contracts/access/InternalOwner.sol';

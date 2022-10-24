@@ -4,10 +4,10 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 
-import "./../../interfaces/multivault/IMultiVaultEverscaleEventAlien.sol";
-import "./../../interfaces/multivault/IProxyMultiVaultAlien_V3.sol";
-import "./../../interfaces/multivault/IProxyMultiVaultAlien_V1.sol";
-import "./../../interfaces/ITokenRootAlienEVM.sol";
+import "./../modules/bridge/interfaces/multivault/IMultiVaultEverscaleEventAlien.sol";
+import "./../modules/bridge/interfaces/multivault/IProxyMultiVaultAlien_V3.sol";
+import "./../modules/bridge/interfaces/multivault/IProxyMultiVaultAlien_V1.sol";
+import "./../modules/bridge/interfaces/ITokenRootAlienEVM.sol";
 
 import "./../base/EverscaleBaseEvent.sol";
 

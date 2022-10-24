@@ -7,15 +7,15 @@ pragma AbiHeader pubkey;
 import '@broxus/contracts/contracts/libraries/MsgFlag.sol';
 
 
-import "./../../interfaces/multivault/IMultiVaultEVMEventAlien.sol";
-import "./../../interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol";
-import "./../../interfaces/IProxyExtended.sol";
-import "./../../interfaces/multivault/IProxyMultiVaultAlien_V3.sol";
-import "./../../interfaces/ITokenRootAlienEVM.sol";
-import "./../../interfaces/alien-token-merge/IMergePool.sol";
-import "./../../interfaces/alien-token-merge/IMergeRouter.sol";
+import "./../modules/bridge/interfaces/multivault/IMultiVaultEVMEventAlien.sol";
+import "./../modules/bridge/interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol";
+import "./../modules/bridge/interfaces/IProxyExtended.sol";
+import "./../modules/bridge/interfaces/multivault/IProxyMultiVaultAlien_V3.sol";
+import "./../modules/bridge/interfaces/ITokenRootAlienEVM.sol";
+import "./../modules/bridge/interfaces/alien-token-merge/IMergePool.sol";
+import "./../modules/bridge/interfaces/alien-token-merge/IMergeRouter.sol";
 
-import "./../base/EthereumBaseEvent.sol";
+import "./../modules/bridge/event-contracts/base/EthereumBaseEvent.sol";
 
 
 /// @title Alien event EVM -> Everscale
@@ -34,6 +34,7 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
     uint8 decimals;
     uint128 amount;
     address recipient;
+    address hook;
 
     address proxy;
     address token;
@@ -79,10 +80,11 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
             decimals,
             amount,
             recipient_wid,
-            recipient_addr
+            recipient_addr,
+            hook
         ) = abi.decode(
             eventInitData.voteData.eventData,
-            (uint256, uint160, string, string, uint8, uint128, int8, uint256)
+            (uint256, uint160, string, string, uint8, uint128, int8, uint256, address)
         );
 
         recipient = address.makeAddrStd(recipient_wid, recipient_addr);
@@ -245,7 +247,8 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
         TvmCell metaData = abi.encode(
             target_token,
             target_amount,
-            recipient
+            recipient,
+            hook
         );
 
         IProxyExtended(eventInitData.configuration).onEventConfirmedExtended{

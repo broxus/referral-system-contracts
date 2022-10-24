@@ -7,8 +7,8 @@ pragma AbiHeader pubkey;
 import "ton-eth-bridge-token-contracts/contracts/interfaces/ITokenRoot.sol";
 import "ton-eth-bridge-token-contracts/contracts/interfaces/TIP3TokenRoot.sol";
 
-import "./../base/EverscaleBaseEvent.sol";
-import "./../../interfaces/multivault/IMultiVaultEverscaleEventNative.sol";
+import "./../modules/bridge/event-contracts/base/EverscaleBaseEvent.sol";
+import "./../modules/bridge/interfaces/multivault/IMultiVaultEverscaleEventNative.sol";
 
 
 /// @notice Everscale-EVM event for MultiVault native token transfer.
@@ -65,25 +65,25 @@ contract HookedMultiVaultEverscaleEventNative is EverscaleBaseEvent, IMultiVault
         ITokenRoot(token).name{
             value: 0.1 ton,
             bounce: true,
-            callback: MultiVaultEverscaleEventNative.receiveTokenName
+            callback: HookedMultiVaultEverscaleEventNative.receiveTokenName
         }();
 
         ITokenRoot(token).symbol{
             value: 0.1 ton,
             bounce: true,
-            callback: MultiVaultEverscaleEventNative.receiveTokenSymbol
+            callback: HookedMultiVaultEverscaleEventNative.receiveTokenSymbol
         }();
 
         ITokenRoot(token).decimals{
             value: 0.1 ton,
             bounce: true,
-            callback: MultiVaultEverscaleEventNative.receiveTokenDecimals
+            callback: HookedMultiVaultEverscaleEventNative.receiveTokenDecimals
         }();
 
         ITokenRoot(token).walletOf{
             value: 0.1 ton,
             bounce: true,
-            callback: MultiVaultEverscaleEventNative.receiveProxyTokenWallet
+            callback: HookedMultiVaultEverscaleEventNative.receiveProxyTokenWallet
         }(proxy);
     }
 

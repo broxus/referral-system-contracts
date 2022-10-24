@@ -4,17 +4,17 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 
-import "./../../interfaces/IProxyExtended.sol";
-import "./../../interfaces/multivault/IProxyMultiVaultAlien_V3.sol";
-import "./../../interfaces/event-configuration-contracts/IEverscaleEventConfiguration.sol";
+import "./../modules/bridge/interfaces/IProxyExtended.sol";
+import "./../modules/bridge/interfaces/multivault/IProxyMultiVaultAlien_V3.sol";
+import "./../modules/bridge/interfaces/event-configuration-contracts/IEverscaleEventConfiguration.sol";
 
-import "./../../../utils/ErrorCodes.sol";
-import "./../../../utils/TransferUtils.sol";
+import "./../modules/utils/ErrorCodes.sol";
+import "./../modules/utils/TransferUtils.sol";
 
-import "./../../alien-token/TokenRootAlienEVM.sol";
-import "./../../alien-token-merge/MergePool.sol";
-import "./../../alien-token-merge/MergeRouter.sol";
-import "./../../alien-token-merge/MergePoolPlatform.sol";
+import "./../modules/bridge/alien-token/TokenRootAlienEVM.sol";
+import "./../modules/bridge/alien-token-merge/MergePool.sol";
+import "./../modules/bridge/alien-token-merge/MergeRouter.sol";
+import "./../modules/bridge/alien-token-merge/MergePoolPlatform.sol";
 
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensBurnCallback.sol";
 
@@ -23,6 +23,7 @@ import '@broxus/contracts/contracts/utils/CheckPubKey.sol';
 import '@broxus/contracts/contracts/utils/RandomNonce.sol';
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
+import "../interfaces/IProxyHook.sol";
 
 contract HookedProxyMultiVaultAlien_V3 is
     InternalOwner,
@@ -113,7 +114,7 @@ contract HookedProxyMultiVaultAlien_V3 is
     /// be deployed before. See note on `deployAlienToken`
     /// @param remainingGasTo Gas back address
     function onEventConfirmedExtended(
-        IEthereumEvent.EthereumEventInitData,
+        IEthereumEvent.EthereumEventInitData eventData,
         TvmCell meta,
         address remainingGasTo
     ) external override reserveAtLeastTargetBalance {
@@ -122,11 +123,14 @@ contract HookedProxyMultiVaultAlien_V3 is
         (
             address token,
             uint128 amount,
-            address recipient
+            address recipient,
+            address hook,
         ) = abi.decode(
             meta,
-            (address, uint128, address)
+            (address, uint128, address, address, address)
         );
+
+        IProxyHook(hook).onEventCompleted(eventData);
 
         _mintTokens(
             token,

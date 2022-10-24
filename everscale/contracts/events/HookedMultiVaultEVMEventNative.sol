@@ -6,11 +6,11 @@ pragma AbiHeader pubkey;
 
 import "ton-eth-bridge-token-contracts/contracts/interfaces/ITokenRoot.sol";
 
-import "./../../interfaces/multivault/IMultiVaultEVMEventNative.sol";
-import "./../../interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol";
-import "./../../interfaces/IProxyExtended.sol";
+import "./../modules/bridge/interfaces/multivault/IMultiVaultEVMEventNative.sol";
+import "./../modules/bridge/interfaces/event-configuration-contracts/IEthereumEventConfiguration.sol";
+import "./../modules/bridge/interfaces/IProxyExtended.sol";
 
-import "./../base/EthereumBaseEvent.sol";
+import "./../modules/bridge/event-contracts/base/EthereumBaseEvent.sol";
 
 
 contract HookedMultiVaultEVMEventNative is EthereumBaseEvent, IMultiVaultEVMEventNative {
