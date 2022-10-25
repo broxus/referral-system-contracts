@@ -61,7 +61,7 @@ contract HookedMultiVaultEVMEventNative is EthereumBaseEvent, IMultiVaultEVMEven
 
         IEthereumEventConfiguration(eventInitData.configuration).getDetails{
             value: 1 ton,
-            callback: MultiVaultEVMEventNative.receiveConfigurationDetails
+            callback: HookedMultiVaultEVMEventNative.receiveConfigurationDetails
         }();
     }
 
@@ -76,7 +76,7 @@ contract HookedMultiVaultEVMEventNative is EthereumBaseEvent, IMultiVaultEVMEven
 
         ITokenRoot(token).walletOf{
             value: 0.1 ton,
-            callback: MultiVaultEVMEventNative.receiveProxyTokenWallet
+            callback: HookedMultiVaultEVMEventNative.receiveProxyTokenWallet
         }(proxy);
     }
 

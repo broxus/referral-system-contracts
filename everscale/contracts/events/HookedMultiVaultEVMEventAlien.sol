@@ -91,7 +91,7 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
 
         IEthereumEventConfiguration(eventInitData.configuration).getDetails{
             value: 1 ton,
-            callback: MultiVaultEVMEventAlien.receiveConfigurationDetails
+            callback: HookedMultiVaultEVMEventAlien.receiveConfigurationDetails
         }();
     }
 
@@ -106,7 +106,7 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
 
         IProxyMultiVaultAlien_V3(proxy).deriveAlienTokenRoot{
             value: 1 ton,
-            callback: MultiVaultEVMEventAlien.receiveAlienTokenRoot
+            callback: HookedMultiVaultEVMEventAlien.receiveAlienTokenRoot
         }(
             base_chainId,
             base_token,
@@ -130,7 +130,7 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
         ITokenRootAlienEVM(token).meta{
             value: 1 ton,
             bounce: true,
-            callback: MultiVaultEVMEventAlien.receiveTokenMeta
+            callback: HookedMultiVaultEVMEventAlien.receiveTokenMeta
         }();
     }
 
@@ -155,7 +155,7 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
         IProxyMultiVaultAlien_V3(proxy).deriveMergeRouter{
             value: 1 ton,
             bounce: false,
-            callback: MultiVaultEVMEventAlien.receiveMergeRouter
+            callback: HookedMultiVaultEVMEventAlien.receiveMergeRouter
         }(token);
     }
 
@@ -175,7 +175,7 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
         IMergeRouter(router).getPool{
             value: 1 ton,
             bounce: true,
-            callback: MultiVaultEVMEventAlien.receiveMergeRouterPool
+            callback: HookedMultiVaultEVMEventAlien.receiveMergeRouterPool
         }();
     }
 
@@ -197,7 +197,7 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
             IMergePool(pool).getCanon{
                 value: 1 ton,
                 bounce: false,
-                callback: MultiVaultEVMEventAlien.receiveMergePoolCanon
+                callback: HookedMultiVaultEVMEventAlien.receiveMergePoolCanon
             }();
         }
     }

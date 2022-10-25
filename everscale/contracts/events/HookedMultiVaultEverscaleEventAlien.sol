@@ -9,7 +9,7 @@ import "./../modules/bridge/interfaces/multivault/IProxyMultiVaultAlien_V3.sol";
 import "./../modules/bridge/interfaces/multivault/IProxyMultiVaultAlien_V1.sol";
 import "./../modules/bridge/interfaces/ITokenRootAlienEVM.sol";
 
-import "./../base/EverscaleBaseEvent.sol";
+import "./../modules/bridge/event-contracts/base/EverscaleBaseEvent.sol";
 
 
 /// @notice Everscale-EVM event for MultiVault alien token transfer.
@@ -53,7 +53,7 @@ contract HookedMultiVaultEverscaleEventAlien is EverscaleBaseEvent, IMultiVaultE
         ITokenRootAlienEVM(token).meta{
             value: 1 ton,
             bounce: true,
-            callback: MultiVaultEverscaleEventAlien.receiveTokenMeta
+            callback: HookedMultiVaultEverscaleEventAlien.receiveTokenMeta
         }();
     }
 
@@ -72,7 +72,7 @@ contract HookedMultiVaultEverscaleEventAlien is EverscaleBaseEvent, IMultiVaultE
         IProxyMultiVaultAlien_V3(proxy).deriveAlienTokenRoot{
             value: 1 ton,
             bounce: true,
-            callback: MultiVaultEverscaleEventAlien.receiveAlienTokenRoot
+            callback: HookedMultiVaultEverscaleEventAlien.receiveAlienTokenRoot
         }(
             base_chainId,
             base_token,

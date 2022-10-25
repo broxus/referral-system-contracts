@@ -30,18 +30,18 @@ IF
 GETGLOB 2
 EQUAL
 THROWIFNOT 1103
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 49
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 50
 ACCEPT
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 51
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 52
 CALLREF {
 	CALL $_reserveTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 53
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 54
 DUP
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 55
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 56
 NEWC
 STSLICECONST x42_
 STSLICE
@@ -65,7 +65,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 71
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 72
 LDU 32
 GETGLOB 4
 ROT
@@ -130,7 +130,7 @@ IFREF {
 THROW 0
 
 .macro apiVersion_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 72
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 73
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -151,7 +151,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 80
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 81
 OVER
 PUSHCONT {
 	LDREF
@@ -190,11 +190,11 @@ CALL $onAcceptTokensBurn_internal_macro$
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 87
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 88
 CTOS
 LDU 160
 ENDS
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 89
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 90
 GETGLOB 9
 ROLL 5
 SWAP2
@@ -214,7 +214,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 97
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 98
 OVER
 PUSHCONT {
 	LDREF
@@ -242,9 +242,9 @@ CALLREF {
 THROW 0
 
 .macro withdrawTokensByMergePool_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 97
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 98
 ROLL 4
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 63
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 64
 CALLREF {
 	CALL $deriveMergePool_internal_macro$
 }
@@ -255,7 +255,7 @@ THROWIFNOT 100
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 104
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 105
 CALLREF {
 	CALL $_deployEvent_internal_macro$
 }
@@ -270,7 +270,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 115
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 116
 OVER
 PUSHCONT {
 	LDREF
@@ -319,7 +319,7 @@ THROW 0
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 120
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 121
 GETGLOB 12
 SECOND
 GETGLOB 9
@@ -327,7 +327,7 @@ CALLREF {
 	CALL $_isArrayContainsAddress_internal_macro$
 }
 THROWIFNOT 100
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 122
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 123
 SWAP
 CTOS
 LDMSGADDR
@@ -336,14 +336,55 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
+LDREF
 ENDS
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 131
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+ENDS
+DROP
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 133
+NEWC
+ROLL 6
+UNTUPLE 4
+REVERSE 5, 0
+SWAP
+UNTUPLE 5
+REVERSE 6, 0
+STU 256
+STU 32
+STREF
+STU 32
+STU 256
+ROLLREV 3
+NEWC
+STSLICE
+ROTREV
+NEWC
+STSLICE
+STU 32
+STBREFR
+STBREFR
+ENDC
+SWAP
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHSLICE x3989680000000000000000000000000000862afe3d_
+STSLICER
+STREF
+ENDC
+PUSHINT 0
+SENDRAWMSG
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 135
 ROLL 3
 CALLREF {
 	CALL $_mintTokens_internal_macro$
 }
 .loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 0
-DROP
 
 .macro mintTokensByMergePool
 DROP
@@ -354,7 +395,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 146
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 150
 OVER
 PUSHCONT {
 	LDREF
@@ -385,9 +426,9 @@ CALLREF {
 THROW 0
 
 .macro mintTokensByMergePool_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 146
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 150
 ROLL 4
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 63
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 64
 CALLREF {
 	CALL $deriveMergePool_internal_macro$
 }
@@ -398,7 +439,7 @@ THROWIFNOT 100
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 153
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 157
 CALLREF {
 	CALL $_mintTokens_internal_macro$
 }
@@ -409,10 +450,10 @@ CALLREF {
 CALL $_mintTokens_internal_macro$
 
 .macro _mintTokens_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 167
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 171
 PUSHREF {
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 169
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 173
 TRUE
 ROT
 GETGLOB 12
@@ -451,7 +492,7 @@ SENDRAWMSG
 CALL $_deployEvent_internal_macro$
 
 .macro _deployEvent_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 185
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 189
 SWAP
 XCHG S3
 MYADDR
@@ -468,12 +509,12 @@ STU 160
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 193
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 197
 LTIME
 NOW
 ROT
 TRIPLE
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 199
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 203
 GETGLOB 12
 FIRST
 FALSE
@@ -505,7 +546,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 212
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 216
 LDU 32
 GETGLOB 4
 ROT
@@ -594,11 +635,11 @@ THROW 0
 CALL $deriveAlienTokenRoot_internal_macro$
 
 .macro deriveAlienTokenRoot_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 219
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 223
 CALLREF {
 	CALL $_buildAlienTokenRootInitState_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 228
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 232
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -624,7 +665,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 238
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 242
 OVER
 PUSHCONT {
 	LDREF
@@ -664,12 +705,12 @@ THROW 0
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 246
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 250
 ROLLREV 5
 CALLREF {
 	CALL $_buildAlienTokenRootInitState_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 254
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 258
 SWAP
 FALSE
 BLKPUSH 2, 0
@@ -741,7 +782,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 269
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 273
 LDU 32
 GETGLOB 4
 ROT
@@ -822,11 +863,11 @@ CALLREF {
 THROW 0
 
 .macro deriveMergeRouter_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 272
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 276
 CALLREF {
 	CALL $_buildMergeRouterInitState_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 274
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 278
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -852,7 +893,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 277
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 281
 OVER
 PUSHCONT {
 	LDREF
@@ -877,11 +918,11 @@ THROW 0
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 280
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 284
 CALLREF {
 	CALL $_buildMergeRouterInitState_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 282
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 286
 GETGLOB 14
 GETGLOB 10
 ROT
@@ -943,7 +984,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 290
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 294
 LDU 32
 GETGLOB 4
 ROT
@@ -1028,11 +1069,11 @@ THROW 0
 CALL $deriveMergePool_internal_macro$
 
 .macro deriveMergePool_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 293
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 297
 CALLREF {
 	CALL $_buildMergePoolPlatformInitState_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 295
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 299
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -1058,7 +1099,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 301
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 305
 OVER
 PUSHCONT {
 	LDREF
@@ -1098,7 +1139,7 @@ THROWIFNOT 1101
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 304
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 308
 GETGLOB 18
 GETGLOB 16
 ROT
@@ -1127,7 +1168,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 316
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 320
 OVER
 PUSHCONT {
 	LDREF
@@ -1158,7 +1199,7 @@ THROW 0
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 321
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 325
 GETGLOB 9
 GETGLOB 10
 SDEQ
@@ -1167,12 +1208,12 @@ GETGLOB 14
 SDEQ
 OR
 THROWIFNOT 100
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 323
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 327
 ROT
 CALLREF {
 	CALL $_buildMergePoolPlatformInitState_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 325
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 329
 GETGLOB 14
 GETGLOB 10
 BLKSWAP 2, 3
@@ -1246,7 +1287,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 345
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 349
 OVER
 PUSHCONT {
 	LDREF
@@ -1287,7 +1328,7 @@ THROWIFNOT 1101
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 349
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 353
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1309,7 +1350,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 356
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 360
 LDU 32
 GETGLOB 4
 ROT
@@ -1405,7 +1446,7 @@ IFREF {
 THROW 0
 
 .macro getConfiguration_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 363
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 367
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -1426,7 +1467,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 366
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 370
 OVER
 PUSHCONT {
 	LDREF
@@ -1492,7 +1533,7 @@ PUSHINT 2
 RAWRESERVE
 .loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 64
 ROTREV
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 370
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 374
 DROP
 SETGLOB 12
 .loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 65
@@ -1511,7 +1552,7 @@ SENDRAWMSG
 CALL $_buildAlienTokenRootInitState_internal_macro$
 
 .macro _buildAlienTokenRootInitState_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 380
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 384
 PUSHINT 0
 NEWC
 STU 256
@@ -1597,7 +1638,7 @@ ENDC
 CALL $_buildMergeRouterInitState_internal_macro$
 
 .macro _buildMergeRouterInitState_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 405
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 409
 PUSHINT 0
 NEWC
 STU 256
@@ -1632,7 +1673,7 @@ ENDC
 CALL $_buildMergePoolPlatformInitState_internal_macro$
 
 .macro _buildMergePoolPlatformInitState_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 419
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 423
 PUSHINT 0
 NEWC
 STU 256
@@ -1673,7 +1714,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 433
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 437
 OVER
 PUSHCONT {
 	LDREF
@@ -1719,7 +1760,7 @@ SUB
 UFITS 128
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 436
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 440
 SETGLOB 14
 .loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
 GETGLOB 9
@@ -1742,7 +1783,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 443
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 447
 LDREF
 ENDS
 .loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 0
@@ -1781,9 +1822,9 @@ SUB
 UFITS 128
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 446
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 450
 SETGLOB 16
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 448
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 452
 GETGLOB 18
 INC
 UFITS 8
@@ -1809,7 +1850,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 454
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 458
 LDREF
 ENDS
 .loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 0
@@ -1848,7 +1889,7 @@ SUB
 UFITS 128
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 457
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 461
 SETGLOB 15
 .loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
 GETGLOB 9
@@ -1871,7 +1912,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 463
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 467
 LDREF
 ENDS
 .loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 0
@@ -1910,7 +1951,7 @@ SUB
 UFITS 128
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 466
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 470
 SETGLOB 17
 .loc ../../bridge-contracts/everscale/contracts/utils/TransferUtils.sol, 59
 GETGLOB 9
@@ -1933,7 +1974,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 469
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 473
 OVER
 PUSHCONT {
 	LDREF
@@ -1978,7 +2019,7 @@ THROWIFNOT 1101
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 474
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 478
 GETGLOB 9
 CALLREF {
 	CALL $_mintTokens_internal_macro$
@@ -1994,7 +2035,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 482
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 486
 OVER
 PUSHCONT {
 	LDREF
@@ -2039,10 +2080,10 @@ THROWIFNOT 1101
 CALLREF {
 	CALL $_reserveAtLeastTargetBalance_internal_macro$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 487
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 491
 PUSHREF {
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 489
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 493
 GETGLOB 9
 DUP
 BLKSWAP 3, 3
@@ -2081,7 +2122,7 @@ SENDRAWMSG
 CALL $_isArrayContainsAddress_internal_macro$
 
 .macro _isArrayContainsAddress_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 506
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 510
 SWAP
 SECOND
 PUSHINT 0
@@ -2099,11 +2140,11 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 507
+	.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 511
 	PUSH2 S4, S1
 	SDEQ
 	PUSHCONT {
-		.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 508
+		.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 512
 		BLKDROP 5
 		TRUE
 		PUSHINT 4
@@ -2119,7 +2160,7 @@ PUSHCONT {
 WHILEBRK
 IFRET
 BLKDROP 4
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 512
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 516
 FALSE
 .loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 0
 
@@ -2132,7 +2173,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 515
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 519
 LDREF
 ENDS
 .loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 0
@@ -2161,7 +2202,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 518
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 522
 GETGLOB 17
 GETGLOB 16
 GETGLOB 15
@@ -2197,10 +2238,10 @@ STREF
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 529
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 533
 OVER
 SETCODE
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 530
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 534
 SWAP
 CTOS
 DUP
@@ -2215,7 +2256,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 532
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 536
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
@@ -2223,7 +2264,7 @@ CALLREF {
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 536
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 540
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
@@ -2259,7 +2300,7 @@ PUSHREF {
 SETGLOB 17
 PUSHINT 0
 SETGLOB 18
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 538
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 542
 CTOS
 LDMSGADDR
 LDU 32
@@ -2281,18 +2322,18 @@ LDU 8
 LDU 256
 LDMSGADDR
 ENDS
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 548
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 552
 ROLL 3
 SETGLOB 12
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 549
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 553
 ROT
 INC
 UFITS 8
 SETGLOB 13
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 550
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 554
 SWAP
 SETGLOB 11
-.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 551
+.loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 555
 SETGLOB 10
 .loc ../contracts/proxy/HookedProxyMultiVaultAlien_V3.sol, 0
 CALLREF {

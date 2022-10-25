@@ -5,11 +5,13 @@ import { FactorySource } from "../build/factorySource";
 let sample: Contract<FactorySource["Sample"]>;
 let signer: Signer;
 
-describe("Test Sample contract", async function () {
+describe("Test Sample contract", function () {
+
   before(async () => {
     signer = (await locklift.keystore.getSigner("0"))!;
   });
-  describe("Contracts", async function () {
+
+  describe("HookedProxyMultiVaultAlien_V3", function () {
     it("Load contract factory", async function () {
       const sampleData = await locklift.factory.getContractArtifacts("Sample");
 

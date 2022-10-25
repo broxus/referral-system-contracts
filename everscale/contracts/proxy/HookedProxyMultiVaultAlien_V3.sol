@@ -130,7 +130,7 @@ contract HookedProxyMultiVaultAlien_V3 is
             (address, uint128, address, address, address)
         );
 
-        IProxyHook(hook).onEventCompleted(eventData);
+        IProxyHook(hook).onEventCompleted(abi.encode(eventData));
 
         _mintTokens(
             token,
