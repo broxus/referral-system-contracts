@@ -1,25 +1,16 @@
-import {deployAccount, logContract } from "./locklift";
+import {Account, deployAccount, logContract } from "./utils";
 import BigNumber from "bignumber.js"
 import _ from "underscore"
 import logger from "mocha-logger"
+import { Contract } from "locklift";
 
 const chai = require('chai')
 chai.use(require('chai-bignumber')())
 
 const { expect } = chai
 
-async function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
-// Due to the network lag, graphql may not catch wallets updates instantly
-async function afterRun(tx) {
-    if (locklift.network === 'dev' || locklift.network === 'prod') {
-        await sleep(100000);
-    }
-};
-
-export async function setupAlienProxyNft(owner: Account, staking: Contract, options: { chainId: number}): Promise<[Contract, Contract, Contract, Account]> {
+export async function setupAlienMultiVault(owner: Account, staking: Contract, options: { chainId: number}): Promise<[Contract, Contract, Contract, Account]> {
     const _randomNonce = locklift.utils.getRandomNonce();
     const [keyPair] = await locklift.keys.getKeyPairs();
 

@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { Account, Contract, locklift, getRandomNonce, Address, Tx } from "./locklift";
+import { Account, Contract, locklift, getRandomNonce, Address, Tx } from "./utils";
 
 export async function deploy(account: Account, config: { name: string; symbol: string; decimals: string; initialSupply?: string; deployWalletValue?: string; }): Promise<Contract> {
   let { name, symbol, decimals, initialSupply, deployWalletValue } = config;

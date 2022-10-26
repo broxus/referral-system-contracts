@@ -2,83 +2,90 @@ import logger from 'mocha-logger'
 import BigNumber from 'bignumber.js'
 import _ from 'underscore'
 
-import { logContract, locklift, afterRun, KeyPair, Contract, Account } from './locklift';
+import { logContract, afterRun, Account } from './utils';
+import { Contract, Signer } from 'locklift';
+import { FactorySource } from '../../../build/factorySource';
 
-export async function setupBridge(relays: KeyPair[]): Promise<[Contract, Account, Contract, Contract]> {
-    const Account = await locklift.factory.getAccount('Wallet');
-    const [keyPair] = await locklift.keys.getKeyPairs();
+
+export type Bridge = Contract<FactorySource["Bridge"]>
+export type StakingMockup = Contract<FactorySource["StakingMockup"]>
+export type CellEncoderStandalone = Contract<FactorySource["CellEncoderStandalone"]>
+export async function setupBridge(relays: Signer[]): Promise<[Bridge, Account, StakingMockup, CellEncoderStandalone]> {
+    const ownerKey = await locklift.keystore.getSigner("0");
 
     const _randomNonce = locklift.utils.getRandomNonce();
 
-    const owner = await locklift.giver.deployContract({
-        contract: Account,
+    const owner = (await locklift.factory.deployContract({
+        contract: 'Wallet',
         constructorParams: {},
+        publicKey: ownerKey!.publicKey,
         initParams: {
             _randomNonce,
         },
-        keyPair,
-    }, locklift.utils.convertCrystal(1000, 'nano'));
-
-    owner.setKeyPair(keyPair);
-    owner.afterRun = afterRun;
-    owner.name = 'Bridge owner';
+        value: locklift.utils.toNano(1000)
+    })).contract;
+    
+    
+    // owner.contract.setKeyPair(keyPair);
+    // owner.contract.afterRun = afterRun;
+    // owner.contract.name = 'Bridge owner';
 
     await logContract(owner);
 
-    const StakingMockup = await locklift.factory.getContract('StakingMockup');
-
-    const staking = await locklift.giver.deployContract({
-        contract: StakingMockup,
+    const staking = (await locklift.factory.deployContract({
+        contract: "StakingMockup",
         constructorParams: {},
+        publicKey: ownerKey!.publicKey,
         initParams: {
             _randomNonce,
-            __keys: relays.map(r => `0x${r.public}`),
+            __keys: relays.map(r => `0x${r.publicKey}`),
         },
-        keyPair,
-    }, locklift.utils.convertCrystal(1, 'nano'));
+        value: locklift.utils.toNano(1)
+    })).contract;
 
     await logContract(staking);
 
-    const Bridge = await locklift.factory.getContract('Bridge');
-    const Connector = await locklift.factory.getContract('Connector');
+    const Connector = await locklift.factory.getContractArtifacts('Connector');
 
-    const bridge = await locklift.giver.deployContract({
-        contract: Bridge,
+    const bridge = (await locklift.factory.deployContract({
+        contract: "Bridge",
         constructorParams: {
             _owner: owner.address,
             _manager: owner.address,
             _staking: staking.address,
             _connectorCode: Connector.code,
-            _connectorDeployValue: locklift.utils.convertCrystal(1, 'nano'),
+            _connectorDeployValue: locklift.utils.toNano(1),
         },
         initParams: {
             _randomNonce: locklift.utils.getRandomNonce(),
         },
-        keyPair
-    }, locklift.utils.convertCrystal(1, 'nano'));
+        publicKey: ownerKey!.publicKey,
+        value: locklift.utils.toNano(1)
+    })).contract;
 
 
     await logContract(bridge);
 
-    const CellEncoder = await locklift.factory.getContract('ProxyNftTransferCellEncoder');
-
-    const cellEncoder = await locklift.giver.deployContract({
-        contract: CellEncoder,
-        keyPair,
+    const cellEncoder = (await locklift.factory.deployContract({
+        contract: "CellEncoderStandalone",
+        publicKey: ownerKey!.publicKey,
         constructorParams: {},
         initParams: {
             _randomNonce: locklift.utils.getRandomNonce()
         },
-    }, locklift.utils.convertCrystal(1, 'nano'));
+        value: locklift.utils.toNano(1)
+    })).contract;
 
 
-    return [bridge, owner as Account, staking, cellEncoder];
+    return [bridge, owner, staking, cellEncoder];
 };
 
-export function setupRelays(amount = 20): Promise<KeyPair[]> {
+export function setupRelays(amount = 20): Promise<Signer[]> {
     return Promise.all(_
         .range(amount)
-        .map(async () => locklift.ton.client.crypto.generate_random_sign_keys())
+        .map(async (i:  number) => locklift.keystore.getSigner(i.toString()))
     );
 };
+
+
 

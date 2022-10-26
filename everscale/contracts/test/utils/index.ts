@@ -1,5 +1,4 @@
 
-export * from './locklift'
-export * as AlienCollection from './collection'
-export * as AlienNft from './nft'
+export * from './utils'
 export * as ProxyAlienNft from './proxyNftAlien'
+export * as Bridge from './bridge'

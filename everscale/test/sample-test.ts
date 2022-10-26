@@ -1,8 +1,10 @@
 import { expect } from "chai";
 import { Contract, Signer } from "locklift";
 import { FactorySource } from "../build/factorySource";
+import { setupBridge, setupRelays } from "../contracts/test/utils/bridge";
 
 let sample: Contract<FactorySource["Sample"]>;
+
 let signer: Signer;
 
 describe("Test Sample contract", function () {
@@ -19,6 +21,23 @@ describe("Test Sample contract", function () {
       expect(sampleData.abi).not.to.equal(undefined, "ABI should be available");
       expect(sampleData.tvc).not.to.equal(undefined, "tvc should be available");
     });
+
+    it('Setup bridge', async () => {
+      let relays = await setupRelays();
+      let [bridge, bridgeOwner, staking, cellEncoder] = await setupBridge(relays);
+
+      [evmConfiguration, everscaleConfiguration, proxy, initializer] = await setupAlienMultiVault(
+          bridgeOwner,
+          staking,
+          cellEncoder
+      );
+
+      metricManager = new utils.MetricManager(
+          bridge, bridgeOwner, staking,
+          evmConfiguration, everscaleConfiguration, proxy, initializer
+      );
+  });
+
 
     it("Deploy contract", async function () {
       const INIT_STATE = 0;

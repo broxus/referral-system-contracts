@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { Account, Address, Contract, locklift, Tx } from "./locklift";
+import { Account, Address, Contract, locklift, Tx } from "./utils";
 
 export async function deploy(account: Account, tokenRoot: Contract): Promise<Contract> {
 
