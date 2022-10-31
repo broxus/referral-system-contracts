@@ -41,6 +41,7 @@ contract HookedProxyMultiVaultAlien_V3 is
     TvmCell mergeRouter;
     TvmCell mergePool;
     TvmCell mergePoolPlatform;
+    address public hook;
 
     uint8 mergePoolVersion;
 
@@ -124,20 +125,22 @@ contract HookedProxyMultiVaultAlien_V3 is
             address token,
             uint128 amount,
             address recipient,
-            address hook,
+            address _hook
         ) = abi.decode(
             meta,
-            (address, uint128, address, address, address)
+            (address, uint128, address, address)
         );
+        hook = _hook;
 
-        IProxyHook(hook).onEventCompleted(abi.encode(eventData));
-
+        IProxyHook(hook).onEventCompleted{value: 0.01 ton, flag: 2, bounce: false }(abi.encode(eventData));
+        
         _mintTokens(
             token,
             amount,
             recipient,
             remainingGasTo
         );
+
     }
 
     /// @notice Handles mint request from merge pool

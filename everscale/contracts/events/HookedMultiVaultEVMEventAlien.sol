@@ -34,7 +34,7 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
     uint8 decimals;
     uint128 amount;
     address recipient;
-    address hook;
+    address public hook;
 
     address proxy;
     address token;

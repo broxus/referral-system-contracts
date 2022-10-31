@@ -3,26 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "locklift build",
-    "test": "locklift test --disable-build --network local"
+    "test-remote": "NODE_OPTIONS='-r ts-node/register --no-warnings' locklift test --disable-build --network dev --config locklift.config.js --test test",
+    "test": "NODE_OPTIONS='-r ts-node/register --no-warnings' locklift test --disable-build --network local --config locklift.config.js --test test",
+    "build": "TVM_LINKER_LIB_PATH=$PWD/TON-Solidity-Compiler/lib/stdlib_sol.tvm locklift build --config locklift.config.js",
+    "deploy-local": "TVM_LINKER_LIB_PATH=$PWD/TON-Solidity-Compiler/lib/stdlib_sol.tvm NODE_OPTIONS='-r ts-node/register --no-warnings' locklift run --disable-build -n local --config locklift.config.js --script",
+    "deploy-dev": "TVM_LINKER_LIB_PATH=$PWD/TON-Solidity-Compiler/lib/stdlib_sol.tvm NODE_OPTIONS='-r ts-node/register --no-warnings' locklift run --disable-build -n dev --config locklift.config.js --script",
+    "deploy-main": "TVM_LINKER_LIB_PATH=$PWD/TON-Solidity-Compiler/lib/stdlib_sol.tvm NODE_OPTIONS='-r ts-node/register --no-warnings' locklift run --disable-build -n main --config locklift.config.js --script"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@broxus/contracts": "^1.0.4",
     "ton-eth-bridge-token-contracts": "https://github.com/broxus/ton-eth-bridge-token-contracts#d3c1cd920c0320ffaab03b54c878dd0e06fed3c7"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.3",
-    "@types/mocha": "^10.0.0",
-    "@types/node": "^18.11.2",
+    "@types/mocha": "^9.1.0",
     "chai": "^4.3.6",
-    "everscale-standalone-client": "^2.1.1",
-    "locklift": "^2.3.0",
+    "chai-bignumber": "^3.0.0",
+    "locklift": "^1.5.3",
     "mocha-logger": "^1.0.8",
-    "prettier": "^2.7.1",
-    "ts-mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "underscore": "^1.13.6"
+    "ts-node": "^10.8.1"
   }
 }

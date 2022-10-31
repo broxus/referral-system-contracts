@@ -265,6 +265,14 @@
 			"outputs": [
 				{"name":"round_number","type":"uint32"}
 			]
+		},
+		{
+			"name": "hook",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"hook","type":"address"}
+			]
 		}
 	],
 	"data": [

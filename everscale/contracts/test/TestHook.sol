@@ -1,42 +1,19 @@
-pragma ton-solidity >= 0.57.1;
-pragma AbiHeader expire;
-pragma AbiHeader pubkey;
+pragma ton-solidity >=0.39.0;
 
 import "../interfaces/IProxyHook.sol";
+import "@broxus/contracts/contracts/utils/RandomNonce.sol";
 
-contract TestHook is IProxyHook {
-    uint16 static _nonce;
+contract TestHook is IProxyHook, RandomNonce {
+  event RawTestEvent(TvmCell payload);
+  uint256 public recievedEvents;
 
-    uint state;
+  constructor() public {
+    tvm.accept();
+  }
 
-    event StateChange(uint _state);
-    event ReceivedEvent(TvmCell payload);
-
-    constructor(uint _state) public {
-        tvm.accept();
-
-        setState(_state);
-    }
-
-    function onEventCompleted(TvmCell payload) override external {
-        tvm.accept();
-        emit ReceivedEvent(payload);
-    }
-
-
-    function setState(uint _state) public {
-        tvm.accept();
-        state = _state;
-
-        emit StateChange(_state);
-    }
-
-    function getDetails()
-        external
-        view
-    returns (
-        uint _state
-    ) {
-        return state;
-    }
+  function onEventCompleted(TvmCell payload) override external {
+    tvm.accept();
+    recievedEvents += 1;
+    emit RawTestEvent(payload);
+  }
 }
