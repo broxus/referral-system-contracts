@@ -265,14 +265,6 @@
 			"outputs": [
 				{"name":"round_number","type":"uint32"}
 			]
-		},
-		{
-			"name": "hook",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"hook","type":"address"}
-			]
 		}
 	],
 	"data": [
@@ -339,6 +331,7 @@
 		{"name":"amount","type":"uint128"},
 		{"name":"recipient","type":"address"},
 		{"name":"hook","type":"address"},
+		{"name":"hookPayload","type":"cell"},
 		{"name":"proxy","type":"address"},
 		{"name":"token","type":"address"},
 		{"name":"router","type":"address"},

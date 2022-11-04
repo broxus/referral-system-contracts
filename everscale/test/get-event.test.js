@@ -94,7 +94,8 @@ describe('Deposit Alien token from EVM to Everscale with no merging', async func
           amount: 333,
           recipient_wid: initializer.address.split(':')[0],
           recipient_addr: `0x${initializer.address.split(':')[1]}`,
-          hook: testHook.address
+          hook: testHook.address,
+          hookPayload: locklift.utils.zeroAddress
       };
 
       eventDataEncoded =  await cellEncoder.call({

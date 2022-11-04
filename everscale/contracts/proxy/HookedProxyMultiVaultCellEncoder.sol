@@ -13,9 +13,10 @@ contract HookedProxyMultiVaultCellEncoder {
         uint128 amount,
         int8 recipient_wid,
         uint256 recipient_addr,
-        address hook
+        address hook,
+        TvmCell hookPayload
     ) external pure returns (TvmCell) {
-        return abi.encode(base_chainId, base_token, name, symbol, decimals, amount, recipient_wid, recipient_addr, hook);
+        return abi.encode(base_chainId, base_token, name, symbol, decimals, amount, recipient_wid, recipient_addr, hook, hookPayload);
     }
 
     function encodeMultiVaultNativeEVM(

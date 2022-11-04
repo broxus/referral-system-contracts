@@ -1,0 +1,39 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"parent_","type":"address"},
+				{"name":"eventData","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getParents",
+			"inputs": [
+				{"name":"eventData","type":"cell"},
+				{"name":"parents","type":"address[]"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"factory","type":"address"},
+		{"key":2,"name":"recipient","type":"address"}
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"factory","type":"address"},
+		{"name":"recipient","type":"address"},
+		{"name":"parent","type":"address"}
+	]
+}

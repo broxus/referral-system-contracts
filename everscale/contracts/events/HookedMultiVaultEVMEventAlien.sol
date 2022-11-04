@@ -34,7 +34,8 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
     uint8 decimals;
     uint128 amount;
     address recipient;
-    address public hook;
+    address hook;
+    TvmCell hookPayload;
 
     address proxy;
     address token;
@@ -81,10 +82,11 @@ contract HookedMultiVaultEVMEventAlien is EthereumBaseEvent, IMultiVaultEVMEvent
             amount,
             recipient_wid,
             recipient_addr,
-            hook
+            hook,
+            hookPayload
         ) = abi.decode(
             eventInitData.voteData.eventData,
-            (uint256, uint160, string, string, uint8, uint128, int8, uint256, address)
+            (uint256, uint160, string, string, uint8, uint128, int8, uint256, address, TvmCell)
         );
 
         recipient = address.makeAddrStd(recipient_wid, recipient_addr);

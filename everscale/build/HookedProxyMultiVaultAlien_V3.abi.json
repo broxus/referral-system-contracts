@@ -264,14 +264,6 @@
 			"outputs": [
 				{"name":"manager","type":"address"}
 			]
-		},
-		{
-			"name": "hook",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"hook","type":"address"}
-			]
 		}
 	],
 	"data": [
@@ -311,7 +303,6 @@
 		{"name":"mergeRouter","type":"cell"},
 		{"name":"mergePool","type":"cell"},
 		{"name":"mergePoolPlatform","type":"cell"},
-		{"name":"hook","type":"address"},
 		{"name":"mergePoolVersion","type":"uint8"}
 	]
 }

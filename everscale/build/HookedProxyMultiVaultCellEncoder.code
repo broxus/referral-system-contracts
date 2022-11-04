@@ -40,6 +40,7 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
+LDREF
 ENDS
 .loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 0
 CALLREF {
@@ -56,7 +57,7 @@ PUSHCONT {
 	NEWC
 	STSLICECONST xc
 	STSLICE
-	PUSHSLICE x0000000000000000000000002e4dc6a16_
+	PUSHSLICE x0000000000000000000000002fac59946_
 	STSLICER
 	STREF
 	ENDC
@@ -73,7 +74,8 @@ IFREF {
 THROW 0
 
 .macro encodeMultiVaultAlienEVM_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 18
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 19
+ROLLREV 9
 REVERSE 9, 0
 NEWC
 STU 256
@@ -84,9 +86,10 @@ STU 8
 STU 128
 STI 8
 STU 256
-SWAP
+ROTREV
 NEWC
 STSLICE
+STREF
 STBREFR
 ENDC
 .loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 0
@@ -95,7 +98,7 @@ ENDC
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 21
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 22
 OVER
 PUSHCONT {
 	LDI 8
@@ -144,7 +147,7 @@ IFREF {
 THROW 0
 
 .macro encodeMultiVaultNativeEVM_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 28
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 29
 REVERSE 5, 0
 NEWC
 STI 8
@@ -159,7 +162,7 @@ ENDC
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 31
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 32
 OVER
 PUSHCONT {
 	LDREF
@@ -201,7 +204,7 @@ IFREF {
 THROW 0
 
 .macro encodeAlienBurnPayload_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 34
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 35
 NEWC
 STU 160
 ENDC
@@ -211,7 +214,7 @@ ENDC
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 37
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 38
 OVER
 PUSHCONT {
 	LDREF
@@ -254,7 +257,7 @@ IFREF {
 THROW 0
 
 .macro encodeNativeTransferPayload_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 41
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 42
 SWAP
 NEWC
 STU 160
@@ -266,7 +269,7 @@ ENDC
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 44
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 45
 LDREF
 ENDS
 .loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 0
@@ -308,10 +311,10 @@ IFREF {
 THROW 0
 
 .macro decodeMultiVaultAlienEverscale_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 44
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 45
 PUSHINT 0
 BLKPUSH 2, 0
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 52
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 53
 ROLL 3
 CTOS
 LDU 160
@@ -329,7 +332,7 @@ POP S2
 DROP
 GETGLOB 6
 THROWIFNOT 76
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 58
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 59
 LDREF
 ENDS
 .loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 0
@@ -375,7 +378,7 @@ IFREF {
 THROW 0
 
 .macro decodeMultiVaultNativeEverscale_internal_macro
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 58
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 59
 PUSHINT 0
 DUP
 PUSHREF {
@@ -383,7 +386,7 @@ PUSHREF {
 DUP
 PUSHINT 0
 BLKPUSH 2, 0
-.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 70
+.loc ../contracts/proxy/HookedProxyMultiVaultCellEncoder.sol, 71
 ROLL 7
 CTOS
 LDI 8
@@ -562,7 +565,7 @@ IFJMPREF {
 		CALL $decodeMultiVaultNativeEverscale$
 	}
 	DUP
-	PUSHINT 959912581
+	PUSHINT 1051813457
 	EQUAL
 	IFJMPREF {
 		CALL $encodeMultiVaultAlienEVM$

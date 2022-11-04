@@ -14,7 +14,8 @@
 				{"name":"amount","type":"uint128"},
 				{"name":"recipient_wid","type":"int8"},
 				{"name":"recipient_addr","type":"uint256"},
-				{"name":"hook","type":"address"}
+				{"name":"hook","type":"address"},
+				{"name":"hookPayload","type":"cell"}
 			],
 			"outputs": [
 				{"name":"value0","type":"cell"}

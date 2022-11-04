@@ -46,14 +46,14 @@ THROW 0
 CALL $onInit_internal_macro$
 
 .macro onInit_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 70
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 71
 CALLREF {
 	CALL $setStatusInitializing_internal_macro$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 72
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 73
 PUSHINT 0
 DUP
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 75
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 76
 GETGLOB 19
 INDEX2 0, 2
 CTOS
@@ -69,18 +69,20 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
+LDREF
 ENDS
-REVERSE 9, 0
+REVERSE 10, 0
 SETGLOB 20
 SETGLOB 21
 SETGLOB 22
 SETGLOB 23
 SETGLOB 24
 SETGLOB 25
-POP S4
-POP S2
+POP S5
+POP S3
 SETGLOB 27
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 90
+SETGLOB 28
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 92
 SWAP
 NEWC
 STSLICECONST x9_
@@ -89,7 +91,7 @@ STU 256
 ENDC
 CTOS
 SETGLOB 26
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 92
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 94
 GETGLOB 19
 SECOND
 NEWC
@@ -111,7 +113,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 98
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 100
 OVER
 PUSHCONT {
 	LDREF
@@ -154,24 +156,24 @@ CALLREF {
 THROW 0
 
 .macro receiveConfigurationDetails_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 103
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 105
 DROP
 GETGLOB 9
 GETGLOB 19
 SECOND
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 105
-INDEX 3
-SETGLOB 28
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 107
+INDEX 3
+SETGLOB 29
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 109
 DROP
 GETGLOB 24
 GETGLOB 23
 GETGLOB 22
 GETGLOB 21
 GETGLOB 20
-GETGLOB 28
+GETGLOB 29
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -201,7 +203,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 123
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 125
 OVER
 PUSHCONT {
 	LDREF
@@ -222,15 +224,15 @@ CALLREF {
 THROW 0
 
 .macro receiveAlienTokenRoot_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 126
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 128
 GETGLOB 9
-GETGLOB 28
+GETGLOB 29
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 128
-DUP
-SETGLOB 29
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 130
+DUP
+SETGLOB 30
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 132
 TRUE
 NEWC
 STSLICECONST x6_
@@ -254,7 +256,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 140
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 142
 OVER
 PUSHCONT {
 	LDREF
@@ -279,13 +281,13 @@ CALLREF {
 THROW 0
 
 .macro receiveTokenMeta_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 147
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 149
 BLKDROP 5
 GETGLOB 9
-GETGLOB 29
+GETGLOB 30
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 149
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 151
 CALLREF {
 	CALL $_requestMergeRouter_internal_macro$
 }
@@ -296,8 +298,8 @@ CALLREF {
 CALL $_requestMergeRouter_internal_macro$
 
 .macro _requestMergeRouter_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 155
-GETGLOB 28
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 157
+GETGLOB 29
 FALSE
 NEWC
 STSLICECONST x6_
@@ -307,7 +309,7 @@ STZEROES
 STSLICE
 PUSHSLICE x43b9aca00000000000000000000000000003_
 STSLICER
-GETGLOB 29
+GETGLOB 30
 PUSHSLICE x5bbeb5f222caeb0a
 NEWC
 STSLICE
@@ -327,7 +329,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 167
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 169
 OVER
 PUSHCONT {
 	LDREF
@@ -348,15 +350,15 @@ CALLREF {
 THROW 0
 
 .macro receiveMergeRouter_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 170
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 172
 GETGLOB 9
-GETGLOB 28
+GETGLOB 29
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 172
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 174
 DUP
-SETGLOB 30
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 175
+SETGLOB 31
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 177
 TRUE
 NEWC
 STSLICECONST x6_
@@ -380,7 +382,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 187
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 189
 OVER
 PUSHCONT {
 	LDREF
@@ -401,21 +403,23 @@ CALLREF {
 THROW 0
 
 .macro receiveMergeRouterPool_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 190
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 192
 GETGLOB 9
-GETGLOB 30
+GETGLOB 31
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 192
-DUP
-SETGLOB 31
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 194
+DUP
+PUSHINT 32
+SETGLOBVAR
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 196
 PARSEMSGADDR
 INDEX 3
 PLDU 256
 PUSHCONT {
-	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 197
-	GETGLOB 31
+	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 199
+	PUSHINT 32
+	GETGLOBVAR
 	FALSE
 	NEWC
 	STSLICECONST x6_
@@ -430,8 +434,8 @@ PUSHCONT {
 	SENDRAWMSG
 }
 PUSHCONT {
-	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 195
-	GETGLOB 29
+	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 197
+	GETGLOB 30
 	GETGLOB 25
 	CALLREF {
 		CALL $_finishSetup_internal_macro$
@@ -449,7 +453,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 209
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 211
 OVER
 PUSHCONT {
 	LDREF
@@ -475,38 +479,39 @@ CALLREF {
 THROW 0
 
 .macro receiveMergePoolCanon_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 213
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 215
 GETGLOB 9
-GETGLOB 31
+PUSHINT 32
+GETGLOBVAR
 SDEQ
 THROWIFNOT 100
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 215
-SWAP
-PUSHINT 32
-SETGLOBVAR
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 217
+SWAP
+PUSHINT 33
+SETGLOBVAR
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 219
 DUP
 SECOND
 FALSE
 EQUAL
 PUSHCONT {
-	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 221
-	GETGLOB 29
+	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 223
+	GETGLOB 30
 	GETGLOB 25
 	CALLREF {
 		CALL $_finishSetup_internal_macro$
 	}
 }
 PUSHCONT {
-	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 225
-	PUSHINT 0
 	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 227
+	PUSHINT 0
+	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 229
 	GETGLOB 24
 	PUSH S2
 	FIRST
 	GREATER
 	PUSHCONT {
-		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 228
+		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 230
 		GETGLOB 25
 		PUSHINT 10
 		GETGLOB 24
@@ -530,7 +535,7 @@ PUSHCONT {
 		FIRST
 		LESS
 		PUSHCONT {
-			.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 230
+			.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 232
 			GETGLOB 25
 			PUSHINT 10
 			PUSH S3
@@ -550,24 +555,24 @@ PUSHCONT {
 			NIP
 		}
 		PUSHCONT {
-			.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 232
+			.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 234
 			DROP
 			GETGLOB 25
 		}
 		IFELSE
 	}
 	IFELSE
-	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 238
+	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 240
 	DUP
 	PUSHCONT {
-		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 241
-		PUSHINT 32
+		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 243
+		PUSHINT 33
 		GETGLOBVAR
 		OVER
 	}
 	PUSHCONT {
-		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 239
-		GETGLOB 29
+		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 241
+		GETGLOB 30
 		GETGLOB 25
 	}
 	IFELSE
@@ -586,12 +591,12 @@ DROP
 CALL $onConfirm_internal_macro$
 
 .macro onConfirm_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 247
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 249
 GETGLOB 27
 GETGLOB 26
-PUSHINT 34
+PUSHINT 35
 GETGLOBVAR
-PUSHINT 33
+PUSHINT 34
 GETGLOBVAR
 NEWC
 STSLICE
@@ -605,7 +610,7 @@ STSLICE
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 254
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 256
 GETGLOB 12
 SWAP
 GETGLOB 19
@@ -659,7 +664,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 259
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 261
 LDU 32
 GETGLOB 4
 ROT
@@ -766,7 +771,7 @@ CALLREF {
 THROW 0
 
 .macro getDecodedData_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 270
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 272
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -782,8 +787,8 @@ GETGLOB 23
 GETGLOB 24
 GETGLOB 25
 GETGLOB 26
-GETGLOB 28
 GETGLOB 29
+GETGLOB 30
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 0
 
 .macro getDecodedDataExtended
@@ -795,7 +800,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 284
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 286
 LDU 32
 GETGLOB 4
 ROT
@@ -936,7 +941,7 @@ CALLREF {
 THROW 0
 
 .macro getDecodedDataExtended_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 300
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 302
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -952,7 +957,6 @@ GETGLOB 23
 GETGLOB 24
 GETGLOB 25
 GETGLOB 26
-GETGLOB 28
 GETGLOB 29
 GETGLOB 30
 GETGLOB 31
@@ -961,6 +965,8 @@ GETGLOBVAR
 PUSHINT 33
 GETGLOBVAR
 PUSHINT 34
+GETGLOBVAR
+PUSHINT 35
 GETGLOBVAR
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 0
 
@@ -972,26 +978,26 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 319
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 321
 LDU 32
 DROP
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 321
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 323
 DUP
 PUSHINT 833314494
 EQUAL
 GETGLOB 9
-GETGLOB 29
+GETGLOB 30
 SDEQ
 AND
 PUSHCONT {
-	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 327
+	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 329
 	GETGLOB 26
 	GETGLOB 24
 	GETGLOB 23
 	GETGLOB 22
 	GETGLOB 21
 	GETGLOB 20
-	GETGLOB 28
+	GETGLOB 29
 	FALSE
 	NEWC
 	STSLICECONST x6_
@@ -1017,7 +1023,7 @@ PUSHCONT {
 	ENDC
 	PUSHINT 0
 	SENDRAWMSG
-	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 339
+	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 341
 	CALLREF {
 		CALL $_requestMergeRouter_internal_macro$
 	}
@@ -1027,12 +1033,12 @@ PUSHCONT {
 	PUSHINT 275599550
 	EQUAL
 	GETGLOB 9
-	GETGLOB 30
+	GETGLOB 31
 	SDEQ
 	AND
 	PUSHCONT {
-		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 346
-		GETGLOB 28
+		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 348
+		GETGLOB 29
 		FALSE
 		NEWC
 		STSLICECONST x6_
@@ -1042,7 +1048,7 @@ PUSHCONT {
 		STSLICE
 		PUSHSLICE x43b9aca00000000000000000000000000003_
 		STSLICER
-		GETGLOB 29
+		GETGLOB 30
 		NEWC
 		STSLICECONST x2a42d362
 		STSLICE
@@ -1050,8 +1056,8 @@ PUSHCONT {
 		ENDC
 		PUSHINT 0
 		SENDRAWMSG
-		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 351
-		GETGLOB 29
+		.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 353
+		GETGLOB 30
 		GETGLOB 25
 		CALLREF {
 			CALL $_finishSetup_internal_macro$
@@ -1072,14 +1078,14 @@ CALLREF {
 CALL $_finishSetup_internal_macro$
 
 .macro _finishSetup_internal_macro
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 359
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 361
 SWAP
-PUSHINT 33
-SETGLOBVAR
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 360
 PUSHINT 34
 SETGLOBVAR
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 362
+PUSHINT 35
+SETGLOBVAR
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 364
 CALLREF {
 	CALL $loadRelays_internal_macro$
 }
@@ -2489,6 +2495,7 @@ ENDS
 CTOS
 LDMSGADDR
 LDREF
+LDREF
 ENDS
 CTOS
 LDMSGADDR
@@ -2525,10 +2532,10 @@ GETGLOB 6
 GETGLOB 7
 GETGLOB 8
 GETGLOB 9
-PUSHINT 25
+PUSHINT 26
 PUSHINT 10
 BLKSWX
-PUSHINT 35
+PUSHINT 36
 TUPLEVAR
 POP C7
 SETGLOB 2
@@ -2621,9 +2628,15 @@ PUSHCONT {
 	PUSHREFSLICE {
 		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 	}
-	BLKPUSH 7, 0
+	DUP
+	PUSHREF {
+	}
+	PUSHREFSLICE {
+		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
+	BLKPUSH 5, 0
 	PUSHINT 0
-	PUSHINT 35
+	PUSHINT 36
 	TUPLEVAR
 	POP C7
 	PUSHINT 64
@@ -2641,12 +2654,12 @@ IFREFELSE {
 .macro c7_to_c4
 PUSH C7
 FALSE
-PUSHINT 35
-SETINDEXVARQ
 PUSHINT 36
+SETINDEXVARQ
+PUSHINT 37
 UNTUPLEVAR
 DROP
-PUSHINT 35
+PUSHINT 36
 PUSHINT 0
 REVX
 BLKDROP 10
@@ -2661,7 +2674,7 @@ STREF
 STU 32
 STU 16
 STU 16
-PUSHINT 18
+PUSHINT 19
 ROLLREVX
 NEWC
 STSLICE
@@ -2676,18 +2689,18 @@ STU 256
 STU 32
 STREF
 STU 32
-PUSHINT 19
+PUSHINT 20
 ROLLREVX
 NEWC
 STU 256
 STSLICE
-PUSHINT 17
+PUSHINT 18
 ROLLREVX
 NEWC
 STSLICE
 STU 32
 STU 256
-ROLLREV 14
+ROLLREV 15
 NEWC
 STU 160
 STREF
@@ -2695,9 +2708,10 @@ STREF
 STU 8
 STU 128
 STSLICE
-ROLLREV 8
+ROLLREV 9
 NEWC
 STSLICE
+STREF
 ROLLREV 7
 NEWC
 STSLICE
@@ -2843,23 +2857,23 @@ PUSHCONT {
 }
 IFELSE
 PUSH2 S3, S0
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 58
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 59
 LDU 64
 LDU 32
 POP S4
 DROP2
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 59
-PUSH2 S1, S1
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 60
+PUSH2 S1, S1
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 61
 LDU 32
 POP S4
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 62
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 63
 DUP
 CALLREF {
 	CALL $isExternalVoteCall_internal_macro$
 }
 PUSHCONT {
-	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 63
+	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 64
 	PUSHINT 2318
 	GETGLOB 5
 	DUP
@@ -2884,7 +2898,7 @@ PUSHCONT {
 	.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 0
 }
 IF
-.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 66
+.loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 67
 OVER
 BLKDROP2 4, 1
 .loc ../contracts/events/HookedMultiVaultEVMEventAlien.sol, 0
@@ -3055,26 +3069,6 @@ PUSHCONT {
 IF
 THROW 0
 
-.macro hook
-DROP
-ENDS
-CALLREF {
-	CALL $c4_to_c7$
-}
-GETGLOB 27
-OVER
-PUSHCONT {
-	PUSHSLICE xc0000000000000000000000000f258dfc8
-	NEWC
-	STSLICE
-	STSLICE
-	ENDC
-	PUSHINT 0
-	SENDRAWMSG
-}
-IF
-THROW 0
-
 .macro public_function_selector
 DUP
 PUSHINT 1047874239
@@ -3231,7 +3225,7 @@ IFJMPREF {
 		}
 	}
 	DUP
-	PUSHINT 1918427080
+	PUSHINT 1921297053
 	LEQ
 	IFJMPREF {
 		DUP
@@ -3253,22 +3247,16 @@ IFJMPREF {
 			CALL $getDecodedDataExtended$
 		}
 		DUP
-		PUSHINT 1918427080
+		PUSHINT 1921297053
 		EQUAL
 		IFJMPREF {
-			CALL $hook$
+			CALL $relay_round$
 		}
 	}
 	DUP
 	PUSHINT 2131655838
 	LEQ
 	IFJMPREF {
-		DUP
-		PUSHINT 1921297053
-		EQUAL
-		IFJMPREF {
-			CALL $relay_round$
-		}
 		DUP
 		PUSHINT 2039135592
 		EQUAL
