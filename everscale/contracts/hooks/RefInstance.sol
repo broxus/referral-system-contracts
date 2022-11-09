@@ -37,6 +37,13 @@ contract RefInstance {
         tvm.accept();
         parent = parent_;
         
+        // Single-Level
+        // RefFactory(factory).onRefDeploy{
+        //     value: 0,
+        //     flag: MsgFlag.ALL_NOT_RESERVED
+        // }(eventData, [recipient, parent]);
+
+        // Multi-Level
         // Start Parent Chain Query
         if(parent != address(0)) {
             address parentRef = _deriveRef(parent);
