@@ -47,16 +47,74 @@ CALL $setProxy_internal_macro$
 SETGLOB 12
 .loc ../contracts/hooks/RefFactory.sol, 0
 
+.macro encodeAddress
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/hooks/RefFactory.sol, 65
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../contracts/hooks/RefFactory.sol, 0
+CALLREF {
+	CALL $encodeAddress_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHSLICE x00000000000000000000000024e684f36_
+	STSLICER
+	STREF
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro encodeAddress_internal_macro
+.loc ../contracts/hooks/RefFactory.sol, 66
+NEWC
+STSLICE
+ENDC
+.loc ../contracts/hooks/RefFactory.sol, 0
+
 .globl	decodeEventData_internal
 .type	decodeEventData_internal, @function
 CALL $decodeEventData_internal_macro$
 
 .macro decodeEventData_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 65
+.loc ../contracts/hooks/RefFactory.sol, 69
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/hooks/RefFactory.sol, 66
+.loc ../contracts/hooks/RefFactory.sol, 70
 SWAP
 CTOS
 LDU 256
@@ -74,7 +132,7 @@ LDMSGADDR
 LDREF
 ENDS
 BLKDROP2 6, 4
-.loc ../contracts/hooks/RefFactory.sol, 79
+.loc ../contracts/hooks/RefFactory.sol, 83
 SWAP2
 SWAP
 NEWC
@@ -84,7 +142,7 @@ STU 256
 ENDC
 CTOS
 POP S3
-.loc ../contracts/hooks/RefFactory.sol, 80
+.loc ../contracts/hooks/RefFactory.sol, 84
 CTOS
 LDMSGADDR
 ENDS
@@ -100,7 +158,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 83
+.loc ../contracts/hooks/RefFactory.sol, 87
 LDREF
 ENDS
 .loc ../contracts/hooks/RefFactory.sol, 0
@@ -114,9 +172,9 @@ CALLREF {
 THROW 0
 
 .macro onEventCompleted_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 84
+.loc ../contracts/hooks/RefFactory.sol, 88
 ACCEPT
-.loc ../contracts/hooks/RefFactory.sol, 85
+.loc ../contracts/hooks/RefFactory.sol, 89
 PUSHREF {
 	.blob x5065726d697373696f6e2044656e6965642e204d7573742042652050726f7879
 }
@@ -124,7 +182,7 @@ GETGLOB 9
 GETGLOB 12
 SDEQ
 THROWARGIFNOT 401
-.loc ../contracts/hooks/RefFactory.sol, 86
+.loc ../contracts/hooks/RefFactory.sol, 90
 CTOS
 LDU 256
 LDU 32
@@ -147,13 +205,13 @@ ROLLREV 4
 TUPLE 4
 SWAP
 ENDS
-.loc ../contracts/hooks/RefFactory.sol, 87
+.loc ../contracts/hooks/RefFactory.sol, 91
 DUP
 INDEX2 0, 2
 CALLREF {
 	CALL $decodeEventData_internal_macro$
 }
-.loc ../contracts/hooks/RefFactory.sol, 89
+.loc ../contracts/hooks/RefFactory.sol, 93
 ROT
 INDEX2 0, 2
 CALLREF {
@@ -171,7 +229,12 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 92
+.loc ../contracts/hooks/RefFactory.sol, 96
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
 OVER
 PUSHCONT {
 	LDREF
@@ -200,29 +263,65 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST xeff7a94d
+	STSLICECONST x88123a13
 	STSLICE
 	STBREFR
 	ENDC
 	PUSHINT 0
-	SENDRAWMSG
 }
 PUSHCONT {
-	DROP
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	THIRD
+	GETGLOB 9
+	ROLL 3
+	SECOND
+	NEWC
+	PUSHINT 2
+	STZEROES
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 1
+	STUR 106
+	SWAP
+	NEWC
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STSLICE
+	STBREFR
+	ENDC
+	GETGLOB 4
+	INDEX 4
 }
 IFELSE
+SENDRAWMSG
 DROP
 CALLREF {
 	CALL $c7_to_c4$
 }
 THROW 0
 
-.globl	deriveRef_internal
-.type	deriveRef_internal, @function
-CALL $deriveRef_internal_macro$
-
 .macro deriveRef_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 93
+.loc ../contracts/hooks/RefFactory.sol, 97
+CALLREF {
+	CALL $_deriveRef_internal_macro$
+}
+.loc ../contracts/hooks/RefFactory.sol, 0
+
+.globl	_deriveRef_internal
+.type	_deriveRef_internal, @function
+CALL $_deriveRef_internal_macro$
+
+.macro _deriveRef_internal_macro
+.loc ../contracts/hooks/RefFactory.sol, 101
 CALLREF {
 	CALL $_buildRefInitData_internal_macro$
 }
@@ -239,7 +338,7 @@ CTOS
 CALL $deployRef_internal_macro$
 
 .macro deployRef_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 97
+.loc ../contracts/hooks/RefFactory.sol, 105
 XCHG S2
 CALLREF {
 	CALL $_buildRefInitData_internal_macro$
@@ -294,7 +393,7 @@ PUSHINT 0
 SENDRAWMSG
 .loc ../contracts/hooks/RefFactory.sol, 0
 
-.macro createEmptyRef
+.macro deployEmptyRef
 DROP
 GETGLOB 6
 THROWIFNOT 76
@@ -303,16 +402,11 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 105
-LDU 32
-GETGLOB 4
-ROT
-SETINDEXQ 5
-SETGLOB 4
+.loc ../contracts/hooks/RefFactory.sol, 113
 ENDS
 .loc ../contracts/hooks/RefFactory.sol, 0
 CALLREF {
-	CALL $createEmptyRef_internal_macro$
+	CALL $deployEmptyRef_internal_macro$
 }
 OVER
 PUSHCONT {
@@ -329,112 +423,34 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST x9640bd1f
+	STSLICECONST x83648b3e
 	STSLICE
 	STBREFR
 	ENDC
 	PUSHINT 0
+	SENDRAWMSG
 }
 PUSHCONT {
-	GETGLOB 4
-	DUP
-	INDEX 3
-	OVER
-	THIRD
-	GETGLOB 9
-	ROLL 3
-	SECOND
-	NEWC
-	PUSHINT 2
-	STZEROES
-	STI 1
-	PUSHINT 3
-	STZEROES
-	STSLICE
-	SWAP
-	STGRAMS
-	STDICT
-	PUSHINT 1
-	STUR 106
-	SWAP
-	NEWC
-	GETGLOB 4
-	INDEX 5
-	STUR 32
-	STSLICE
-	STBREFR
-	ENDC
-	GETGLOB 4
-	INDEX 4
+	DROP
 }
 IFELSE
-SENDRAWMSG
 DROP
 CALLREF {
 	CALL $c7_to_c4$
 }
 THROW 0
 
-.macro createEmptyRef_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 106
-PUSHREF {
-}
-.loc ../contracts/hooks/RefFactory.sol, 107
+.macro deployEmptyRef_internal_macro
+.loc ../contracts/hooks/RefFactory.sol, 115
+GETGLOB 9
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-GETGLOB 9
-CALLREF {
-	CALL $_buildRefInitData_internal_macro$
+PUSHREF {
 }
-DUP
-HASHCU
-NEWC
-STSLICECONST x801_
-STU 256
-ENDC
-CTOS
-ROLLREV 3
-PUSH S3
-NEWC
-STSLICECONST x62_
-STSLICE
-PUSHSLICE x0000000000000000000000000007_
-STSLICER
-OVER
 CALLREF {
-	CTOS
-	LDI 1
-	SWAP
-	PUSHCONT {
-		LDI 5
-		NIP
-	}
-	IF
-	LDI 1
-	SWAP
-	PUSHCONT {
-		LDI 2
-		NIP
-	}
-	IF
-	LDOPTREF
-	LDOPTREF
-	LDDICT
-	ENDS
-	BLKDROP 3
+	CALL $deployRef_internal_macro$
 }
-STREF
-STSLICECONST 1
-ROTREV
-NEWC
-STSLICECONST x27b2cd1d
-STSLICE
-STREF
-STBREFR
-ENDC
-PUSHINT 128
-SENDRAWMSG
 .loc ../contracts/hooks/RefFactory.sol, 0
 
 .globl	_buildRefInitData_internal
@@ -442,7 +458,7 @@ SENDRAWMSG
 CALL $_buildRefInitData_internal_macro$
 
 .macro _buildRefInitData_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 115
+.loc ../contracts/hooks/RefFactory.sol, 119
 PUSHINT 0
 NEWC
 STU 256
@@ -481,7 +497,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 126
+.loc ../contracts/hooks/RefFactory.sol, 130
 LDREF
 LDU 32
 LDDICT
@@ -500,27 +516,30 @@ CALLREF {
 THROW 0
 
 .macro onRefDeploy_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 127
+.loc ../contracts/hooks/RefFactory.sol, 131
 ACCEPT
-.loc ../contracts/hooks/RefFactory.sol, 128
-PUSHINT 0
+.loc ../contracts/hooks/RefFactory.sol, 132
+DUP
+FIRST
+DEC
+UFITS 256
 OVER
 SECOND
 PUSHINT 32
 DICTUGET
 THROWIFNOT 50
-.loc ../contracts/hooks/RefFactory.sol, 129
+.loc ../contracts/hooks/RefFactory.sol, 133
 PUSHREF {
 	.blob x5065726d697373696f6e2044656e6965642e204d75737420426520526566
 }
 GETGLOB 9
 ROT
 CALLREF {
-	CALL $deriveRef_internal_macro$
+	CALL $_deriveRef_internal_macro$
 }
 SDEQ
 THROWARGIFNOT 401
-.loc ../contracts/hooks/RefFactory.sol, 131
+.loc ../contracts/hooks/RefFactory.sol, 135
 CALLREF {
 	CALL $runRewards_internal_macro$
 }
@@ -531,7 +550,7 @@ CALLREF {
 CALL $runRewards_internal_macro$
 
 .macro runRewards_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 136
+.loc ../contracts/hooks/RefFactory.sol, 140
 DUP
 ROT
 PUSHSLICE xc0000000000000000000000000720756fd
@@ -546,11 +565,11 @@ STDICT
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/hooks/RefFactory.sol, 137
+.loc ../contracts/hooks/RefFactory.sol, 141
 GETGLOB 14
 INC
 SETGLOB 14
-.loc ../contracts/hooks/RefFactory.sol, 138
+.loc ../contracts/hooks/RefFactory.sol, 142
 SETGLOB 15
 .loc ../contracts/hooks/RefFactory.sol, 0
 
@@ -1028,9 +1047,21 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 995308319
+PUSHINT 328864717
 LEQ
 IFJMPREF {
+	DUP
+	PUSHINT 56920894
+	EQUAL
+	IFJMPREF {
+		CALL $deployEmptyRef$
+	}
+	DUP
+	PUSHINT 135412243
+	EQUAL
+	IFJMPREF {
+		CALL $deriveRef$
+	}
 	DUP
 	PUSHINT 235197086
 	EQUAL
@@ -1038,11 +1069,16 @@ IFJMPREF {
 		CALL $transferOwnership$
 	}
 	DUP
-	PUSHINT 373341471
+	PUSHINT 328864717
 	EQUAL
 	IFJMPREF {
-		CALL $createEmptyRef$
+		CALL $encodeAddress$
 	}
+}
+DUP
+PUSHINT 1204164566
+LEQ
+IFJMPREF {
 	DUP
 	PUSHINT 666029341
 	EQUAL
@@ -1055,11 +1091,6 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $_randomNonce$
 	}
-}
-DUP
-PUSHINT 1594609630
-LEQ
-IFJMPREF {
 	DUP
 	PUSHINT 1125482270
 	EQUAL
@@ -1072,6 +1103,11 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $onRefDeploy$
 	}
+}
+DUP
+PUSHINT 1852666078
+LEQ
+IFJMPREF {
 	DUP
 	PUSHINT 1308553177
 	EQUAL
@@ -1084,11 +1120,6 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $owner$
 	}
-}
-DUP
-PUSHINT 2030210511
-LEQ
-IFJMPREF {
 	DUP
 	PUSHINT 1729444094
 	EQUAL
@@ -1101,17 +1132,11 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $DEBUG_RECV_COUNT$
 	}
-	DUP
-	PUSHINT 1878501709
-	EQUAL
-	IFJMPREF {
-		CALL $deriveRef$
-	}
-	DUP
-	PUSHINT 2030210511
-	EQUAL
-	IFJMPREF {
-		CALL $proxy$
-	}
+}
+DUP
+PUSHINT 2030210511
+EQUAL
+IFJMPREF {
+	CALL $proxy$
 }
 

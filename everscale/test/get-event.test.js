@@ -1,6 +1,6 @@
 // @ts-check
 const { expect } = require('chai');
-const { locklift, afterRun, deployTestHook, logContract, deployRefFactory } = require('./utils')
+const { locklift, afterRun, deployTestHook, logContract, deployRefFactory, deployEmptyRef, encodeAddress, deployAccount, deriveRef } = require('./utils')
 const logger = require('mocha-logger')
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
@@ -25,6 +25,8 @@ describe('Deposit Alien token from EVM to Everscale with no merging', async func
     let eventVoteData;
     let eventContract;
     let refFactory;
+    let parentRef;
+    let parent;
 
     const alienTokenBase = {
         chainId: 111,
@@ -85,10 +87,22 @@ describe('Deposit Alien token from EVM to Everscale with no merging', async func
     });
     it('Set RefFactory', async () => {
         refFactory = await deployRefFactory(proxy)
-        logContract((refFactory));
+        logContract(refFactory);
 
         expect(await refFactory.call({ method: 'proxy' }))
             .to.be.equal(proxy.address, 'Wrong proxy in ref factory')
+    })
+
+    it('Set Ref Parent', async () => {
+        let [,keyPair] = await locklift.keys.getKeyPairs();
+
+          // Deploy parent account
+        parent = await deployAccount(keyPair, 30)
+        console.log(parent.address)
+
+        await deployEmptyRef(parent, refFactory);
+        parentRef = await deriveRef(refFactory, parent.address)
+        logContract(parentRef)
     })
 
     it('Initialize event', async () => {
@@ -100,7 +114,8 @@ describe('Deposit Alien token from EVM to Everscale with no merging', async func
             recipient_wid: initializer.address.split(':')[0],
             recipient_addr: `0x${initializer.address.split(':')[1]}`,
             hook: refFactory.address,
-            hookPayload: "te6ccgEBAQEAJAAAQ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=" // Zero Address
+            hookPayload: await encodeAddress(refFactory, parent.address)
+            // hookPayload: "te6ccgEBAQEAJAAAQ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=" // Zero Address
         };
 
         eventDataEncoded = await cellEncoder.call({
@@ -412,10 +427,12 @@ describe('Deposit Alien token from EVM to Everscale with no merging', async func
             })
 
             expect(receieved)
-                .to.be.bignumber.greaterThan(0, 'RefFactory did not receive Event')
+                .to.be.bignumber.greaterThan(1, 'RefFactory did not receive Event')
 
             expect(parents[0])
                 .to.be.equals(initializer.address)
+            expect(parents[1])
+                .to.be.equals(parent.address)
         })
     });
 });

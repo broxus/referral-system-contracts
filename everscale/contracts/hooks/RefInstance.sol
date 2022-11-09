@@ -37,14 +37,19 @@ contract RefInstance {
         tvm.accept();
         parent = parent_;
         
-        // Single-Chain
-        RefFactory(factory).onRefDeploy(eventData, [recipient, parent]);
-
         // Start Parent Chain Query
-        // if(parent != address(0)) {
-        //     address parentRef = _deriveRef(parent);
-        //     RefInstance(parentRef).getParents(eventData, [recipient]);
-        // }
+        if(parent != address(0)) {
+            address parentRef = _deriveRef(parent);
+            RefInstance(parentRef).getParents{
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED
+            }(eventData, [recipient]);
+        } else {
+            RefFactory(factory).onRefDeploy{
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED
+            }(eventData, [recipient]);
+        }
     }
 
     function _deriveRef(address target) internal returns (address) {
@@ -70,9 +75,15 @@ contract RefInstance {
 
         if(parent != address(0)) {
             address parentRef = _deriveRef(parent);
-            RefInstance(parentRef).getParents(eventData, parents);
+            RefInstance(parentRef).getParents{
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED
+            }(eventData, parents);
         } else {
-            RefFactory(factory).onRefDeploy(eventData, parents);
+            RefFactory(factory).onRefDeploy{
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED
+            }(eventData, parents);
         }
     }
 

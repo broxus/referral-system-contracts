@@ -13,6 +13,15 @@
 			]
 		},
 		{
+			"name": "encodeAddress",
+			"inputs": [
+				{"name":"target","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
 			"name": "onEventCompleted",
 			"inputs": [
 				{"name":"payload","type":"cell"}
@@ -23,6 +32,7 @@
 		{
 			"name": "deriveRef",
 			"inputs": [
+				{"name":"answerId","type":"uint32"},
 				{"name":"recipient","type":"address"}
 			],
 			"outputs": [
@@ -30,9 +40,8 @@
 			]
 		},
 		{
-			"name": "createEmptyRef",
+			"name": "deployEmptyRef",
 			"inputs": [
-				{"name":"answerId","type":"uint32"}
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}

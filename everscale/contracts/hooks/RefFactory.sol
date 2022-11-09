@@ -62,6 +62,10 @@ contract RefFactory is
         proxy = proxy_;
     }
 
+    function encodeAddress(address target) external returns (TvmCell) {
+        return abi.encode(target);
+    }
+
     function decodeEventData(TvmCell eventData) internal returns (address recipient, address parent) {
         (
             uint256 base_chainId,
@@ -89,26 +93,26 @@ contract RefFactory is
         deployRef(recipient, parent, initData.voteData.eventData);
     }
 
-    function deriveRef(address recipient) public returns (address) {
+    function deriveRef(address recipient) external responsible returns (address) {
+       return _deriveRef(recipient);
+    }
+
+    function _deriveRef(address recipient) internal returns (address) {
        return address(tvm.hash(_buildRefInitData(recipient)));
     }
 
-    function deployRef(address recipient, address parentRef, TvmCell eventData) internal returns (address) {
+    function deployRef(address recipient, address parent, TvmCell eventData) internal returns (address) {
         return new RefInstance {
             stateInit: _buildRefInitData(recipient),
             value: 3 ton,
             flag: 0
             // flag: MsgFlag.ALL_NOT_RESERVED
-        }(parentRef, eventData);
+        }(parent, eventData);
     }
 
-    function createEmptyRef() responsible external returns (address) {
+    function deployEmptyRef() external returns (address) {
         TvmCell empty;
-        return new RefInstance {
-            stateInit: _buildRefInitData(msg.sender),
-            value: 0,
-            flag: MsgFlag.ALL_NOT_RESERVED
-        }(address(0), empty);
+        return deployRef(msg.sender, address(0), empty);
     }
 
     function _buildRefInitData(address recipient) internal returns (TvmCell) {
@@ -125,8 +129,8 @@ contract RefFactory is
 
     function onRefDeploy(TvmCell eventData, address[] parents) external {
         tvm.accept();
-        address origin = parents[0];
-        require(msg.sender == deriveRef(origin), 401, "Permission Denied. Must Be Ref");
+        address origin = parents[parents.length -1];
+        require(msg.sender == _deriveRef(origin), 401, "Permission Denied. Must Be Ref");
         
         runRewards(eventData, parents);
     }
