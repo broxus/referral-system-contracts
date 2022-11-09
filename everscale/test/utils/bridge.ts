@@ -25,6 +25,32 @@ export async function deployTestHook(): Promise<Contract> {
     
     return testHook;
 }
+
+export async function deployRefFactory(proxy: Contract): Promise<Contract> {
+    const RefFactory = await locklift.factory.getContract('RefFactory');
+    const RefInstance = await locklift.factory.getContract('RefInstance');
+    const [keyPair] = await locklift.keys.getKeyPairs();
+    const _randomNonce = locklift.utils.getRandomNonce();
+
+    const refFactory = await locklift.giver.deployContract({
+        contract: RefFactory,
+        constructorParams: {
+            proxy_: proxy.address,
+            refCode_: RefInstance.code
+        },
+        initParams: {
+            _randomNonce
+        },
+        keyPair
+    }, locklift.utils.convertCrystal(10, 'nano'))
+
+    refFactory.setKeyPair(keyPair);
+    refFactory.afterRun = afterRun;
+    refFactory.name = 'RefFactory';
+
+    return refFactory;
+}
+
 export async function setupBridge(relays: KeyPair[]): Promise<[Contract, Account, Contract, Contract]> {
     const Account = await locklift.factory.getAccount('Wallet');
     const [keyPair] = await locklift.keys.getKeyPairs();

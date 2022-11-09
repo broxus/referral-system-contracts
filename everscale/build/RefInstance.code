@@ -28,53 +28,38 @@ SWAP
 DUP
 SETGLOB 12
 .loc ../contracts/hooks/RefInstance.sol, 41
-PUSHREFSLICE {
-	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-}
-SDEQ
+GETGLOB 11
+PUSHINT 0
+NEWDICT
+PUSHINT 2
 PUSHCONT {
-	.loc ../contracts/hooks/RefInstance.sol, 42
-	GETGLOB 12
-	CALLREF {
-		CALL $_deriveRef_internal_macro$
-	}
-	.loc ../contracts/hooks/RefInstance.sol, 43
-	GETGLOB 11
-	PUSHINT 0
-	NEWDICT
-	PUSHINT 1
-	PUSHCONT {
-		ROT
-		PUSH S2
-		INC
-		XCHG S3
-		ROT
-		PUSHINT 32
-		DICTUSET
-	}
-	REPEAT
-	PAIR
-	PUSH S2
 	ROT
-	NEWC
-	STSLICECONST x62_
-	STSLICE
-	PUSHSLICE x39896800000000000000000000000000002de452ff_
-	STSLICER
-	STREF
-	SWAP
-	UNPAIR
-	XCHG S2
-	STU 32
-	STDICT
-	ENDC
-	PUSHINT 0
-	SENDRAWMSG
-	.loc ../contracts/hooks/RefInstance.sol, 0
+	PUSH S2
+	INC
+	XCHG S3
+	ROT
+	PUSHINT 32
+	DICTUSET
 }
-IFNOT
+REPEAT
+PAIR
+SWAP
+GETGLOB 10
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHSLICE x39896800000000000000000000000000008f8c2fad_
+STSLICER
+STREF
+SWAP
+UNPAIR
+XCHG S2
+STU 32
+STDICT
+ENDC
+PUSHINT 0
+SENDRAWMSG
 .loc ../contracts/hooks/RefInstance.sol, 0
-DROP
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -85,7 +70,7 @@ THROW 0
 CALL $_deriveRef_internal_macro$
 
 .macro _deriveRef_internal_macro
-.loc ../contracts/hooks/RefInstance.sol, 48
+.loc ../contracts/hooks/RefInstance.sol, 51
 CALLREF {
 	CALL $_buildRefInitData_internal_macro$
 }
@@ -102,7 +87,7 @@ CTOS
 CALL $_buildRefInitData_internal_macro$
 
 .macro _buildRefInitData_internal_macro
-.loc ../contracts/hooks/RefInstance.sol, 52
+.loc ../contracts/hooks/RefInstance.sol, 55
 PUSHINT 0
 NEWC
 STU 256
@@ -152,7 +137,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefInstance.sol, 63
+.loc ../contracts/hooks/RefInstance.sol, 66
 LDREF
 LDU 32
 LDDICT
@@ -171,9 +156,9 @@ CALLREF {
 THROW 0
 
 .macro getParents_internal_macro
-.loc ../contracts/hooks/RefInstance.sol, 64
+.loc ../contracts/hooks/RefInstance.sol, 67
 ACCEPT
-.loc ../contracts/hooks/RefInstance.sol, 65
+.loc ../contracts/hooks/RefInstance.sol, 68
 PUSHREF {
 	.blob x5065726d697373696f6e2044656e6965642e204d75737420426520526566
 }
@@ -192,7 +177,7 @@ CALLREF {
 }
 SDEQ
 THROWARGIFNOT 401
-.loc ../contracts/hooks/RefInstance.sol, 66
+.loc ../contracts/hooks/RefInstance.sol, 69
 GETGLOB 11
 SWAP
 UNPAIR
@@ -202,14 +187,14 @@ ROLLREV 3
 PUSHINT 32
 DICTUSET
 PAIR
-.loc ../contracts/hooks/RefInstance.sol, 68
+.loc ../contracts/hooks/RefInstance.sol, 71
 GETGLOB 12
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
 SDEQ
 PUSHCONT {
-	.loc ../contracts/hooks/RefInstance.sol, 72
+	.loc ../contracts/hooks/RefInstance.sol, 75
 	PUSH2 S0, S1
 	GETGLOB 10
 	NEWC
@@ -218,12 +203,12 @@ PUSHCONT {
 	PUSHSLICE x39896800000000000000000000000000008f8c2fad_
 }
 PUSHCONT {
-	.loc ../contracts/hooks/RefInstance.sol, 69
+	.loc ../contracts/hooks/RefInstance.sol, 72
 	GETGLOB 12
 	CALLREF {
 		CALL $_deriveRef_internal_macro$
 	}
-	.loc ../contracts/hooks/RefInstance.sol, 70
+	.loc ../contracts/hooks/RefInstance.sol, 73
 	PUSH2 S1, S2
 	ROT
 	NEWC

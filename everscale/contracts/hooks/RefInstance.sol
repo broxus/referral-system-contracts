@@ -36,12 +36,15 @@ contract RefInstance {
     constructor(address parent_, TvmCell eventData) public {
         tvm.accept();
         parent = parent_;
+        
+        // Single-Chain
+        RefFactory(factory).onRefDeploy(eventData, [recipient, parent]);
 
         // Start Parent Chain Query
-        if(parent != address(0)) {
-            address parentRef = _deriveRef(parent);
-            RefInstance(parentRef).getParents(eventData, [recipient]);
-        }
+        // if(parent != address(0)) {
+        //     address parentRef = _deriveRef(parent);
+        //     RefInstance(parentRef).getParents(eventData, [recipient]);
+        // }
     }
 
     function _deriveRef(address target) internal returns (address) {

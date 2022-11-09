@@ -33,11 +33,15 @@ contract RefFactory is
     InternalOwner,
     RandomNonce
 {
-    address proxy;
+    address public proxy;
     TvmCell refCode;
 
+    uint public DEBUG_RECV_COUNT;
+    address[] public DEBUG_RECV_PARENTS;
+
+    event DEBUG(TvmCell eventData, address[] parents);
+
     constructor(
-        address owner_,
         address proxy_,
         TvmCell refCode_
     ) public {
@@ -45,15 +49,14 @@ contract RefFactory is
 
         refCode = refCode_;
         setProxy(proxy_);
-        setOwnership(owner_);
+        setOwnership(msg.sender);
 
-        owner_.transfer({
-            value: 0,
-            bounce: false,
-            flag: MsgFlag.ALL_NOT_RESERVED
-        });
+        // owner.transfer({
+        //     value: 0,
+        //     bounce: false,
+        //     flag: MsgFlag.ALL_NOT_RESERVED
+        // });
     }
-
 
     function setProxy(address proxy_) internal virtual {
         proxy = proxy_;
@@ -78,10 +81,11 @@ contract RefFactory is
     }
 
     function onEventCompleted(TvmCell payload) external override {
+        tvm.accept();
         require(msg.sender == proxy, 401, "Permission Denied. Must Be Proxy");
         IEthereumEvent.EthereumEventInitData initData = abi.decode(payload, IEthereumEvent.EthereumEventInitData);
         (address recipient, address parent) = decodeEventData(initData.voteData.eventData);
-
+        
         deployRef(recipient, parent, initData.voteData.eventData);
     }
 
@@ -89,12 +93,13 @@ contract RefFactory is
        return address(tvm.hash(_buildRefInitData(recipient)));
     }
 
-    function deployRef(address recipient, address parent, TvmCell eventData) internal returns (address) {
+    function deployRef(address recipient, address parentRef, TvmCell eventData) internal returns (address) {
         return new RefInstance {
             stateInit: _buildRefInitData(recipient),
-            value: 0,
-            flag: MsgFlag.ALL_NOT_RESERVED
-        }(parent, eventData);
+            value: 3 ton,
+            flag: 0
+            // flag: MsgFlag.ALL_NOT_RESERVED
+        }(parentRef, eventData);
     }
 
     function createEmptyRef() responsible external returns (address) {
@@ -119,12 +124,18 @@ contract RefFactory is
     }
 
     function onRefDeploy(TvmCell eventData, address[] parents) external {
-        require(msg.sender == deriveRef(parents[0]), 401, "Permission Denied. Must Be Ref");
+        tvm.accept();
+        address origin = parents[0];
+        require(msg.sender == deriveRef(origin), 401, "Permission Denied. Must Be Ref");
+        
         runRewards(eventData, parents);
     }
 
     function runRewards(TvmCell eventData, address[] parents) internal virtual {
         // TODO
+        emit DEBUG(eventData, parents);
+        DEBUG_RECV_COUNT += 1;
+        DEBUG_RECV_PARENTS = parents;
     }
 
 }

@@ -6,7 +6,6 @@
 		{
 			"name": "constructor",
 			"inputs": [
-				{"name":"owner_","type":"address"},
 				{"name":"proxy_","type":"address"},
 				{"name":"refCode_","type":"cell"}
 			],
@@ -78,12 +77,45 @@
 			"outputs": [
 				{"name":"_randomNonce","type":"uint256"}
 			]
+		},
+		{
+			"name": "proxy",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"proxy","type":"address"}
+			]
+		},
+		{
+			"name": "DEBUG_RECV_COUNT",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"DEBUG_RECV_COUNT","type":"uint256"}
+			]
+		},
+		{
+			"name": "DEBUG_RECV_PARENTS",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"DEBUG_RECV_PARENTS","type":"address[]"}
+			]
 		}
 	],
 	"data": [
 		{"key":1,"name":"_randomNonce","type":"uint256"}
 	],
 	"events": [
+		{
+			"name": "DEBUG",
+			"inputs": [
+				{"name":"eventData","type":"cell"},
+				{"name":"parents","type":"address[]"}
+			],
+			"outputs": [
+			]
+		},
 		{
 			"name": "OwnershipTransferred",
 			"inputs": [
@@ -101,6 +133,8 @@
 		{"name":"owner","type":"address"},
 		{"name":"_randomNonce","type":"uint256"},
 		{"name":"proxy","type":"address"},
-		{"name":"refCode","type":"cell"}
+		{"name":"refCode","type":"cell"},
+		{"name":"DEBUG_RECV_COUNT","type":"uint256"},
+		{"name":"DEBUG_RECV_PARENTS","type":"address[]"}
 	]
 }

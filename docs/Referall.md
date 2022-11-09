@@ -1,5 +1,7 @@
-# Referall Hook
-One-Layer Referall on top of MultiToken Bridge 
+# Referall Hooks
+
+## Single-Layer Referall
+Provides a signle referall (only one person gets reward) on top of MultiToken Bridge 
 
 ![RefChart](RefChart.drawio.png)
 
@@ -18,3 +20,6 @@ One-Layer Referall on top of MultiToken Bridge
 * Based on Event Data, RefFactory sends reward to Bob's Wallet
 
 
+## Multi-Layer Referall
+Multi-Layer Referall (extension of Single-Layer) (multiple people can get reward)
+![RefChart](RefFactory.drawio.png)
