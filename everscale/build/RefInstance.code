@@ -28,64 +28,27 @@ SWAP
 DUP
 SETGLOB 12
 .loc ../contracts/hooks/RefInstance.sol, 41
-PUSHREFSLICE {
-	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-}
-SDEQ
+GETGLOB 11
+PUSHINT 0
+NEWDICT
+PUSHINT 2
 PUSHCONT {
-	.loc ../contracts/hooks/RefInstance.sol, 48
-	GETGLOB 11
-	PUSHINT 0
-	NEWDICT
-	PUSHINT 1
-	PUSHCONT {
-		ROT
-		PUSH S2
-		INC
-		XCHG S3
-		ROT
-		PUSHINT 32
-		DICTUSET
-	}
-	REPEAT
-	PAIR
-	OVER
-	GETGLOB 10
-	NEWC
-	STSLICECONST x62_
-	STSLICE
-	PUSHSLICE x00000000000000000000000000008f8c2fad_
-}
-PUSHCONT {
-	.loc ../contracts/hooks/RefInstance.sol, 42
-	GETGLOB 12
-	CALLREF {
-		CALL $_deriveRef_internal_macro$
-	}
-	.loc ../contracts/hooks/RefInstance.sol, 43
-	GETGLOB 11
-	PUSHINT 0
-	NEWDICT
-	PUSHINT 1
-	PUSHCONT {
-		ROT
-		PUSH S2
-		INC
-		XCHG S3
-		ROT
-		PUSHINT 32
-		DICTUSET
-	}
-	REPEAT
-	PAIR
-	PUSH S2
 	ROT
-	NEWC
-	STSLICECONST x62_
-	STSLICE
-	PUSHSLICE x00000000000000000000000000002de452ff_
+	PUSH S2
+	INC
+	XCHG S3
+	ROT
+	PUSHINT 32
+	DICTUSET
 }
-IFELSE
+REPEAT
+PAIR
+SWAP
+GETGLOB 10
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHSLICE x00000000000000000000000000008f8c2fad_
 STSLICER
 STREF
 SWAP
@@ -97,18 +60,59 @@ ENDC
 PUSHINT 128
 SENDRAWMSG
 .loc ../contracts/hooks/RefInstance.sol, 0
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro setLatestParent
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/hooks/RefInstance.sol, 62
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../contracts/hooks/RefInstance.sol, 0
+CALLREF {
+	CALL $setLatestParent_internal_macro$
+}
 DROP
 CALLREF {
 	CALL $c7_to_c4$
 }
 THROW 0
 
+.macro setLatestParent_internal_macro
+.loc ../contracts/hooks/RefInstance.sol, 63
+PUSHREF {
+	.blob x4d7573742062652052656653797374656d
+}
+GETGLOB 9
+GETGLOB 10
+SDEQ
+THROWARGIFNOT 401
+.loc ../contracts/hooks/RefInstance.sol, 64
+SETGLOB 12
+.loc ../contracts/hooks/RefInstance.sol, 0
+
 .globl	_deriveRef_internal
 .type	_deriveRef_internal, @function
 CALL $_deriveRef_internal_macro$
 
 .macro _deriveRef_internal_macro
-.loc ../contracts/hooks/RefInstance.sol, 56
+.loc ../contracts/hooks/RefInstance.sol, 68
 CALLREF {
 	CALL $_buildRefInitData_internal_macro$
 }
@@ -125,7 +129,7 @@ CTOS
 CALL $_buildRefInitData_internal_macro$
 
 .macro _buildRefInitData_internal_macro
-.loc ../contracts/hooks/RefInstance.sol, 60
+.loc ../contracts/hooks/RefInstance.sol, 72
 PUSHINT 0
 NEWC
 STU 256
@@ -165,108 +169,6 @@ STOPTREF
 STZERO
 ENDC
 .loc ../contracts/hooks/RefInstance.sol, 0
-
-.macro getParents
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../contracts/hooks/RefInstance.sol, 71
-LDREF
-LDU 32
-LDDICT
-ROTREV
-PAIR
-SWAP
-ENDS
-.loc ../contracts/hooks/RefInstance.sol, 0
-CALLREF {
-	CALL $getParents_internal_macro$
-}
-DROP
-CALLREF {
-	CALL $c7_to_c4$
-}
-THROW 0
-
-.macro getParents_internal_macro
-.loc ../contracts/hooks/RefInstance.sol, 72
-ACCEPT
-.loc ../contracts/hooks/RefInstance.sol, 73
-PUSHREF {
-	.blob x5065726d697373696f6e2044656e6965642e204d75737420426520526566
-}
-GETGLOB 9
-PUSH S2
-FIRST
-DEC
-UFITS 256
-PUSH S3
-SECOND
-PUSHINT 32
-DICTUGET
-THROWIFNOT 50
-CALLREF {
-	CALL $_deriveRef_internal_macro$
-}
-SDEQ
-THROWARGIFNOT 401
-.loc ../contracts/hooks/RefInstance.sol, 74
-GETGLOB 11
-SWAP
-UNPAIR
-OVER
-INC
-ROLLREV 3
-PUSHINT 32
-DICTUSET
-PAIR
-.loc ../contracts/hooks/RefInstance.sol, 76
-GETGLOB 12
-PUSHREFSLICE {
-	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-}
-SDEQ
-PUSHCONT {
-	.loc ../contracts/hooks/RefInstance.sol, 83
-	PUSH2 S0, S1
-	GETGLOB 10
-	NEWC
-	STSLICECONST x62_
-	STSLICE
-	PUSHSLICE x00000000000000000000000000008f8c2fad_
-}
-PUSHCONT {
-	.loc ../contracts/hooks/RefInstance.sol, 77
-	GETGLOB 12
-	CALLREF {
-		CALL $_deriveRef_internal_macro$
-	}
-	.loc ../contracts/hooks/RefInstance.sol, 78
-	PUSH2 S1, S2
-	ROT
-	NEWC
-	STSLICECONST x62_
-	STSLICE
-	PUSHSLICE x00000000000000000000000000002de452ff_
-}
-IFELSE
-STSLICER
-STREF
-SWAP
-UNPAIR
-XCHG S2
-STU 32
-STDICT
-ENDC
-PUSHINT 128
-SENDRAWMSG
-.loc ../contracts/hooks/RefInstance.sol, 0
-DROP2
 
 .macro c4_to_c7
 PUSHROOT
@@ -470,12 +372,38 @@ CALLREF {
 }
 THROW 60
 
+.macro parent
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 12
+OVER
+PUSHCONT {
+	PUSHSLICE xc00000000000000000000000008d8f2ca0
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+THROW 0
+
 .macro public_function_selector
 DUP
-PUSHINT 384969087
+PUSHINT 227486880
 EQUAL
 IFJMPREF {
-	CALL $getParents$
+	CALL $parent$
+}
+DUP
+PUSHINT 474333539
+EQUAL
+IFJMPREF {
+	CALL $setLatestParent$
 }
 DUP
 PUSHINT 666029341

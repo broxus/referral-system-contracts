@@ -27,28 +27,37 @@ import "../interfaces/IProxyHook.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 
 import "./RefInstance.sol";
+import "../interfaces/IRefSystem.sol";
 
-contract RefFactory is
-    IProxyHook,
+
+contract RefSystem is
+    IRefSystem,
     InternalOwner,
     RandomNonce
 {
-    address public proxy;
-    TvmCell refCode;
+    address public _proxy;
+    TvmCell _refCode;
 
-    uint public DEBUG_RECV_COUNT;
+    uint128 public _approvalFee;
+    uint128 public _approvalFeeDigits;
+
+    uint256 public DEBUG_RECV_COUNT;
     address[] public DEBUG_RECV_PARENTS;
 
     event DEBUG(TvmCell eventData, address[] parents);
 
     constructor(
-        address proxy_,
-        TvmCell refCode_
+        uint128 approvalFee,
+        uint128 approvalFeeDigits,
+        TvmCell refCode
     ) public {
         tvm.accept();
+        require(approvalFee < approvalFeeDigits, 500);
 
-        refCode = refCode_;
-        setProxy(proxy_);
+        _approvalFee = approvalFee;
+        _approvalFeeDigits = approvalFeeDigits;
+
+        _refCode = refCode;
         setOwnership(msg.sender);
 
         // owner.transfer({
@@ -58,39 +67,17 @@ contract RefFactory is
         // });
     }
 
-    function setProxy(address proxy_) internal virtual {
-        proxy = proxy_;
+    /// TODO
+    function onCheck(TvmCell payload) virtual internal returns (bool, TvmCell) {
+        return (true, payload);
     }
 
-    function encodeAddress(address target) external returns (TvmCell) {
-        return abi.encode(target);
-    }
-
-    function decodeEventData(TvmCell eventData) internal returns (address recipient, address parent) {
-        (
-            uint256 base_chainId,
-            uint160 base_token,
-            string name,
-            string symbol,
-            uint8 decimals,
-            uint128 amount,
-            int8 recipient_wid,
-            uint256 recipient_addr,
-            address hook,
-            TvmCell hookPayload
-        ) = abi.decode(eventData, (uint256, uint160, string, string, uint8, uint128, int8, uint256, address, TvmCell));
-        
-        recipient = address.makeAddrStd(recipient_wid, recipient_addr);
-        parent = abi.decode(hookPayload, address);
-    }
-
-    function onEventCompleted(TvmCell payload) external override {
-        tvm.accept();
-        require(msg.sender == proxy, 401, "Permission Denied. Must Be Proxy");
-        IEthereumEvent.EthereumEventInitData initData = abi.decode(payload, IEthereumEvent.EthereumEventInitData);
-        (address recipient, address parent) = decodeEventData(initData.voteData.eventData);
-        
-        deployRef(recipient, parent, initData.voteData.eventData);
+    function requestApproval(TvmCell payload) external responsible override returns (TvmCell) {
+        // Take Fee
+        uint128 refFee = msg.value*_approvalFee/_approvalFeeDigits;
+        tvm.rawReserve(refFee, 4);
+        // TODO
+        return payload;
     }
 
     function deriveRef(address recipient) external responsible returns (address) {
@@ -123,7 +110,7 @@ contract RefFactory is
                 factory: address(this)
             },
             pubkey: 0,
-            code: refCode
+            code: _refCode
         });
     }
 

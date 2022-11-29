@@ -25,38 +25,43 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
 import "../interfaces/IProxyHook.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
-import "./RefFactory.sol";
+import "./RefSystem.sol";
 
 contract RefInstance {
 
     address static factory;
     address static recipient;
-    address parent;
+    address public parent;
 
     constructor(address parent_, TvmCell eventData) public {
         tvm.accept();
         parent = parent_;
         
         // Single-Level
-        // RefFactory(factory).onRefDeploy{
-        //     value: 0,
-        //     flag: MsgFlag.ALL_NOT_RESERVED
-        // }(eventData, [recipient, parent]);
+        RefSystem(factory).onRefDeploy{
+            value: 0,
+            flag: MsgFlag.ALL_NOT_RESERVED
+        }(eventData, [recipient, parent]);
 
-        // Multi-Level
-        // Start Parent Chain Query
-        if(parent != address(0)) {
-            address parentRef = _deriveRef(parent);
-            RefInstance(parentRef).getParents{
-                value: 0,
-                flag: MsgFlag.ALL_NOT_RESERVED
-            }(eventData, [recipient]);
-        } else {
-            RefFactory(factory).onRefDeploy{
-                value: 0,
-                flag: MsgFlag.ALL_NOT_RESERVED
-            }(eventData, [recipient]);
-        }
+        // // Multi-Level
+        // // Start Parent Chain Query
+        // if(parent != address(0)) {
+        //     address parentRef = _deriveRef(parent);
+        //     RefInstance(parentRef).getParents{
+        //         value: 0,
+        //         flag: MsgFlag.ALL_NOT_RESERVED
+        //     }(eventData, [recipient]);
+        // } else {
+        //     RefSystem(factory).onRefDeploy{
+        //         value: 0,
+        //         flag: MsgFlag.ALL_NOT_RESERVED
+        //     }(eventData, [recipient]);
+        // }
+    }
+
+    function setLatestParent(address parent_) external {
+        require(msg.sender == factory, 401, "Must be RefSystem");
+        parent = parent_;
     }
 
     function _deriveRef(address target) internal returns (address) {
@@ -75,23 +80,23 @@ contract RefInstance {
         });
     }
 
-    function getParents(TvmCell eventData, address[] parents) external {
-        tvm.accept();
-        require(msg.sender == _deriveRef(parents[parents.length -1]), 401, 'Permission Denied. Must Be Ref');
-        parents.push(recipient);
+    // function getParents(TvmCell eventData, address[] parents) external {
+    //     tvm.accept();
+    //     require(msg.sender == _deriveRef(parents[parents.length -1]), 401, 'Permission Denied. Must Be Ref');
+    //     parents.push(recipient);
 
-        if(parent != address(0)) {
-            address parentRef = _deriveRef(parent);
-            RefInstance(parentRef).getParents{
-                value: 0,
-                flag: MsgFlag.ALL_NOT_RESERVED
-            }(eventData, parents);
-        } else {
-            RefFactory(factory).onRefDeploy{
-                value: 0,
-                flag: MsgFlag.ALL_NOT_RESERVED
-            }(eventData, parents);
-        }
-    }
+    //     if(parent != address(0)) {
+    //         address parentRef = _deriveRef(parent);
+    //         RefInstance(parentRef).getParents{
+    //             value: 0,
+    //             flag: MsgFlag.ALL_NOT_RESERVED
+    //         }(eventData, parents);
+    //     } else {
+    //         RefSystem(factory).onRefDeploy{
+    //             value: 0,
+    //             flag: MsgFlag.ALL_NOT_RESERVED
+    //         }(eventData, parents);
+    //     }
+    // }
 
 }

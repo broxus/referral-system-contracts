@@ -1,0 +1,110 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"refSystem","type":"address"},
+				{"name":"refAuthority","type":"address"},
+				{"name":"projectFee","type":"uint16"},
+				{"name":"cashbackFee","type":"uint16"},
+				{"name":"feeDigits","type":"uint16"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onRefferal",
+			"inputs": [
+				{"name":"referrer","type":"address"},
+				{"name":"referred","type":"address"},
+				{"name":"reward","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onApproval",
+			"inputs": [
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_randomNonce",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_randomNonce","type":"uint256"}
+			]
+		},
+		{
+			"name": "_refSystem",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refSystem","type":"address"}
+			]
+		},
+		{
+			"name": "_refAuthority",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refAuthority","type":"address"}
+			]
+		},
+		{
+			"name": "_projectFee",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_projectFee","type":"uint16"}
+			]
+		},
+		{
+			"name": "_cashbackFee",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_cashbackFee","type":"uint16"}
+			]
+		},
+		{
+			"name": "_feeDigits",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_feeDigits","type":"uint16"}
+			]
+		},
+		{
+			"name": "_accountCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_accountCode","type":"cell"}
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"_randomNonce","type":"uint256"}
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"_randomNonce","type":"uint256"},
+		{"name":"_refSystem","type":"address"},
+		{"name":"_refAuthority","type":"address"},
+		{"name":"_projectFee","type":"uint16"},
+		{"name":"_cashbackFee","type":"uint16"},
+		{"name":"_feeDigits","type":"uint16"},
+		{"name":"_accountCode","type":"cell"}
+	]
+}
