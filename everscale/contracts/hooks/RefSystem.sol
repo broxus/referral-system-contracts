@@ -74,10 +74,10 @@ contract RefSystem is
 
     function requestApproval(TvmCell payload) external responsible override returns (TvmCell) {
         // Take Fee
-        uint128 refFee = msg.value*_approvalFee/_approvalFeeDigits;
+        uint128 refFee = (msg.value*_approvalFee)/_approvalFeeDigits;
         tvm.rawReserve(refFee, 4);
         // TODO
-        return payload;
+        return {value: msg.value - refFee - 0.1 ton, flag: 0}(payload);
     }
 
     function deriveRef(address recipient) external responsible returns (address) {

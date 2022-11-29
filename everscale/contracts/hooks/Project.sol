@@ -40,13 +40,12 @@ contract Project is IProjectCallback, RandomNonce {
         require(msg.sender == _refSystem, 400, 'Must be RefSystem');
         (address referrer, address referred, uint128 reward) = abi.decode(payload, (address, address, uint128));
         
-        uint128 forProject = reward*_projectFee/_feeDigits;
-        uint128 forReferred = reward*_cashbackFee/_feeDigits;
-        uint128 forRefSystem = reward - msg.value;
-        uint128 forReferrer = reward - forProject - forReferred - forRefSystem;
+        uint128 forProject = (reward*_projectFee)/_feeDigits;
+        uint128 forReferred = (reward*_cashbackFee)/_feeDigits;
+        uint128 forReferrer = msg.value - forProject - forReferred;
         
         // Keep for Project // original_balance + forProject;
-        tvm.rawReserve(forProject, 4);
+        tvm.rawReserve(forProject - 0.1 ton, 4);
         // Send Reward
         referrer.transfer(forReferrer, false, 0);
         // Send Cashback

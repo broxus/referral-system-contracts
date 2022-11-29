@@ -1,6 +1,6 @@
 // @ts-check
 const { expect } = require('chai');
-const { locklift, afterRun, deployTestHook, logContract, deployRefFactory, deployEmptyRef, encodeAddress, deployAccount, deriveRef, deployProject, deployRefSystem } = require('./utils')
+const { locklift, afterRun, deployTestHook, logContract, deployRefFactory, deployEmptyRef, encodeAddress, deployAccount, deriveRef, deployProject, deployRefSystem, runOnRefferral } = require('./utils')
 const logger = require('mocha-logger')
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
@@ -41,6 +41,40 @@ describe.only('Refferrals', function () {
                 .to.be.bignumber.equal(5, 'Must be Valid')
             
         })
+
+        describe('onRefferal()', function() {
+            it('should pass on all fees on success', async function() {
+                let [,authPair, bobPair, alicePair] = await locklift.keys.getKeyPairs();
+                let auth = await deployAccount(authPair, 100, 'refAuthority');
+                let bob = await deployAccount(bobPair, 100, 'refAuthority');
+                let alice = await deployAccount(alicePair, 100, 'refAuthority');
+
+                let refSystem = await deployRefSystem(30, 100);
+                let project = await deployProject(refSystem.address, auth.address, 5, 5, 100);
+
+                let bobBalance = (await locklift.ton.getBalance(bob.address)).toNumber()
+                let aliceBalance = (await locklift.ton.getBalance(alice.address)).toNumber()
+                let refSystemBalance = (await locklift.ton.getBalance(refSystem.address)).toNumber()
+                let projectBalance = (await locklift.ton.getBalance(project.address)).toNumber()
+
+                let reward = 10;
+
+                await runOnRefferral(project, auth, bob.address, alice.address, reward);
+
+                let new_bobBalance = (await locklift.ton.getBalance(bob.address)).toNumber()
+                let new_aliceBalance = (await locklift.ton.getBalance(alice.address)).toNumber()
+                let new_refSystemBalance = (await locklift.ton.getBalance(refSystem.address)).toNumber()
+                let new_projectBalance = (await locklift.ton.getBalance(project.address)).toNumber()
+                
+                // expect(new_projectBalance).to.equal(projectBalance+Number(locklift.utils.convertCrystal(reward*5/100, 'nano')))
+                // expect(new_refSystemBalance).to.equal(refSystemBalance+Number(locklift.utils.convertCrystal(reward*30/100, 'nano')))
+                
+                expect(new_aliceBalance - aliceBalance).to.be.greaterThanOrEqual(Number(locklift.utils.convertCrystal(reward*5/100, 'nano'))*0.95)
+                expect(new_bobBalance - bobBalance).to.be.greaterThanOrEqual(Number(locklift.utils.convertCrystal(reward*60/100, 'nano'))*0.95)
+
+            })
+        })
     })
+
 
 })

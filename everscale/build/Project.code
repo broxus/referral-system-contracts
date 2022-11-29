@@ -179,34 +179,30 @@ UFITS 128
 GETGLOB 15
 DIV
 .loc ../contracts/hooks/Project.sol, 44
-OVER
+SWAP
 GETGLOB 14
 MUL
 UFITS 128
 GETGLOB 15
 DIV
 .loc ../contracts/hooks/Project.sol, 45
-PUSH S2
 DEPTH
 ADDCONST -2
 PICK
-SUB
-UFITS 128
-.loc ../contracts/hooks/Project.sol, 46
-ROLL 3
-PUSH S3
-SUB
-UFITS 128
 PUSH S2
 SUB
 UFITS 128
-SUBR
+OVER
+SUB
 UFITS 128
-.loc ../contracts/hooks/Project.sol, 49
+.loc ../contracts/hooks/Project.sol, 48
 ROT
+PUSHINT 100000000
+SUB
+UFITS 128
 PUSHINT 4
 RAWRESERVE
-.loc ../contracts/hooks/Project.sol, 51
+.loc ../contracts/hooks/Project.sol, 50
 ROLL 3
 NEWC
 STSLICECONST x42_
@@ -218,7 +214,7 @@ STZEROES
 ENDC
 PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/hooks/Project.sol, 53
+.loc ../contracts/hooks/Project.sol, 52
 SWAP
 NEWC
 STSLICECONST x42_
@@ -240,11 +236,11 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/Project.sol, 57
+.loc ../contracts/hooks/Project.sol, 56
 DUP
 LDU 32
 POP S2
-.loc ../contracts/hooks/Project.sol, 59
+.loc ../contracts/hooks/Project.sol, 58
 PUSHINT 2048710864
 EQUAL
 GETGLOB 9
@@ -252,14 +248,14 @@ GETGLOB 11
 SDEQ
 AND
 PUSHCONT {
-	.loc ../contracts/hooks/Project.sol, 64
+	.loc ../contracts/hooks/Project.sol, 63
 	DUP
 	LDMSGADDR
 	LDMSGADDR
 	LDU 128
 	POP S4
 	BLKDROP2 2, 1
-	.loc ../contracts/hooks/Project.sol, 66
+	.loc ../contracts/hooks/Project.sol, 65
 	GETGLOB 12
 	NEWC
 	STSLICECONST x42_

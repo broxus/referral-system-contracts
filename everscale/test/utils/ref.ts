@@ -27,7 +27,8 @@ export async function deployRefSystem(approvalFee = 300, approvalFeeDigits = 100
     refSystem.setKeyPair(keyPair);
     refSystem.afterRun = afterRun;
     refSystem.name = 'RefSystem';
-
+    await logContract(refSystem)
+    
     return refSystem;
 }
 

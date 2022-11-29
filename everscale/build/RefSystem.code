@@ -141,8 +141,24 @@ UFITS 128
 GETGLOB 15
 DIV
 .loc ../contracts/hooks/RefSystem.sol, 78
+DUP
 PUSHINT 4
 RAWRESERVE
+.loc ../contracts/hooks/RefSystem.sol, 80
+GETGLOB 4
+DEPTH
+ADDCONST -2
+PICK
+ROT
+SUB
+UFITS 128
+PUSHINT 100000000
+SUB
+UFITS 128
+SETINDEXQ 2
+PUSHINT 0
+SETINDEXQ 4
+SETGLOB 4
 .loc ../contracts/hooks/RefSystem.sol, 0
 
 .macro deriveRef

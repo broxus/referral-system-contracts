@@ -1,4 +1,4 @@
-import { Account, Address, Contract, deployAccount, locklift, logContract } from "./locklift";
+import { Account, Address, Contract, deployAccount, locklift, logContract, Tx } from "./locklift";
 import BigNumber from "bignumber.js"
 import _ from "underscore"
 import logger from "mocha-logger"
@@ -55,5 +55,19 @@ export async function deployProject(
     await logContract(project);
 
     return project;
+}
+
+export function runOnRefferral(project: Contract, refAuthority: Account, referrer: Address, referred: Address, reward: number): Promise<Tx> {
+    return refAuthority.runTarget({
+        contract: project,
+        method: 'onRefferal',
+        params: {
+            referrer,
+            referred,
+            reward: locklift.utils.convertCrystal(reward, 'nano')
+        },
+        keyPair: refAuthority.keyPair,
+        value: locklift.utils.convertCrystal(reward+0.01, 'nano')
+    });
 }
 
