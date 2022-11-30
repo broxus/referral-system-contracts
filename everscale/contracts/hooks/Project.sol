@@ -33,12 +33,11 @@ contract Project is IProjectCallback, RandomNonce {
         require(msg.sender == _refAuthority, 400, 'Must be RefAuthority');
         require(msg.value >= reward, 402, "Must Provide Reward");
 
-        IRefSystem(_refSystem).requestApproval{callback: Project.onApproval, bounce: true, value: reward, flag: 0}(abi.encode(referrer, referred, reward));
+        IRefSystem(_refSystem).requestApproval{value: reward, flag: 0}(referrer, referred, reward);
     }
 
-    function onApproval(TvmCell payload) external {
+    function onApproval(address referrer, address referred, uint128 reward) override external {
         require(msg.sender == _refSystem, 400, 'Must be RefSystem');
-        (address referrer, address referred, uint128 reward) = abi.decode(payload, (address, address, uint128));
         
         uint128 forProject = (reward*_projectFee)/_feeDigits;
         uint128 forReferred = (reward*_cashbackFee)/_feeDigits;

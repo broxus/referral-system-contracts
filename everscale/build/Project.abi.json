@@ -28,7 +28,9 @@
 		{
 			"name": "onApproval",
 			"inputs": [
-				{"name":"payload","type":"cell"}
+				{"name":"referrer","type":"address"},
+				{"name":"referred","type":"address"},
+				{"name":"reward","type":"uint128"}
 			],
 			"outputs": [
 			]

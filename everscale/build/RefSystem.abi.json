@@ -16,11 +16,11 @@
 		{
 			"name": "requestApproval",
 			"inputs": [
-				{"name":"answerId","type":"uint32"},
-				{"name":"payload","type":"cell"}
+				{"name":"referrer","type":"address"},
+				{"name":"referred","type":"address"},
+				{"name":"reward","type":"uint128"}
 			],
 			"outputs": [
-				{"name":"value0","type":"cell"}
 			]
 		},
 		{
@@ -44,8 +44,9 @@
 		{
 			"name": "onRefDeploy",
 			"inputs": [
-				{"name":"eventData","type":"cell"},
-				{"name":"parents","type":"address[]"}
+				{"name":"reciever","type":"address"},
+				{"name":"lastParent","type":"address"},
+				{"name":"lastReward","type":"uint128"}
 			],
 			"outputs": [
 			]

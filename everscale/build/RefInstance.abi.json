@@ -7,25 +7,47 @@
 			"name": "constructor",
 			"inputs": [
 				{"name":"parent_","type":"address"},
-				{"name":"eventData","type":"cell"}
+				{"name":"reward_","type":"uint128"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "setLatestParent",
+			"name": "queryLast",
 			"inputs": [
-				{"name":"parent_","type":"address"}
+				{"name":"answerId","type":"uint32"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"},
+				{"name":"value1","type":"uint128"},
+				{"name":"value2","type":"cell"}
+			]
+		},
+		{
+			"name": "setLast",
+			"inputs": [
+				{"name":"parent_","type":"address"},
+				{"name":"value1","type":"address"},
+				{"name":"reward_","type":"uint128"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "parent",
+			"name": "lastParent",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"parent","type":"address"}
+				{"name":"lastParent","type":"address"}
+			]
+		},
+		{
+			"name": "lastReward",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"lastReward","type":"uint128"}
 			]
 		}
 	],
@@ -41,6 +63,7 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"factory","type":"address"},
 		{"name":"recipient","type":"address"},
-		{"name":"parent","type":"address"}
+		{"name":"lastParent","type":"address"},
+		{"name":"lastReward","type":"uint128"}
 	]
 }

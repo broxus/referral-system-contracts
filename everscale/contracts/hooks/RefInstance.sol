@@ -31,17 +31,19 @@ contract RefInstance {
 
     address static factory;
     address static recipient;
-    address public parent;
+    address public lastParent;
+    uint128 public lastReward;
 
-    constructor(address parent_, TvmCell eventData) public {
+    constructor(address parent_, uint128 reward_) public {
         tvm.accept();
-        parent = parent_;
+        lastParent = parent_;
+        lastReward = reward_;
         
         // Single-Level
         RefSystem(factory).onRefDeploy{
             value: 0,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(eventData, [recipient, parent]);
+        }(recipient, lastParent, lastReward);
 
         // // Multi-Level
         // // Start Parent Chain Query
@@ -59,9 +61,13 @@ contract RefInstance {
         // }
     }
 
-    function setLatestParent(address parent_) external {
+    function queryLast(TvmCell payload) external responsible returns (address, uint128, TvmCell) {
+        return (lastParent, lastReward, payload);
+    }
+    function setLast(address parent_, address, uint128 reward_) external {
         require(msg.sender == factory, 401, "Must be RefSystem");
-        parent = parent_;
+        lastParent = parent_;
+        lastReward = reward_;
     }
 
     function _deriveRef(address target) internal returns (address) {
