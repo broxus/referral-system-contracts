@@ -44,10 +44,11 @@ describe.only('Refferrals', function () {
 
         describe('onRefferal()', function() {
             it('should pass on all fees on success', async function() {
-                let [,authPair, bobPair, alicePair] = await locklift.keys.getKeyPairs();
-                let auth = await deployAccount(authPair, 100, 'refAuthority');
-                let bob = await deployAccount(bobPair, 100, 'refAuthority');
-                let alice = await deployAccount(alicePair, 100, 'refAuthority');
+                let [,authPair, bobPair, alicePair, jerryPair] = await locklift.keys.getKeyPairs();
+                let auth = await deployAccount(authPair, 50, 'refAuthority');
+                let bob = await deployAccount(bobPair, 50, 'refAuthority');
+                let alice = await deployAccount(alicePair, 50, 'refAuthority');
+                let jerry = await deployAccount(jerryPair, 50, 'refAuthority');
 
                 let refSystem = await deployRefSystem(30, 100);
                 let project = await deployProject(refSystem.address, auth.address, 5, 5, 100);
@@ -72,8 +73,19 @@ describe.only('Refferrals', function () {
                 expect(new_aliceBalance - aliceBalance).to.be.greaterThanOrEqual(Number(locklift.utils.convertCrystal(reward*5/100, 'nano'))*0.95)
                 expect(new_bobBalance - bobBalance).to.be.greaterThanOrEqual(Number(locklift.utils.convertCrystal(reward*60/100, 'nano'))*0.95)
 
+                let refInstance = await deriveRef(refSystem, alice.address)
+
+                await logContract(refInstance)
+                expect(await refInstance.call({method: 'lastParent', params: {answerId: 0}}))
+                    .to.be.equal(bob.address)
+                
+                // Should Update Parent
+                await runOnRefferral(project, auth, jerry.address, alice.address, reward);
+                expect(await refInstance.call({method: 'lastParent', value: locklift.utils.convertCrystal(1, 'nano'), params: {answerId: 0}}))
+                    .to.be.equal(jerry.address)
             })
         })
+
     })
 
 

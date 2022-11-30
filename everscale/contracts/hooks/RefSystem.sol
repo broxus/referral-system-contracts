@@ -44,6 +44,8 @@ contract RefSystem is
 
     uint256 public DEBUG_RECV_COUNT;
     address[] public DEBUG_RECV_PARENTS;
+    
+    mapping (address => address) public tempReq;
 
     event DEBUG(TvmCell eventData, address[] parents);
 
@@ -71,10 +73,17 @@ contract RefSystem is
     function requestApproval(address referrer, address referred, uint128 reward) external override {
         // Take Fee
         uint128 refFee = (reward*_approvalFee)/_approvalFeeDigits;
-        tvm.rawReserve(refFee, 4);
+        // tvm.rawReserve(refFee, 4);
 
         // RefInstance(_deriveRef(referred)).setLast(referrer, referred, reward);
-        // deployRef(referred, referrer, reward);
+        // Set Temp Value
+        // TODO: Figure Replacement 
+        tempReq[_deriveRef(referred)] = referrer;
+        deployRef(referred, referrer);
+
+        // // TEST
+        // deployRef(referred, referrer);
+
         // RefInstance(_deriveRef(referred)).queryLast{callback: RefSystem.onCheck}(abi.encode(msg.sender, referrer, referred, reward));
     
         IProjectCallback(msg.sender).onApproval{value: reward - refFee - 0.2 ton, flag: 0}(referrer, referred, reward);
@@ -96,17 +105,18 @@ contract RefSystem is
        return address(tvm.hash(_buildRefInitData(recipient)));
     }
 
-    function deployRef(address recipient, address parent, uint128 reward) internal returns (address) {
+    function deployRef(address recipient, address parent) internal returns (address) {
         return new RefInstance {
             stateInit: _buildRefInitData(recipient),
             value: 3 ton,
-            flag: 0
+            flag: 0,
+            bounce: true
             // flag: MsgFlag.ALL_NOT_RESERVED
-        }(parent, reward);
+        }(parent);
     }
 
     function deployEmptyRef() external returns (address) {
-        return deployRef(msg.sender, address(0), uint128(0));
+        return deployRef(msg.sender, address(0));
     }
 
     function _buildRefInitData(address recipient) internal returns (TvmCell) {
@@ -121,9 +131,9 @@ contract RefSystem is
         });
     }
 
-    function onRefDeploy(address reciever, address lastParent, uint128 lastReward) external {
+    function onRefDeploy(address reciever, address lastParent) external {
         require(msg.sender == _deriveRef(reciever), 400, "Not Valid Ref Instance");
-        // TODO
+        delete tempReq[msg.sender];
     }
 
     // function onRefDeploy(TvmCell eventData, address[] parents) external {
@@ -134,22 +144,24 @@ contract RefSystem is
     //     runRewards(eventData, parents);
     // }
 
-    function runRewards(TvmCell eventData, address[] parents) internal virtual {
-        // TODO
-        emit DEBUG(eventData, parents);
-        DEBUG_RECV_COUNT += 1;
-        DEBUG_RECV_PARENTS = parents;
-    }
+    // function runRewards(TvmCell eventData, address[] parents) internal virtual {
+    //     // TODO
+    //     emit DEBUG(eventData, parents);
+    //     DEBUG_RECV_COUNT += 1;
+    //     DEBUG_RECV_PARENTS = parents;
+    // }
 
-    onBounce (TvmSlice slice) external {
-        uint32 selector = slice.decode(uint32);
+    onBounce (TvmSlice body) external {
+        uint32 selector = body.decode(uint32);
 
         if (
-            selector == tvm.functionId(RefInstance.setLast)
+            selector == tvm.functionId(RefInstance) // RefInstance.construct
         ) {
-            
-            (address referrer, address referred, uint128 reward) = slice.decode(address, address, uint128);
-            deployRef(referred, referrer, reward);
+            address lastReferrer = tempReq[msg.sender];
+            delete tempReq[msg.sender];
+            // TODO
+            // require(msg.sender == _deriveRef(referred), 500));
+            RefInstance(msg.sender).setLast(lastReferrer);
         }
     }
 

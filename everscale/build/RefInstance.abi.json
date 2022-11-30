@@ -6,8 +6,7 @@
 		{
 			"name": "constructor",
 			"inputs": [
-				{"name":"parent_","type":"address"},
-				{"name":"reward_","type":"uint128"}
+				{"name":"parent_","type":"address"}
 			],
 			"outputs": [
 			]
@@ -20,16 +19,13 @@
 			],
 			"outputs": [
 				{"name":"value0","type":"address"},
-				{"name":"value1","type":"uint128"},
-				{"name":"value2","type":"cell"}
+				{"name":"value1","type":"cell"}
 			]
 		},
 		{
 			"name": "setLast",
 			"inputs": [
-				{"name":"parent_","type":"address"},
-				{"name":"value1","type":"address"},
-				{"name":"reward_","type":"uint128"}
+				{"name":"parent_","type":"address"}
 			],
 			"outputs": [
 			]
@@ -40,14 +36,6 @@
 			],
 			"outputs": [
 				{"name":"lastParent","type":"address"}
-			]
-		},
-		{
-			"name": "lastReward",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"lastReward","type":"uint128"}
 			]
 		}
 	],
@@ -63,7 +51,6 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"factory","type":"address"},
 		{"name":"recipient","type":"address"},
-		{"name":"lastParent","type":"address"},
-		{"name":"lastReward","type":"uint128"}
+		{"name":"lastParent","type":"address"}
 	]
 }

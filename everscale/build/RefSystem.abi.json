@@ -45,8 +45,7 @@
 			"name": "onRefDeploy",
 			"inputs": [
 				{"name":"reciever","type":"address"},
-				{"name":"lastParent","type":"address"},
-				{"name":"lastReward","type":"uint128"}
+				{"name":"lastParent","type":"address"}
 			],
 			"outputs": [
 			]
@@ -121,6 +120,14 @@
 			"outputs": [
 				{"name":"DEBUG_RECV_PARENTS","type":"address[]"}
 			]
+		},
+		{
+			"name": "tempReq",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"tempReq","type":"map(address,address)"}
+			]
 		}
 	],
 	"data": [
@@ -157,6 +164,7 @@
 		{"name":"_approvalFee","type":"uint128"},
 		{"name":"_approvalFeeDigits","type":"uint128"},
 		{"name":"DEBUG_RECV_COUNT","type":"uint256"},
-		{"name":"DEBUG_RECV_PARENTS","type":"address[]"}
+		{"name":"DEBUG_RECV_PARENTS","type":"address[]"},
+		{"name":"tempReq","type":"map(address,address)"}
 	]
 }

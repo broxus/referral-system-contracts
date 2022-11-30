@@ -163,7 +163,7 @@ export async function getAccount(keyPair: KeyPair, address: Address): Promise<Ac
   return account;
 }
 
-export async function deployAccount(keyPair: KeyPair, balance: number, name = 'Account'): Promise<Account> {
+export async function deployAccount(keyPair: KeyPair, balance: number = 20, name = 'Account'): Promise<Account> {
   const _randomNonce = locklift.utils.getRandomNonce();
 
   // Deploy initializer account
@@ -175,7 +175,7 @@ export async function deployAccount(keyPair: KeyPair, balance: number, name = 'A
       _randomNonce,
     },
     keyPair,
-  }, locklift.utils.convertCrystal(20, 'nano'));
+  }, locklift.utils.convertCrystal(balance, 'nano'));
 
   account.setKeyPair(keyPair);
   account.afterRun = afterRun;
