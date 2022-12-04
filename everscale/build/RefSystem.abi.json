@@ -8,6 +8,7 @@
 			"inputs": [
 				{"name":"approvalFee","type":"uint128"},
 				{"name":"approvalFeeDigits","type":"uint128"},
+				{"name":"refPlatformCode","type":"cell"},
 				{"name":"refCode","type":"cell"}
 			],
 			"outputs": [
@@ -31,23 +32,6 @@
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}
-			]
-		},
-		{
-			"name": "deployEmptyRef",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"value0","type":"address"}
-			]
-		},
-		{
-			"name": "onRefDeploy",
-			"inputs": [
-				{"name":"reciever","type":"address"},
-				{"name":"lastParent","type":"address"}
-			],
-			"outputs": [
 			]
 		},
 		{
@@ -161,6 +145,7 @@
 		{"name":"_randomNonce","type":"uint256"},
 		{"name":"_proxy","type":"address"},
 		{"name":"_refCode","type":"cell"},
+		{"name":"_refPlatformCode","type":"cell"},
 		{"name":"_approvalFee","type":"uint128"},
 		{"name":"_approvalFeeDigits","type":"uint128"},
 		{"name":"DEBUG_RECV_COUNT","type":"uint256"},

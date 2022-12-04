@@ -28,6 +28,8 @@ import "../interfaces/IProjectCallback.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 
 import "./RefInstance.sol";
+import "./RefInstancePlatform.sol";
+
 import "../interfaces/IRefSystem.sol";
 
 
@@ -38,6 +40,7 @@ contract RefSystem is
 {
     address public _proxy;
     TvmCell _refCode;
+    TvmCell _refPlatformCode;
 
     uint128 public _approvalFee;
     uint128 public _approvalFeeDigits;
@@ -52,6 +55,7 @@ contract RefSystem is
     constructor(
         uint128 approvalFee,
         uint128 approvalFeeDigits,
+        TvmCell refPlatformCode,
         TvmCell refCode
     ) public {
         tvm.accept();
@@ -60,6 +64,7 @@ contract RefSystem is
         _approvalFee = approvalFee;
         _approvalFeeDigits = approvalFeeDigits;
 
+        _refPlatformCode = refPlatformCode;
         _refCode = refCode;
         setOwnership(msg.sender);
 
@@ -75,11 +80,8 @@ contract RefSystem is
         uint128 refFee = (reward*_approvalFee)/_approvalFeeDigits;
         // tvm.rawReserve(refFee, 4);
 
-        // RefInstance(_deriveRef(referred)).setLast(referrer, referred, reward);
-        // Set Temp Value
-        // TODO: Figure Replacement 
-        tempReq[_deriveRef(referred)] = referrer;
-        deployRef(referred, referrer);
+        // Deploy or Update ref
+        deployRef(referred, referrer, reward);
 
         // // TEST
         // deployRef(referred, referrer);
@@ -105,64 +107,27 @@ contract RefSystem is
        return address(tvm.hash(_buildRefInitData(recipient)));
     }
 
-    function deployRef(address recipient, address parent) internal returns (address) {
-        return new RefInstance {
+    function deployRef(address recipient, address lastRef, uint128 lastRefReward) internal returns (address) {
+        return new RefInstancePlatform {
             stateInit: _buildRefInitData(recipient),
             value: 3 ton,
+            wid: address(this).wid,
             flag: 0,
             bounce: true
             // flag: MsgFlag.ALL_NOT_RESERVED
-        }(parent);
+        }(_refCode, 0, lastRef, lastRefReward, recipient, address(this));
     }
 
-    function deployEmptyRef() external returns (address) {
-        return deployRef(msg.sender, address(0));
-    }
-
-    function _buildRefInitData(address recipient) internal returns (TvmCell) {
+    function _buildRefInitData(address target) internal returns (TvmCell) {
         return tvm.buildStateInit({
-            contr: RefInstance,
+            contr: RefInstancePlatform,
             varInit: {
-                recipient: recipient,
-                factory: address(this)
+                root: address(this),
+                owner: target
             },
             pubkey: 0,
-            code: _refCode
+            code: _refPlatformCode
         });
-    }
-
-    function onRefDeploy(address reciever, address lastParent) external {
-        require(msg.sender == _deriveRef(reciever), 400, "Not Valid Ref Instance");
-        delete tempReq[msg.sender];
-    }
-
-    // function onRefDeploy(TvmCell eventData, address[] parents) external {
-    //     tvm.accept();
-    //     address origin = parents[parents.length -1];
-    //     require(msg.sender == _deriveRef(origin), 401, "Permission Denied. Must Be Ref");
-        
-    //     runRewards(eventData, parents);
-    // }
-
-    // function runRewards(TvmCell eventData, address[] parents) internal virtual {
-    //     // TODO
-    //     emit DEBUG(eventData, parents);
-    //     DEBUG_RECV_COUNT += 1;
-    //     DEBUG_RECV_PARENTS = parents;
-    // }
-
-    onBounce (TvmSlice body) external {
-        uint32 selector = body.decode(uint32);
-
-        if (
-            selector == tvm.functionId(RefInstance) // RefInstance.construct
-        ) {
-            address lastReferrer = tempReq[msg.sender];
-            delete tempReq[msg.sender];
-            // TODO
-            // require(msg.sender == _deriveRef(referred), 500));
-            RefInstance(msg.sender).setLast(lastReferrer);
-        }
     }
 
 }

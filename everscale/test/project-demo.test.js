@@ -76,12 +76,12 @@ describe.only('Refferrals', function () {
                 let refInstance = await deriveRef(refSystem, alice.address)
 
                 await logContract(refInstance)
-                expect(await refInstance.call({method: 'lastParent', params: {answerId: 0}}))
+                expect(await refInstance.call({method: 'lastRef_', params: {answerId: 0}}))
                     .to.be.equal(bob.address)
                 
                 // Should Update Parent
                 await runOnRefferral(project, auth, jerry.address, alice.address, reward);
-                expect(await refInstance.call({method: 'lastParent', value: locklift.utils.convertCrystal(1, 'nano'), params: {answerId: 0}}))
+                expect(await refInstance.call({method: 'lastRef_', params: {answerId: 0}}))
                     .to.be.equal(jerry.address)
             })
         })

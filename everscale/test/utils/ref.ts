@@ -7,6 +7,8 @@ import { logContract, locklift, afterRun, KeyPair, Contract, Account, Address, T
 export async function deployRefSystem(approvalFee = 300, approvalFeeDigits = 1000): Promise<Contract> {
     const RefSystem = await locklift.factory.getContract('RefSystem');
     const RefInstance = await locklift.factory.getContract('RefInstance');
+    const RefInstancePlatform = await locklift.factory.getContract('RefInstancePlatform');
+
     const [keyPair] = await locklift.keys.getKeyPairs();
     const _randomNonce = locklift.utils.getRandomNonce();
 
@@ -16,6 +18,7 @@ export async function deployRefSystem(approvalFee = 300, approvalFeeDigits = 100
             // proxy_: proxy.address,
             approvalFee,
             approvalFeeDigits,
+            refPlatformCode: RefInstancePlatform.code,
             refCode: RefInstance.code
         },
         initParams: {

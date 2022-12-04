@@ -6,42 +6,68 @@
 		{
 			"name": "constructor",
 			"inputs": [
-				{"name":"parent_","type":"address"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "queryLast",
+			"name": "onDeployOrUpdate",
+			"id": "0x15A038FB",
 			"inputs": [
-				{"name":"answerId","type":"uint32"},
-				{"name":"payload","type":"cell"}
-			],
-			"outputs": [
-				{"name":"value0","type":"address"},
-				{"name":"value1","type":"cell"}
-			]
-		},
-		{
-			"name": "setLast",
-			"inputs": [
-				{"name":"parent_","type":"address"}
+				{"name":"value0","type":"cell"},
+				{"name":"value1","type":"uint32"},
+				{"name":"lastRef","type":"address"},
+				{"name":"lastRefReward","type":"uint128"},
+				{"name":"sender","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "lastParent",
+			"name": "platformCode",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "deriveRef",
+			"inputs": [
+				{"name":"target","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "owner_",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"lastParent","type":"address"}
+				{"name":"owner_","type":"address"}
+			]
+		},
+		{
+			"name": "lastRef_",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"lastRef_","type":"address"}
+			]
+		},
+		{
+			"name": "lastRefReward_",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"lastRefReward_","type":"uint128"}
 			]
 		}
 	],
 	"data": [
-		{"key":1,"name":"factory","type":"address"},
-		{"key":2,"name":"recipient","type":"address"}
 	],
 	"events": [
 	],
@@ -49,8 +75,11 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"factory","type":"address"},
-		{"name":"recipient","type":"address"},
-		{"name":"lastParent","type":"address"}
+		{"name":"version_","type":"uint32"},
+		{"name":"platformCode_","type":"cell"},
+		{"name":"root_","type":"address"},
+		{"name":"owner_","type":"address"},
+		{"name":"lastRef_","type":"address"},
+		{"name":"lastRefReward_","type":"uint128"}
 	]
 }

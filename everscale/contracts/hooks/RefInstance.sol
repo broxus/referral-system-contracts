@@ -25,51 +25,51 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
 import "../interfaces/IProxyHook.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
+import "./RefInstancePlatform.sol";
 import "./RefSystem.sol";
 
 contract RefInstance {
 
-    address static factory;
-    address static recipient;
-    address public lastParent;
+    uint32 version_;
+    TvmCell platformCode_;
 
-    constructor(address parent_) 
-    public 
-    // functionID(0x15A038FB)
+    address root_;
+    address public owner_;
+
+    address public lastRef_;
+    uint128 public lastRefReward_;
+
+    constructor() public {
+        revert();
+    }
+
+    function onDeployOrUpdate(TvmCell, uint32, address lastRef, uint128 lastRefReward, address sender, address remainingGasTo) 
+    external
+    functionID(0x15A038FB)
     {
+        require(msg.sender == root_, 400, "Must be root");
+        lastRef_ = lastRef;
+        lastRefReward_ = lastRefReward;
         
-        tvm.accept();
-        lastParent = parent_;
-        
-        // Single-Level
-        RefSystem(factory).onRefDeploy{
-            value: 0,
-            flag: MsgFlag.ALL_NOT_RESERVED
-        }(recipient, lastParent);
-
-        // // Multi-Level
-        // // Start Parent Chain Query
-        // if(parent != address(0)) {
-        //     address parentRef = _deriveRef(parent);
-        //     RefInstance(parentRef).getParents{
-        //         value: 0,
-        //         flag: MsgFlag.ALL_NOT_RESERVED
-        //     }(eventData, [recipient]);
-        // } else {
-        //     RefSystem(factory).onRefDeploy{
-        //         value: 0,
-        //         flag: MsgFlag.ALL_NOT_RESERVED
-        //     }(eventData, [recipient]);
-        // }
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: TokenMsgFlag.ALL_NOT_RESERVED + TokenMsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 
-    function queryLast(TvmCell payload) external responsible returns (address, TvmCell) {
-        return (lastParent, payload);
+    function _reserve() internal returns (uint128) {
+        return 0;
     }
-    
-    function setLast(address parent_) external {
-        require(msg.sender == factory, 401, "Must be RefSystem");
-        lastParent = parent_;
+
+    function platformCode() external view responsible returns (TvmCell) {
+        return { value: 0, flag: TokenMsgFlag.REMAINING_GAS, bounce: false } platformCode_;
+    }
+
+    function deriveRef(address target) external returns (address) {
+        return _deriveRef(target);
     }
 
     function _deriveRef(address target) internal returns (address) {
@@ -78,33 +78,28 @@ contract RefInstance {
 
     function _buildRefInitData(address target) internal returns (TvmCell) {
         return tvm.buildStateInit({
-            contr: RefInstance,
+            contr: RefInstancePlatform,
             varInit: {
-                recipient: target,
-                factory: factory
+                root: root_,
+                owner: target
             },
             pubkey: 0,
-            code: tvm.code()
+            code: platformCode_
         });
     }
 
-    // function getParents(TvmCell eventData, address[] parents) external {
-    //     tvm.accept();
-    //     require(msg.sender == _deriveRef(parents[parents.length -1]), 401, 'Permission Denied. Must Be Ref');
-    //     parents.push(recipient);
+    function onCodeUpgrade(TvmCell data) private {
+        tvm.rawReserve(_reserve(), 2);
+        tvm.resetStorage();
 
-    //     if(parent != address(0)) {
-    //         address parentRef = _deriveRef(parent);
-    //         RefInstance(parentRef).getParents{
-    //             value: 0,
-    //             flag: MsgFlag.ALL_NOT_RESERVED
-    //         }(eventData, parents);
-    //     } else {
-    //         RefSystem(factory).onRefDeploy{
-    //             value: 0,
-    //             flag: MsgFlag.ALL_NOT_RESERVED
-    //         }(eventData, parents);
-    //     }
-    // }
+        TvmSlice s = data.toSlice();
+        (root_, owner_, lastRef_, lastRefReward_) = s.decode(
+            address,
+            address,
+            address,
+            uint128
+        );
 
+        platformCode_ = s.loadRef();
+    }
 }
