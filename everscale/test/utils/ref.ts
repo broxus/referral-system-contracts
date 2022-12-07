@@ -4,10 +4,13 @@ import _ from 'underscore'
 
 import { logContract, locklift, afterRun, KeyPair, Contract, Account, Address, Tx } from './locklift';
 
-export async function deployRefSystem(approvalFee = 300, approvalFeeDigits = 1000): Promise<Contract> {
+export async function deployRefSystem(owner: Address, approvalFee = 300, approvalFeeDigits = 1000): Promise<Contract> {
     const RefSystem = await locklift.factory.getContract('RefSystem');
     const RefInstance = await locklift.factory.getContract('RefInstance');
     const RefInstancePlatform = await locklift.factory.getContract('RefInstancePlatform');
+    const ProjectPlatform = await locklift.factory.getContract('ProjectPlatform');
+    const Project = await locklift.factory.getContract('Project');
+
 
     const [keyPair] = await locklift.keys.getKeyPairs();
     const _randomNonce = locklift.utils.getRandomNonce();
@@ -16,10 +19,12 @@ export async function deployRefSystem(approvalFee = 300, approvalFeeDigits = 100
         contract: RefSystem,
         constructorParams: {
             // proxy_: proxy.address,
+            owner,
             approvalFee,
             approvalFeeDigits,
             refPlatformCode: RefInstancePlatform.code,
-            refCode: RefInstance.code
+            refCode: RefInstance.code,
+            projectPlatformCode: ProjectPlatform.code
         },
         initParams: {
             _randomNonce

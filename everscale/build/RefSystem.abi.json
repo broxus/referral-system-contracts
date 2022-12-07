@@ -6,10 +6,12 @@
 		{
 			"name": "constructor",
 			"inputs": [
+				{"name":"owner","type":"address"},
 				{"name":"approvalFee","type":"uint128"},
 				{"name":"approvalFeeDigits","type":"uint128"},
 				{"name":"refPlatformCode","type":"cell"},
-				{"name":"refCode","type":"cell"}
+				{"name":"refCode","type":"cell"},
+				{"name":"projectPlatformCode","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -17,6 +19,7 @@
 		{
 			"name": "requestApproval",
 			"inputs": [
+				{"name":"owner","type":"address"},
 				{"name":"referrer","type":"address"},
 				{"name":"referred","type":"address"},
 				{"name":"reward","type":"uint128"}
@@ -32,6 +35,40 @@
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deriveProject",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"owner","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployProject",
+			"inputs": [
+				{"name":"initCode","type":"cell"},
+				{"name":"initVersion","type":"uint32"},
+				{"name":"refSystem","type":"address"},
+				{"name":"projectFee","type":"uint16"},
+				{"name":"cashbackFee","type":"uint16"},
+				{"name":"feeDigits","type":"uint16"},
+				{"name":"sender","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "approveProject",
+			"inputs": [
+				{"name":"projectOwner","type":"address"}
+			],
+			"outputs": [
 			]
 		},
 		{
@@ -146,6 +183,7 @@
 		{"name":"_proxy","type":"address"},
 		{"name":"_refCode","type":"cell"},
 		{"name":"_refPlatformCode","type":"cell"},
+		{"name":"_projectPlatformCode","type":"cell"},
 		{"name":"_approvalFee","type":"uint128"},
 		{"name":"_approvalFeeDigits","type":"uint128"},
 		{"name":"DEBUG_RECV_COUNT","type":"uint256"},

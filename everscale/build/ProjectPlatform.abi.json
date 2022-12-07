@@ -1,0 +1,60 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"id": "0x15A038FB",
+			"inputs": [
+				{"name":"initCode","type":"cell"},
+				{"name":"initVersion","type":"uint32"},
+				{"name":"refSystem","type":"address"},
+				{"name":"projectFee","type":"uint16"},
+				{"name":"cashbackFee","type":"uint16"},
+				{"name":"feeDigits","type":"uint16"},
+				{"name":"sender","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getOwner",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "acceptInit",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		}
+	],
+	"data": [
+		{"key":1,"name":"root","type":"address"},
+		{"key":2,"name":"owner","type":"address"}
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"root","type":"address"},
+		{"name":"owner","type":"address"},
+		{"name":"_initCode","type":"cell"},
+		{"name":"_initVersion","type":"uint32"},
+		{"name":"_refSystem","type":"address"},
+		{"name":"_projectFee","type":"uint16"},
+		{"name":"_cashbackFee","type":"uint16"},
+		{"name":"_feeDigits","type":"uint16"},
+		{"name":"_sender","type":"address"},
+		{"name":"_remainingGasTo","type":"address"}
+	]
+}

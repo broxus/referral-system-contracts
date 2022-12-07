@@ -8,32 +8,84 @@ import "../interfaces/IRefSystem.sol";
 import "./ProjectAccount.sol";
 import '@broxus/contracts/contracts/utils/RandomNonce.sol';
 
+import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
-contract Project is IProjectCallback, RandomNonce {
-    address public _refSystem;
-    address public _refAuthority;
+contract Project is IProjectCallback {
+
+    uint32 version_;
+    TvmCell platformCode_;
+
+    address public _refSystem; // root
+    address public _owner;
 
     uint16 public _projectFee; 
     uint16 public _cashbackFee;
     uint16 public _feeDigits;
-    TvmCell public _accountCode;
+    TvmCell public _platformCode;
 
-    constructor(address refSystem, address refAuthority, uint16 projectFee, uint16 cashbackFee, uint16 feeDigits) public {
-        tvm.accept();
-        _refSystem = refSystem;
-        _refAuthority = refAuthority;
-        _projectFee = projectFee;
-        _cashbackFee = cashbackFee;
-        _feeDigits = feeDigits;
-        // _accountCode = accountCode;
+    constructor() public {
+        revert();
     }
-    
+
+    function onDeployOrUpdate(TvmCell, uint32, address, address, uint16, uint16, uint16, address sender, address remainingGasTo) 
+    external
+    functionID(0x15A038FB)
+    {
+        require(msg.sender == _refSystem, 400, "Must be root");
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
+    }
+
+    function onCodeUpgrade(TvmCell data) private {
+        tvm.rawReserve(_reserve(), 2);
+        tvm.resetStorage();
+
+        uint32 oldVersion;
+        address remainingGasTo;
+        TvmSlice s = data.toSlice();
+        (_refSystem,
+        _owner,
+        oldVersion,
+        version_,
+        _projectFee,
+        _cashbackFee,
+        _feeDigits,
+        remainingGasTo
+        ) = s.decode(
+            address,
+            address,
+            uint32,
+            uint32,
+            uint16,
+            uint16,
+            uint16,
+            address
+        );
+
+        _platformCode = s.loadRef();
+
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
+    }
+
+    function _reserve() private returns (uint128) {
+        return 0;
+    }
 
     function onRefferal(address referrer, address referred, uint128 reward) override external {
-        require(msg.sender == _refAuthority, 400, 'Must be RefAuthority');
         require(msg.value >= reward, 402, "Must Provide Reward");
 
-        IRefSystem(_refSystem).requestApproval{value: reward, flag: 0}(referrer, referred, reward);
+        IRefSystem(_refSystem).requestApproval{value: reward - 0.1 ton, flag: 0}(_owner, referrer, referred, reward);
     }
 
     function onApproval(address referrer, address referred, uint128 reward) override external {
@@ -49,20 +101,6 @@ contract Project is IProjectCallback, RandomNonce {
         referrer.transfer(forReferrer, false, 0);
         // Send Cashback
         referred.transfer(forReferred, false, 0);
-    }
-
-    onBounce(TvmSlice slice) external {
-        uint32 selector = slice.decode(uint32);
-
-        if (
-            selector == tvm.functionId(IRefSystem.requestApproval) &&
-            msg.sender == _refSystem
-        ) {
-            
-            (,, uint128 reward) = slice.decode(address, address, uint128);
-            // TODO
-            _refAuthority.transfer(reward, false, 0);
-        }
     }
 
     // function deriveAccount(address recipient) external responsible returns (address) {

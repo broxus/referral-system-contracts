@@ -29,6 +29,7 @@ import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 
 import "./RefInstance.sol";
 import "./RefInstancePlatform.sol";
+import "./ProjectPlatform.sol";
 
 import "../interfaces/IRefSystem.sol";
 
@@ -41,6 +42,7 @@ contract RefSystem is
     address public _proxy;
     TvmCell _refCode;
     TvmCell _refPlatformCode;
+    TvmCell _projectPlatformCode;
 
     uint128 public _approvalFee;
     uint128 public _approvalFeeDigits;
@@ -53,10 +55,12 @@ contract RefSystem is
     event DEBUG(TvmCell eventData, address[] parents);
 
     constructor(
+        address owner,
         uint128 approvalFee,
         uint128 approvalFeeDigits,
         TvmCell refPlatformCode,
-        TvmCell refCode
+        TvmCell refCode,
+        TvmCell projectPlatformCode
     ) public {
         tvm.accept();
         require(approvalFee < approvalFeeDigits, 500);
@@ -66,7 +70,8 @@ contract RefSystem is
 
         _refPlatformCode = refPlatformCode;
         _refCode = refCode;
-        setOwnership(msg.sender);
+        _projectPlatformCode = projectPlatformCode;
+        setOwnership(owner);
 
         // owner.transfer({
         //     value: 0,
@@ -75,39 +80,76 @@ contract RefSystem is
         // });
     }
 
-    function requestApproval(address referrer, address referred, uint128 reward) external override {
+    function requestApproval(address owner, address referrer, address referred, uint128 reward) external override {
+        require(msg.sender == _deriveProject(owner), 404, "Must Be Project");
         // Take Fee
         uint128 refFee = (reward*_approvalFee)/_approvalFeeDigits;
-        // tvm.rawReserve(refFee, 4);
-
         // Deploy or Update ref
-        deployRef(referred, referrer, reward);
-
-        // // TEST
-        // deployRef(referred, referrer);
-
-        // RefInstance(_deriveRef(referred)).queryLast{callback: RefSystem.onCheck}(abi.encode(msg.sender, referrer, referred, reward));
-    
+        _deployRef(referred, referrer, reward);
         IProjectCallback(msg.sender).onApproval{value: reward - refFee - 0.2 ton, flag: 0}(referrer, referred, reward);
     }
 
-    // function onCheck(address parent, uint128 lastReward, TvmCell payload) external {
-    //     (address project, address referrer, address referred, uint128 reward) = abi.decode(payload, (address, address, address, uint128));
-    //     require(msg.sender == _deriveRef(referred), 402, 'Must be valid RefInstance');
-    //     uint128 refFee = (reward*_approvalFee)/_approvalFeeDigits;
-
-    //     IProjectCallback(project).onApproval{value: reward - refFee, flag: 0}(referrer, referred, reward);
-    // }
-
     function deriveRef(address recipient) external responsible returns (address) {
        return _deriveRef(recipient);
+    }
+
+    function deriveProject(address owner) external responsible returns (address) {
+       return _deriveProject(owner);
+    }
+
+    function deployProject(
+        TvmCell initCode,
+        uint32 initVersion,
+        address refSystem,
+        uint16 projectFee,
+        uint16 cashbackFee,
+        uint16 feeDigits,
+        address sender,
+        address remainingGasTo
+    ) public returns (address) {
+        return new ProjectPlatform {
+            stateInit: _buildProjectInitData(msg.sender),
+            value: 3 ton,
+            wid: address(this).wid,
+            flag: 0,
+            bounce: true
+            // flag: MsgFlag.ALL_NOT_RESERVED
+        }(
+            initCode,
+            initVersion,
+            refSystem,
+            projectFee,
+            cashbackFee,
+            feeDigits,
+            sender,
+            remainingGasTo
+        );
+    }
+
+    function approveProject(address projectOwner) public {
+        ProjectPlatform(_deriveProject(projectOwner)).acceptInit();
     }
 
     function _deriveRef(address recipient) internal returns (address) {
        return address(tvm.hash(_buildRefInitData(recipient)));
     }
 
-    function deployRef(address recipient, address lastRef, uint128 lastRefReward) internal returns (address) {
+    function _deriveProject(address owner) internal returns (address) {
+        return address(tvm.hash(_buildProjectInitData(owner)));
+    }
+
+    // function _deployProject(TvmCell projectCode, address owner, TvmCell payload) internal returns (address) {
+    //     return new ProjectPlatform {
+    //         stateInit: _buildRefInitData(owner),
+    //         value: 3 ton,
+    //         wid: address(this).wid,
+    //         flag: 0,
+    //         bounce: true
+    //         // flag: MsgFlag.ALL_NOT_RESERVED
+    //     }(projectCode, payload);
+    // }
+
+    function _deployRef(address recipient, address lastRef, uint128 lastRefReward) internal returns (address) {
         return new RefInstancePlatform {
             stateInit: _buildRefInitData(recipient),
             value: 3 ton,
@@ -118,6 +160,17 @@ contract RefSystem is
         }(_refCode, 0, lastRef, lastRefReward, recipient, address(this));
     }
 
+    function _buildProjectInitData(address owner) internal returns (TvmCell) {
+        return tvm.buildStateInit({
+            contr: ProjectPlatform,
+            varInit: {
+                root: address(this),
+                owner: owner
+            },
+            pubkey: 0,
+            code: _projectPlatformCode
+        });
+    }
     function _buildRefInitData(address target) internal returns (TvmCell) {
         return tvm.buildStateInit({
             contr: RefInstancePlatform,

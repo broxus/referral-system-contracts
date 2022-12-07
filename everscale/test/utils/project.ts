@@ -20,45 +20,67 @@ async function afterRun(tx) {
 };
 
 export async function deployProject(
-    refSystem: Address,
-    refAuthority: Address,
+    projectOwner: Account,
+    refSystem: Contract,
     projectFee: number,
     cashbackFee: number,
     feeDigits: number): Promise<Contract> {
-
-    const _randomNonce = locklift.utils.getRandomNonce();
-    const [keyPair] = await locklift.keys.getKeyPairs();
-
-    // Deploy initializer account
-    const initializer = await deployAccount(keyPair, 20)
-    initializer.setKeyPair(keyPair);
-    initializer.afterRun = afterRun;
-    initializer.name = 'Event initializer';
-
-    const Project = await locklift.factory.getContract('Project');
     
-    const project = await locklift.giver.deployContract({
-        contract: Project,
-        constructorParams: {
-            refSystem,
-            refAuthority,
+    const Project = await locklift.factory.getContract('Project');
+    const ProjectPlatform = await locklift.factory.getContract('ProjectPlatform');
+    
+    await projectOwner.runTarget({
+        contract: refSystem,
+        method: "deployProject",
+        params: {
+            initCode: Project.code,
+            initVersion: 0,
+            refSystem: refSystem.address,
             projectFee,
             cashbackFee,
-            feeDigits
+            feeDigits,
+            sender: projectOwner.address,
+            remainingGasTo: projectOwner.address
         },
-        initParams: {
-            _randomNonce
-        },
-        keyPair
-    }, locklift.utils.convertCrystal(2, 'nano'));
+        keyPair: projectOwner.keyPair,
+        value: locklift.utils.convertCrystal(2, 'nano')
+    });
+
+    let projectAddr = await refSystem.call({ method: 'deriveProject', params: { owner: projectOwner.address, answerId: 0 } })
+
+    let project = ProjectPlatform;
+    project.setAddress(projectAddr)
+    project.setKeyPair(projectOwner.keyPair)
 
     await logContract(project);
 
     return project;
 }
 
-export function runOnRefferral(project: Contract, refAuthority: Account, referrer: Address, referred: Address, reward: number): Promise<Tx> {
-    return refAuthority.runTarget({
+export async function approveProject(platform: Contract, refSystemOwner: Account, refSystem: Contract): Promise<Contract> {
+    let projectOwner: Address = await platform.call({method: "getOwner", params: { answerId: 0}})
+    const Project = await locklift.factory.getContract('Project');
+    
+    await refSystemOwner.runTarget({
+        contract: refSystem,
+        method: 'approveProject',
+        params: {
+            projectOwner
+        },
+        keyPair: refSystemOwner.keyPair,
+        value: locklift.utils.convertCrystal(0.1, 'nano')
+    });
+    
+    let project = Project;
+    project.setAddress(platform.address)
+
+    await logContract(project)
+
+    return project
+}
+
+export function runOnRefferral(account: Account, project: Contract, referrer: Address, referred: Address, reward: number): Promise<Tx> {
+    return account.runTarget({
         contract: project,
         method: 'onRefferal',
         params: {
@@ -66,8 +88,8 @@ export function runOnRefferral(project: Contract, refAuthority: Account, referre
             referred,
             reward: locklift.utils.convertCrystal(reward, 'nano')
         },
-        keyPair: refAuthority.keyPair,
-        value: locklift.utils.convertCrystal(reward+0.01, 'nano')
+        keyPair: account.keyPair,
+        value: locklift.utils.convertCrystal(reward + 0.01, 'nano')
     });
 }
 
