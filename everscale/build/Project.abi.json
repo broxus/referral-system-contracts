@@ -28,6 +28,13 @@
 			]
 		},
 		{
+			"name": "acceptInit",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "onRefferal",
 			"inputs": [
 				{"name":"referrer","type":"address"},
@@ -61,6 +68,14 @@
 			],
 			"outputs": [
 				{"name":"_owner","type":"address"}
+			]
+		},
+		{
+			"name": "_isApproved",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_isApproved","type":"bool"}
 			]
 		},
 		{
@@ -108,6 +123,7 @@
 		{"name":"platformCode_","type":"cell"},
 		{"name":"_refSystem","type":"address"},
 		{"name":"_owner","type":"address"},
+		{"name":"_isApproved","type":"bool"},
 		{"name":"_projectFee","type":"uint16"},
 		{"name":"_cashbackFee","type":"uint16"},
 		{"name":"_feeDigits","type":"uint16"},

@@ -1,4 +1,4 @@
-.version sol 0.57.1
+.version sol 0.62.0
 
 .macro constructor
 DROP
@@ -22,7 +22,7 @@ ENDS
 ACCEPT
 .loc ../contracts/Sample.sol, 16
 CALLREF {
-	CALL $setState_internal_macro$
+	CALL $setState_a9e966b7_internal_macro$
 }
 .loc ../contracts/Sample.sol, 0
 CALLREF {
@@ -51,7 +51,7 @@ LDU 256
 ENDS
 .loc ../contracts/Sample.sol, 0
 CALLREF {
-	CALL $setState_internal_macro$
+	CALL $setState_a9e966b7_internal_macro$
 }
 DROP
 CALLREF {
@@ -59,11 +59,11 @@ CALLREF {
 }
 THROW 0
 
-.globl	setState_internal
-.type	setState_internal, @function
-CALL $setState_internal_macro$
+.globl	setState_a9e966b7_internal
+.type	setState_a9e966b7_internal, @function
+CALL $setState_a9e966b7_internal_macro$
 
-.macro setState_internal_macro
+.macro setState_a9e966b7_internal_macro
 .loc ../contracts/Sample.sol, 20
 ACCEPT
 .loc ../contracts/Sample.sol, 21
@@ -92,7 +92,7 @@ IFREF {
 ENDS
 .loc ../contracts/Sample.sol, 0
 CALLREF {
-	CALL $getDetails_internal_macro$
+	CALL $getDetails_fbbf93a0_internal_macro$
 }
 OVER
 PUSHCONT {
@@ -105,8 +105,8 @@ PUSHCONT {
 	NEWC
 	STSLICECONST xc
 	STSLICE
-	PUSHSLICE x0000000000000000000000002818af06a_
-	STSLICER
+	PUSHINT 2690825242
+	STUR 130
 	STU 256
 	ENDC
 	PUSHINT 0
@@ -121,7 +121,7 @@ IFREF {
 }
 THROW 0
 
-.macro getDetails_internal_macro
+.macro getDetails_fbbf93a0_internal_macro
 .loc ../contracts/Sample.sol, 32
 GETGLOB 11
 .loc ../contracts/Sample.sol, 0
@@ -155,13 +155,11 @@ PUSHCONT {
 	OVER
 	PUSHINT 64
 	DICTUGET
+	ZEROSWAPIFNOT
 	PUSHCONT {
 		PLDU 16
 	}
-	PUSHCONT {
-		PUSHINT 0
-	}
-	IFELSE
+	IF
 	PUSHINT 0
 	SETGLOB 11
 	SETGLOB 10
@@ -252,12 +250,12 @@ CALLREF {
 LDU 1 ; haveSign msgSlice
 SWAP
 PUSHCONT {
-	PUSHINT 512
+	PUSHPOW2 9
 	LDSLICEX ; signatureSlice msgSlice
 	DUP
 	HASHSU ; signatureSlice msgSlice hashMsgSlice
 	SWAP
-	LDU 1 ; signatureSlice hashMsgSlice havePubkey msgSlice
+	LDU 1 ; signatureSlice hashMsgSlice hasPubkey msgSlice
 	SWAP
 	PUSHCONT {
 		LDU 256 ; signatureSlice hashMsgSlice pubkey msgSlice
@@ -273,7 +271,7 @@ PUSHCONT {
 	THROWIFNOT 40
 }
 PUSHCONT {
-	LDU 1 ; havePubkey msgSlice
+	LDU 1 ; hasPubkey msgSlice
 	SWAP
 	THROWIF 58
 }

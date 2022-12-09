@@ -6,12 +6,23 @@
 		{
 			"name": "constructor",
 			"inputs": [
-				{"name":"owner","type":"address"},
-				{"name":"approvalFee","type":"uint128"},
-				{"name":"approvalFeeDigits","type":"uint128"},
-				{"name":"refPlatformCode","type":"cell"},
-				{"name":"refCode","type":"cell"},
-				{"name":"projectPlatformCode","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onDeployOrUpdate",
+			"id": "0x15A038FB",
+			"inputs": [
+				{"name":"value0","type":"cell"},
+				{"name":"value1","type":"uint32"},
+				{"name":"value2","type":"address"},
+				{"name":"value3","type":"address"},
+				{"name":"value4","type":"uint16"},
+				{"name":"value5","type":"uint16"},
+				{"name":"value6","type":"uint16"},
+				{"name":"sender","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
 			]
@@ -50,7 +61,6 @@
 		{
 			"name": "deployProject",
 			"inputs": [
-				{"name":"initCode","type":"cell"},
 				{"name":"initVersion","type":"uint32"},
 				{"name":"refSystem","type":"address"},
 				{"name":"projectFee","type":"uint16"},
@@ -95,19 +105,59 @@
 			]
 		},
 		{
-			"name": "_randomNonce",
+			"name": "version_",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_randomNonce","type":"uint256"}
+				{"name":"version_","type":"uint32"}
 			]
 		},
 		{
-			"name": "_proxy",
+			"name": "_platformCode",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_proxy","type":"address"}
+				{"name":"_platformCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_refFactory",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refFactory","type":"address"}
+			]
+		},
+		{
+			"name": "_refCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_refPlatformCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refPlatformCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_projectCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_projectCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_projectPlatformCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_projectPlatformCode","type":"cell"}
 			]
 		},
 		{
@@ -152,7 +202,6 @@
 		}
 	],
 	"data": [
-		{"key":1,"name":"_randomNonce","type":"uint256"}
 	],
 	"events": [
 		{
@@ -179,10 +228,12 @@
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"owner","type":"address"},
-		{"name":"_randomNonce","type":"uint256"},
-		{"name":"_proxy","type":"address"},
+		{"name":"version_","type":"uint32"},
+		{"name":"_platformCode","type":"cell"},
+		{"name":"_refFactory","type":"address"},
 		{"name":"_refCode","type":"cell"},
 		{"name":"_refPlatformCode","type":"cell"},
+		{"name":"_projectCode","type":"cell"},
 		{"name":"_projectPlatformCode","type":"cell"},
 		{"name":"_approvalFee","type":"uint128"},
 		{"name":"_approvalFeeDigits","type":"uint128"},

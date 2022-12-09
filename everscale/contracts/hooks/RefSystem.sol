@@ -30,19 +30,22 @@ import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 import "./RefInstance.sol";
 import "./RefInstancePlatform.sol";
 import "./ProjectPlatform.sol";
+import "./Project.sol";
 
 import "../interfaces/IRefSystem.sol";
 
-
 contract RefSystem is
     IRefSystem,
-    InternalOwner,
-    RandomNonce
-{
-    address public _proxy;
-    TvmCell _refCode;
-    TvmCell _refPlatformCode;
-    TvmCell _projectPlatformCode;
+    InternalOwner
+{   
+    uint32 public version_;
+    TvmCell public _platformCode;
+    
+    address public _refFactory;
+    TvmCell public _refCode;
+    TvmCell public _refPlatformCode;
+    TvmCell public _projectCode;
+    TvmCell public _projectPlatformCode;
 
     uint128 public _approvalFee;
     uint128 public _approvalFeeDigits;
@@ -54,31 +57,103 @@ contract RefSystem is
 
     event DEBUG(TvmCell eventData, address[] parents);
 
-    constructor(
-        address owner,
-        uint128 approvalFee,
-        uint128 approvalFeeDigits,
-        TvmCell refPlatformCode,
-        TvmCell refCode,
-        TvmCell projectPlatformCode
-    ) public {
-        tvm.accept();
-        require(approvalFee < approvalFeeDigits, 500);
+        constructor() public {
+        revert();
+    }
 
-        _approvalFee = approvalFee;
-        _approvalFeeDigits = approvalFeeDigits;
+    function onDeployOrUpdate(TvmCell, uint32, address, address, uint16, uint16, uint16, address sender, address remainingGasTo) 
+    external
+    functionID(0x15A038FB)
+    {
+        require(msg.sender == _refFactory, 400, "Must be Ref Factory");
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
+    }
 
-        _refPlatformCode = refPlatformCode;
-        _refCode = refCode;
-        _projectPlatformCode = projectPlatformCode;
+    function onCodeUpgrade(TvmCell data) private {
+        tvm.rawReserve(_reserve(), 2);
+        tvm.resetStorage();
+
+        uint32 oldVersion;
+        address remainingGasTo;
+        address sender;
+        address owner;
+        TvmSlice s = data.toSlice();
+        (_refFactory,
+        owner,
+        oldVersion,
+        version_,
+        _approvalFee,
+        _approvalFeeDigits,
+        sender,
+        remainingGasTo
+        ) = s.decode(
+            address,
+            address,
+            uint32,
+            uint32, 
+            uint128,
+            uint128,
+            address,
+            address
+        );
+
         setOwnership(owner);
 
-        // owner.transfer({
-        //     value: 0,
-        //     bounce: false,
-        //     flag: MsgFlag.ALL_NOT_RESERVED
-        // });
+        _refPlatformCode = s.loadRef();
+        _refCode = s.loadRef();
+        _projectPlatformCode = s.loadRef();
+        _projectCode = s.loadRef();
+        _platformCode = s.loadRef();
+
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
+
+    function _reserve() internal returns (uint128) {
+        return 0;
+    }
+
+    // constructor(
+    //     address owner,
+    //     uint128 approvalFee,
+    //     uint128 approvalFeeDigits,
+    //     TvmCell refPlatformCode,
+    //     TvmCell refCode,
+    //     TvmCell projectPlatformCode,
+    //     TvmCell projectCode
+    // ) public {
+    //     tvm.accept();
+    //     require(approvalFee < approvalFeeDigits, 500);
+
+    //     _approvalFee = approvalFee;
+    //     _approvalFeeDigits = approvalFeeDigits;
+
+    //     _refPlatformCode = refPlatformCode;
+    //     _refCode = refCode;
+    //     _projectPlatformCode = projectPlatformCode;
+    //     _projectCode = projectCode;
+    //     setOwnership(owner);
+
+    //     // owner.transfer({
+    //     //     value: 0,
+    //     //     bounce: false,
+    //     //     flag: MsgFlag.ALL_NOT_RESERVED
+    //     // });
+    // }
+
+    // on
+
 
     function requestApproval(address owner, address referrer, address referred, uint128 reward) external override {
         require(msg.sender == _deriveProject(owner), 404, "Must Be Project");
@@ -98,7 +173,6 @@ contract RefSystem is
     }
 
     function deployProject(
-        TvmCell initCode,
         uint32 initVersion,
         address refSystem,
         uint16 projectFee,
@@ -115,7 +189,7 @@ contract RefSystem is
             bounce: true
             // flag: MsgFlag.ALL_NOT_RESERVED
         }(
-            initCode,
+            _projectCode,
             initVersion,
             refSystem,
             projectFee,
@@ -127,7 +201,7 @@ contract RefSystem is
     }
 
     function approveProject(address projectOwner) public {
-        ProjectPlatform(_deriveProject(projectOwner)).acceptInit();
+        Project(_deriveProject(projectOwner)).acceptInit();
     }
 
     function _deriveRef(address recipient) internal returns (address) {

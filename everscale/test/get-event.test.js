@@ -4,15 +4,7 @@ const { locklift, afterRun, deployTestHook, logContract, deployRefFactory, deplo
 const logger = require('mocha-logger')
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
-const {
-    setupRelays,
-    setupBridge,
-    setupAlienMultiVault,
-    ...utils
-} = require('./old_utils.js');
-
-
-describe('Deposit Alien token from EVM to Everscale with no merging', async function () {
+describe.skip('Deposit Alien token from EVM to Everscale with no merging', async function () {
     this.timeout(10000000);
 
     let metricManager;

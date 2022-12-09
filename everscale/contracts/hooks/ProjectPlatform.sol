@@ -8,15 +8,6 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 contract ProjectPlatform {
     address static root;
     address static owner;
-
-    TvmCell _initCode;
-    uint32 _initVersion;
-    address _refSystem;
-    uint16 _projectFee;
-    uint16 _cashbackFee;
-    uint16 _feeDigits;
-    address _sender;
-    address _remainingGasTo;
     
     constructor(
         TvmCell initCode,
@@ -32,33 +23,16 @@ contract ProjectPlatform {
         functionID(0x15A038FB)
     {   
         tvm.accept();
-        _initCode = initCode;
-        _initVersion = initVersion;
-        _refSystem = refSystem;
-        _projectFee = projectFee;
-        _cashbackFee = cashbackFee;
-        _feeDigits = feeDigits;
-        _sender = sender;
-        _remainingGasTo = remainingGasTo;
-        // if (msg.sender == owner || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
-        //    initialize(initCode, initVersion, projectFee, cashbackFee, feeDigits, remainingGasTo);
-        // } else {
-        //     remainingGasTo.transfer({
-        //         value: 0,
-        //         flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.DESTROY_IF_ZERO,
-        //         bounce: false
-        //     });
-        // }
-    }
 
-    function getOwner() external responsible returns (address) {
-        return owner;
-    }
-
-    function acceptInit() external {
-        tvm.accept();
-        require(msg.sender == root, 400, 'Must be Root');
-        initialize(_initCode, _initVersion, _projectFee, _cashbackFee, _feeDigits, _sender, _remainingGasTo);
+        if (msg.sender == owner || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
+           initialize(initCode, initVersion, projectFee, cashbackFee, feeDigits, sender, remainingGasTo);
+        } else {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.DESTROY_IF_ZERO,
+                bounce: false
+            });
+        }
     }
 
     function _getExpectedAddress(address owner_) private view returns (address) {

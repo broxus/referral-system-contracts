@@ -37,174 +37,69 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/ProjectPlatform.sol, 34
+.loc ../contracts/hooks/ProjectPlatform.sol, 25
 ACCEPT
-.loc ../contracts/hooks/ProjectPlatform.sol, 35
-ROLL 7
-SETGLOB 12
-.loc ../contracts/hooks/ProjectPlatform.sol, 36
-ROLL 6
-SETGLOB 13
-.loc ../contracts/hooks/ProjectPlatform.sol, 37
-ROLL 5
-SETGLOB 14
-.loc ../contracts/hooks/ProjectPlatform.sol, 38
-ROLL 4
-SETGLOB 15
-.loc ../contracts/hooks/ProjectPlatform.sol, 39
-ROLL 3
-SETGLOB 16
-.loc ../contracts/hooks/ProjectPlatform.sol, 40
-ROT
-SETGLOB 17
-.loc ../contracts/hooks/ProjectPlatform.sol, 41
-SWAP
-SETGLOB 18
-.loc ../contracts/hooks/ProjectPlatform.sol, 42
-SETGLOB 19
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-THROW 0
-
-.macro getOwner
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../contracts/hooks/ProjectPlatform.sol, 54
-LDU 32
-GETGLOB 4
-ROT
-SETINDEXQ 5
-SETGLOB 4
-ENDS
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
-CALLREF {
-	CALL $getOwner_internal_macro$
-}
-OVER
+.loc ../contracts/hooks/ProjectPlatform.sol, 27
+GETGLOB 9
+GETGLOB 11
+SDEQ
+DUP
 PUSHCONT {
-	PUSH S3
-	CTOS
-	LDU 2
-	LDMSGADDR
 	DROP
-	NIP
-	NEWC
-	STSLICECONST xc
-	STSLICE
-	PUSHINT 1
-	STUR 98
-	SWAP
-	NEWC
-	STSLICECONST xe2c3961c
-	STSLICE
-	STBREFR
-	ENDC
-	PUSHINT 0
+	OVER
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+	DUP
+	PUSHCONT {
+		DROP
+		OVER
+		CALLREF {
+			CALL $_getExpectedAddress_internal_macro$
+		}
+		GETGLOB 9
+		SDEQ
+	}
+	IF
+}
+IFNOT
+PUSHCONT {
+	.loc ../contracts/hooks/ProjectPlatform.sol, 28
+	BLKPUSH 2, 7
+	BLKPUSH 5, 6
+	CALLREF {
+		CALL $initialize_internal_macro$
+	}
 }
 PUSHCONT {
-	GETGLOB 4
+	.loc ../contracts/hooks/ProjectPlatform.sol, 30
 	DUP
-	INDEX 3
-	OVER
-	THIRD
-	GETGLOB 9
-	ROLL 3
-	SECOND
 	NEWC
-	PUSHINT 2
-	STZEROES
-	STI 1
-	PUSHINT 3
-	STZEROES
+	STSLICECONST x42_
 	STSLICE
-	SWAP
-	STGRAMS
-	STDICT
-	PUSHINT 1
-	STUR 106
-	SWAP
-	NEWC
-	GETGLOB 4
-	INDEX 5
-	STUR 32
-	STSLICE
-	STBREFR
+	PUSHINT 111
+	STZEROES
 	ENDC
-	GETGLOB 4
-	INDEX 4
+	PUSHINT 128
+	ADDCONST 32
+	UFITS 8
+	SENDRAWMSG
 }
 IFELSE
-SENDRAWMSG
-DROP
+.loc ../contracts/hooks/ProjectPlatform.sol, 0
+BLKDROP 8
 CALLREF {
 	CALL $c7_to_c4$
 }
 THROW 0
-
-.macro getOwner_internal_macro
-.loc ../contracts/hooks/ProjectPlatform.sol, 55
-GETGLOB 11
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
-
-.macro acceptInit
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../contracts/hooks/ProjectPlatform.sol, 58
-ENDS
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
-CALLREF {
-	CALL $acceptInit_internal_macro$
-}
-DROP
-CALLREF {
-	CALL $c7_to_c4$
-}
-THROW 0
-
-.macro acceptInit_internal_macro
-.loc ../contracts/hooks/ProjectPlatform.sol, 59
-ACCEPT
-.loc ../contracts/hooks/ProjectPlatform.sol, 60
-PUSHREF {
-	.blob x4d75737420626520526f6f74
-}
-GETGLOB 9
-GETGLOB 10
-SDEQ
-THROWARGIFNOT 400
-.loc ../contracts/hooks/ProjectPlatform.sol, 61
-GETGLOB 12
-GETGLOB 13
-GETGLOB 15
-GETGLOB 16
-GETGLOB 17
-GETGLOB 18
-GETGLOB 19
-CALLREF {
-	CALL $initialize_internal_macro$
-}
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
 
 .globl	_getExpectedAddress_internal
 .type	_getExpectedAddress_internal, @function
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/hooks/ProjectPlatform.sol, 65
+.loc ../contracts/hooks/ProjectPlatform.sol, 39
 PUSHINT 0
 NEWC
 STU 256
@@ -243,7 +138,7 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/ProjectPlatform.sol, 75
+.loc ../contracts/hooks/ProjectPlatform.sol, 49
 HASHCU
 NEWC
 STSLICECONST x801_
@@ -257,37 +152,37 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/ProjectPlatform.sol, 81
+.loc ../contracts/hooks/ProjectPlatform.sol, 55
 GETGLOB 10
 NEWC
 STSLICE
-.loc ../contracts/hooks/ProjectPlatform.sol, 82
+.loc ../contracts/hooks/ProjectPlatform.sol, 56
 GETGLOB 11
 SWAP
 STSLICE
-.loc ../contracts/hooks/ProjectPlatform.sol, 83
+.loc ../contracts/hooks/ProjectPlatform.sol, 57
 PUSHINT 0
 SWAP
 STU 32
-.loc ../contracts/hooks/ProjectPlatform.sol, 84
+.loc ../contracts/hooks/ProjectPlatform.sol, 58
 ROLL 6
 SWAP
 STU 32
-.loc ../contracts/hooks/ProjectPlatform.sol, 85
+.loc ../contracts/hooks/ProjectPlatform.sol, 59
 ROLL 5
 SWAP
 STU 16
-.loc ../contracts/hooks/ProjectPlatform.sol, 86
+.loc ../contracts/hooks/ProjectPlatform.sol, 60
 ROLL 4
 SWAP
 STU 16
-.loc ../contracts/hooks/ProjectPlatform.sol, 87
+.loc ../contracts/hooks/ProjectPlatform.sol, 61
 ROLL 3
 SWAP
 STU 16
-.loc ../contracts/hooks/ProjectPlatform.sol, 88
+.loc ../contracts/hooks/ProjectPlatform.sol, 62
 STSLICE
-.loc ../contracts/hooks/ProjectPlatform.sol, 90
+.loc ../contracts/hooks/ProjectPlatform.sol, 64
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -302,10 +197,10 @@ STSLICE
 ENDC
 SWAP
 STREF
-.loc ../contracts/hooks/ProjectPlatform.sol, 92
+.loc ../contracts/hooks/ProjectPlatform.sol, 66
 PUSH S2
 SETCODE
-.loc ../contracts/hooks/ProjectPlatform.sol, 93
+.loc ../contracts/hooks/ProjectPlatform.sol, 67
 ROT
 CTOS
 DUP
@@ -320,7 +215,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/ProjectPlatform.sol, 95
+.loc ../contracts/hooks/ProjectPlatform.sol, 69
 ENDC
 CALLREF {
 	CALL $:onCodeUpgrade$
@@ -350,32 +245,7 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
-LDREF
-LDU 32
-LDREF
 ENDS
-CTOS
-LDMSGADDR
-LDU 16
-LDU 16
-LDU 16
-LDREF
-ENDS
-CTOS
-LDMSGADDR
-LDREF
-ENDS
-CTOS
-LDMSGADDR
-ENDS
-SETGLOB 19
-SETGLOB 18
-SETGLOB 17
-SETGLOB 16
-SETGLOB 15
-SETGLOB 14
-SETGLOB 13
-SETGLOB 12
 SETGLOB 11
 SETGLOB 10
 SETGLOB 3
@@ -411,26 +281,6 @@ PUSHCONT {
 		}
 	}
 	IFNOT
-	PUSHREF {
-	}
-	PUSHINT 0
-	PUSHREFSLICE {
-		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-	}
-	PUSHINT 0
-	BLKPUSH 2, 0
-	PUSHREFSLICE {
-		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-	}
-	DUP
-	SETGLOB 19
-	SETGLOB 18
-	SETGLOB 17
-	SETGLOB 16
-	SETGLOB 15
-	SETGLOB 14
-	SETGLOB 13
-	SETGLOB 12
 	SETGLOB 11
 	SETGLOB 10
 	PUSHINT 64
@@ -446,15 +296,6 @@ IFREFELSE {
 }
 
 .macro c7_to_c4
-GETGLOB 19
-GETGLOB 18
-GETGLOB 17
-GETGLOB 16
-GETGLOB 15
-GETGLOB 14
-GETGLOB 13
-GETGLOB 12
-GETGLOB 11
 GETGLOB 10
 GETGLOB 3
 GETGLOB 2
@@ -463,26 +304,9 @@ STU 256
 STU 64
 STONE
 STSLICE
-ROLLREV 9
+GETGLOB 11
 NEWC
 STSLICE
-STREF
-STU 32
-ROLLREV 6
-NEWC
-STSLICE
-STU 16
-STU 16
-STU 16
-ROTREV
-NEWC
-STSLICE
-SWAP
-NEWC
-STSLICE
-STBREFR
-STBREFR
-STBREFR
 STBREFR
 ENDC
 POPROOT
@@ -516,16 +340,6 @@ LDMSGADDR ; bounced src tail
 DROP
 SETGLOB 9
 MODPOW2 1
-GETGLOB 4
-TRUE
-SETINDEXQ 1
-PUSHINT 10000000
-SETINDEXQ 2
-NULL
-SETINDEXQ 3
-PUSHINT 0
-SETINDEXQ 4
-SETGLOB 4
 IFRET
 OVER
 SEMPTY ; isEmpty
@@ -608,21 +422,9 @@ THROW 60
 
 .macro public_function_selector
 DUP
-PUSHINT 202536740
-EQUAL
-IFJMPREF {
-	CALL $acceptInit$
-}
-DUP
 PUSHINT 362821883
 EQUAL
 IFJMPREF {
 	CALL $constructor$
-}
-DUP
-PUSHINT 1656985116
-EQUAL
-IFJMPREF {
-	CALL $getOwner$
 }
 

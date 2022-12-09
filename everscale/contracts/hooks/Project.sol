@@ -17,6 +17,7 @@ contract Project is IProjectCallback {
 
     address public _refSystem; // root
     address public _owner;
+    bool public _isApproved;
 
     uint16 public _projectFee; 
     uint16 public _cashbackFee;
@@ -78,17 +79,26 @@ contract Project is IProjectCallback {
         }
     }
 
+    function acceptInit() public {
+        require(msg.sender == _refSystem, 400, "Must be RefSystem");
+        _isApproved = true;
+    }
+
+    modifier approved() {
+        require(_isApproved, 500, "Must Be Approved");
+        _;
+    }
+
     function _reserve() private returns (uint128) {
         return 0;
     }
 
-    function onRefferal(address referrer, address referred, uint128 reward) override external {
+    function onRefferal(address referrer, address referred, uint128 reward) approved override external {
         require(msg.value >= reward, 402, "Must Provide Reward");
-
         IRefSystem(_refSystem).requestApproval{value: reward - 0.1 ton, flag: 0}(_owner, referrer, referred, reward);
     }
 
-    function onApproval(address referrer, address referred, uint128 reward) override external {
+    function onApproval(address referrer, address referred, uint128 reward) approved override external {
         require(msg.sender == _refSystem, 400, 'Must be RefSystem');
         
         uint128 forProject = (reward*_projectFee)/_feeDigits;
