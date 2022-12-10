@@ -44,12 +44,12 @@ contract RefSystemPlatform {
     constructor(
         TvmCell initCode,
         uint32 initVersion,
-        uint128 approvalFee,
-        uint128 approvalFeeDigits,
         TvmCell refPlatformCode,
         TvmCell refCode,
         TvmCell projectPlatformCode,
         TvmCell projectCode,
+        uint128 approvalFee,
+        uint128 approvalFeeDigits,
         address sender,
         address remainingGasTo
     )
@@ -58,8 +58,8 @@ contract RefSystemPlatform {
     {   
         tvm.accept();
 
-        if (msg.sender == owner || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
-           initialize(initCode, initVersion, approvalFee, approvalFeeDigits, refPlatformCode, refCode, projectPlatformCode, projectCode, sender, remainingGasTo);
+        if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
+            initialize(initCode, initVersion, refPlatformCode, refCode, projectPlatformCode, projectCode, approvalFee, approvalFeeDigits, sender, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -86,37 +86,36 @@ contract RefSystemPlatform {
     function initialize(
         TvmCell initCode,
         uint32 initVersion,
-        uint128 approvalFee,
-        uint128 approvalFeeDigits,
         TvmCell refPlatformCode,
         TvmCell refCode,
         TvmCell projectPlatformCode,
         TvmCell projectCode,
+        uint128 approvalFee,
+        uint128 approvalFeeDigits,
         address sender,
         address remainingGasTo
     ) private {
-        TvmBuilder builder;
 
-        builder.store(root); // _refFactory
-        builder.store(owner);
-        builder.store(uint32(0)); // oldVersion
-        builder.store(initVersion); // initVersion
-
-        builder.store(approvalFee);
-        builder.store(approvalFeeDigits);
-        builder.store(sender);
-        builder.store(remainingGasTo);
-
-        builder.store(refPlatformCode);
-        builder.store(refCode);
-        builder.store(projectPlatformCode);
-        builder.store(projectCode);
-        builder.store(tvm.code());
+        TvmCell inputCell = abi.encode(
+            root,
+            owner,
+            uint32(0),
+            initVersion,
+            approvalFee,
+            approvalFeeDigits,
+            sender,
+            remainingGasTo,
+            tvm.code(),
+            projectPlatformCode,
+            projectCode,
+            refPlatformCode,
+            refCode
+        );
 
         tvm.setcode(initCode);
         tvm.setCurrentCode(initCode);
 
-        onCodeUpgrade(builder.toCell());
+        onCodeUpgrade(inputCell);
     }
 
     function onCodeUpgrade(TvmCell data) private {}

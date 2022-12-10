@@ -7,31 +7,37 @@ import { Contract } from "locklift";
 import { Account } from "everscale-standalone-client";
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
-describe('Save Refferral', function () {
+describe.only('Save Refferral', function () {
     this.timeout(10000000);
 
     describe('RefFactory', function () {
-        describe('contructor', function () {
+        describe('constructor', function () {
             it('should deploy RefFactory', async function () {
                 let refOwnerPair = await locklift.keystore.getSigner("0")
-                let refFactoryOwner = await deployAccount(refOwnerPair!, 50);
+                let refFactoryOwner = await deployAccount(refOwnerPair!, 50, "RefFactoryOwner");
 
                 let refFactory = await deployRefFactory(refFactoryOwner)
+                logContract(refFactory, "RefFactory")
+
                 expect((await refFactory.methods.owner().call()).owner.equals(refFactoryOwner.address)).to.be.true
             })
         })
     })
+
     describe("RefSystem", function () {
         describe('constructor', function () {
             it('should deploy RefSystem', async () => {
-                let refFactoryOwnerPair = await locklift.keystore.getSigner("0")
+                let refFactoryOwnerPair = await locklift.keystore.getSigner("1")
                 let refFactoryOwner = await deployAccount(refFactoryOwnerPair!, 50);
                 let refFactory = await deployRefFactory(refFactoryOwner)
+                logContract(refFactory, "refFactory")
 
                 let refOwnerPair = await locklift.keystore.getSigner("1")
-                let refSysOwner = await deployAccount(refOwnerPair!, 50);
+                let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
 
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                logContract(refSystem, "refSystem")
+
                 expect((await refSystem.methods._approvalFee().call())._approvalFee)
                     .to.be.bignumber.equal(300, 'Wrong Value');
             })
@@ -41,7 +47,6 @@ describe('Save Refferral', function () {
             let project: Contract<FactorySource["Project"]>;
             let refSystem: Contract<FactorySource["RefSystem"]>;
             let refSysOwner: Account;
-
 
             it('should deploy Project uninitialized', async function () {
                 let refFactoryOwnerPair = await locklift.keystore.getSigner("0")
@@ -62,12 +67,12 @@ describe('Save Refferral', function () {
                 let { _owner } = await project.methods._owner().call()
                 logger.log(_owner, projectOwner.address);
                 expect(_owner.equals(projectOwner.address)).to.be.true
-                expect((await (await project.methods._isApproved().call())._isApproved).to.be.false;
+                expect((await (await project.methods._isApproved().call())._isApproved)).to.be.false;
             })
 
             it('should be approved by RefSystem', async function () {
                 await approveProject(project, refSysOwner, refSystem)
-                expect((await (await project.methods._isApproved().call())._isApproved).to.be.true;
+                expect(((await project.methods._isApproved().call())._isApproved)).to.be.true;
             })
         })
 
@@ -79,7 +84,6 @@ describe('Save Refferral', function () {
     })
 
     describe('ProjectUpgradeable', function () {
-        it('should be upgradeable by owner')
         it('should have version')
         it('should not be initialized after upgrade')
         it('should be initialized by RefSystem')

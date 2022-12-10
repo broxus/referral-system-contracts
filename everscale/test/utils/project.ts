@@ -25,7 +25,6 @@ export async function deployProject(
     const ProjectPlatform = await locklift.factory.getContractArtifacts('ProjectPlatform');
 
     await refSystem.methods.deployProject({
-        initCode: Project.code,
         initVersion: 0,
         refSystem: refSystem.address,
         projectFee,
@@ -33,7 +32,7 @@ export async function deployProject(
         feeDigits,
         sender: projectOwner.address,
         remainingGasTo: projectOwner.address
-    }).send({ from: projectOwner.address, amount: locklift.utils.toNano(3) })
+    }).send({ from: projectOwner.address, amount: locklift.utils.toNano(5) })
 
     let { value0: projectAddr } = await refSystem.methods.deriveProject({owner: projectOwner.address, answerId: 0}).call();
     // let projectAddr = await refSystem.call({ method: 'deriveProject', params: { owner: projectOwner.address, answerId: 0 } })
@@ -43,9 +42,8 @@ export async function deployProject(
     return project;
 }
 
-export async function approveProject(platform: Contract<FactorySource["Project"]>, refSystemOwner: Account, refSystem: Contract<FactorySource["RefSystem"]>) {
-    const Project = await locklift.factory.getContractArtifacts("Project");
-    let {_owner: projectOwner } = await platform.methods._owner().call()
+export async function approveProject(project: Contract<FactorySource["Project"]>, refSystemOwner: Account, refSystem: Contract<FactorySource["RefSystem"]>) {
+    let {_owner: projectOwner } = await project.methods._owner().call()
     
     return refSystem.methods.approveProject({
         projectOwner

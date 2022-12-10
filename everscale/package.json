@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "npx locklift test --network local",
+    "test": "npx locklift test --network local --disable-build",
     "build": "npx locklift build"
   },
   "author": "",

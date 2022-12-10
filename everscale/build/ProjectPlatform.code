@@ -41,7 +41,7 @@ ENDS
 ACCEPT
 .loc ../contracts/hooks/ProjectPlatform.sol, 27
 GETGLOB 9
-GETGLOB 11
+GETGLOB 10
 SDEQ
 DUP
 PUSHCONT {
@@ -152,37 +152,7 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/ProjectPlatform.sol, 55
-GETGLOB 10
-NEWC
-STSLICE
-.loc ../contracts/hooks/ProjectPlatform.sol, 56
-GETGLOB 11
-SWAP
-STSLICE
-.loc ../contracts/hooks/ProjectPlatform.sol, 57
-PUSHINT 0
-SWAP
-STU 32
-.loc ../contracts/hooks/ProjectPlatform.sol, 58
-ROLL 6
-SWAP
-STU 32
-.loc ../contracts/hooks/ProjectPlatform.sol, 59
-ROLL 5
-SWAP
-STU 16
-.loc ../contracts/hooks/ProjectPlatform.sol, 60
-ROLL 4
-SWAP
-STU 16
-.loc ../contracts/hooks/ProjectPlatform.sol, 61
-ROLL 3
-SWAP
-STU 16
-.loc ../contracts/hooks/ProjectPlatform.sol, 62
-STSLICE
-.loc ../contracts/hooks/ProjectPlatform.sol, 64
+.loc ../contracts/hooks/ProjectPlatform.sol, 54
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -195,8 +165,28 @@ STSLICECONST x8adb35
 STREF
 STSLICE
 ENDC
-SWAP
+ROT
+REVERSE 7, 0
+PUSHINT 0
+GETGLOB 11
+GETGLOB 10
+NEWC
+STSLICE
+ROLLREV 8
+NEWC
+STSLICE
+STU 32
+STU 32
+STU 16
+STU 16
+STU 16
+ROTREV
+NEWC
+STSLICE
 STREF
+STBREFR
+STBREFR
+ENDC
 .loc ../contracts/hooks/ProjectPlatform.sol, 66
 PUSH S2
 SETCODE
@@ -216,7 +206,6 @@ CTOS
 BLESS
 POP C3
 .loc ../contracts/hooks/ProjectPlatform.sol, 69
-ENDC
 CALLREF {
 	CALL $:onCodeUpgrade$
 }

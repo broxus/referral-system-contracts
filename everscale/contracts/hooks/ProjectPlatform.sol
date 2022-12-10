@@ -24,7 +24,7 @@ contract ProjectPlatform {
     {   
         tvm.accept();
 
-        if (msg.sender == owner || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
+        if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
            initialize(initCode, initVersion, projectFee, cashbackFee, feeDigits, sender, remainingGasTo);
         } else {
             remainingGasTo.transfer({
@@ -50,23 +50,23 @@ contract ProjectPlatform {
     }
 
     function initialize(TvmCell initCode, uint32 initVersion, uint16 projectFee, uint16 cashbackFee, uint16 feeDigits, address sender, address remainingGasTo) private {
-        TvmBuilder builder;
-
-        builder.store(root); // _refSystem
-        builder.store(owner);
-        builder.store(uint32(0)); // oldVersion
-        builder.store(initVersion); // initVersion
-        builder.store(projectFee);
-        builder.store(cashbackFee);
-        builder.store(feeDigits);
-        builder.store(remainingGasTo);
-
-        builder.store(tvm.code());
+        
+        TvmCell inputData = abi.encode(
+            root,
+            owner,
+            uint32(0),
+            initVersion,
+            projectFee,
+            cashbackFee,
+            feeDigits,
+            remainingGasTo,
+            tvm.code()
+        );
 
         tvm.setcode(initCode);
         tvm.setCurrentCode(initCode);
 
-        onCodeUpgrade(builder.toCell());
+        onCodeUpgrade(inputData);
     }
 
     function onCodeUpgrade(TvmCell data) private {}

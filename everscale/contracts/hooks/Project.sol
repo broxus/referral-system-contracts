@@ -48,16 +48,17 @@ contract Project is IProjectCallback {
 
         uint32 oldVersion;
         address remainingGasTo;
-        TvmSlice s = data.toSlice();
-        (_refSystem,
-        _owner,
-        oldVersion,
-        version_,
-        _projectFee,
-        _cashbackFee,
-        _feeDigits,
-        remainingGasTo
-        ) = s.decode(
+        (
+            _refSystem,
+            _owner,
+            oldVersion,
+            version_,
+            _projectFee,
+            _cashbackFee,
+            _feeDigits,
+            remainingGasTo,
+            _platformCode
+        ) = abi.decode(data, (
             address,
             address,
             uint32,
@@ -65,10 +66,11 @@ contract Project is IProjectCallback {
             uint16,
             uint16,
             uint16,
-            address
-        );
+            address,
+            TvmCell
+        ));
 
-        _platformCode = s.loadRef();
+        // _platformCode = s.loadRef();
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({

@@ -56,8 +56,7 @@ contract RefSystem is
     mapping (address => address) public tempReq;
 
     event DEBUG(TvmCell eventData, address[] parents);
-
-        constructor() public {
+    constructor() public {
         revert();
     }
 
@@ -83,7 +82,7 @@ contract RefSystem is
         address remainingGasTo;
         address sender;
         address owner;
-        TvmSlice s = data.toSlice();
+
         (_refFactory,
         owner,
         oldVersion,
@@ -91,8 +90,13 @@ contract RefSystem is
         _approvalFee,
         _approvalFeeDigits,
         sender,
-        remainingGasTo
-        ) = s.decode(
+        remainingGasTo,
+        _platformCode,
+        _projectPlatformCode,
+        _projectCode,
+        _refPlatformCode,
+        _refCode
+        ) = abi.decode(data,(
             address,
             address,
             uint32,
@@ -100,17 +104,15 @@ contract RefSystem is
             uint128,
             uint128,
             address,
-            address
-        );
+            address,
+            TvmCell,
+            TvmCell,
+            TvmCell,
+            TvmCell,
+            TvmCell
+        ));
 
         setOwnership(owner);
-
-        _refPlatformCode = s.loadRef();
-        _refCode = s.loadRef();
-        _projectPlatformCode = s.loadRef();
-        _projectCode = s.loadRef();
-        _platformCode = s.loadRef();
-
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
                 value: 0,

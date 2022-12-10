@@ -11,59 +11,44 @@ IFREF {
 }
 GETGLOB 6
 THROWIF 51
-LDREF
-LDU 32
-LDREF
-LDREF
+OVER
+PUSHCONT {
+	LDREF
+	LDU 32
+	LDREF
+	ENDS
+	CTOS
+}
+PUSHCONT {
+	LDREF
+	LDU 32
+}
+IFELSE
+LDMSGADDR
+LDU 128
 LDREF
 ENDS
 CTOS
-LDREF
-LDREF
-LDU 128
-LDU 128
 LDMSGADDR
 LDREF
 ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefSystemPlatform.sol, 59
-ACCEPT
-.loc ../contracts/hooks/RefSystemPlatform.sol, 61
+.loc ../contracts/hooks/RefAccountPlatform.sol, 18
 GETGLOB 9
 GETGLOB 10
 SDEQ
-DUP
 PUSHCONT {
-	DROP
-	OVER
-	PARSEMSGADDR
-	INDEX 3
-	PLDU 256
-	NEQINT 0
-	DUP
-	PUSHCONT {
-		DROP
-		OVER
-		CALLREF {
-			CALL $_getExpectedAddress_internal_macro$
-		}
-		GETGLOB 9
-		SDEQ
-	}
-	IF
-}
-IFNOT
-PUSHCONT {
-	.loc ../contracts/hooks/RefSystemPlatform.sol, 62
-	BLKPUSH 10, 9
+	.loc ../contracts/hooks/RefAccountPlatform.sol, 19
+	BLKPUSH 4, 5
+	PUSH S4
 	CALLREF {
 		CALL $initialize_internal_macro$
 	}
 }
 PUSHCONT {
-	.loc ../contracts/hooks/RefSystemPlatform.sol, 64
+	.loc ../contracts/hooks/RefAccountPlatform.sol, 21
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -77,8 +62,8 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IFELSE
-.loc ../contracts/hooks/RefSystemPlatform.sol, 0
-BLKDROP 10
+.loc ../contracts/hooks/RefAccountPlatform.sol, 0
+BLKDROP 6
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -89,7 +74,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/hooks/RefSystemPlatform.sol, 73
+.loc ../contracts/hooks/RefAccountPlatform.sol, 30
 PUSHINT 0
 NEWC
 STU 256
@@ -128,23 +113,36 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/RefSystemPlatform.sol, 83
+.loc ../contracts/hooks/RefAccountPlatform.sol, 40
 HASHCU
 NEWC
 STSLICECONST x801_
 STU 256
 ENDC
 CTOS
-.loc ../contracts/hooks/RefSystemPlatform.sol, 0
+.loc ../contracts/hooks/RefAccountPlatform.sol, 0
 
 .globl	initialize_internal
 .type	initialize_internal, @function
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/RefSystemPlatform.sol, 99
-REVERSE 6, 0
-REVERSE 6, 2
+.loc ../contracts/hooks/RefAccountPlatform.sol, 44
+DROP
+.loc ../contracts/hooks/RefAccountPlatform.sol, 46
+GETGLOB 10
+NEWC
+STSLICE
+.loc ../contracts/hooks/RefAccountPlatform.sol, 47
+GETGLOB 11
+SWAP
+STSLICE
+.loc ../contracts/hooks/RefAccountPlatform.sol, 48
+XCHG S1, S2
+STSLICE
+.loc ../contracts/hooks/RefAccountPlatform.sol, 49
+STU 128
+.loc ../contracts/hooks/RefAccountPlatform.sol, 53
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -157,43 +155,13 @@ STSLICECONST x8adb35
 STREF
 STSLICE
 ENDC
-BLKSWAP 5, 5
-REVERSE 5, 0
-PUSHINT 0
-GETGLOB 11
-GETGLOB 10
-NEWC
-STSLICE
-ROLLREV 12
-NEWC
-STSLICE
-STU 32
-STU 32
-STU 128
-STU 128
-ROLLREV 7
-NEWC
-STSLICE
-ROLLREV 6
-NEWC
-STSLICE
-STREF
-STREF
-STREF
-ROTREV
-NEWC
-STREF
-STREF
-STBREFR
-STBREFR
-STBREFR
-STBREFR
-ENDC
-.loc ../contracts/hooks/RefSystemPlatform.sol, 115
-OVER
-SETCODE
-.loc ../contracts/hooks/RefSystemPlatform.sol, 116
 SWAP
+STREF
+.loc ../contracts/hooks/RefAccountPlatform.sol, 55
+PUSH S2
+SETCODE
+.loc ../contracts/hooks/RefAccountPlatform.sol, 56
+ROT
 CTOS
 DUP
 PUSHSLICE x8adb35
@@ -207,16 +175,18 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/RefSystemPlatform.sol, 118
+.loc ../contracts/hooks/RefAccountPlatform.sol, 58
+ENDC
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
-.loc ../contracts/hooks/RefSystemPlatform.sol, 0
+.loc ../contracts/hooks/RefAccountPlatform.sol, 0
+DROP
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
 DROP
-.loc ../contracts/hooks/RefSystemPlatform.sol, 0
+.loc ../contracts/hooks/RefAccountPlatform.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -235,7 +205,9 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
+LDDICT
 ENDS
+SETGLOB 12
 SETGLOB 11
 SETGLOB 10
 SETGLOB 3
@@ -271,6 +243,8 @@ PUSHCONT {
 		}
 	}
 	IFNOT
+	NEWDICT
+	SETGLOB 12
 	SETGLOB 11
 	SETGLOB 10
 	PUSHINT 64
@@ -286,6 +260,8 @@ IFREFELSE {
 }
 
 .macro c7_to_c4
+GETGLOB 12
+GETGLOB 11
 GETGLOB 10
 GETGLOB 3
 GETGLOB 2
@@ -294,9 +270,10 @@ STU 256
 STU 64
 STONE
 STSLICE
-GETGLOB 11
+ROTREV
 NEWC
 STSLICE
+STDICT
 STBREFR
 ENDC
 POPROOT

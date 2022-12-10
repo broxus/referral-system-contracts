@@ -1,0 +1,100 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onDeployOrUpdate",
+			"id": "0x15A038FB",
+			"inputs": [
+				{"name":"value0","type":"cell"},
+				{"name":"value1","type":"uint32"},
+				{"name":"walletRoot","type":"address"},
+				{"name":"reward","type":"uint128"},
+				{"name":"value4","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "platformCode",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "deriveRef",
+			"inputs": [
+				{"name":"target","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "_tokenBalance",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_tokenBalance","type":"map(address,uint256)"}
+			]
+		},
+		{
+			"name": "version_",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"version_","type":"uint32"}
+			]
+		},
+		{
+			"name": "platformCode_",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"platformCode_","type":"cell"}
+			]
+		},
+		{
+			"name": "_refSystem",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refSystem","type":"address"}
+			]
+		},
+		{
+			"name": "_recipient",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_recipient","type":"address"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"_tokenBalance","type":"map(address,uint256)"},
+		{"name":"version_","type":"uint32"},
+		{"name":"platformCode_","type":"cell"},
+		{"name":"_refSystem","type":"address"},
+		{"name":"_recipient","type":"address"}
+	]
+}

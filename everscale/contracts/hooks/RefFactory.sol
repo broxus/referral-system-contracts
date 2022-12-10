@@ -46,17 +46,19 @@ contract RefFactory is InternalOwner, RandomNonce {
         TvmCell refSystemPlatformCode
     ) public {
         tvm.accept();
+        _refSystemPlatformCode = refSystemPlatformCode;
+        _refSystemCode = refSystemCode;
         setOwnership(owner);
     }
 
     function deployRefSystem(
         address owner,
-        uint128 approvalFee,
-        uint128 approvalFeeDigits,
         TvmCell refPlatformCode,
         TvmCell refCode,
         TvmCell projectPlatformCode,
         TvmCell projectCode,
+        uint128 approvalFee,
+        uint128 approvalFeeDigits,
         address sender,
         address remainingGasTo
     ) public onlyOwner returns (address) {
@@ -66,7 +68,7 @@ contract RefFactory is InternalOwner, RandomNonce {
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(_refSystemCode, 0, approvalFee, approvalFeeDigits, refPlatformCode, refCode, projectPlatformCode, projectCode, sender, remainingGasTo);
+        }(_refSystemCode, 0, refPlatformCode, refCode, projectPlatformCode, projectCode, approvalFee, approvalFeeDigits, sender, remainingGasTo);
     }
 
     function deriveRefSystem(address owner) public returns (address) {

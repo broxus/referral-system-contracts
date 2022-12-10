@@ -21,9 +21,12 @@ LDREF
 LDREF
 ENDS
 .loc ../contracts/hooks/RefFactory.sol, 48
-DROP2
 ACCEPT
 .loc ../contracts/hooks/RefFactory.sol, 49
+SETGLOB 13
+.loc ../contracts/hooks/RefFactory.sol, 50
+SETGLOB 12
+.loc ../contracts/hooks/RefFactory.sol, 51
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
@@ -42,7 +45,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 52
+.loc ../contracts/hooks/RefFactory.sol, 54
 OVER
 PUSHCONT {
 	LDREF
@@ -51,8 +54,6 @@ PUSHCONT {
 }
 IF
 LDMSGADDR
-LDU 128
-LDU 128
 LDREF
 LDREF
 LDREF
@@ -60,6 +61,8 @@ LDREF
 ENDS
 CTOS
 LDREF
+LDU 128
+LDU 128
 LDMSGADDR
 LDREF
 ENDS
@@ -85,7 +88,7 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST xe3026d95
+	STSLICECONST xb5054b60
 	STSLICE
 	STBREFR
 	ENDC
@@ -122,7 +125,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/hooks/RefFactory.sol, 63
+.loc ../contracts/hooks/RefFactory.sol, 65
 REVERSE 8, 0
 PUSHINT 0
 GETGLOB 12
@@ -178,14 +181,14 @@ NEWC
 STSLICECONST x15a038fb
 STREF
 STU 32
-STU 128
-STU 128
 STREF
 STREF
-ROLLREV 4
+ROLLREV 6
 NEWC
 STREF
 STREF
+STU 128
+STU 128
 STSLICE
 SWAP
 NEWC
@@ -207,7 +210,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 72
+.loc ../contracts/hooks/RefFactory.sol, 74
 OVER
 PUSHCONT {
 	LDREF
@@ -258,7 +261,7 @@ THROW 0
 CALL $deriveRefSystem_internal_macro$
 
 .macro deriveRefSystem_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 73
+.loc ../contracts/hooks/RefFactory.sol, 75
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
@@ -269,7 +272,7 @@ CALLREF {
 CALL $_deriveRefSystem_internal_macro$
 
 .macro _deriveRefSystem_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 77
+.loc ../contracts/hooks/RefFactory.sol, 79
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -286,7 +289,7 @@ CTOS
 CALL $_buildRefSystemInitData_internal_macro$
 
 .macro _buildRefSystemInitData_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 81
+.loc ../contracts/hooks/RefFactory.sol, 83
 PUSHINT 0
 NEWC
 STU 256
@@ -759,6 +762,12 @@ PUSHINT 1729444094
 LEQ
 IFJMPREF {
 	DUP
+	PUSHINT 889539424
+	EQUAL
+	IFJMPREF {
+		CALL $deployRefSystem$
+	}
+	DUP
 	PUSHINT 995308319
 	EQUAL
 	IFJMPREF {
@@ -769,12 +778,6 @@ IFJMPREF {
 	EQUAL
 	IFJMPREF {
 		CALL $owner$
-	}
-	DUP
-	PUSHINT 1661103509
-	EQUAL
-	IFJMPREF {
-		CALL $deployRefSystem$
 	}
 	DUP
 	PUSHINT 1729444094

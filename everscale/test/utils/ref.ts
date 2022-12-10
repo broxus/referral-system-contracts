@@ -40,7 +40,7 @@ export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefF
     const _randomNonce = locklift.utils.getRandomNonce();
     const signer = await locklift.keystore.getSigner("0")
 
-    let {output} = await refFactory.methods.deployRefSystem({
+    await refFactory.methods.deployRefSystem({
         owner: owner.address,
         approvalFee,
         approvalFeeDigits,
@@ -50,9 +50,10 @@ export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefF
         projectPlatformCode: ProjectPlatform.code,
         sender: owner.address,
         remainingGasTo: owner.address,
-    }).sendWithResult({ from : owner.address, amount: toNano(3)})
+    }).send({ from : refFactoryOwner.address, amount: toNano(3)})
     
-    return locklift.factory.getDeployedContract("RefSystem", output?.value0!)
+    let {value0: refSysAddr } = await refFactory.methods.deriveRefSystem({owner: owner.address}).call();
+    return locklift.factory.getDeployedContract("RefSystem", refSysAddr)
 }
 
 // export function encodeAddress(factory: Contract, target: Address): Promise<string> {

@@ -166,8 +166,6 @@ export async function getAccount(signer: Signer, address: Address) {
 }
 
 export async function deployAccount(signer: Signer, balance: number = 20, name?: string) {
-  const _randomNonce = locklift.utils.getRandomNonce();
-
   const {account} = await locklift.factory.accounts.addNewAccount({
     type: WalletTypes.EverWallet, // or WalletTypes.HighLoadWallet or WalletTypes.WalletV3,
     //Value which will send to the new account from a giver
@@ -178,6 +176,7 @@ export async function deployAccount(signer: Signer, balance: number = 20, name?:
   });
 
   if(name) {
+    // console.log(account.address, "Account")
     logContract(account, name);
   }
 
