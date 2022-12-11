@@ -3,29 +3,33 @@ pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
+import "./../modules/TokenContracts/interfaces/ITokenRoot.sol";
+
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
+import '@broxus/contracts/contracts/access/InternalOwner.sol';
+
+import "./RefSystemBase.sol";
 import "./RefAccountPlatform.sol";
 
-contract RefAccount {
+contract RefAccount is InternalOwner {
 
     mapping (address => uint) public _tokenBalance;
 
     uint32 public version_;
-    TvmCell public platformCode_;
+    TvmCell public _platformCode;
 
     address public _refSystem;
-    address public _recipient;
 
     constructor() public {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address walletRoot, uint128 reward, address, address remainingGasTo) 
+    function onDeployOrUpdate(TvmCell, uint32, address tokenWallet, uint128 reward, address, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
         require(msg.sender == _refSystem, 400, "Must be root");
-        _tokenBalance[walletRoot] += reward;
+        _tokenBalance[tokenWallet] += reward;
         
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
@@ -41,7 +45,7 @@ contract RefAccount {
     }
 
     function platformCode() external view responsible returns (TvmCell) {
-        return { value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false } platformCode_;
+        return { value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false } _platformCode;
     }
 
     function deriveRef(address target) external returns (address) {
@@ -57,10 +61,10 @@ contract RefAccount {
             contr: RefAccountPlatform,
             varInit: {
                 root: _refSystem,
-                recipient: target
+                owner: target
             },
             pubkey: 0,
-            code: platformCode_
+            code: _platformCode
         });
     }
 
@@ -68,17 +72,33 @@ contract RefAccount {
         tvm.rawReserve(_reserve(), 2);
         tvm.resetStorage();
 
-        TvmSlice s = data.toSlice();
         address firstWalletRoot;
         uint128 firstReward;
+        address owner;
+        (
+            _refSystem,
+            owner,
+            firstWalletRoot,
+            firstReward,
+            _platformCode
+        ) = abi.decode(data,(
+            address,
+            address,
+            address,
+            uint128,
+            TvmCell
+        ));
 
-        (_refSystem, _recipient, firstWalletRoot, firstReward) = s.decode(
-            address,
-            address,
-            address,
-            uint128
-        );
+        setOwnership(owner);
+    }
 
-        platformCode_ = s.loadRef();
+    function requestTransfer(
+        address tokenWallet,
+        address remainingGasTo,
+        bool notify,
+        TvmCell payload
+    ) onlyOwner {
+        // TODO: Auth tokenWallet?
+        RefSystemBase(_refSystem).requestTransfer(owner, tokenWallet, _tokenBalance[tokenWallet], remainingGasTo, notify, payload);
     }
 }

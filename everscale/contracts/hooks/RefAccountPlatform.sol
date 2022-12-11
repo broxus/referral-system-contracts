@@ -7,16 +7,16 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
 contract RefAccountPlatform {
     address static root;
-    address static recipient;
+    address static owner;
 
     mapping (address => uint) tokenBalance;
 
-    constructor(TvmCell initCode, uint32 initVersion, address walletRoot, uint128 reward, address sender, address remainingGasTo)
+    constructor(TvmCell initCode, uint32 initVersion, address tokenWallet, uint128 reward, address sender, address remainingGasTo)
         public
         functionID(0x15A038FB)
     {   
         if (msg.sender == root) {
-           initialize(initCode, initVersion, walletRoot, reward, remainingGasTo);
+           initialize(initCode, initVersion, tokenWallet, reward, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -31,7 +31,7 @@ contract RefAccountPlatform {
             contr: RefAccountPlatform,
             varInit: {
                 root: root,
-                recipient: target
+                owner: target
             },
             pubkey: 0,
             code: tvm.code()
@@ -40,22 +40,21 @@ contract RefAccountPlatform {
         return address(tvm.hash(stateInit));
     }
 
-    function initialize(TvmCell initCode, uint32 initVersion, address walletRoot, uint128 reward, address remainingGasTo) private {
+    function initialize(TvmCell initCode, uint32 initVersion, address tokenWallet, uint128 reward, address remainingGasTo) private {
         TvmBuilder builder;
 
-        builder.store(root);
-        builder.store(recipient);
-        builder.store(walletRoot);
-        builder.store(reward);
-        // builder.store(initVersion);
-        // builder.store(remainingGasTo);
-
-        builder.store(tvm.code());
+        TvmCell inputData = abi.encode(
+            root,
+            owner,
+            tokenWallet,
+            reward,
+            tvm.code()
+        );
 
         tvm.setcode(initCode);
         tvm.setCurrentCode(initCode);
 
-        onCodeUpgrade(builder.toCell());
+        onCodeUpgrade(inputData);
     }
 
     function onCodeUpgrade(TvmCell data) private {}

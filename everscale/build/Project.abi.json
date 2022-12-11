@@ -28,6 +28,17 @@
 			]
 		},
 		{
+			"name": "acceptUpgrade",
+			"inputs": [
+				{"name":"newCode","type":"cell"},
+				{"name":"newParams","type":"cell"},
+				{"name":"newVersion","type":"uint32"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "acceptInit",
 			"inputs": [
 			],
@@ -35,23 +46,63 @@
 			]
 		},
 		{
-			"name": "onRefferal",
+			"name": "meta",
 			"inputs": [
-				{"name":"referrer","type":"address"},
-				{"name":"referred","type":"address"},
-				{"name":"reward","type":"uint128"}
+				{"name":"answerId","type":"uint32"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+				{"name":"value0","type":"bool"},
+				{"name":"value1","type":"uint128"},
+				{"name":"value2","type":"uint128"},
+				{"name":"value3","type":"cell"}
+			]
+		},
+		{
+			"name": "transferOwnership",
+			"inputs": [
+				{"name":"newOwner","type":"address"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "onApproval",
+			"name": "renounceOwnership",
 			"inputs": [
-				{"name":"referrer","type":"address"},
-				{"name":"referred","type":"address"},
-				{"name":"reward","type":"uint128"}
 			],
 			"outputs": [
+			]
+		},
+		{
+			"name": "owner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"owner","type":"address"}
+			]
+		},
+		{
+			"name": "version_",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"version_","type":"uint32"}
+			]
+		},
+		{
+			"name": "_platformCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_platformCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_refFactory",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refFactory","type":"address"}
 			]
 		},
 		{
@@ -60,14 +111,6 @@
 			],
 			"outputs": [
 				{"name":"_refSystem","type":"address"}
-			]
-		},
-		{
-			"name": "_owner",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_owner","type":"address"}
 			]
 		},
 		{
@@ -101,32 +144,33 @@
 			"outputs": [
 				{"name":"_feeDigits","type":"uint16"}
 			]
-		},
-		{
-			"name": "_platformCode",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_platformCode","type":"cell"}
-			]
 		}
 	],
 	"data": [
 	],
 	"events": [
+		{
+			"name": "OwnershipTransferred",
+			"inputs": [
+				{"name":"previousOwner","type":"address"},
+				{"name":"newOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		}
 	],
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
+		{"name":"owner","type":"address"},
 		{"name":"version_","type":"uint32"},
-		{"name":"platformCode_","type":"cell"},
+		{"name":"_platformCode","type":"cell"},
+		{"name":"_refFactory","type":"address"},
 		{"name":"_refSystem","type":"address"},
-		{"name":"_owner","type":"address"},
 		{"name":"_isApproved","type":"bool"},
 		{"name":"_projectFee","type":"uint16"},
 		{"name":"_cashbackFee","type":"uint16"},
-		{"name":"_feeDigits","type":"uint16"},
-		{"name":"_platformCode","type":"cell"}
+		{"name":"_feeDigits","type":"uint16"}
 	]
 }

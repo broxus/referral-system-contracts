@@ -127,22 +127,8 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/RefAccountPlatform.sol, 44
-DROP
 .loc ../contracts/hooks/RefAccountPlatform.sol, 46
-GETGLOB 10
-NEWC
-STSLICE
-.loc ../contracts/hooks/RefAccountPlatform.sol, 47
-GETGLOB 11
-SWAP
-STSLICE
-.loc ../contracts/hooks/RefAccountPlatform.sol, 48
-XCHG S1, S2
-STSLICE
-.loc ../contracts/hooks/RefAccountPlatform.sol, 49
-STU 128
-.loc ../contracts/hooks/RefAccountPlatform.sol, 53
+DROP
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -155,12 +141,26 @@ STSLICECONST x8adb35
 STREF
 STSLICE
 ENDC
-SWAP
+XCHG S2
+GETGLOB 11
+GETGLOB 10
+NEWC
+STSLICE
+ROLLREV 4
+NEWC
+STSLICE
+ROLLREV 3
+NEWC
+STSLICE
+STU 128
 STREF
-.loc ../contracts/hooks/RefAccountPlatform.sol, 55
+STBREFR
+STBREFR
+ENDC
+.loc ../contracts/hooks/RefAccountPlatform.sol, 54
 PUSH S2
 SETCODE
-.loc ../contracts/hooks/RefAccountPlatform.sol, 56
+.loc ../contracts/hooks/RefAccountPlatform.sol, 55
 ROT
 CTOS
 DUP
@@ -175,8 +175,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/RefAccountPlatform.sol, 58
-ENDC
+.loc ../contracts/hooks/RefAccountPlatform.sol, 57
 CALLREF {
 	CALL $:onCodeUpgrade$
 }

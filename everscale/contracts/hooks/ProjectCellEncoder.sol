@@ -5,7 +5,6 @@ pragma AbiHeader pubkey;
 
 import "../interfaces/IProjectCallback.sol";
 import "../interfaces/IRefSystem.sol";
-import "./ProjectAccount.sol";
 import "@broxus/contracts/contracts/utils/RandomNonce.sol";
 
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";

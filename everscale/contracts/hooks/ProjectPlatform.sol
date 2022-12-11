@@ -12,7 +12,7 @@ contract ProjectPlatform {
     constructor(
         TvmCell initCode,
         uint32 initVersion,
-        address refSystem,
+        address refFactory,
         uint16 projectFee,
         uint16 cashbackFee,
         uint16 feeDigits,
@@ -25,7 +25,7 @@ contract ProjectPlatform {
         tvm.accept();
 
         if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
-           initialize(initCode, initVersion, projectFee, cashbackFee, feeDigits, sender, remainingGasTo);
+           initialize(initCode, initVersion, refFactory, projectFee, cashbackFee, feeDigits, sender, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -49,9 +49,9 @@ contract ProjectPlatform {
         return address(tvm.hash(stateInit));
     }
 
-    function initialize(TvmCell initCode, uint32 initVersion, uint16 projectFee, uint16 cashbackFee, uint16 feeDigits, address sender, address remainingGasTo) private {
-        
+    function initialize(TvmCell initCode, uint32 initVersion, address refFactory, uint16 projectFee, uint16 cashbackFee, uint16 feeDigits, address sender, address remainingGasTo) private {
         TvmCell inputData = abi.encode(
+            refFactory,
             root,
             owner,
             uint32(0),

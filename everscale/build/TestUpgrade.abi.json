@@ -1,7 +1,7 @@
 {
 	"ABI version": 2,
 	"version": "2.2",
-	"header": ["time"],
+	"header": ["pubkey", "time", "expire"],
 	"functions": [
 		{
 			"name": "constructor",
@@ -11,19 +11,11 @@
 			]
 		},
 		{
-			"name": "storedData",
+			"name": "_isUpgraded",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"storedData","type":"cell"}
-			]
-		},
-		{
-			"name": "isUpgraded",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"isUpgraded","type":"bool"}
+				{"name":"_isUpgraded","type":"string"}
 			]
 		}
 	],
@@ -35,7 +27,6 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"storedData","type":"cell"},
-		{"name":"isUpgraded","type":"bool"}
+		{"name":"_isUpgraded","type":"string"}
 	]
 }

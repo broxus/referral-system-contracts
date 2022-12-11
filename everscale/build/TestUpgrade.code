@@ -10,20 +10,29 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../../bridge-contracts/everscale/contracts/dao/test/TestUpgrade.sol, 0
-CALLREF {
-	CALL $c7_to_c4$
-}
-THROW 0
+.loc ../contracts/test/TestUpgrade.sol, 10
+THROW 100
+.loc ../contracts/test/TestUpgrade.sol, 0
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
-.loc ../../bridge-contracts/everscale/contracts/dao/test/TestUpgrade.sol, 12
+.loc ../contracts/test/TestUpgrade.sol, 14
+DROP
+PUSHINT 0
+PUSHINT 2
+RAWRESERVE
+.loc ../contracts/test/TestUpgrade.sol, 15
+PUSHREF {
+}
 SETGLOB 10
-.loc ../../bridge-contracts/everscale/contracts/dao/test/TestUpgrade.sol, 13
-TRUE
-SETGLOB 11
-.loc ../../bridge-contracts/everscale/contracts/dao/test/TestUpgrade.sol, 0
+.loc ../contracts/test/TestUpgrade.sol, 16
+ACCEPT
+.loc ../contracts/test/TestUpgrade.sol, 18
+PUSHREF {
+	.blob x74727565
+}
+SETGLOB 10
+.loc ../contracts/test/TestUpgrade.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -38,9 +47,7 @@ LDU 64 ; pubkey timestamp c4
 LDU 1 ; ctor flag
 NIP
 LDREF
-LDI 1
 ENDS
-SETGLOB 11
 SETGLOB 10
 SETGLOB 3
 SETGLOB 2
@@ -57,8 +64,6 @@ PUSHCONT {
 	PLDDICT ; D
 	PUSHREF {
 	}
-	PUSHINT 0
-	SETGLOB 11
 	SETGLOB 10
 	PUSHINT 64
 	DICTUGET
@@ -73,7 +78,6 @@ IFREFELSE {
 }
 
 .macro c7_to_c4
-GETGLOB 11
 GETGLOB 10
 GETGLOB 3
 GETGLOB 2
@@ -82,7 +86,6 @@ STU 256
 STU 64
 STONE
 STREF
-STI 1
 ENDC
 POPROOT
 
@@ -151,15 +154,36 @@ PUSHCONT {
 	LDSLICEX ; signatureSlice msgSlice
 	DUP
 	HASHSU ; signatureSlice msgSlice hashMsgSlice
-	ROT
-	GETGLOB 2
+	SWAP
+	LDU 1 ; signatureSlice hashMsgSlice havePubkey msgSlice
+	SWAP
+	PUSHCONT {
+		LDU 256 ; signatureSlice hashMsgSlice pubkey msgSlice
+		XCHG S3
+		SWAP
+	}
+	PUSHCONT {
+		XCHG S2
+		GETGLOB 2
+	}
+	IFELSE
 	CHKSIGNU ; msgSlice isSigned
 	THROWIFNOT 40
 }
-IF
+PUSHCONT {
+	LDU 1 ; havePubkey msgSlice
+	SWAP
+	THROWIF 58
+}
+IFELSE
 LDU 64 ; timestamp msgSlice
 SWAP
 CALL $replay_protection_macro$
+LDU 32 ; expireAt msgSlice
+SWAP
+NOW ; msgSlice expireAt now
+GREATER ; msgSlice expireAt>now
+THROWIFNOT 57
 LDU 32 ; funcId body
 SWAP
 CALLREF {
@@ -167,7 +191,7 @@ CALLREF {
 }
 THROW 60
 
-.macro storedData
+.macro _isUpgraded
 DROP
 ENDS
 CALLREF {
@@ -176,7 +200,7 @@ CALLREF {
 GETGLOB 10
 OVER
 PUSHCONT {
-	PUSHSLICE xc0000000000000000000000000ff498ef4
+	PUSHSLICE xc0000000000000000000000000afa975b9
 	NEWC
 	STSLICE
 	STREF
@@ -187,43 +211,17 @@ PUSHCONT {
 IF
 THROW 0
 
-.macro isUpgraded
-DROP
-ENDS
-CALLREF {
-	CALL $c4_to_c7$
-}
-GETGLOB 11
-OVER
-PUSHCONT {
-	PUSHSLICE xc0000000000000000000000000b1a93ffd
-	NEWC
-	STSLICE
-	STI 1
-	ENDC
-	PUSHINT 0
-	SENDRAWMSG
-}
-IF
-THROW 0
-
 .macro public_function_selector
 DUP
-PUSHINT 833175549
+PUSHINT 799634873
 EQUAL
 IFJMPREF {
-	CALL $isUpgraded$
+	CALL $_isUpgraded$
 }
 DUP
 PUSHINT 1756716863
 EQUAL
 IFJMPREF {
 	CALL $constructor$
-}
-DUP
-PUSHINT 2135527156
-EQUAL
-IFJMPREF {
-	CALL $storedData$
 }
 

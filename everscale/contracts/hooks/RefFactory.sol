@@ -26,35 +26,36 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 import "../interfaces/IProxyHook.sol";
 import "../interfaces/IProjectCallback.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
+import "../interfaces/IUpgradeable.sol";
 
 import "./RefInstance.sol";
 import "./RefInstancePlatform.sol";
 import "./ProjectPlatform.sol";
 import "./Project.sol";
-import "./RefSystem.sol";
+import "./RefSystemUpgradeable.sol";
 import "./RefSystemPlatform.sol";
 
 import "../interfaces/IRefSystem.sol";
 
 contract RefFactory is InternalOwner, RandomNonce {
-    TvmCell public _refSystemCode;
     TvmCell public _refSystemPlatformCode;
 
     constructor(
         address owner,
-        TvmCell refSystemCode,
         TvmCell refSystemPlatformCode
     ) public {
         tvm.accept();
         _refSystemPlatformCode = refSystemPlatformCode;
-        _refSystemCode = refSystemCode;
         setOwnership(owner);
     }
 
     function deployRefSystem(
         address owner,
+        TvmCell refSystemCode,
         TvmCell refPlatformCode,
         TvmCell refCode,
+        TvmCell accountPlatformCode,
+        TvmCell accountCode,
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 approvalFee,
@@ -68,7 +69,28 @@ contract RefFactory is InternalOwner, RandomNonce {
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(_refSystemCode, 0, refPlatformCode, refCode, projectPlatformCode, projectCode, approvalFee, approvalFeeDigits, sender, remainingGasTo);
+        }(refSystemCode, 0, refPlatformCode, refCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, approvalFeeDigits, sender, remainingGasTo);
+    }
+
+    function upgradeRefSystem(
+        address owner,
+        TvmCell newRefSystemCode,
+        TvmCell newParams,
+        uint32 newVersion,
+        address remainingGasTo
+    ) public onlyOwner returns (address) {
+        RefSystemUpgradeable(_deriveRefSystem(owner)).acceptUpgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(newRefSystemCode, newParams, newVersion, remainingGasTo);
+    }
+
+    function upgradeTarget(
+        address target,
+        TvmCell targetCode,
+        TvmCell params,
+        uint32 newVersion,
+        address remainingGasTo
+    ) public onlyOwner returns (address) {
+        tvm.accept();
+        IUpgradeable(target).acceptUpgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(targetCode, params, newVersion, remainingGasTo);
     }
 
     function deriveRefSystem(address owner) public returns (address) {

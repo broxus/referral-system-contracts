@@ -59,11 +59,11 @@
 			]
 		},
 		{
-			"name": "platformCode_",
+			"name": "_platformCode",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"platformCode_","type":"cell"}
+				{"name":"_platformCode","type":"cell"}
 			]
 		},
 		{
@@ -93,7 +93,7 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"_tokenBalance","type":"map(address,uint256)"},
 		{"name":"version_","type":"uint32"},
-		{"name":"platformCode_","type":"cell"},
+		{"name":"_platformCode","type":"cell"},
 		{"name":"_refSystem","type":"address"},
 		{"name":"_recipient","type":"address"}
 	]

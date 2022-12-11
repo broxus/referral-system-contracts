@@ -9,7 +9,7 @@
 			"inputs": [
 				{"name":"initCode","type":"cell"},
 				{"name":"initVersion","type":"uint32"},
-				{"name":"refSystem","type":"address"},
+				{"name":"refFactory","type":"address"},
 				{"name":"projectFee","type":"uint16"},
 				{"name":"cashbackFee","type":"uint16"},
 				{"name":"feeDigits","type":"uint16"},

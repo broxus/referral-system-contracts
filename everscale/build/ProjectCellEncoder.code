@@ -10,7 +10,7 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/hooks/ProjectCellEncoder.sol, 15
+.loc ../contracts/hooks/ProjectCellEncoder.sol, 14
 ACCEPT
 .loc ../contracts/hooks/ProjectCellEncoder.sol, 0
 CALLREF {
@@ -27,7 +27,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/ProjectCellEncoder.sol, 18
+.loc ../contracts/hooks/ProjectCellEncoder.sol, 17
 OVER
 PUSHCONT {
 	LDU 32
@@ -89,7 +89,7 @@ CALLREF {
 THROW 0
 
 .macro encode_internal_macro
-.loc ../contracts/hooks/ProjectCellEncoder.sol, 28
+.loc ../contracts/hooks/ProjectCellEncoder.sol, 27
 REVERSE 8, 0
 NEWC
 STU 32

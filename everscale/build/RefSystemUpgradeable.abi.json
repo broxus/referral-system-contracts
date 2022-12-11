@@ -28,12 +28,44 @@
 			]
 		},
 		{
+			"name": "version",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint32"}
+			]
+		},
+		{
 			"name": "acceptUpgrade",
 			"inputs": [
 				{"name":"newCode","type":"cell"},
 				{"name":"newParams","type":"cell"},
 				{"name":"newVersion","type":"uint32"},
 				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onAcceptTokensTransfer",
+			"inputs": [
+				{"name":"tokenRoot","type":"address"},
+				{"name":"amount","type":"uint128"},
+				{"name":"sender","type":"address"},
+				{"name":"senderWallet","type":"address"},
+				{"name":"remainingGasTo","type":"address"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getProjectMeta",
+			"inputs": [
+				{"name":"isApproved","type":"bool"},
+				{"name":"cashback","type":"uint128"},
+				{"name":"projectFee","type":"uint128"},
+				{"name":"acceptParams","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -115,14 +147,6 @@
 			]
 		},
 		{
-			"name": "version_",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"version_","type":"uint32"}
-			]
-		},
-		{
 			"name": "_platformCode",
 			"inputs": [
 			],
@@ -152,6 +176,22 @@
 			],
 			"outputs": [
 				{"name":"_refPlatformCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_accountCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_accountCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_accountPlatformCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_accountPlatformCode","type":"cell"}
 			]
 		},
 		{
@@ -185,44 +225,11 @@
 			"outputs": [
 				{"name":"_approvalFeeDigits","type":"uint128"}
 			]
-		},
-		{
-			"name": "DEBUG_RECV_COUNT",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"DEBUG_RECV_COUNT","type":"uint256"}
-			]
-		},
-		{
-			"name": "DEBUG_RECV_PARENTS",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"DEBUG_RECV_PARENTS","type":"address[]"}
-			]
-		},
-		{
-			"name": "tempReq",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"tempReq","type":"map(address,address)"}
-			]
 		}
 	],
 	"data": [
 	],
 	"events": [
-		{
-			"name": "DEBUG",
-			"inputs": [
-				{"name":"eventData","type":"cell"},
-				{"name":"parents","type":"address[]"}
-			],
-			"outputs": [
-			]
-		},
 		{
 			"name": "OwnershipTransferred",
 			"inputs": [
@@ -238,17 +245,16 @@
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"owner","type":"address"},
-		{"name":"version_","type":"uint32"},
 		{"name":"_platformCode","type":"cell"},
 		{"name":"_refFactory","type":"address"},
 		{"name":"_refCode","type":"cell"},
 		{"name":"_refPlatformCode","type":"cell"},
+		{"name":"_accountCode","type":"cell"},
+		{"name":"_accountPlatformCode","type":"cell"},
 		{"name":"_projectCode","type":"cell"},
 		{"name":"_projectPlatformCode","type":"cell"},
 		{"name":"_approvalFee","type":"uint128"},
 		{"name":"_approvalFeeDigits","type":"uint128"},
-		{"name":"DEBUG_RECV_COUNT","type":"uint256"},
-		{"name":"DEBUG_RECV_PARENTS","type":"address[]"},
-		{"name":"tempReq","type":"map(address,address)"}
+		{"name":"version_","type":"uint32"}
 	]
 }

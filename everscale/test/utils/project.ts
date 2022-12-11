@@ -16,7 +16,7 @@ async function sleep(ms) {
 
 export async function deployProject(
     projectOwner: Account,
-    refSystem: Contract<FactorySource["RefSystem"]>,
+    refSystem: Contract<FactorySource["RefSystemUpgradeable"]>,
     projectFee: number,
     cashbackFee: number,
     feeDigits: number): Promise<Contract<FactorySource["Project"]>> {
@@ -25,7 +25,6 @@ export async function deployProject(
     const ProjectPlatform = await locklift.factory.getContractArtifacts('ProjectPlatform');
 
     await refSystem.methods.deployProject({
-        initVersion: 0,
         refSystem: refSystem.address,
         projectFee,
         cashbackFee,
@@ -42,8 +41,8 @@ export async function deployProject(
     return project;
 }
 
-export async function approveProject(project: Contract<FactorySource["Project"]>, refSystemOwner: Account, refSystem: Contract<FactorySource["RefSystem"]>) {
-    let {_owner: projectOwner } = await project.methods._owner().call()
+export async function approveProject(project: Contract<FactorySource["Project"]>, refSystemOwner: Account, refSystem: Contract<FactorySource["RefSystemUpgradeable"]>) {
+    let {owner: projectOwner } = await project.methods.owner().call()
     
     return refSystem.methods.approveProject({
         projectOwner

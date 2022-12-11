@@ -26,7 +26,7 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 import "../interfaces/IProxyHook.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 import "./RefInstancePlatform.sol";
-import "./RefSystem.sol";
+import "./RefSystemUpgradeable.sol";
 
 contract RefInstance {
 

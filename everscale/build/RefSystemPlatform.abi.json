@@ -11,6 +11,8 @@
 				{"name":"initVersion","type":"uint32"},
 				{"name":"refPlatformCode","type":"cell"},
 				{"name":"refCode","type":"cell"},
+				{"name":"accountPlatformCode","type":"cell"},
+				{"name":"accountCode","type":"cell"},
 				{"name":"projectPlatformCode","type":"cell"},
 				{"name":"projectCode","type":"cell"},
 				{"name":"approvalFee","type":"uint128"},
