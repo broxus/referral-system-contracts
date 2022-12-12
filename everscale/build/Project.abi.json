@@ -17,9 +17,8 @@
 				{"name":"value0","type":"cell"},
 				{"name":"value1","type":"uint32"},
 				{"name":"value2","type":"address"},
-				{"name":"value3","type":"address"},
+				{"name":"value3","type":"uint128"},
 				{"name":"value4","type":"uint128"},
-				{"name":"value5","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],

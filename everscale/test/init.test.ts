@@ -7,7 +7,7 @@ import { Contract, toNano } from "locklift";
 import { Account } from "everscale-standalone-client";
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
-describe.only('Ref Init', function () {
+describe('Ref Init', function () {
     this.timeout(10000000);
 
     describe('RefFactory', function () {

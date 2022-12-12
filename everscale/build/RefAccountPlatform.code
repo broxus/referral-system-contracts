@@ -35,12 +35,12 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefAccountPlatform.sol, 18
+.loc ../contracts/hooks/RefAccountPlatform.sol, 16
 GETGLOB 9
 GETGLOB 10
 SDEQ
 PUSHCONT {
-	.loc ../contracts/hooks/RefAccountPlatform.sol, 19
+	.loc ../contracts/hooks/RefAccountPlatform.sol, 17
 	BLKPUSH 4, 5
 	PUSH S4
 	CALLREF {
@@ -48,7 +48,7 @@ PUSHCONT {
 	}
 }
 PUSHCONT {
-	.loc ../contracts/hooks/RefAccountPlatform.sol, 21
+	.loc ../contracts/hooks/RefAccountPlatform.sol, 19
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -74,7 +74,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/hooks/RefAccountPlatform.sol, 30
+.loc ../contracts/hooks/RefAccountPlatform.sol, 28
 PUSHINT 0
 NEWC
 STU 256
@@ -113,7 +113,7 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/RefAccountPlatform.sol, 40
+.loc ../contracts/hooks/RefAccountPlatform.sol, 38
 HASHCU
 NEWC
 STSLICECONST x801_
@@ -127,7 +127,7 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/RefAccountPlatform.sol, 46
+.loc ../contracts/hooks/RefAccountPlatform.sol, 49
 DROP
 GETGLOB 1
 PUSHREF {
@@ -141,14 +141,15 @@ STSLICECONST x8adb35
 STREF
 STSLICE
 ENDC
-XCHG S2
+REVERSE 4, 0
 GETGLOB 11
 GETGLOB 10
 NEWC
 STSLICE
-ROLLREV 4
+ROLLREV 5
 NEWC
 STSLICE
+STU 32
 ROLLREV 3
 NEWC
 STSLICE
@@ -157,11 +158,11 @@ STREF
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/hooks/RefAccountPlatform.sol, 54
-PUSH S2
+.loc ../contracts/hooks/RefAccountPlatform.sol, 58
+OVER
 SETCODE
-.loc ../contracts/hooks/RefAccountPlatform.sol, 55
-ROT
+.loc ../contracts/hooks/RefAccountPlatform.sol, 59
+SWAP
 CTOS
 DUP
 PUSHSLICE x8adb35
@@ -175,12 +176,11 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/RefAccountPlatform.sol, 57
+.loc ../contracts/hooks/RefAccountPlatform.sol, 61
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
 .loc ../contracts/hooks/RefAccountPlatform.sol, 0
-DROP
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
@@ -204,9 +204,7 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
-LDDICT
 ENDS
-SETGLOB 12
 SETGLOB 11
 SETGLOB 10
 SETGLOB 3
@@ -242,8 +240,6 @@ PUSHCONT {
 		}
 	}
 	IFNOT
-	NEWDICT
-	SETGLOB 12
 	SETGLOB 11
 	SETGLOB 10
 	PUSHINT 64
@@ -259,8 +255,6 @@ IFREFELSE {
 }
 
 .macro c7_to_c4
-GETGLOB 12
-GETGLOB 11
 GETGLOB 10
 GETGLOB 3
 GETGLOB 2
@@ -269,10 +263,9 @@ STU 256
 STU 64
 STONE
 STSLICE
-ROTREV
+GETGLOB 11
 NEWC
 STSLICE
-STDICT
 STBREFR
 ENDC
 POPROOT

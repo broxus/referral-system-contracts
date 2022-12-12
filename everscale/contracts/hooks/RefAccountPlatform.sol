@@ -9,8 +9,6 @@ contract RefAccountPlatform {
     address static root;
     address static owner;
 
-    mapping (address => uint) tokenBalance;
-
     constructor(TvmCell initCode, uint32 initVersion, address tokenWallet, uint128 reward, address sender, address remainingGasTo)
         public
         functionID(0x15A038FB)
@@ -40,12 +38,18 @@ contract RefAccountPlatform {
         return address(tvm.hash(stateInit));
     }
 
-    function initialize(TvmCell initCode, uint32 initVersion, address tokenWallet, uint128 reward, address remainingGasTo) private {
-        TvmBuilder builder;
+    function initialize(
+        TvmCell initCode,
+        uint32 initVersion,
+        address tokenWallet,
+        uint128 reward,
+        address remainingGasTo
+    ) private {
 
         TvmCell inputData = abi.encode(
             root,
             owner,
+            initVersion,
             tokenWallet,
             reward,
             tvm.code()

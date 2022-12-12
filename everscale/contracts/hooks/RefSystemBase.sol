@@ -57,6 +57,10 @@ abstract contract RefSystemBase is
     TvmCell public _projectCode;
     TvmCell public _projectPlatformCode;
 
+    uint128 _deployRefAccountValue;
+    uint128 _deployLastRefValue;
+    uint128 _deployProjectValue;
+
     uint128 public _approvalFee;
     
     function _reserve() virtual internal returns (uint128) {
@@ -76,7 +80,10 @@ abstract contract RefSystemBase is
         (address projectOwner, address referred, address referrer) = abi.decode(payload, (address, address, address));
         address targetProject = _deriveProject(projectOwner);
         TvmCell acceptParams = abi.encode(msg.sender, tokenRoot, amount, sender, senderWallet, remainingGasTo, projectOwner, referred, referrer);
-        Project(targetProject).meta{callback: RefSystemBase.getProjectMeta}(acceptParams);
+        Project(targetProject).meta{
+            callback: RefSystemBase.getProjectMeta,
+            flag: MsgFlag.ALL_NOT_RESERVED
+        }(acceptParams);
     }
 
     function onAcceptTokensTransferPayloadEncoder(address projectOwner, address referred, address referrer) responsible external returns (TvmCell) {
@@ -101,7 +108,7 @@ abstract contract RefSystemBase is
         require(msg.sender == _deriveProject(projectOwner), 400, "Not a valid Project");
 
         // Allocate to System Owner
-        if(amount< _approvalFee) return;
+        if(amount < _approvalFee) return;
         _deployRefAccount(owner, tokenRoot, _approvalFee, sender, remainingGasTo);
 
         // Allocate to Project Owner
@@ -112,20 +119,20 @@ abstract contract RefSystemBase is
         uint128 r = amount - _approvalFee - projectFee;
         if (r < cashback) return;
         uint128 reward = r - cashback;
-        _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
         _deployRefAccount(referred, tokenWallet, cashback, sender, remainingGasTo);
+        _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
     }
 
     function requestTransfer(
         address recipient,
         address tokenWallet,
-        uint128 reward,
+        uint128 balance,
         address remainingGasTo,
         bool notify,
         TvmCell payload
     ) override external {
         require(msg.sender == _deriveRefAccount(recipient), 400, "Invalid Account");
-        ITokenWallet(tokenWallet).transfer(reward, recipient, 0 ton, remainingGasTo, notify, payload);
+        ITokenWallet(tokenWallet).transfer{flag: MsgFlag.REMAINING_GAS, value: 0 }(balance, recipient, 0.5 ton, remainingGasTo, notify, payload);
     }
 
 
@@ -142,8 +149,8 @@ abstract contract RefSystemBase is
     }
     function deployProject(
         address refSystem,
-        uint16 projectFee,
-        uint16 cashbackFee,
+        uint128 projectFee,
+        uint128 cashbackFee,
         address sender,
         address remainingGasTo
     ) public returns (address) {
@@ -189,12 +196,12 @@ abstract contract RefSystemBase is
     ) internal returns (address) {
         return new RefAccountPlatform {
             stateInit: _buildRefAccountInitData(recipient),
-            value: 3 ton,
+            value: 0.5 ton,
             wid: address(this).wid,
             flag: 0,
             bounce: true
             // flag: MsgFlag.ALL_NOT_RESERVED
-        }(_refCode, version(), tokenWallet, reward, sender, remainingGasTo);
+        }(_accountCode, version(), tokenWallet, reward, sender, remainingGasTo);
     }
     
     function _deployRefInstance(address recipient, address lastRef, uint128 lastRefReward) internal returns (address) {

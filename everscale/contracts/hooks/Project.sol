@@ -28,7 +28,7 @@ contract Project is InternalOwner, IUpgradeable {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address, address, uint128, uint128, address sender, address remainingGasTo) 
+    function onDeployOrUpdate(TvmCell, uint32, address, uint128, uint128, address sender, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
@@ -126,6 +126,6 @@ contract Project is InternalOwner, IUpgradeable {
     }
 
     function meta(TvmCell payload) view external responsible returns (bool, uint128, uint128, TvmCell) {
-        return (_isApproved, _cashbackFee, _projectFee, payload);
+        return {value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(_isApproved, _cashbackFee, _projectFee, payload);
     }
 }

@@ -89,7 +89,7 @@
 			"inputs": [
 				{"name":"recipient","type":"address"},
 				{"name":"tokenWallet","type":"address"},
-				{"name":"reward","type":"uint128"},
+				{"name":"balance","type":"uint128"},
 				{"name":"remainingGasTo","type":"address"},
 				{"name":"notify","type":"bool"},
 				{"name":"payload","type":"cell"}
@@ -131,8 +131,8 @@
 			"name": "deployProject",
 			"inputs": [
 				{"name":"refSystem","type":"address"},
-				{"name":"projectFee","type":"uint16"},
-				{"name":"cashbackFee","type":"uint16"},
+				{"name":"projectFee","type":"uint128"},
+				{"name":"cashbackFee","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
@@ -270,6 +270,9 @@
 		{"name":"_accountPlatformCode","type":"cell"},
 		{"name":"_projectCode","type":"cell"},
 		{"name":"_projectPlatformCode","type":"cell"},
+		{"name":"_deployRefAccountValue","type":"uint128"},
+		{"name":"_deployLastRefValue","type":"uint128"},
+		{"name":"_deployProjectValue","type":"uint128"},
 		{"name":"_approvalFee","type":"uint128"},
 		{"name":"version_","type":"uint32"}
 	]

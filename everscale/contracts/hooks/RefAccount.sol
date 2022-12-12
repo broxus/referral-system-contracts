@@ -8,12 +8,12 @@ import "./../modules/TokenContracts/interfaces/ITokenRoot.sol";
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
 
-// import "./RefSystemBase.sol";
+import "../interfaces/IRefSystem.sol";
 import "./RefAccountPlatform.sol";
 
 contract RefAccount is InternalOwner {
 
-    mapping (address => uint) public _tokenBalance;
+    mapping (address => uint128) public _tokenBalance;
 
     uint32 public version_;
     TvmCell public _platformCode;
@@ -24,12 +24,16 @@ contract RefAccount is InternalOwner {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address tokenWallet, uint128 reward, address, address remainingGasTo) 
+    function onDeployOrUpdate(TvmCell initCode, uint32 initVersion, address tokenWallet, uint128 reward, address sender, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
         require(msg.sender == _refSystem, 400, "Must be root");
-        _tokenBalance[tokenWallet] += reward;
+        if(reward == 0) {
+            delete _tokenBalance[tokenWallet];
+        } else {
+            _tokenBalance[tokenWallet] += reward;
+        }
         
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
@@ -72,33 +76,39 @@ contract RefAccount is InternalOwner {
         tvm.rawReserve(_reserve(), 2);
         tvm.resetStorage();
 
-        address firstWalletRoot;
+        address firstWallet;
         uint128 firstReward;
-        address owner;
+        address newOwner;
         (
             _refSystem,
-            owner,
-            firstWalletRoot,
+            newOwner,
+            version_,
+            firstWallet,
             firstReward,
             _platformCode
         ) = abi.decode(data,(
             address,
             address,
+            uint32,
             address,
             uint128,
             TvmCell
         ));
 
-        setOwnership(owner);
+        setOwnership(newOwner);
+        _tokenBalance[firstWallet] = firstReward;
+
     }
 
-    // function requestTransfer(
-    //     address tokenWallet,
-    //     address remainingGasTo,
-    //     bool notify,
-    //     TvmCell payload
-    // ) public onlyOwner {
-    //     // TODO: Auth tokenWallet?
-    //     RefSystemBase(_refSystem).requestTransfer(owner, tokenWallet, _tokenBalance[tokenWallet], remainingGasTo, notify, payload);
-    // }
+    function requestTransfer(
+        address tokenWallet,
+        address remainingGasTo,
+        bool notify,
+        TvmCell payload
+    ) public onlyOwner {
+        uint128 amount = _tokenBalance[tokenWallet];
+        delete _tokenBalance[tokenWallet];
+        IRefSystem(_refSystem).requestTransfer{flag: MsgFlag.REMAINING_GAS}(owner, tokenWallet, amount, remainingGasTo, notify, payload);
+    }
+
 }

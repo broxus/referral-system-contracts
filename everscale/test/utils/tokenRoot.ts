@@ -1,54 +1,94 @@
 import BigNumber from "bignumber.js";
 import { Account } from "everscale-standalone-client";
-import { Address, Contract, getRandomNonce, toNano } from "locklift";
+import { Address, Contract, getRandomNonce, toNano, zeroAddress } from "locklift";
 import { FactorySource } from "../../build/factorySource";
+import logger from "mocha-logger"
 
-export async function deployTokenRoot(account: Account, config: { name: string; symbol: string; decimals: string; initialSupply?: string; deployWalletValue?: string; }) {
-  let { name, symbol, decimals, initialSupply, deployWalletValue } = config;
-  decimals = decimals || '4';
-  initialSupply = initialSupply || new BigNumber(10000000).shiftedBy(2).toFixed();
-
-  // deployWalletValue = deployWalletValue || locklift.utils.convertCrystal('1', 'nano')
-  deployWalletValue = toNano(0.1)
-
-  const TokenWallet = await locklift.factory.getContractArtifacts("TokenWallet");
+export async function deployTokenFactory(account: Account) {
+  const TokenRoot = locklift.factory.getContractArtifacts("TokenRoot");
+  const TokenRootPlatform = locklift.factory.getContractArtifacts("");
+  const TokenRootUpgradeable = locklift.factory.getContractArtifacts("TokenRootUpgradeable");
+  
+  const TokenWallet = locklift.factory.getContractArtifacts("TokenWallet");
+  const TokenWalletPlatform = locklift.factory.getContractArtifacts("TokenWalletPlatform");
+  const TokenWalletUpgradeable = locklift.factory.getContractArtifacts("TokenWalletUpgradeable");
   const signer = await locklift.keystore.getSigner("0")
 
   let { contract } = await locklift.factory.deployContract({
+    contract: "TokenFactory",
+    constructorParams: {
+      owner: account.address,
+      deployValue: 0,
+      rootCode: TokenRoot.code,
+      walletCode: TokenWallet.code,
+      rootUpgradeableCode: TokenRootUpgradeable.code,
+      walletUpgradeableCode: TokenWalletUpgradeable.code,
+      platformCode: ''
+    },
+    initParams: {
+      _randomNonce: getRandomNonce()
+    },
+    publicKey: signer!.publicKey,
+    value: toNano(1)
+  });
+
+  return contract;
+}
+
+type TokenFactory = Contract<FactorySource["TokenFactory"]>
+export async function deployTokenRoot(
+  account: Account,
+  config: { 
+    name: string;
+    symbol: string; 
+    decimals: string;
+    initialSupply?: number | string;
+    initialSupplyTo?: Address;
+    deployValue?: string; 
+  }) {
+  const TokenWallet = locklift.factory.getContractArtifacts("TokenWallet");
+
+  let { name, symbol, decimals, initialSupply, initialSupplyTo, deployValue } = config;
+  decimals = decimals || '4';
+  initialSupply = initialSupply || 0;
+  initialSupplyTo = initialSupplyTo || account.address;
+
+  // deployWalletValue = deployWalletValue || locklift.utils.convertCrystal('1', 'nano')
+  deployValue = toNano(0.1)
+  const signer = await locklift.keystore.getSigner("0")
+  let {contract} = await locklift.factory.deployContract({
     contract: "TokenRoot",
     constructorParams: {
-      initialSupplyTo: account.address,
-      initialSupply,
-      deployWalletValue,
+      initialSupplyTo: zeroAddress,
+      initialSupply: 0,
+      deployWalletValue: toNano(0.2),
       mintDisabled: false,
       burnByRootDisabled: false,
       burnPaused: false,
       remainingGasTo: account.address
     },
     initParams: {
-      deployer_: account.address,
-      randomNonce_: getRandomNonce(),
-      rootOwner_: account.address,
       name_: name,
       symbol_: symbol,
-      decimals_: decimals,
-      walletCode_: TokenWallet.code
+      decimals_: 9,
+      rootOwner_: account.address,
+      walletCode_: TokenWallet.code,
+      randomNonce_: getRandomNonce(),
+      deployer_: zeroAddress
     },
     publicKey: signer!.publicKey,
-    value: toNano(3)
-  });
-
+    value: toNano(4)
+  })
   return contract;
-
 }
 
 export async function mint(account: Account, tokenRoot: Contract<FactorySource["TokenRoot"]>, amount: number | string, recipient: Address) {
   return tokenRoot.methods.mint({
     amount,
     recipient,
-    deployWalletValue: 0,
+    deployWalletValue: toNano(1),
     remainingGasTo: account.address,
     notify: false,
     payload: ''
-  }).send({from: account.address, amount: toNano(0.4)})
+  }).send({ from: account.address, amount: toNano(10) })
 }

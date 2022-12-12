@@ -38,10 +38,6 @@ PUSHCONT {
 }
 IFELSE
 LDMSGADDR
-LDREF
-ENDS
-CTOS
-LDMSGADDR
 LDU 128
 LDU 128
 LDREF
@@ -100,7 +96,7 @@ PUSHCONT {
 }
 IF
 .loc ../contracts/hooks/Project.sol, 0
-BLKDROP 8
+BLKDROP 7
 
 .macro acceptUpgrade
 DROP
@@ -477,6 +473,12 @@ THROW 0
 
 .macro meta_internal_macro
 .loc ../contracts/hooks/Project.sol, 129
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+PUSHINT 128
+SETINDEXQ 4
+SETGLOB 4
 GETGLOB 15
 GETGLOB 17
 GETGLOB 16

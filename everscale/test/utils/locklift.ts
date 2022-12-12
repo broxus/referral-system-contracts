@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { Account, Signer } from "everscale-standalone-client";
-import { Address, Contract, WalletTypes, toNano } from "locklift";
+import { Address, Contract, WalletTypes, toNano, zeroAddress } from "locklift";
 const logger = require('mocha-logger');
 const chai = require('chai')
 
@@ -138,7 +138,7 @@ chai.use(require('chai-bignumber')());
 
 export const getRandomNonce = () => Math.random() * 64000 | 0;
 export const toAddrs = (i: number): Address => {
-  let zeroAddrs = locklift.utils.zeroAddress;
+  let zeroAddrs = zeroAddress
   let si = i.toString();
   return zeroAddrs.substr(0, zeroAddrs.length - si.length).concat(si) as Address
 }

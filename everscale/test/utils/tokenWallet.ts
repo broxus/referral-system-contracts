@@ -1,7 +1,9 @@
 import BigNumber from "bignumber.js";
 import { Account } from "everscale-standalone-client";
-import { Contract } from "locklift";
+import { Address, Contract } from "locklift";
 import { FactorySource } from "../../build/factorySource";
+import logger from "mocha-logger"
+import { logContract } from "./locklift";
 
 type TokenRoot = Contract<FactorySource["TokenRoot"]>;
 type TokenWallet = Contract<FactorySource["TokenWallet"]>;
@@ -51,14 +53,9 @@ type TokenWallet = Contract<FactorySource["TokenWallet"]>;
 //   })
 // }
 
-export async function walletOf(tokenRoot: TokenRoot, account: Account){
-  let { value0: addr} = await tokenRoot.methods.walletOf({walletOwner: account.address, answerId: 0}).call()
-  return locklift.factory.getDeployedContract("TokenWallet", addr);
-}
-
-export function getBalance(wallet: Contract): Promise<BigNumber> {
-  return wallet.call({
-    method: 'balance',
-    params: { answerId: 0 }
-  })
+export async function walletOf(tokenRoot: TokenRoot, owner: Address, name?: string){
+  let { value0: addr} = await tokenRoot.methods.walletOf({walletOwner: owner, answerId: 0}).call()
+  let contract = locklift.factory.getDeployedContract("TokenWallet", addr);;
+  if (name) logContract(contract, name)
+  return contract
 }

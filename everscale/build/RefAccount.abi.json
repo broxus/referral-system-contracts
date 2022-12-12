@@ -14,11 +14,11 @@
 			"name": "onDeployOrUpdate",
 			"id": "0x15A038FB",
 			"inputs": [
-				{"name":"value0","type":"cell"},
-				{"name":"value1","type":"uint32"},
+				{"name":"initCode","type":"cell"},
+				{"name":"initVersion","type":"uint32"},
 				{"name":"tokenWallet","type":"address"},
 				{"name":"reward","type":"uint128"},
-				{"name":"value4","type":"address"},
+				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
@@ -40,6 +40,17 @@
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "requestTransfer",
+			"inputs": [
+				{"name":"tokenWallet","type":"address"},
+				{"name":"remainingGasTo","type":"address"},
+				{"name":"notify","type":"bool"},
+				{"name":"payload","type":"cell"}
+			],
+			"outputs": [
 			]
 		},
 		{
@@ -70,7 +81,7 @@
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_tokenBalance","type":"map(address,uint256)"}
+				{"name":"_tokenBalance","type":"map(address,uint128)"}
 			]
 		},
 		{
@@ -116,7 +127,7 @@
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"owner","type":"address"},
-		{"name":"_tokenBalance","type":"map(address,uint256)"},
+		{"name":"_tokenBalance","type":"map(address,uint128)"},
 		{"name":"version_","type":"uint32"},
 		{"name":"_platformCode","type":"cell"},
 		{"name":"_refSystem","type":"address"}
