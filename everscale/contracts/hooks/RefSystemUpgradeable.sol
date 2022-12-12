@@ -30,8 +30,8 @@ import "../interfaces/IProxyHook.sol";
 import "../interfaces/IProjectCallback.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 
-import "./RefInstance.sol";
-import "./RefInstancePlatform.sol";
+import "./RefLast.sol";
+import "./RefLastPlatform.sol";
 import "./ProjectPlatform.sol";
 import "./Project.sol";
 
@@ -49,8 +49,8 @@ contract RefSystemUpgradeable is RefSystemBase {
     function onDeployOrUpdate(
         TvmCell initCode,
         uint32 initVersion,
-        TvmCell refPlatformCode,
-        TvmCell refCode,
+        TvmCell refLastPlatformCode,
+        TvmCell refLastCode,
         TvmCell accountPlatformCode,
         TvmCell accountCode,
         TvmCell projectPlatformCode,
@@ -121,8 +121,8 @@ contract RefSystemUpgradeable is RefSystemBase {
         _platformCode,
         _projectPlatformCode,
         _projectCode,
-        _refPlatformCode,
-        _refCode,
+        _refLastPlatformCode,
+        _refLastCode,
         _accountPlatformCode,
         _accountCode
         ) = abi.decode(data,(

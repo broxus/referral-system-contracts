@@ -17,8 +17,8 @@
 			"inputs": [
 				{"name":"owner","type":"address"},
 				{"name":"refSystemCode","type":"cell"},
-				{"name":"refPlatformCode","type":"cell"},
-				{"name":"refCode","type":"cell"},
+				{"name":"refLastPlatformCode","type":"cell"},
+				{"name":"refLastCode","type":"cell"},
 				{"name":"accountPlatformCode","type":"cell"},
 				{"name":"accountCode","type":"cell"},
 				{"name":"projectPlatformCode","type":"cell"},

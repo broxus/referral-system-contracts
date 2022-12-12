@@ -16,8 +16,8 @@
 			"inputs": [
 				{"name":"initCode","type":"cell"},
 				{"name":"initVersion","type":"uint32"},
-				{"name":"refPlatformCode","type":"cell"},
-				{"name":"refCode","type":"cell"},
+				{"name":"refLastPlatformCode","type":"cell"},
+				{"name":"refLastCode","type":"cell"},
 				{"name":"accountPlatformCode","type":"cell"},
 				{"name":"accountCode","type":"cell"},
 				{"name":"projectPlatformCode","type":"cell"},
@@ -98,16 +98,6 @@
 			]
 		},
 		{
-			"name": "deriveRef",
-			"inputs": [
-				{"name":"answerId","type":"uint32"},
-				{"name":"recipient","type":"address"}
-			],
-			"outputs": [
-				{"name":"value0","type":"address"}
-			]
-		},
-		{
 			"name": "deriveProject",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},
@@ -122,6 +112,16 @@
 			"inputs": [
 				{"name":"answerId","type":"uint32"},
 				{"name":"owner","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deriveRefLast",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"root","type":"address"}
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}
@@ -188,19 +188,19 @@
 			]
 		},
 		{
-			"name": "_refCode",
+			"name": "_refLastCode",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_refCode","type":"cell"}
+				{"name":"_refLastCode","type":"cell"}
 			]
 		},
 		{
-			"name": "_refPlatformCode",
+			"name": "_refLastPlatformCode",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_refPlatformCode","type":"cell"}
+				{"name":"_refLastPlatformCode","type":"cell"}
 			]
 		},
 		{
@@ -264,8 +264,8 @@
 		{"name":"owner","type":"address"},
 		{"name":"_platformCode","type":"cell"},
 		{"name":"_refFactory","type":"address"},
-		{"name":"_refCode","type":"cell"},
-		{"name":"_refPlatformCode","type":"cell"},
+		{"name":"_refLastCode","type":"cell"},
+		{"name":"_refLastPlatformCode","type":"cell"},
 		{"name":"_accountCode","type":"cell"},
 		{"name":"_accountPlatformCode","type":"cell"},
 		{"name":"_projectCode","type":"cell"},

@@ -27,8 +27,8 @@ import "../interfaces/IProxyHook.sol";
 import "../interfaces/IProjectCallback.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 
-import "./RefInstance.sol";
-import "./RefInstancePlatform.sol";
+import "./RefLast.sol";
+import "./RefLastPlatform.sol";
 import "./ProjectPlatform.sol";
 import "./Project.sol";
 
@@ -44,8 +44,8 @@ contract RefSystemPlatform {
     constructor(
         TvmCell initCode,
         uint32 initVersion,
-        TvmCell refPlatformCode,
-        TvmCell refCode,
+        TvmCell refLastPlatformCode,
+        TvmCell refLastCode,
         TvmCell accountPlatformCode,
         TvmCell accountCode,
         TvmCell projectPlatformCode,
@@ -60,7 +60,7 @@ contract RefSystemPlatform {
         tvm.accept();
 
         if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
-            initialize(initCode, initVersion, refPlatformCode, refCode, accountPlatformCode, accountCode,projectPlatformCode, projectCode, approvalFee, sender, remainingGasTo);
+            initialize(initCode, initVersion, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode,projectPlatformCode, projectCode, approvalFee, sender, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -87,8 +87,8 @@ contract RefSystemPlatform {
     function initialize(
         TvmCell initCode,
         uint32 initVersion,
-        TvmCell refPlatformCode,
-        TvmCell refCode,
+        TvmCell refLastPlatformCode,
+        TvmCell refLastCode,
         TvmCell accountPlatformCode,
         TvmCell accountCode,
         TvmCell projectPlatformCode,
@@ -109,8 +109,8 @@ contract RefSystemPlatform {
             tvm.code(),
             projectPlatformCode,
             projectCode,
-            refPlatformCode,
-            refCode,
+            refLastPlatformCode,
+            refLastCode,
             accountPlatformCode,
             accountCode
         );

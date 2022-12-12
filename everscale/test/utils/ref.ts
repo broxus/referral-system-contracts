@@ -32,8 +32,8 @@ export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefF
     
     const RefSystem = await locklift.factory.getContractArtifacts('RefSystemUpgradeable');
     
-    const RefInstance = await locklift.factory.getContractArtifacts('RefInstance');
-    const RefInstancePlatform = await locklift.factory.getContractArtifacts('RefInstancePlatform');
+    const RefLast = await locklift.factory.getContractArtifacts('RefLast');
+    const RefLastPlatform = await locklift.factory.getContractArtifacts('RefLastPlatform');
     
     const RefAccount = await locklift.factory.getContractArtifacts("RefAccount")
     const RefAccountPlatform = await locklift.factory.getContractArtifacts("RefAccountPlatform")
@@ -48,8 +48,8 @@ export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefF
         owner: owner.address,
         refSystemCode: RefSystem.code,
         approvalFee,
-        refPlatformCode: RefInstancePlatform.code,
-        refCode: RefInstance.code,
+        refLastPlatformCode: RefLastPlatform.code,
+        refLastCode: RefLast.code,
         accountPlatformCode: RefAccountPlatform.code,
         accountCode: RefAccount.code,
         projectCode: Project.code,
@@ -62,10 +62,10 @@ export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefF
     return locklift.factory.getDeployedContract("RefSystemUpgradeable", refSysAddr)
 }
 
-export async function deriveRef(factory: Contract<FactorySource["RefSystem"]>, recipient: Address): Promise<Contract<FactorySource["RefInstance"]>> {
-    const RefInstance = await locklift.factory.getContractArtifacts('RefInstance');
+export async function deriveRef(factory: Contract<FactorySource["RefSystem"]>, recipient: Address): Promise<Contract<FactorySource["RefLast"]>> {
+    const RefLast = await locklift.factory.getContractArtifacts('RefLast');
     const {value0: refAddr} = await factory.methods.deriveRef({ recipient, answerId: 0 }).call();
 
-    const refInstance = new Contract(locklift.provider,RefInstance.abi, refAddr )
+    const refInstance = new Contract(locklift.provider,RefLast.abi, refAddr )
     return refInstance
 }

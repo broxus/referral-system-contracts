@@ -5,17 +5,16 @@ pragma AbiHeader pubkey;
 
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
-contract RefInstancePlatform {
+contract RefLastPlatform {
     address static root;
-    address static owner;
 
-    constructor(TvmCell initCode, uint32 initVersion, address lastRef, uint128 lastRefReward, address sender, address remainingGasTo)
+    constructor(TvmCell initCode, uint32 initVersion,address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo)
         public
         functionID(0x15A038FB)
     {   
         if (msg.sender == root) {
         // if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
-           initialize(initCode, initVersion, lastRef, lastRefReward, remainingGasTo);
+           initialize(initCode, initVersion, lastRefWallet, lastReferred, lastReferrer, lastRefReward, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -27,10 +26,9 @@ contract RefInstancePlatform {
 
     function _getExpectedAddress(address owner_) private view returns (address) {
         TvmCell stateInit = tvm.buildStateInit({
-            contr: RefInstancePlatform,
+            contr: RefLastPlatform,
             varInit: {
-                root: root,
-                owner: owner_
+                root: root
             },
             pubkey: 0,
             code: tvm.code()
@@ -39,23 +37,24 @@ contract RefInstancePlatform {
         return address(tvm.hash(stateInit));
     }
 
-    function initialize(TvmCell initCode, uint32 initVersion, address lastRef, uint128 lastRefReward, address remainingGasTo) private {
-        TvmBuilder builder;
-
-        builder.store(root);
-        builder.store(owner);
-        builder.store(lastRef);
-        builder.store(lastRefReward);
-        // builder.store(uint32(0));
-        // builder.store(initVersion);
-        // builder.store(remainingGasTo);
-
-        builder.store(tvm.code());
+    function initialize(TvmCell initCode, uint32 initVersion, address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address remainingGasTo) private {
+        
+        TvmCell inputData = abi.encode(
+            root,
+            uint32(0),
+            initVersion,
+            lastRefWallet,
+            lastReferred,
+            lastReferrer,
+            lastRefReward,
+            remainingGasTo,
+            tvm.code()
+        );
 
         tvm.setcode(initCode);
         tvm.setCurrentCode(initCode);
 
-        onCodeUpgrade(builder.toCell());
+        onCodeUpgrade(inputData);
     }
 
     function onCodeUpgrade(TvmCell data) private {}

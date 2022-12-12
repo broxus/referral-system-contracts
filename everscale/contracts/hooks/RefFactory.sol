@@ -28,8 +28,8 @@ import "../interfaces/IProjectCallback.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 import "../interfaces/IUpgradeable.sol";
 
-import "./RefInstance.sol";
-import "./RefInstancePlatform.sol";
+import "./RefLast.sol";
+import "./RefLastPlatform.sol";
 import "./ProjectPlatform.sol";
 import "./Project.sol";
 import "./RefSystemUpgradeable.sol";
@@ -52,8 +52,8 @@ contract RefFactory is InternalOwner, RandomNonce {
     function deployRefSystem(
         address owner,
         TvmCell refSystemCode,
-        TvmCell refPlatformCode,
-        TvmCell refCode,
+        TvmCell refLastPlatformCode,
+        TvmCell refLastCode,
         TvmCell accountPlatformCode,
         TvmCell accountCode,
         TvmCell projectPlatformCode,
@@ -68,7 +68,7 @@ contract RefFactory is InternalOwner, RandomNonce {
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(refSystemCode, 0, refPlatformCode, refCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, sender, remainingGasTo);
+        }(refSystemCode, 0, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, sender, remainingGasTo);
     }
 
     function upgradeRefSystem(

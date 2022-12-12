@@ -32,8 +32,8 @@ import "../interfaces/IProxyHook.sol";
 import "../interfaces/IProjectCallback.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
 
-import "./RefInstance.sol";
-import "./RefInstancePlatform.sol";
+import "./RefLast.sol";
+import "./RefLastPlatform.sol";
 import "./RefAccountPlatform.sol";
 import "./ProjectPlatform.sol";
 import "./Project.sol";
@@ -50,8 +50,8 @@ abstract contract RefSystemBase is
     TvmCell public _platformCode;
     
     address public _refFactory;
-    TvmCell public _refCode;
-    TvmCell public _refPlatformCode;
+    TvmCell public _refLastCode;
+    TvmCell public _refLastPlatformCode;
     TvmCell public _accountCode;
     TvmCell public _accountPlatformCode;
     TvmCell public _projectCode;
@@ -121,6 +121,9 @@ abstract contract RefSystemBase is
         uint128 reward = r - cashback;
         _deployRefAccount(referred, tokenWallet, cashback, sender, remainingGasTo);
         _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
+        
+        // Update/Deploy RefLast
+        _deployRefLast(tokenWallet, referred, referrer, amount, sender, remainingGasTo);
     }
 
     function requestTransfer(
@@ -135,11 +138,6 @@ abstract contract RefSystemBase is
         ITokenWallet(tokenWallet).transfer{flag: MsgFlag.REMAINING_GAS, value: 0 }(balance, recipient, 0.5 ton, remainingGasTo, notify, payload);
     }
 
-
-    function deriveRef(address recipient) external responsible returns (address) {
-       return _deriveRef(recipient);
-    }
-
     function deriveProject(address owner) external responsible returns (address) {
        return _deriveProject(owner);
     }
@@ -147,6 +145,11 @@ abstract contract RefSystemBase is
     function deriveRefAccount(address owner) external responsible returns (address) {
        return _deriveRefAccount(owner);
     }
+
+    function deriveRefLast(address root) external responsible returns (address) {
+        return _deriveRefLast(root);
+    }
+
     function deployProject(
         address refSystem,
         uint128 projectFee,
@@ -175,16 +178,16 @@ abstract contract RefSystemBase is
         Project(_deriveProject(projectOwner)).acceptInit();
     }
 
-    function _deriveRef(address recipient) internal returns (address) {
-       return address(tvm.hash(_buildRefInitData(recipient)));
-    }
-
     function _deriveProject(address owner) internal returns (address) {
         return address(tvm.hash(_buildProjectInitData(owner)));
     }
 
     function _deriveRefAccount(address owner) internal returns (address) {
         return address(tvm.hash(_buildRefAccountInitData(owner)));
+    }
+
+    function _deriveRefLast(address root) internal returns (address) {
+        return address(tvm.hash(_buildRefLastInitData(root)));
     }
 
     function _deployRefAccount(
@@ -200,19 +203,17 @@ abstract contract RefSystemBase is
             wid: address(this).wid,
             flag: 0,
             bounce: true
-            // flag: MsgFlag.ALL_NOT_RESERVED
         }(_accountCode, version(), tokenWallet, reward, sender, remainingGasTo);
     }
     
-    function _deployRefInstance(address recipient, address lastRef, uint128 lastRefReward) internal returns (address) {
-        return new RefInstancePlatform {
-            stateInit: _buildRefInitData(recipient),
-            value: 3 ton,
+    function _deployRefLast(address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo) internal returns (address) {
+        return new RefLastPlatform {
+            stateInit: _buildRefLastInitData(address(this)),
+            value: 0.5 ton,
             wid: address(this).wid,
             flag: 0,
             bounce: true
-            // flag: MsgFlag.ALL_NOT_RESERVED
-        }(_refCode, version(), lastRef, lastRefReward, recipient, address(this));
+        }(_refLastCode, version(), lastRefWallet, lastReferred, lastReferrer, lastRefReward, sender, remainingGasTo);
     }
 
     function _buildProjectInitData(address owner) internal returns (TvmCell) {
@@ -226,15 +227,14 @@ abstract contract RefSystemBase is
             code: _projectPlatformCode
         });
     }
-    function _buildRefInitData(address target) internal returns (TvmCell) {
+    function _buildRefLastInitData(address root) internal returns (TvmCell) {
         return tvm.buildStateInit({
-            contr: RefInstancePlatform,
+            contr: RefLastPlatform,
             varInit: {
-                root: address(this),
-                owner: target
+                root: root
             },
             pubkey: 0,
-            code: _refPlatformCode
+            code: _refLastPlatformCode
         });
     }
 

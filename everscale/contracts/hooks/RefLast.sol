@@ -25,32 +25,37 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
 import "../interfaces/IProxyHook.sol";
 import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
-import "./RefInstancePlatform.sol";
+import "./RefLastPlatform.sol";
 import "./RefSystemUpgradeable.sol";
 
-contract RefInstance {
+contract RefLast {
 
     uint32 version_;
-    TvmCell platformCode_;
+    TvmCell _platformCode;
 
-    address root_;
-    address public owner_;
+    address public _root;
 
-    address public lastRef_;
-    uint128 public lastRefReward_;
+    address public _lastReferrer;
+    address public _lastReferred;
+    address public _lastRefWallet;
+    uint128 public _lastRefReward;
+    uint64 public _lastRefUpdate;
 
     constructor() public {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address lastRef, uint128 lastRefReward, address sender, address remainingGasTo) 
+    function onDeployOrUpdate(TvmCell, uint32, address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
-        require(msg.sender == root_, 400, "Must be root");
-        lastRef_ = lastRef;
-        lastRefReward_ = lastRefReward;
-        
+        require(msg.sender == _root, 400, "Must be root");
+        _lastRefWallet = lastRefWallet;
+        _lastReferred = lastReferred;
+        _lastReferrer = lastReferrer;
+        _lastRefReward = lastRefReward;
+        _lastRefUpdate = block.timestamp;
+
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
                 value: 0,
@@ -60,31 +65,30 @@ contract RefInstance {
         }
     }
 
+    function meta() responsible external returns (address wallet, address referred, address referrer, uint128 reward, uint64 block) {
+        wallet = _lastRefWallet;
+        referred = _lastReferred;
+        referrer = _lastReferrer;
+        reward = _lastRefReward;
+        block = _lastRefUpdate;
+    }
+
     function _reserve() internal returns (uint128) {
         return 0;
     }
 
     function platformCode() external view responsible returns (TvmCell) {
-        return { value: 0, flag: TokenMsgFlag.REMAINING_GAS, bounce: false } platformCode_;
+        return { value: 0, flag: TokenMsgFlag.REMAINING_GAS, bounce: false } _platformCode;
     }
 
-    function deriveRef(address target) external returns (address) {
-        return _deriveRef(target);
-    }
-
-    function _deriveRef(address target) internal returns (address) {
-       return address(tvm.hash(_buildRefInitData(target)));
-    }
-
-    function _buildRefInitData(address target) internal returns (TvmCell) {
+    function _buildRefLastInitData(address root) internal returns (TvmCell) {
         return tvm.buildStateInit({
-            contr: RefInstancePlatform,
+            contr: RefLastPlatform,
             varInit: {
-                root: root_,
-                owner: target
+                root: root
             },
             pubkey: 0,
-            code: platformCode_
+            code: _platformCode
         });
     }
 
@@ -92,14 +96,25 @@ contract RefInstance {
         tvm.rawReserve(_reserve(), 2);
         tvm.resetStorage();
 
-        TvmSlice s = data.toSlice();
-        (root_, owner_, lastRef_, lastRefReward_) = s.decode(
-            address,
-            address,
-            address,
-            uint128
-        );
+        uint32 oldVersion;
+        address remainingGasTo;
+        (_root,
+        oldVersion,
+        version_,
+        _lastRefWallet,
+        _lastReferred,
+        _lastReferrer,
+        _lastRefReward,
+        remainingGasTo,
+        _platformCode
+        ) = abi.decode(data,(address,uint32,uint32,address,address,address,uint128,address,TvmCell));
 
-        platformCode_ = s.loadRef();
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 }

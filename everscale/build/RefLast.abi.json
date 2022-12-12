@@ -1,0 +1,117 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "onDeployOrUpdate",
+			"id": "0x15A038FB",
+			"inputs": [
+				{"name":"value0","type":"cell"},
+				{"name":"value1","type":"uint32"},
+				{"name":"lastRefWallet","type":"address"},
+				{"name":"lastReferred","type":"address"},
+				{"name":"lastReferrer","type":"address"},
+				{"name":"lastRefReward","type":"uint128"},
+				{"name":"sender","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "meta",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"wallet","type":"address"},
+				{"name":"referred","type":"address"},
+				{"name":"referrer","type":"address"},
+				{"name":"reward","type":"uint128"},
+				{"name":"block","type":"uint64"}
+			]
+		},
+		{
+			"name": "platformCode",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "_root",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_root","type":"address"}
+			]
+		},
+		{
+			"name": "_lastReferrer",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_lastReferrer","type":"address"}
+			]
+		},
+		{
+			"name": "_lastReferred",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_lastReferred","type":"address"}
+			]
+		},
+		{
+			"name": "_lastRefWallet",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_lastRefWallet","type":"address"}
+			]
+		},
+		{
+			"name": "_lastRefReward",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_lastRefReward","type":"uint128"}
+			]
+		},
+		{
+			"name": "_lastRefUpdate",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_lastRefUpdate","type":"uint64"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"version_","type":"uint32"},
+		{"name":"_platformCode","type":"cell"},
+		{"name":"_root","type":"address"},
+		{"name":"_lastReferrer","type":"address"},
+		{"name":"_lastReferred","type":"address"},
+		{"name":"_lastRefWallet","type":"address"},
+		{"name":"_lastRefReward","type":"uint128"},
+		{"name":"_lastRefUpdate","type":"uint64"}
+	]
+}
