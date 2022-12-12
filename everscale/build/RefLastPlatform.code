@@ -43,12 +43,12 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefLastPlatform.sol, 15
+.loc ../contracts/RefLastPlatform.sol, 15
 GETGLOB 9
 GETGLOB 10
 SDEQ
 PUSHCONT {
-	.loc ../contracts/hooks/RefLastPlatform.sol, 17
+	.loc ../contracts/RefLastPlatform.sol, 17
 	BLKPUSH 6, 7
 	PUSH S6
 	CALLREF {
@@ -56,7 +56,7 @@ PUSHCONT {
 	}
 }
 PUSHCONT {
-	.loc ../contracts/hooks/RefLastPlatform.sol, 19
+	.loc ../contracts/RefLastPlatform.sol, 19
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -70,7 +70,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IFELSE
-.loc ../contracts/hooks/RefLastPlatform.sol, 0
+.loc ../contracts/RefLastPlatform.sol, 0
 BLKDROP 8
 CALLREF {
 	CALL $c7_to_c4$
@@ -82,7 +82,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/hooks/RefLastPlatform.sol, 28
+.loc ../contracts/RefLastPlatform.sol, 28
 DROP
 PUSHINT 0
 NEWC
@@ -117,21 +117,21 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/RefLastPlatform.sol, 37
+.loc ../contracts/RefLastPlatform.sol, 37
 HASHCU
 NEWC
 STSLICECONST x801_
 STU 256
 ENDC
 CTOS
-.loc ../contracts/hooks/RefLastPlatform.sol, 0
+.loc ../contracts/RefLastPlatform.sol, 0
 
 .globl	initialize_internal
 .type	initialize_internal, @function
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/RefLastPlatform.sol, 42
+.loc ../contracts/RefLastPlatform.sol, 42
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -170,10 +170,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/hooks/RefLastPlatform.sol, 54
+.loc ../contracts/RefLastPlatform.sol, 54
 OVER
 SETCODE
-.loc ../contracts/hooks/RefLastPlatform.sol, 55
+.loc ../contracts/RefLastPlatform.sol, 55
 SWAP
 CTOS
 DUP
@@ -188,16 +188,16 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/RefLastPlatform.sol, 57
+.loc ../contracts/RefLastPlatform.sol, 57
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
-.loc ../contracts/hooks/RefLastPlatform.sol, 0
+.loc ../contracts/RefLastPlatform.sol, 0
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
 DROP
-.loc ../contracts/hooks/RefLastPlatform.sol, 0
+.loc ../contracts/RefLastPlatform.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }

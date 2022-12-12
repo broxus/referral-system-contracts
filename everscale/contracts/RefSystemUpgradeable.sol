@@ -3,36 +3,48 @@ pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../interfaces/IProjectCallback.sol";
-import "../interfaces/IRefSystem.sol";
-import "../interfaces/IUpgradeable.sol";
 
-import '@broxus/contracts/contracts/utils/RandomNonce.sol';
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensBurnCallback.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensTransferCallback.sol";
+
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
+import '@broxus/contracts/contracts/utils/CheckPubKey.sol';
+import '@broxus/contracts/contracts/utils/RandomNonce.sol';
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
+import "./RefLast.sol";
+import "./RefLastPlatform.sol";
+import "./ProjectPlatform.sol";
+import "./Project.sol";
 
-contract Project is InternalOwner, IUpgradeable {
+import "./interfaces/IRefSystem.sol";
+import "./interfaces/IUpgradeable.sol";
 
-    uint32 public version_;
-    TvmCell public _platformCode;
+import "./abstract/RefSystemBase.sol";
 
-    address public _refFactory;
-    address public _refSystem; // root
-    bool public _isApproved;
-
-    uint128 public _projectFee; 
-    uint128 public _cashbackFee;
-
+contract RefSystemUpgradeable is RefSystemBase {   
+    uint32 version_;
     constructor() public {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address, uint128, uint128, address sender, address remainingGasTo) 
-    external
+    function onDeployOrUpdate(
+        TvmCell initCode,
+        uint32 initVersion,
+        TvmCell refLastPlatformCode,
+        TvmCell refLastCode,
+        TvmCell accountPlatformCode,
+        TvmCell accountCode,
+        TvmCell projectPlatformCode,
+        TvmCell projectCode,
+        uint128 approvalFee,
+        address sender,
+        address remainingGasTo
+    ) 
+    public
     functionID(0x15A038FB)
     {
-        require(msg.sender == _refSystem, 400, "Must be root");
+        require(msg.sender == _refFactory, 400, "Must be Ref Factory");
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
                 value: 0,
@@ -41,9 +53,13 @@ contract Project is InternalOwner, IUpgradeable {
             });
         }
     }
+    
+    function version() override public returns (uint32) {
+        return version_;
+    }
 
     function acceptUpgrade(TvmCell newCode, TvmCell newParams, uint32 newVersion, address remainingGasTo) override external {
-        require(msg.sender == _refSystem || msg.sender == _refFactory, 400, "Must be Ref System");
+        require(msg.sender == _refFactory, 400, "Must be Ref Factory");
         if (version_ == newVersion) {
             tvm.rawReserve(_reserve(), 0);
             remainingGasTo.transfer({
@@ -54,10 +70,8 @@ contract Project is InternalOwner, IUpgradeable {
         } else {
             TvmCell inputData = abi.encode(
                 _refFactory,
-                _refSystem,
                 owner,
-                _isApproved,
-                version_,
+                version(),
                 newVersion,
                 remainingGasTo,
                 _platformCode,
@@ -74,33 +88,43 @@ contract Project is InternalOwner, IUpgradeable {
         tvm.rawReserve(_reserve(), 2);
         tvm.resetStorage();
 
-        address owner;
         uint32 oldVersion;
         address remainingGasTo;
-        (
-            _refFactory,
-            _refSystem,
-            owner,
-            oldVersion,
-            version_,
-            _projectFee,
-            _cashbackFee,
-            remainingGasTo,
-            _platformCode
-        ) = abi.decode(data, (
-            address,
+        address sender;
+        address owner;
+
+        (_refFactory,
+        owner,
+        oldVersion,
+        version_,
+        _approvalFee,
+        sender,
+        remainingGasTo,
+        _platformCode,
+        _projectPlatformCode,
+        _projectCode,
+        _refLastPlatformCode,
+        _refLastCode,
+        _accountPlatformCode,
+        _accountCode
+        ) = abi.decode(data,(
             address,
             address,
             uint32,
-            uint32,
-            uint128,
+            uint32, 
             uint128,
             address,
+            address,
+            TvmCell,
+            TvmCell,
+            TvmCell,
+            TvmCell,
+            TvmCell,
+            TvmCell,
             TvmCell
         ));
 
         setOwnership(owner);
-
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
                 value: 0,
@@ -108,24 +132,5 @@ contract Project is InternalOwner, IUpgradeable {
                 bounce: false
             });
         }
-    }
-
-    function acceptInit() public {
-        require(msg.sender == _refSystem, 400, "Must be RefSystem");
-        _isApproved = true;
-    }
-
-
-    modifier approved() {
-        require(_isApproved, 500, "Must Be Approved");
-        _;
-    }
-
-    function _reserve() private returns (uint128) {
-        return 0;
-    }
-
-    function meta(TvmCell payload) view external responsible returns (bool, uint128, uint128, TvmCell) {
-        return {value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(_isApproved, _cashbackFee, _projectFee, payload);
     }
 }

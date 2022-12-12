@@ -32,9 +32,9 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefSystemPlatform.sol, 60
+.loc ../contracts/RefSystemPlatform.sol, 40
 ACCEPT
-.loc ../contracts/hooks/RefSystemPlatform.sol, 62
+.loc ../contracts/RefSystemPlatform.sol, 42
 GETGLOB 9
 GETGLOB 10
 SDEQ
@@ -60,14 +60,14 @@ PUSHCONT {
 }
 IFNOT
 PUSHCONT {
-	.loc ../contracts/hooks/RefSystemPlatform.sol, 63
+	.loc ../contracts/RefSystemPlatform.sol, 43
 	BLKPUSH 11, 10
 	CALLREF {
 		CALL $initialize_internal_macro$
 	}
 }
 PUSHCONT {
-	.loc ../contracts/hooks/RefSystemPlatform.sol, 65
+	.loc ../contracts/RefSystemPlatform.sol, 45
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -81,7 +81,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IFELSE
-.loc ../contracts/hooks/RefSystemPlatform.sol, 0
+.loc ../contracts/RefSystemPlatform.sol, 0
 BLKDROP 11
 CALLREF {
 	CALL $c7_to_c4$
@@ -93,7 +93,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/hooks/RefSystemPlatform.sol, 74
+.loc ../contracts/RefSystemPlatform.sol, 54
 PUSHINT 0
 NEWC
 STU 256
@@ -132,21 +132,21 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/RefSystemPlatform.sol, 84
+.loc ../contracts/RefSystemPlatform.sol, 64
 HASHCU
 NEWC
 STSLICECONST x801_
 STU 256
 ENDC
 CTOS
-.loc ../contracts/hooks/RefSystemPlatform.sol, 0
+.loc ../contracts/RefSystemPlatform.sol, 0
 
 .globl	initialize_internal
 .type	initialize_internal, @function
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/RefSystemPlatform.sol, 101
+.loc ../contracts/RefSystemPlatform.sol, 81
 REVERSE 5, 0
 REVERSE 7, 2
 GETGLOB 1
@@ -194,10 +194,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/hooks/RefSystemPlatform.sol, 118
+.loc ../contracts/RefSystemPlatform.sol, 98
 OVER
 SETCODE
-.loc ../contracts/hooks/RefSystemPlatform.sol, 119
+.loc ../contracts/RefSystemPlatform.sol, 99
 SWAP
 CTOS
 DUP
@@ -212,16 +212,16 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/RefSystemPlatform.sol, 121
+.loc ../contracts/RefSystemPlatform.sol, 101
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
-.loc ../contracts/hooks/RefSystemPlatform.sol, 0
+.loc ../contracts/RefSystemPlatform.sol, 0
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
 DROP
-.loc ../contracts/hooks/RefSystemPlatform.sol, 0
+.loc ../contracts/RefSystemPlatform.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }

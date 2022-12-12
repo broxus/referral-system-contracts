@@ -7,9 +7,10 @@ import { Contract, toNano } from "locklift";
 import { Account } from "everscale-standalone-client";
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
+if (locklift.context.network.name === "main") throw "NOT IN TEST MODE"
+
 describe('Ref Init', function () {
     this.timeout(10000000);
-
     describe('RefFactory', function () {
         describe('constructor', function () {
             it('should deploy RefFactory', async function () {

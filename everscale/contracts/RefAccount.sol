@@ -3,12 +3,12 @@ pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "./../modules/TokenContracts/interfaces/ITokenRoot.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/ITokenRoot.sol";
 
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
 
-import "../interfaces/IRefSystem.sol";
+import "./interfaces/IRefSystem.sol";
 import "./RefAccountPlatform.sol";
 
 contract RefAccount is InternalOwner {

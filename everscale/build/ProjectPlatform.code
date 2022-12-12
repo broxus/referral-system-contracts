@@ -36,9 +36,9 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/ProjectPlatform.sol, 24
+.loc ../contracts/ProjectPlatform.sol, 24
 ACCEPT
-.loc ../contracts/hooks/ProjectPlatform.sol, 26
+.loc ../contracts/ProjectPlatform.sol, 26
 GETGLOB 9
 GETGLOB 10
 SDEQ
@@ -64,14 +64,14 @@ PUSHCONT {
 }
 IFNOT
 PUSHCONT {
-	.loc ../contracts/hooks/ProjectPlatform.sol, 27
+	.loc ../contracts/ProjectPlatform.sol, 27
 	BLKPUSH 7, 6
 	CALLREF {
 		CALL $initialize_internal_macro$
 	}
 }
 PUSHCONT {
-	.loc ../contracts/hooks/ProjectPlatform.sol, 29
+	.loc ../contracts/ProjectPlatform.sol, 29
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -85,7 +85,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IFELSE
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
+.loc ../contracts/ProjectPlatform.sol, 0
 BLKDROP 7
 CALLREF {
 	CALL $c7_to_c4$
@@ -97,7 +97,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/hooks/ProjectPlatform.sol, 38
+.loc ../contracts/ProjectPlatform.sol, 38
 PUSHINT 0
 NEWC
 STU 256
@@ -136,21 +136,21 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/ProjectPlatform.sol, 48
+.loc ../contracts/ProjectPlatform.sol, 48
 HASHCU
 NEWC
 STSLICECONST x801_
 STU 256
 ENDC
 CTOS
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
+.loc ../contracts/ProjectPlatform.sol, 0
 
 .globl	initialize_internal
 .type	initialize_internal, @function
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/ProjectPlatform.sol, 52
+.loc ../contracts/ProjectPlatform.sol, 52
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -190,10 +190,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/hooks/ProjectPlatform.sol, 64
+.loc ../contracts/ProjectPlatform.sol, 64
 PUSH S2
 SETCODE
-.loc ../contracts/hooks/ProjectPlatform.sol, 65
+.loc ../contracts/ProjectPlatform.sol, 65
 ROT
 CTOS
 DUP
@@ -208,17 +208,17 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/ProjectPlatform.sol, 67
+.loc ../contracts/ProjectPlatform.sol, 67
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
+.loc ../contracts/ProjectPlatform.sol, 0
 DROP
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
 DROP
-.loc ../contracts/hooks/ProjectPlatform.sol, 0
+.loc ../contracts/ProjectPlatform.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }

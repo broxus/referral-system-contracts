@@ -36,7 +36,7 @@
 				{"name":"referred","type":"address"},
 				{"name":"referrer","type":"address"},
 				{"name":"reward","type":"uint128"},
-				{"name":"block","type":"uint64"}
+				{"name":"time","type":"uint64"}
 			]
 		},
 		{

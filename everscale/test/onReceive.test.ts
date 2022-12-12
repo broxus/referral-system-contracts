@@ -9,6 +9,8 @@ import { deployTokenFactory, deployTokenRoot, mint } from "./utils/tokenRoot";
 import { walletOf } from "./utils/tokenWallet";
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
+if (locklift.context.network.name === "main") throw "NOT IN TEST MODE"
+
 describe('RefSystem On Receive', function () {
     this.timeout(10000000);
     describe('onAcceptTokensTransfer()', function () {
@@ -149,7 +151,7 @@ describe('RefSystem On Receive', function () {
                 let lastRef = locklift.factory.getDeployedContract("RefLast", lastRefAddr)
                 logContract(lastRef, "RefLast");
 
-                let { wallet, referrer, referred, reward, block } = await lastRef.methods.meta({answerId: 0}).call()
+                let { wallet, referrer, referred, reward, time } = await lastRef.methods.meta({answerId: 0}).call()
                 expect(referrer.toString()).to.be.equal(FIRST_REFERRER.toString())
                 expect(referred.toString()).to.be.equal(FIRST_REFERRED.toString())
                 expect(reward).to.be.equal(toNano(FIRST_REWARD));

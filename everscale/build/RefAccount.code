@@ -10,9 +10,9 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/hooks/RefAccount.sol, 24
+.loc ../contracts/RefAccount.sol, 24
 THROW 100
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 
 .macro onDeployOrUpdate
 DROP
@@ -23,7 +23,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefAccount.sol, 27
+.loc ../contracts/RefAccount.sol, 27
 OVER
 PUSHCONT {
 	LDREF
@@ -48,7 +48,7 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 CALLREF {
 	CALL $onDeployOrUpdate_internal_macro$
 }
@@ -59,7 +59,7 @@ CALLREF {
 THROW 0
 
 .macro onDeployOrUpdate_internal_macro
-.loc ../contracts/hooks/RefAccount.sol, 31
+.loc ../contracts/RefAccount.sol, 31
 PUSHREF {
 	.blob x4d75737420626520726f6f74
 }
@@ -67,10 +67,10 @@ GETGLOB 9
 GETGLOB 14
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/hooks/RefAccount.sol, 32
+.loc ../contracts/RefAccount.sol, 32
 PUSH S2
 PUSHCONT {
-	.loc ../contracts/hooks/RefAccount.sol, 35
+	.loc ../contracts/RefAccount.sol, 35
 	PUSH2 S2, S3
 	GETGLOB 11
 	DUP2
@@ -93,7 +93,7 @@ PUSHCONT {
 	DICTSETB
 }
 PUSHCONT {
-	.loc ../contracts/hooks/RefAccount.sol, 33
+	.loc ../contracts/RefAccount.sol, 33
 	PUSH S3
 	GETGLOB 11
 	PUSHINT 267
@@ -102,7 +102,7 @@ PUSHCONT {
 }
 IFELSE
 SETGLOB 11
-.loc ../contracts/hooks/RefAccount.sol, 38
+.loc ../contracts/RefAccount.sol, 38
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -114,7 +114,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/hooks/RefAccount.sol, 39
+	.loc ../contracts/RefAccount.sol, 39
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -126,10 +126,10 @@ PUSHCONT {
 	ADDCONST 2
 	UFITS 8
 	SENDRAWMSG
-	.loc ../contracts/hooks/RefAccount.sol, 0
+	.loc ../contracts/RefAccount.sol, 0
 }
 IF
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 BLKDROP 6
 
 .globl	_reserve_internal
@@ -137,9 +137,9 @@ BLKDROP 6
 CALL $_reserve_internal_macro$
 
 .macro _reserve_internal_macro
-.loc ../contracts/hooks/RefAccount.sol, 48
+.loc ../contracts/RefAccount.sol, 48
 PUSHINT 0
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 
 .macro platformCode
 DROP
@@ -150,14 +150,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefAccount.sol, 51
+.loc ../contracts/RefAccount.sol, 51
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 CALLREF {
 	CALL $platformCode_internal_macro$
 }
@@ -215,7 +215,7 @@ IFREF {
 THROW 0
 
 .macro platformCode_internal_macro
-.loc ../contracts/hooks/RefAccount.sol, 52
+.loc ../contracts/RefAccount.sol, 52
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -225,7 +225,7 @@ FALSE
 SETINDEXQ 1
 SETGLOB 4
 GETGLOB 13
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 
 .macro deriveRef
 DROP
@@ -236,7 +236,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefAccount.sol, 55
+.loc ../contracts/RefAccount.sol, 55
 OVER
 PUSHCONT {
 	LDREF
@@ -246,7 +246,7 @@ PUSHCONT {
 IF
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 CALLREF {
 	CALL $deriveRef_internal_macro$
 }
@@ -283,18 +283,18 @@ CALLREF {
 THROW 0
 
 .macro deriveRef_internal_macro
-.loc ../contracts/hooks/RefAccount.sol, 56
+.loc ../contracts/RefAccount.sol, 56
 CALLREF {
 	CALL $_deriveRef_internal_macro$
 }
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 
 .globl	_deriveRef_internal
 .type	_deriveRef_internal, @function
 CALL $_deriveRef_internal_macro$
 
 .macro _deriveRef_internal_macro
-.loc ../contracts/hooks/RefAccount.sol, 60
+.loc ../contracts/RefAccount.sol, 60
 CALLREF {
 	CALL $_buildRefInitData_internal_macro$
 }
@@ -304,14 +304,14 @@ STSLICECONST x801_
 STU 256
 ENDC
 CTOS
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 
 .globl	_buildRefInitData_internal
 .type	_buildRefInitData_internal, @function
 CALL $_buildRefInitData_internal_macro$
 
 .macro _buildRefInitData_internal_macro
-.loc ../contracts/hooks/RefAccount.sol, 64
+.loc ../contracts/RefAccount.sol, 64
 PUSHINT 0
 NEWC
 STU 256
@@ -339,17 +339,17 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
-.loc ../contracts/hooks/RefAccount.sol, 76
+.loc ../contracts/RefAccount.sol, 76
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/hooks/RefAccount.sol, 77
+.loc ../contracts/RefAccount.sol, 77
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
@@ -365,17 +365,17 @@ PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
 SETGLOB 14
-.loc ../contracts/hooks/RefAccount.sol, 79
+.loc ../contracts/RefAccount.sol, 79
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/hooks/RefAccount.sol, 80
+.loc ../contracts/RefAccount.sol, 80
 PUSHINT 0
-.loc ../contracts/hooks/RefAccount.sol, 81
+.loc ../contracts/RefAccount.sol, 81
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/hooks/RefAccount.sol, 82
+.loc ../contracts/RefAccount.sol, 82
 ROLL 3
 CTOS
 LDMSGADDR
@@ -398,11 +398,11 @@ SETGLOB 12
 POP S5
 POP S3
 SETGLOB 13
-.loc ../contracts/hooks/RefAccount.sol, 98
+.loc ../contracts/RefAccount.sol, 98
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../contracts/hooks/RefAccount.sol, 99
+.loc ../contracts/RefAccount.sol, 99
 GETGLOB 11
 SWAP
 NEWC
@@ -411,7 +411,7 @@ ROTREV
 PUSHINT 267
 DICTSETB
 SETGLOB 11
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -427,7 +427,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefAccount.sol, 103
+.loc ../contracts/RefAccount.sol, 103
 OVER
 PUSHCONT {
 	LDREF
@@ -443,7 +443,7 @@ LDMSGADDR
 LDI 1
 LDREF
 ENDS
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 CALLREF {
 	CALL $requestTransfer_internal_macro$
 }
@@ -473,7 +473,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/hooks/RefAccount.sol, 109
+.loc ../contracts/RefAccount.sol, 109
 PUSH S3
 GETGLOB 11
 PUSHINT 267
@@ -485,14 +485,14 @@ PUSHCONT {
 	PUSHINT 0
 }
 IFELSE
-.loc ../contracts/hooks/RefAccount.sol, 110
+.loc ../contracts/RefAccount.sol, 110
 PUSH S4
 GETGLOB 11
 PUSHINT 267
 DICTDEL
 DROP
 SETGLOB 11
-.loc ../contracts/hooks/RefAccount.sol, 111
+.loc ../contracts/RefAccount.sol, 111
 ROLL 4
 XCHG S2, S4
 GETGLOB 10
@@ -521,7 +521,7 @@ STBREFR
 ENDC
 PUSHINT 64
 SENDRAWMSG
-.loc ../contracts/hooks/RefAccount.sol, 0
+.loc ../contracts/RefAccount.sol, 0
 
 .globl	setOwnership_internal
 .type	setOwnership_internal, @function

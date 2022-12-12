@@ -3,19 +3,6 @@ pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-
-import "./../modules/bridge/interfaces/IProxyExtended.sol";
-import "./../modules/bridge/interfaces/multivault/IProxyMultiVaultAlien_V3.sol";
-import "./../modules/bridge/interfaces/event-configuration-contracts/IEverscaleEventConfiguration.sol";
-
-import "./../modules/utils/ErrorCodes.sol";
-import "./../modules/utils/TransferUtils.sol";
-
-import "./../modules/bridge/alien-token/TokenRootAlienEVM.sol";
-import "./../modules/bridge/alien-token-merge/MergePool.sol";
-import "./../modules/bridge/alien-token-merge/MergeRouter.sol";
-import "./../modules/bridge/alien-token-merge/MergePoolPlatform.sol";
-
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensBurnCallback.sol";
 
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
@@ -23,10 +10,7 @@ import '@broxus/contracts/contracts/utils/CheckPubKey.sol';
 import '@broxus/contracts/contracts/utils/RandomNonce.sol';
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
-import "../interfaces/IProxyHook.sol";
-import "../interfaces/IProjectCallback.sol";
-import "../proxy/HookedProxyMultiVaultCellEncoder.sol";
-import "../interfaces/IUpgradeable.sol";
+import "./interfaces/IUpgradeable.sol";
 
 import "./RefLast.sol";
 import "./RefLastPlatform.sol";
@@ -35,7 +19,7 @@ import "./Project.sol";
 import "./RefSystemUpgradeable.sol";
 import "./RefSystemPlatform.sol";
 
-import "../interfaces/IRefSystem.sol";
+import "./interfaces/IRefSystem.sol";
 
 contract RefFactory is InternalOwner, RandomNonce {
     TvmCell public _refSystemPlatformCode;

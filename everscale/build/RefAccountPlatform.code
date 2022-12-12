@@ -35,12 +35,12 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefAccountPlatform.sol, 16
+.loc ../contracts/RefAccountPlatform.sol, 16
 GETGLOB 9
 GETGLOB 10
 SDEQ
 PUSHCONT {
-	.loc ../contracts/hooks/RefAccountPlatform.sol, 17
+	.loc ../contracts/RefAccountPlatform.sol, 17
 	BLKPUSH 4, 5
 	PUSH S4
 	CALLREF {
@@ -48,7 +48,7 @@ PUSHCONT {
 	}
 }
 PUSHCONT {
-	.loc ../contracts/hooks/RefAccountPlatform.sol, 19
+	.loc ../contracts/RefAccountPlatform.sol, 19
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -62,7 +62,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 IFELSE
-.loc ../contracts/hooks/RefAccountPlatform.sol, 0
+.loc ../contracts/RefAccountPlatform.sol, 0
 BLKDROP 6
 CALLREF {
 	CALL $c7_to_c4$
@@ -74,7 +74,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/hooks/RefAccountPlatform.sol, 28
+.loc ../contracts/RefAccountPlatform.sol, 28
 PUSHINT 0
 NEWC
 STU 256
@@ -113,21 +113,21 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/RefAccountPlatform.sol, 38
+.loc ../contracts/RefAccountPlatform.sol, 38
 HASHCU
 NEWC
 STSLICECONST x801_
 STU 256
 ENDC
 CTOS
-.loc ../contracts/hooks/RefAccountPlatform.sol, 0
+.loc ../contracts/RefAccountPlatform.sol, 0
 
 .globl	initialize_internal
 .type	initialize_internal, @function
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/RefAccountPlatform.sol, 49
+.loc ../contracts/RefAccountPlatform.sol, 49
 DROP
 GETGLOB 1
 PUSHREF {
@@ -158,10 +158,10 @@ STREF
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/hooks/RefAccountPlatform.sol, 58
+.loc ../contracts/RefAccountPlatform.sol, 58
 OVER
 SETCODE
-.loc ../contracts/hooks/RefAccountPlatform.sol, 59
+.loc ../contracts/RefAccountPlatform.sol, 59
 SWAP
 CTOS
 DUP
@@ -176,16 +176,16 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/RefAccountPlatform.sol, 61
+.loc ../contracts/RefAccountPlatform.sol, 61
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
-.loc ../contracts/hooks/RefAccountPlatform.sol, 0
+.loc ../contracts/RefAccountPlatform.sol, 0
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
 DROP
-.loc ../contracts/hooks/RefAccountPlatform.sol, 0
+.loc ../contracts/RefAccountPlatform.sol, 0
 CALLREF {
 	CALL $c7_to_c4$
 }

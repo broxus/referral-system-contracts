@@ -10,9 +10,9 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/hooks/RefLast.sol, 45
+.loc ../contracts/RefLast.sol, 25
 THROW 100
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 
 .macro onDeployOrUpdate
 DROP
@@ -23,7 +23,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefLast.sol, 48
+.loc ../contracts/RefLast.sol, 28
 OVER
 PUSHCONT {
 	LDREF
@@ -56,7 +56,7 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 CALLREF {
 	CALL $onDeployOrUpdate_internal_macro$
 }
@@ -67,7 +67,7 @@ CALLREF {
 THROW 0
 
 .macro onDeployOrUpdate_internal_macro
-.loc ../contracts/hooks/RefLast.sol, 52
+.loc ../contracts/RefLast.sol, 32
 PUSHREF {
 	.blob x4d75737420626520726f6f74
 }
@@ -75,22 +75,22 @@ GETGLOB 9
 GETGLOB 12
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/hooks/RefLast.sol, 53
+.loc ../contracts/RefLast.sol, 33
 ROLL 5
 SETGLOB 15
-.loc ../contracts/hooks/RefLast.sol, 54
+.loc ../contracts/RefLast.sol, 34
 ROLL 4
 SETGLOB 14
-.loc ../contracts/hooks/RefLast.sol, 55
+.loc ../contracts/RefLast.sol, 35
 ROLL 3
 SETGLOB 13
-.loc ../contracts/hooks/RefLast.sol, 56
+.loc ../contracts/RefLast.sol, 36
 ROT
 SETGLOB 16
-.loc ../contracts/hooks/RefLast.sol, 57
+.loc ../contracts/RefLast.sol, 37
 BLOCKLT
 SETGLOB 17
-.loc ../contracts/hooks/RefLast.sol, 59
+.loc ../contracts/RefLast.sol, 39
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -102,7 +102,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/hooks/RefLast.sol, 60
+	.loc ../contracts/RefLast.sol, 40
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -114,10 +114,10 @@ PUSHCONT {
 	ADDCONST 2
 	UFITS 8
 	SENDRAWMSG
-	.loc ../contracts/hooks/RefLast.sol, 0
+	.loc ../contracts/RefLast.sol, 0
 }
 IF
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 BLKDROP 4
 
 .macro meta
@@ -129,14 +129,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefLast.sol, 68
+.loc ../contracts/RefLast.sol, 48
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 CALLREF {
 	CALL $meta_internal_macro$
 }
@@ -222,26 +222,26 @@ CALLREF {
 THROW 0
 
 .macro meta_internal_macro
-.loc ../contracts/hooks/RefLast.sol, 69
+.loc ../contracts/RefLast.sol, 49
 GETGLOB 15
-.loc ../contracts/hooks/RefLast.sol, 70
+.loc ../contracts/RefLast.sol, 50
 GETGLOB 14
-.loc ../contracts/hooks/RefLast.sol, 71
+.loc ../contracts/RefLast.sol, 51
 GETGLOB 13
-.loc ../contracts/hooks/RefLast.sol, 72
+.loc ../contracts/RefLast.sol, 52
 GETGLOB 16
-.loc ../contracts/hooks/RefLast.sol, 73
+.loc ../contracts/RefLast.sol, 53
 GETGLOB 17
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 
 .globl	_reserve_internal
 .type	_reserve_internal, @function
 CALL $_reserve_internal_macro$
 
 .macro _reserve_internal_macro
-.loc ../contracts/hooks/RefLast.sol, 77
+.loc ../contracts/RefLast.sol, 57
 PUSHINT 0
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 
 .macro platformCode
 DROP
@@ -252,14 +252,14 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefLast.sol, 80
+.loc ../contracts/RefLast.sol, 60
 LDU 32
 GETGLOB 4
 ROT
 SETINDEXQ 5
 SETGLOB 4
 ENDS
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 CALLREF {
 	CALL $platformCode_internal_macro$
 }
@@ -317,7 +317,7 @@ IFREF {
 THROW 0
 
 .macro platformCode_internal_macro
-.loc ../contracts/hooks/RefLast.sol, 81
+.loc ../contracts/RefLast.sol, 61
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -327,14 +327,14 @@ FALSE
 SETINDEXQ 1
 SETGLOB 4
 GETGLOB 11
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 
 .globl	_buildRefLastInitData_internal
 .type	_buildRefLastInitData_internal, @function
 CALL $_buildRefLastInitData_internal_macro$
 
 .macro _buildRefLastInitData_internal_macro
-.loc ../contracts/hooks/RefLast.sol, 85
+.loc ../contracts/RefLast.sol, 65
 PUSHINT 0
 NEWC
 STU 256
@@ -357,17 +357,17 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
-.loc ../contracts/hooks/RefLast.sol, 96
+.loc ../contracts/RefLast.sol, 76
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/hooks/RefLast.sol, 97
+.loc ../contracts/RefLast.sol, 77
 PUSHINT 0
 SETGLOB 10
 PUSHREF {
@@ -393,11 +393,11 @@ PUSHINT 0
 SETGLOB 16
 PUSHINT 0
 SETGLOB 17
-.loc ../contracts/hooks/RefLast.sol, 100
+.loc ../contracts/RefLast.sol, 80
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/hooks/RefLast.sol, 101
+.loc ../contracts/RefLast.sol, 81
 SWAP
 CTOS
 LDMSGADDR
@@ -432,7 +432,7 @@ SETGLOB 13
 SETGLOB 16
 POP S2
 SETGLOB 11
-.loc ../contracts/hooks/RefLast.sol, 112
+.loc ../contracts/RefLast.sol, 92
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -444,7 +444,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/hooks/RefLast.sol, 113
+	.loc ../contracts/RefLast.sol, 93
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -456,10 +456,10 @@ PUSHCONT {
 	ADDCONST 2
 	UFITS 8
 	SENDRAWMSG
-	.loc ../contracts/hooks/RefLast.sol, 0
+	.loc ../contracts/RefLast.sol, 0
 }
 IF
-.loc ../contracts/hooks/RefLast.sol, 0
+.loc ../contracts/RefLast.sol, 0
 DROP
 CALLREF {
 	CALL $c7_to_c4$

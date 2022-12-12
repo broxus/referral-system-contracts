@@ -10,9 +10,9 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/hooks/Project.sol, 28
+.loc ../contracts/Project.sol, 26
 THROW 100
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 
 .macro onDeployOrUpdate
 DROP
@@ -23,7 +23,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/Project.sol, 31
+.loc ../contracts/Project.sol, 29
 OVER
 PUSHCONT {
 	LDREF
@@ -49,7 +49,7 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 CALLREF {
 	CALL $onDeployOrUpdate_internal_macro$
 }
@@ -60,7 +60,7 @@ CALLREF {
 THROW 0
 
 .macro onDeployOrUpdate_internal_macro
-.loc ../contracts/hooks/Project.sol, 35
+.loc ../contracts/Project.sol, 33
 PUSHREF {
 	.blob x4d75737420626520726f6f74
 }
@@ -68,7 +68,7 @@ GETGLOB 9
 GETGLOB 14
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/hooks/Project.sol, 36
+.loc ../contracts/Project.sol, 34
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -80,7 +80,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/hooks/Project.sol, 37
+	.loc ../contracts/Project.sol, 35
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -92,10 +92,10 @@ PUSHCONT {
 	ADDCONST 2
 	UFITS 8
 	SENDRAWMSG
-	.loc ../contracts/hooks/Project.sol, 0
+	.loc ../contracts/Project.sol, 0
 }
 IF
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 BLKDROP 7
 
 .macro acceptUpgrade
@@ -107,7 +107,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/Project.sol, 45
+.loc ../contracts/Project.sol, 43
 OVER
 PUSHCONT {
 	LDREF
@@ -125,7 +125,7 @@ PUSHCONT {
 IFELSE
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 CALLREF {
 	CALL $acceptUpgrade_internal_macro$
 }
@@ -136,7 +136,7 @@ CALLREF {
 THROW 0
 
 .macro acceptUpgrade_internal_macro
-.loc ../contracts/hooks/Project.sol, 46
+.loc ../contracts/Project.sol, 44
 PUSHREF {
 	.blob x4d757374206265205265662053797374656d
 }
@@ -148,18 +148,18 @@ GETGLOB 13
 SDEQ
 OR
 THROWARGIFNOT 400
-.loc ../contracts/hooks/Project.sol, 47
+.loc ../contracts/Project.sol, 45
 GETGLOB 11
 PUSH S2
 EQUAL
 PUSHCONT {
-	.loc ../contracts/hooks/Project.sol, 48
+	.loc ../contracts/Project.sol, 46
 	CALLREF {
 		CALL $_reserve_internal_macro$
 	}
 	PUSHINT 0
 	RAWRESERVE
-	.loc ../contracts/hooks/Project.sol, 49
+	.loc ../contracts/Project.sol, 47
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -173,7 +173,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 PUSHCONT {
-	.loc ../contracts/hooks/Project.sol, 55
+	.loc ../contracts/Project.sol, 53
 	PUSH S2
 	GETGLOB 12
 	PUSH2 S2, S3
@@ -202,10 +202,10 @@ PUSHCONT {
 	STBREFR
 	STBREFR
 	ENDC
-	.loc ../contracts/hooks/Project.sol, 67
+	.loc ../contracts/Project.sol, 65
 	PUSH S4
 	SETCODE
-	.loc ../contracts/hooks/Project.sol, 68
+	.loc ../contracts/Project.sol, 66
 	PUSH S4
 	CTOS
 	DUP
@@ -220,24 +220,24 @@ PUSHCONT {
 	CTOS
 	BLESS
 	POP C3
-	.loc ../contracts/hooks/Project.sol, 69
+	.loc ../contracts/Project.sol, 67
 	CALLREF {
 		CALL $:onCodeUpgrade$
 	}
 }
 IFELSE
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 BLKDROP 4
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
-.loc ../contracts/hooks/Project.sol, 74
+.loc ../contracts/Project.sol, 72
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/hooks/Project.sol, 75
+.loc ../contracts/Project.sol, 73
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
@@ -261,12 +261,12 @@ PUSHINT 0
 SETGLOB 16
 PUSHINT 0
 SETGLOB 17
-.loc ../contracts/hooks/Project.sol, 77
+.loc ../contracts/Project.sol, 75
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
 DUP
-.loc ../contracts/hooks/Project.sol, 80
+.loc ../contracts/Project.sol, 78
 ROT
 CTOS
 LDMSGADDR
@@ -298,12 +298,12 @@ SETGLOB 16
 SETGLOB 17
 POP S2
 SETGLOB 12
-.loc ../contracts/hooks/Project.sol, 102
+.loc ../contracts/Project.sol, 100
 SWAP
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../contracts/hooks/Project.sol, 104
+.loc ../contracts/Project.sol, 102
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -315,7 +315,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/hooks/Project.sol, 105
+	.loc ../contracts/Project.sol, 103
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -327,10 +327,10 @@ PUSHCONT {
 	ADDCONST 2
 	UFITS 8
 	SENDRAWMSG
-	.loc ../contracts/hooks/Project.sol, 0
+	.loc ../contracts/Project.sol, 0
 }
 IF
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 DROP
 CALLREF {
 	CALL $c7_to_c4$
@@ -347,9 +347,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/Project.sol, 113
+.loc ../contracts/Project.sol, 111
 ENDS
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 CALLREF {
 	CALL $acceptInit_internal_macro$
 }
@@ -364,7 +364,7 @@ THROW 0
 CALL $acceptInit_internal_macro$
 
 .macro acceptInit_internal_macro
-.loc ../contracts/hooks/Project.sol, 114
+.loc ../contracts/Project.sol, 112
 PUSHREF {
 	.blob x4d7573742062652052656653797374656d
 }
@@ -372,19 +372,19 @@ GETGLOB 9
 GETGLOB 14
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/hooks/Project.sol, 115
+.loc ../contracts/Project.sol, 113
 TRUE
 SETGLOB 15
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 
 .globl	_reserve_internal
 .type	_reserve_internal, @function
 CALL $_reserve_internal_macro$
 
 .macro _reserve_internal_macro
-.loc ../contracts/hooks/Project.sol, 125
+.loc ../contracts/Project.sol, 123
 PUSHINT 0
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 
 .macro meta
 DROP
@@ -395,7 +395,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/Project.sol, 128
+.loc ../contracts/Project.sol, 126
 LDU 32
 GETGLOB 4
 ROT
@@ -403,7 +403,7 @@ SETINDEXQ 5
 SETGLOB 4
 LDREF
 ENDS
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 CALLREF {
 	CALL $meta_internal_macro$
 }
@@ -472,7 +472,7 @@ IFREF {
 THROW 0
 
 .macro meta_internal_macro
-.loc ../contracts/hooks/Project.sol, 129
+.loc ../contracts/Project.sol, 127
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -483,7 +483,7 @@ GETGLOB 15
 GETGLOB 17
 GETGLOB 16
 ROLL 3
-.loc ../contracts/hooks/Project.sol, 0
+.loc ../contracts/Project.sol, 0
 
 .globl	setOwnership_internal
 .type	setOwnership_internal, @function

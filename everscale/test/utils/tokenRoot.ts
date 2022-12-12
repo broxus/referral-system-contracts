@@ -4,6 +4,7 @@ import { Address, Contract, getRandomNonce, toNano, zeroAddress } from "locklift
 import { FactorySource } from "../../build/factorySource";
 import logger from "mocha-logger"
 
+type TokenFactory = Contract<FactorySource["TokenFactory"]>
 export async function deployTokenFactory(account: Account) {
   const TokenRoot = locklift.factory.getContractArtifacts("TokenRoot");
   const TokenRootPlatform = locklift.factory.getContractArtifacts("");
@@ -35,7 +36,6 @@ export async function deployTokenFactory(account: Account) {
   return contract;
 }
 
-type TokenFactory = Contract<FactorySource["TokenFactory"]>
 export async function deployTokenRoot(
   account: Account,
   config: { 
@@ -44,17 +44,18 @@ export async function deployTokenRoot(
     decimals: string;
     initialSupply?: number | string;
     initialSupplyTo?: Address;
-    deployValue?: string; 
+    deployWalletValue?: number |string;
+    value?: number | string;
   }) {
   const TokenWallet = locklift.factory.getContractArtifacts("TokenWallet");
 
-  let { name, symbol, decimals, initialSupply, initialSupplyTo, deployValue } = config;
+  let { name, symbol, decimals, initialSupply, initialSupplyTo, deployWalletValue, value } = config;
   decimals = decimals || '4';
   initialSupply = initialSupply || 0;
   initialSupplyTo = initialSupplyTo || account.address;
+  value = value || toNano(2)
 
-  // deployWalletValue = deployWalletValue || locklift.utils.convertCrystal('1', 'nano')
-  deployValue = toNano(0.1)
+  deployWalletValue = deployWalletValue || toNano(0.2)
   const signer = await locklift.keystore.getSigner("0")
   let {contract} = await locklift.factory.deployContract({
     contract: "TokenRoot",
