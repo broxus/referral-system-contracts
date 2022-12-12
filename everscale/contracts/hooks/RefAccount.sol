@@ -8,7 +8,7 @@ import "./../modules/TokenContracts/interfaces/ITokenRoot.sol";
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
 
-import "./RefSystemBase.sol";
+// import "./RefSystemBase.sol";
 import "./RefAccountPlatform.sol";
 
 contract RefAccount is InternalOwner {
@@ -92,13 +92,13 @@ contract RefAccount is InternalOwner {
         setOwnership(owner);
     }
 
-    function requestTransfer(
-        address tokenWallet,
-        address remainingGasTo,
-        bool notify,
-        TvmCell payload
-    ) onlyOwner {
-        // TODO: Auth tokenWallet?
-        RefSystemBase(_refSystem).requestTransfer(owner, tokenWallet, _tokenBalance[tokenWallet], remainingGasTo, notify, payload);
-    }
+    // function requestTransfer(
+    //     address tokenWallet,
+    //     address remainingGasTo,
+    //     bool notify,
+    //     TvmCell payload
+    // ) public onlyOwner {
+    //     // TODO: Auth tokenWallet?
+    //     RefSystemBase(_refSystem).requestTransfer(owner, tokenWallet, _tokenBalance[tokenWallet], remainingGasTo, notify, payload);
+    // }
 }

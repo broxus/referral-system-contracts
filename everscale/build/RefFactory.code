@@ -65,7 +65,6 @@ ENDS
 CTOS
 LDREF
 LDU 128
-LDU 128
 LDMSGADDR
 LDREF
 ENDS
@@ -91,7 +90,7 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST xa3e0dfb0
+	STSLICECONST xf05ed439
 	STSLICE
 	STBREFR
 	ENDC
@@ -128,11 +127,10 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/hooks/RefFactory.sol, 66
-ROLLREV 9
+.loc ../contracts/hooks/RefFactory.sol, 65
 REVERSE 9, 0
 PUSHINT 0
-BLKSWAP 2, 11
+BLKSWAP 2, 10
 SWAP
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
@@ -148,8 +146,8 @@ STI 8
 STU 256
 ENDC
 CTOS
-ROLLREV 13
-PUSH S13
+ROLLREV 12
+PUSH S12
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -180,22 +178,21 @@ CALLREF {
 }
 STREF
 STSLICECONST 1
-ROLLREV 12
+ROLLREV 11
 NEWC
 STSLICECONST x15a038fb
 STREF
 STU 32
 STREF
 STREF
-ROLLREV 8
+ROLLREV 7
 NEWC
 STREF
 STREF
 STREF
-ROLLREV 5
+ROLLREV 4
 NEWC
 STREF
-STU 128
 STU 128
 STSLICE
 SWAP
@@ -219,7 +216,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 75
+.loc ../contracts/hooks/RefFactory.sol, 74
 OVER
 PUSHCONT {
 	LDREF
@@ -296,7 +293,7 @@ THROWIFNOT 1101
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/hooks/RefFactory.sol, 82
+.loc ../contracts/hooks/RefFactory.sol, 81
 REVERSE 6, 0
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
@@ -328,7 +325,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 85
+.loc ../contracts/hooks/RefFactory.sol, 84
 OVER
 PUSHCONT {
 	LDREF
@@ -405,9 +402,9 @@ THROWIFNOT 1101
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/hooks/RefFactory.sol, 92
+.loc ../contracts/hooks/RefFactory.sol, 91
 ACCEPT
-.loc ../contracts/hooks/RefFactory.sol, 93
+.loc ../contracts/hooks/RefFactory.sol, 92
 REVERSE 6, 0
 NEWC
 STSLICECONST x62_
@@ -436,7 +433,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/hooks/RefFactory.sol, 96
+.loc ../contracts/hooks/RefFactory.sol, 95
 OVER
 PUSHCONT {
 	LDREF
@@ -487,7 +484,7 @@ THROW 0
 CALL $deriveRefSystem_internal_macro$
 
 .macro deriveRefSystem_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 97
+.loc ../contracts/hooks/RefFactory.sol, 96
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
@@ -498,7 +495,7 @@ CALLREF {
 CALL $_deriveRefSystem_internal_macro$
 
 .macro _deriveRefSystem_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 101
+.loc ../contracts/hooks/RefFactory.sol, 100
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -515,7 +512,7 @@ CTOS
 CALL $_buildRefSystemInitData_internal_macro$
 
 .macro _buildRefSystemInitData_internal_macro
-.loc ../contracts/hooks/RefFactory.sol, 105
+.loc ../contracts/hooks/RefFactory.sol, 104
 PUSHINT 0
 NEWC
 STU 256
@@ -958,15 +955,9 @@ IFJMPREF {
 	}
 }
 DUP
-PUSHINT 1594609630
+PUSHINT 1729444094
 LEQ
 IFJMPREF {
-	DUP
-	PUSHINT 601939888
-	EQUAL
-	IFJMPREF {
-		CALL $deployRefSystem$
-	}
 	DUP
 	PUSHINT 666029341
 	EQUAL
@@ -985,22 +976,28 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $owner$
 	}
-}
-DUP
-PUSHINT 1731970066
-LEQ
-IFJMPREF {
 	DUP
 	PUSHINT 1729444094
 	EQUAL
 	IFJMPREF {
 		CALL $renounceOwnership$
 	}
+}
+DUP
+PUSHINT 1885262905
+LEQ
+IFJMPREF {
 	DUP
 	PUSHINT 1731970066
 	EQUAL
 	IFJMPREF {
 		CALL $upgradeTarget$
+	}
+	DUP
+	PUSHINT 1885262905
+	EQUAL
+	IFJMPREF {
+		CALL $deployRefSystem$
 	}
 }
 

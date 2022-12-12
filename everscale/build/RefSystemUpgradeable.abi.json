@@ -14,13 +14,15 @@
 			"name": "onDeployOrUpdate",
 			"id": "0x15A038FB",
 			"inputs": [
-				{"name":"value0","type":"cell"},
-				{"name":"value1","type":"uint32"},
-				{"name":"value2","type":"address"},
-				{"name":"value3","type":"address"},
-				{"name":"value4","type":"uint16"},
-				{"name":"value5","type":"uint16"},
-				{"name":"value6","type":"uint16"},
+				{"name":"initCode","type":"cell"},
+				{"name":"initVersion","type":"uint32"},
+				{"name":"refPlatformCode","type":"cell"},
+				{"name":"refCode","type":"cell"},
+				{"name":"accountPlatformCode","type":"cell"},
+				{"name":"accountCode","type":"cell"},
+				{"name":"projectPlatformCode","type":"cell"},
+				{"name":"projectCode","type":"cell"},
+				{"name":"approvalFee","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
@@ -60,6 +62,18 @@
 			]
 		},
 		{
+			"name": "onAcceptTokensTransferPayloadEncoder",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"projectOwner","type":"address"},
+				{"name":"referred","type":"address"},
+				{"name":"referrer","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
 			"name": "getProjectMeta",
 			"inputs": [
 				{"name":"isApproved","type":"bool"},
@@ -71,12 +85,14 @@
 			]
 		},
 		{
-			"name": "requestApproval",
+			"name": "requestTransfer",
 			"inputs": [
-				{"name":"owner","type":"address"},
-				{"name":"referrer","type":"address"},
-				{"name":"referred","type":"address"},
-				{"name":"reward","type":"uint128"}
+				{"name":"recipient","type":"address"},
+				{"name":"tokenWallet","type":"address"},
+				{"name":"reward","type":"uint128"},
+				{"name":"remainingGasTo","type":"address"},
+				{"name":"notify","type":"bool"},
+				{"name":"payload","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -102,12 +118,21 @@
 			]
 		},
 		{
+			"name": "deriveRefAccount",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"owner","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
 			"name": "deployProject",
 			"inputs": [
 				{"name":"refSystem","type":"address"},
 				{"name":"projectFee","type":"uint16"},
 				{"name":"cashbackFee","type":"uint16"},
-				{"name":"feeDigits","type":"uint16"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
@@ -217,14 +242,6 @@
 			"outputs": [
 				{"name":"_approvalFee","type":"uint128"}
 			]
-		},
-		{
-			"name": "_approvalFeeDigits",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_approvalFeeDigits","type":"uint128"}
-			]
 		}
 	],
 	"data": [
@@ -254,7 +271,6 @@
 		{"name":"_projectCode","type":"cell"},
 		{"name":"_projectPlatformCode","type":"cell"},
 		{"name":"_approvalFee","type":"uint128"},
-		{"name":"_approvalFeeDigits","type":"uint128"},
 		{"name":"version_","type":"uint32"}
 	]
 }

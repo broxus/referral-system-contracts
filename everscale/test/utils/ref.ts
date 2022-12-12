@@ -28,7 +28,7 @@ export async function deployRefFactory(owner:Account) {
 
     return refFactory;
 }
-export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefFactory, owner: Account, approvalFee = 300, approvalFeeDigits = 1000) {
+export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefFactory, owner: Account, approvalFee: string | number) {
     
     const RefSystem = await locklift.factory.getContractArtifacts('RefSystemUpgradeable');
     
@@ -48,7 +48,6 @@ export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefF
         owner: owner.address,
         refSystemCode: RefSystem.code,
         approvalFee,
-        approvalFeeDigits,
         refPlatformCode: RefInstancePlatform.code,
         refCode: RefInstance.code,
         accountPlatformCode: RefAccountPlatform.code,

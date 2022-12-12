@@ -59,7 +59,6 @@ contract RefFactory is InternalOwner, RandomNonce {
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 approvalFee,
-        uint128 approvalFeeDigits,
         address sender,
         address remainingGasTo
     ) public onlyOwner returns (address) {
@@ -69,7 +68,7 @@ contract RefFactory is InternalOwner, RandomNonce {
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(refSystemCode, 0, refPlatformCode, refCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, approvalFeeDigits, sender, remainingGasTo);
+        }(refSystemCode, 0, refPlatformCode, refCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, sender, remainingGasTo);
     }
 
     function upgradeRefSystem(

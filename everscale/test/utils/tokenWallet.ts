@@ -1,63 +1,59 @@
 import BigNumber from "bignumber.js";
-import { Account, Address, Contract, locklift, Tx } from "./locklift";
+import { Account } from "everscale-standalone-client";
+import { Contract } from "locklift";
+import { FactorySource } from "../../build/factorySource";
 
-export async function deploy(account: Account, tokenRoot: Contract): Promise<Contract> {
+type TokenRoot = Contract<FactorySource["TokenRoot"]>;
+type TokenWallet = Contract<FactorySource["TokenWallet"]>;
 
-  let walletAddr = await tokenRoot.call({
-    method: 'walletOf',
-    params: {
-      walletOwner: account.address,
-      answerId: 0
-    }
-  });
+// export async function deploy(account: Account, tokenRoot: TokenRoot): Promise<TokenWallet> {
 
-  await account.runTarget({
-    contract: tokenRoot,
-    method: 'deployWallet',
-    params: {
-      walletOwner: account.address,
-      deployWalletValue: locklift.utils.convertCrystal(0.1, 'nano'),
-      answerId: 0
-    },
-    keyPair: account.keyPair,
-    value: locklift.utils.convertCrystal(0.5, 'nano')
-  });
+//   let walletAddr = await tokenRoot.call({
+//     method: 'walletOf',
+//     params: {
+//       walletOwner: account.address,
+//       answerId: 0
+//     }
+//   });
 
-  const TokenWallet = await locklift.factory.getContract("TokenWallet");
-  TokenWallet.setAddress(walletAddr);
+//   await account.runTarget({
+//     contract: tokenRoot,
+//     method: 'deployWallet',
+//     params: {
+//       walletOwner: account.address,
+//       deployWalletValue: locklift.utils.convertCrystal(0.1, 'nano'),
+//       answerId: 0
+//     },
+//     keyPair: account.keyPair,
+//     value: locklift.utils.convertCrystal(0.5, 'nano')
+//   });
 
-  return TokenWallet;
-}
+//   const TokenWallet = await locklift.factory.getContract("TokenWallet");
+//   TokenWallet.setAddress(walletAddr);
 
-export function transfer(account: Account, wallet: Contract, amount: number, recipient: Address, payload = ''): Promise<Tx> {
-  return account.runTarget({
-    contract: wallet,
-    method: 'transfer',
-    params: {
-      amount,
-      recipient,
-      remainingGasTo: account.address,
-      notify: true,
-      deployWalletValue: 0,
-      payload,
-    },
-    keyPair: account.keyPair,
-    value: locklift.utils.convertCrystal(2, 'nano')
-  })
-}
+//   return TokenWallet;
+// }
 
-export async function walletOf(account: Account, tokenRoot: Contract): Promise<Contract> {
-  const TokenWallet = await locklift.factory.getContract("TokenWallet");
-  let walletAddr = await tokenRoot.call({
-    method: 'walletOf',
-    params: {
-      walletOwner: account.address,
-      answerId: 0
-    }
-  });
+// export function transfer(account: Account, wallet: Contract, amount: number, recipient: Address, payload = ''): Promise<Tx> {
+//   return account.runTarget({
+//     contract: wallet,
+//     method: 'transfer',
+//     params: {
+//       amount,
+//       recipient,
+//       remainingGasTo: account.address,
+//       notify: true,
+//       deployWalletValue: 0,
+//       payload,
+//     },
+//     keyPair: account.keyPair,
+//     value: locklift.utils.convertCrystal(2, 'nano')
+//   })
+// }
 
-  TokenWallet.setAddress(walletAddr);
-  return TokenWallet;
+export async function walletOf(tokenRoot: TokenRoot, account: Account){
+  let { value0: addr} = await tokenRoot.methods.walletOf({walletOwner: account.address, answerId: 0}).call()
+  return locklift.factory.getDeployedContract("TokenWallet", addr);
 }
 
 export function getBalance(wallet: Contract): Promise<BigNumber> {

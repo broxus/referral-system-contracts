@@ -26,16 +26,15 @@ ENDS
 CTOS
 LDREF
 LDU 128
-LDU 128
 LDMSGADDR
 LDREF
 ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/hooks/RefSystemPlatform.sol, 61
+.loc ../contracts/hooks/RefSystemPlatform.sol, 60
 ACCEPT
-.loc ../contracts/hooks/RefSystemPlatform.sol, 63
+.loc ../contracts/hooks/RefSystemPlatform.sol, 62
 GETGLOB 9
 GETGLOB 10
 SDEQ
@@ -61,14 +60,14 @@ PUSHCONT {
 }
 IFNOT
 PUSHCONT {
-	.loc ../contracts/hooks/RefSystemPlatform.sol, 64
-	BLKPUSH 12, 11
+	.loc ../contracts/hooks/RefSystemPlatform.sol, 63
+	BLKPUSH 11, 10
 	CALLREF {
 		CALL $initialize_internal_macro$
 	}
 }
 PUSHCONT {
-	.loc ../contracts/hooks/RefSystemPlatform.sol, 66
+	.loc ../contracts/hooks/RefSystemPlatform.sol, 65
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -83,7 +82,7 @@ PUSHCONT {
 }
 IFELSE
 .loc ../contracts/hooks/RefSystemPlatform.sol, 0
-BLKDROP 12
+BLKDROP 11
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -94,7 +93,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/hooks/RefSystemPlatform.sol, 75
+.loc ../contracts/hooks/RefSystemPlatform.sol, 74
 PUSHINT 0
 NEWC
 STU 256
@@ -133,7 +132,7 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/hooks/RefSystemPlatform.sol, 85
+.loc ../contracts/hooks/RefSystemPlatform.sol, 84
 HASHCU
 NEWC
 STSLICECONST x801_
@@ -147,11 +146,9 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/hooks/RefSystemPlatform.sol, 103
-BLKSWAP 4, 6
-REVERSE 4, 0
-BLKSWAP 2, 8
-SWAP
+.loc ../contracts/hooks/RefSystemPlatform.sol, 101
+REVERSE 5, 0
+REVERSE 7, 2
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -164,19 +161,18 @@ STSLICECONST x8adb35
 STREF
 STSLICE
 ENDC
-BLKSWAP 5, 7
-REVERSE 5, 0
+BLKSWAP 4, 7
+REVERSE 4, 0
 PUSHINT 0
 GETGLOB 11
 GETGLOB 10
 NEWC
 STSLICE
-ROLLREV 14
+ROLLREV 13
 NEWC
 STSLICE
 STU 32
 STU 32
-STU 128
 STU 128
 ROLLREV 9
 NEWC
@@ -198,10 +194,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/hooks/RefSystemPlatform.sol, 121
+.loc ../contracts/hooks/RefSystemPlatform.sol, 118
 OVER
 SETCODE
-.loc ../contracts/hooks/RefSystemPlatform.sol, 122
+.loc ../contracts/hooks/RefSystemPlatform.sol, 119
 SWAP
 CTOS
 DUP
@@ -216,7 +212,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/hooks/RefSystemPlatform.sol, 124
+.loc ../contracts/hooks/RefSystemPlatform.sol, 121
 CALLREF {
 	CALL $:onCodeUpgrade$
 }

@@ -79,14 +79,17 @@ abstract contract RefSystemBase is
         Project(targetProject).meta{callback: RefSystemBase.getProjectMeta}(acceptParams);
     }
 
+    function onAcceptTokensTransferPayloadEncoder(address projectOwner, address referred, address referrer) responsible external returns (TvmCell) {
+        return abi.encode(projectOwner, referred, referrer);
+    }
+
     function getProjectMeta(
         bool isApproved,
         uint128 cashback,
         uint128 projectFee,
         TvmCell acceptParams
     ) external {
-        (
-        address tokenWallet,
+        (address tokenWallet,
         address tokenRoot,
         uint128 amount,
         address sender,
@@ -94,7 +97,7 @@ abstract contract RefSystemBase is
         address remainingGasTo,
         address projectOwner,
         address referred,
-        address referrer) = abi.decode(acceptParams, (address, uint128, address, address, address, address, address, address));
+        address referrer) = abi.decode(acceptParams, (address, address, uint128, address, address, address, address, address, address));
         require(msg.sender == _deriveProject(projectOwner), 400, "Not a valid Project");
 
         // Allocate to System Owner
@@ -134,11 +137,13 @@ abstract contract RefSystemBase is
        return _deriveProject(owner);
     }
 
+    function deriveRefAccount(address owner) external responsible returns (address) {
+       return _deriveRefAccount(owner);
+    }
     function deployProject(
         address refSystem,
         uint16 projectFee,
         uint16 cashbackFee,
-        uint16 feeDigits,
         address sender,
         address remainingGasTo
     ) public returns (address) {
@@ -154,7 +159,6 @@ abstract contract RefSystemBase is
             _refFactory,
             projectFee,
             cashbackFee,
-            feeDigits,
             sender,
             remainingGasTo
         );

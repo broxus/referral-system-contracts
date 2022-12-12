@@ -14,7 +14,7 @@ export async function deployTokenRoot(account: Account, config: { name: string; 
   const TokenWallet = await locklift.factory.getContractArtifacts("TokenWallet");
   const signer = await locklift.keystore.getSigner("0")
 
-  return await locklift.factory.deployContract({
+  let { contract } = await locklift.factory.deployContract({
     contract: "TokenRoot",
     constructorParams: {
       initialSupplyTo: account.address,
@@ -38,9 +38,11 @@ export async function deployTokenRoot(account: Account, config: { name: string; 
     value: toNano(3)
   });
 
+  return contract;
+
 }
 
-export async function mint(account: Account, tokenRoot: Contract<FactorySource["TokenRootUpgradeable"]>, amount: number, recipient: Address) {
+export async function mint(account: Account, tokenRoot: Contract<FactorySource["TokenRoot"]>, amount: number | string, recipient: Address) {
   return tokenRoot.methods.mint({
     amount,
     recipient,

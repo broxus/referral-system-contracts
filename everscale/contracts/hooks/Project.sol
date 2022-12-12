@@ -21,15 +21,14 @@ contract Project is InternalOwner, IUpgradeable {
     address public _refSystem; // root
     bool public _isApproved;
 
-    uint16 public _projectFee; 
-    uint16 public _cashbackFee;
-    uint16 public _feeDigits;
+    uint128 public _projectFee; 
+    uint128 public _cashbackFee;
 
     constructor() public {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address, address, uint16, uint16, uint16, address sender, address remainingGasTo) 
+    function onDeployOrUpdate(TvmCell, uint32, address, address, uint128, uint128, address sender, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
@@ -86,7 +85,6 @@ contract Project is InternalOwner, IUpgradeable {
             version_,
             _projectFee,
             _cashbackFee,
-            _feeDigits,
             remainingGasTo,
             _platformCode
         ) = abi.decode(data, (
@@ -95,9 +93,8 @@ contract Project is InternalOwner, IUpgradeable {
             address,
             uint32,
             uint32,
-            uint16,
-            uint16,
-            uint16,
+            uint128,
+            uint128,
             address,
             TvmCell
         ));

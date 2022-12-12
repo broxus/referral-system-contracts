@@ -10,9 +10,8 @@
 				{"name":"initCode","type":"cell"},
 				{"name":"initVersion","type":"uint32"},
 				{"name":"refFactory","type":"address"},
-				{"name":"projectFee","type":"uint16"},
-				{"name":"cashbackFee","type":"uint16"},
-				{"name":"feeDigits","type":"uint16"},
+				{"name":"projectFee","type":"uint128"},
+				{"name":"cashbackFee","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],

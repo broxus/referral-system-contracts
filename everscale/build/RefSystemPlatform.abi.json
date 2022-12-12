@@ -16,7 +16,6 @@
 				{"name":"projectPlatformCode","type":"cell"},
 				{"name":"projectCode","type":"cell"},
 				{"name":"approvalFee","type":"uint128"},
-				{"name":"approvalFeeDigits","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],

@@ -16,7 +16,7 @@
 			"inputs": [
 				{"name":"value0","type":"cell"},
 				{"name":"value1","type":"uint32"},
-				{"name":"walletRoot","type":"address"},
+				{"name":"tokenWallet","type":"address"},
 				{"name":"reward","type":"uint128"},
 				{"name":"value4","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
@@ -40,6 +40,29 @@
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "transferOwnership",
+			"inputs": [
+				{"name":"newOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "renounceOwnership",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "owner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"owner","type":"address"}
 			]
 		},
 		{
@@ -73,28 +96,29 @@
 			"outputs": [
 				{"name":"_refSystem","type":"address"}
 			]
-		},
-		{
-			"name": "_recipient",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_recipient","type":"address"}
-			]
 		}
 	],
 	"data": [
 	],
 	"events": [
+		{
+			"name": "OwnershipTransferred",
+			"inputs": [
+				{"name":"previousOwner","type":"address"},
+				{"name":"newOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		}
 	],
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
+		{"name":"owner","type":"address"},
 		{"name":"_tokenBalance","type":"map(address,uint256)"},
 		{"name":"version_","type":"uint32"},
 		{"name":"_platformCode","type":"cell"},
-		{"name":"_refSystem","type":"address"},
-		{"name":"_recipient","type":"address"}
+		{"name":"_refSystem","type":"address"}
 	]
 }

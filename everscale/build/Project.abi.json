@@ -18,9 +18,8 @@
 				{"name":"value1","type":"uint32"},
 				{"name":"value2","type":"address"},
 				{"name":"value3","type":"address"},
-				{"name":"value4","type":"uint16"},
-				{"name":"value5","type":"uint16"},
-				{"name":"value6","type":"uint16"},
+				{"name":"value4","type":"uint128"},
+				{"name":"value5","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
@@ -126,7 +125,7 @@
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_projectFee","type":"uint16"}
+				{"name":"_projectFee","type":"uint128"}
 			]
 		},
 		{
@@ -134,15 +133,7 @@
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_cashbackFee","type":"uint16"}
-			]
-		},
-		{
-			"name": "_feeDigits",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_feeDigits","type":"uint16"}
+				{"name":"_cashbackFee","type":"uint128"}
 			]
 		}
 	],
@@ -169,8 +160,7 @@
 		{"name":"_refFactory","type":"address"},
 		{"name":"_refSystem","type":"address"},
 		{"name":"_isApproved","type":"bool"},
-		{"name":"_projectFee","type":"uint16"},
-		{"name":"_cashbackFee","type":"uint16"},
-		{"name":"_feeDigits","type":"uint16"}
+		{"name":"_projectFee","type":"uint128"},
+		{"name":"_cashbackFee","type":"uint128"}
 	]
 }
