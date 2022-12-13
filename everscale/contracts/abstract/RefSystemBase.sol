@@ -88,13 +88,19 @@ abstract contract RefSystemBase is
         address referrer) = abi.decode(acceptParams, (address, address, uint128, address, address, address, address, address, address));
         require(msg.sender == _deriveProject(projectOwner), 400, "Not a valid Project");
 
+        // If Project Invalid, simply receive full reward
+        if(!isApproved) {
+            _deployRefAccount(owner, tokenWallet, fee, sender, remainingGasTo);
+            return;
+        }
+
         // Allocate to System Owner
         if(amount < _approvalFee) return;
-        _deployRefAccount(owner, tokenRoot, _approvalFee, sender, remainingGasTo);
+        _deployRefAccount(owner, tokenWallet, _approvalFee, sender, remainingGasTo);
 
         // Allocate to Project Owner
         if (amount < _approvalFee + projectFee) return;
-        _deployRefAccount(projectOwner, tokenRoot, projectFee, sender, remainingGasTo);
+        _deployRefAccount(projectOwner, tokenWallet, projectFee, sender, remainingGasTo);
         
         // Allocate Rewards
         uint128 r = amount - _approvalFee - projectFee;
@@ -175,7 +181,7 @@ abstract contract RefSystemBase is
     ) public onlyOwner returns (address) {
         return _deployRefLast(lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
     }
-    
+
     function approveProject(address projectOwner) public {
         Project(_deriveProject(projectOwner)).acceptInit();
     }
