@@ -91,27 +91,20 @@ abstract contract RefSystemBase is
         require(msg.sender == _deriveProject(projectOwner), 400, "Not a valid Project");
         require(amount != 0, 400, "Invalid Amount");
 
-        // If Project Invalid, simply receive full reward
-        if(!isApproved) {
+        // If Amount or Project Invalid, simply receive full reward
+        if(!isApproved || amount < _approvalFee + projectFee + cashback) {
             _deployRefAccount(owner, tokenWallet, amount, sender, remainingGasTo);
             return;
         }
-
         // Allocate to System Owner
-        if(amount < _approvalFee) return;
         _deployRefAccount(owner, tokenWallet, _approvalFee, sender, remainingGasTo);
-
         // Allocate to Project Owner
-        if (amount < _approvalFee + projectFee) return;
         _deployRefAccount(projectOwner, tokenWallet, projectFee, sender, remainingGasTo);
-        
         // Allocate Rewards
-        uint128 r = amount - _approvalFee - projectFee;
-        if (r < cashback) return;
-        uint128 reward = r - cashback;
         _deployRefAccount(referred, tokenWallet, cashback, sender, remainingGasTo);
+        uint128 reward = amount - _approvalFee - projectFee - cashback;
         _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
-        
+
         // Update/Deploy RefLast
         _deployRefLast(tokenWallet, referred, referrer, amount, sender, remainingGasTo);
     }
