@@ -57,7 +57,6 @@ abstract contract RefSystemBase is
         address remainingGasTo,
         TvmCell payload
     ) override external {
-        // TODO: Check if Valid Wallet
         require(amount != 0, 401, "Invalid Amount");
         (address projectOwner, address referred, address referrer) = abi.decode(payload, (address, address, address));
         address targetProject = _deriveProject(projectOwner);
@@ -139,7 +138,7 @@ abstract contract RefSystemBase is
         uint128 cashbackFee,
         address sender,
         address remainingGasTo
-    ) public returns (address) {
+    ) override external returns (address) {
         return new ProjectPlatform {
             stateInit: _buildProjectInitData(msg.sender),
             value: 0,
@@ -163,7 +162,7 @@ abstract contract RefSystemBase is
         uint128 reward,
         address sender,
         address remainingGasTo
-    ) public onlyOwner returns (address) {
+    ) external onlyOwner returns (address) {
         return _deployRefAccount(recipient, tokenWallet, reward, sender, remainingGasTo);
     }
 
@@ -174,11 +173,11 @@ abstract contract RefSystemBase is
         uint128 lastRefReward,
         address sender,
         address remainingGasTo
-    ) public onlyOwner returns (address) {
+    ) external onlyOwner returns (address) {
         return _deployRefLast(lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
     }
 
-    function approveProject(address projectOwner) public {
+    function approveProject(address projectOwner) onlyOwner public {
         Project(_deriveProject(projectOwner)).acceptInit();
     }
 

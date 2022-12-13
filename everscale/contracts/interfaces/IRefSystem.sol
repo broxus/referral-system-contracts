@@ -9,4 +9,12 @@ interface IRefSystem {
         bool notify,
         TvmCell payload
     ) external;
+
+    function deployProject(
+        address refSystem,
+        uint128 projectFee,
+        uint128 cashbackFee,
+        address sender,
+        address remainingGasTo
+    ) external returns (address);
 }
