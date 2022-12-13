@@ -94,13 +94,13 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         if (currentVersion == version_) {
             remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
         } else {
-            IUpgradeable(msg.sender).acceptUpgrade{
+            IUpgradeable(_deriveRefAccount(accountOwner)).acceptUpgrade{
                 value: 0,
                 flag: MsgFlag.ALL_NOT_RESERVED,
                 bounce: false
             }(
                 _accountCode,
-                version_,
+                currentVersion,
                 remainingGasTo
             );
         }
@@ -114,13 +114,33 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         if (currentVersion == version_) {
             remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
         } else {
-            IUpgradeable(msg.sender).acceptUpgrade{
+            IUpgradeable(_deriveProject(projectOwner)).acceptUpgrade{
                 value: 0,
                 flag: MsgFlag.ALL_NOT_RESERVED,
                 bounce: false
             }(
                 _projectCode,
-                version_,
+                currentVersion,
+                remainingGasTo
+            );
+        }
+    }
+
+    function requestUpgradeRefLast(uint32 currentVersion, address remainingGasTo) override external {
+        require(msg.sender == _refFactory || msg.sender == owner, 400);
+                
+        tvm.rawReserve(_reserve(), 0);
+
+        if (currentVersion == version_) {
+            remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
+        } else {
+            IUpgradeable(_deriveRefLast(address(this))).acceptUpgrade{
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED,
+                bounce: false
+            }(
+                _refLastCode,
+                currentVersion,
                 remainingGasTo
             );
         }

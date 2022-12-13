@@ -42,6 +42,18 @@
 			]
 		},
 		{
+			"name": "upgradeTarget",
+			"inputs": [
+				{"name":"target","type":"address"},
+				{"name":"version","type":"uint32"},
+				{"name":"code","type":"cell"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
 			"name": "deriveRefSystem",
 			"inputs": [
 				{"name":"owner","type":"address"}

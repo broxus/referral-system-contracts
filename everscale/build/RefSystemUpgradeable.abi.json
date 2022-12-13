@@ -119,6 +119,15 @@
 			]
 		},
 		{
+			"name": "requestUpgradeRefLast",
+			"inputs": [
+				{"name":"currentVersion","type":"uint32"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "upgrade",
 			"inputs": [
 				{"name":"code","type":"cell"}
@@ -224,6 +233,20 @@
 				{"name":"recipient","type":"address"},
 				{"name":"tokenWallet","type":"address"},
 				{"name":"reward","type":"uint128"},
+				{"name":"sender","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployRefLast",
+			"inputs": [
+				{"name":"lastRefWallet","type":"address"},
+				{"name":"lastReferred","type":"address"},
+				{"name":"lastReferrer","type":"address"},
+				{"name":"lastRefReward","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],

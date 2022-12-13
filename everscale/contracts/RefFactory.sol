@@ -62,6 +62,15 @@ contract RefFactory is InternalOwner, RandomNonce {
         IRefSystemUpgradeable(_deriveRefSystem(refSysOwner)).upgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(code);
     }
 
+    function upgradeTarget(
+        address target,
+        uint32 version,
+        TvmCell code,
+        address remainingGasTo
+    ) public onlyOwner returns (address) {
+        IUpgradeable(target).acceptUpgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(code, version, remainingGasTo);
+    }
+
     function deriveRefSystem(address owner) public returns (address) {
         return _deriveRefSystem(owner);
     }

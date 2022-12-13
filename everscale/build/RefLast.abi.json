@@ -49,11 +49,21 @@
 			]
 		},
 		{
-			"name": "_root",
+			"name": "acceptUpgrade",
+			"inputs": [
+				{"name":"newCode","type":"cell"},
+				{"name":"newVersion","type":"uint32"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_refSystem",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_root","type":"address"}
+				{"name":"_refSystem","type":"address"}
 			]
 		},
 		{
@@ -107,7 +117,7 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"version_","type":"uint32"},
 		{"name":"_platformCode","type":"cell"},
-		{"name":"_root","type":"address"},
+		{"name":"_refSystem","type":"address"},
 		{"name":"_lastReferrer","type":"address"},
 		{"name":"_lastReferred","type":"address"},
 		{"name":"_lastRefWallet","type":"address"},

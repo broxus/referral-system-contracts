@@ -10,8 +10,10 @@ import '@broxus/contracts/contracts/access/InternalOwner.sol';
 
 import "./interfaces/IRefSystem.sol";
 import "./RefAccountPlatform.sol";
+import "./interfaces/IUpgradeable.sol";
 
-contract RefAccount is InternalOwner {
+
+contract RefAccount is InternalOwner, IUpgradeable {
 
     mapping (address => uint128) public _tokenBalance;
 
@@ -70,6 +72,32 @@ contract RefAccount is InternalOwner {
             pubkey: 0,
             code: _platformCode
         });
+    }
+
+    function acceptUpgrade(TvmCell newCode, uint32 newVersion, address remainingGasTo) override external {
+        require(msg.sender == _refSystem, 400, "Must be Ref System");
+        if (version_ == newVersion) {
+            tvm.rawReserve(_reserve(), 0);
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        } else {
+            TvmCell inputData = abi.encode(
+                // _refFactory,
+                _refSystem,
+                owner,
+                version_,
+                newVersion,
+                remainingGasTo,
+                _platformCode
+            );
+
+            tvm.setcode(newCode);
+            tvm.setCurrentCode(newCode);
+            onCodeUpgrade(inputData);
+        }
     }
     
     function onCodeUpgrade(TvmCell data) private {

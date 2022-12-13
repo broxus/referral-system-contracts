@@ -303,7 +303,7 @@ PUSHINT 128
 SENDRAWMSG
 .loc ../contracts/RefFactory.sol, 0
 
-.macro deriveRefSystem
+.macro upgradeTarget
 DROP
 GETGLOB 6
 THROWIFNOT 76
@@ -313,6 +313,111 @@ IFREF {
 	CALL $c4_to_c7$
 }
 .loc ../contracts/RefFactory.sol, 65
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+LDU 32
+LDREF
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+ENDS
+.loc ../contracts/RefFactory.sol, 0
+CALLREF {
+	CALL $upgradeTarget_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHINT 1
+	STUR 98
+	SWAP
+	NEWC
+	STSLICECONST xfde55f98
+	STSLICE
+	STBREFR
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+PUSHCONT {
+	DROP
+}
+IFELSE
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.globl	upgradeTarget_internal
+.type	upgradeTarget_internal, @function
+CALL $upgradeTarget_internal_macro$
+
+.macro upgradeTarget_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+GETGLOB 9
+GETGLOB 10
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+}
+IF
+THROWIFNOT 1101
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 16
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
+.loc ../contracts/RefFactory.sol, 71
+ROLLREV 4
+XCHG S3
+NEWC
+STSLICECONST x62_
+STSLICE
+PUSHINT 1
+STUR 111
+ROLLREV 3
+NEWC
+STSLICECONST x03369199
+STREF
+STU 32
+STSLICE
+STBREFR
+ENDC
+PUSHINT 128
+SENDRAWMSG
+.loc ../contracts/RefFactory.sol, 0
+
+.macro deriveRefSystem
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/RefFactory.sol, 74
 OVER
 PUSHCONT {
 	LDREF
@@ -363,7 +468,7 @@ THROW 0
 CALL $deriveRefSystem_internal_macro$
 
 .macro deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 66
+.loc ../contracts/RefFactory.sol, 75
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
@@ -374,7 +479,7 @@ CALLREF {
 CALL $_deriveRefSystem_internal_macro$
 
 .macro _deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 70
+.loc ../contracts/RefFactory.sol, 79
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -391,7 +496,7 @@ CTOS
 CALL $_buildRefSystemInitData_internal_macro$
 
 .macro _buildRefSystemInitData_internal_macro
-.loc ../contracts/RefFactory.sol, 74
+.loc ../contracts/RefFactory.sol, 83
 PUSHINT 0
 NEWC
 STU 256
@@ -863,9 +968,20 @@ IFJMPREF {
 	}
 }
 DUP
-PUSHINT 1885262905
-EQUAL
+PUSHINT 2112184216
+LEQ
 IFJMPREF {
-	CALL $deployRefSystem$
+	DUP
+	PUSHINT 1885262905
+	EQUAL
+	IFJMPREF {
+		CALL $deployRefSystem$
+	}
+	DUP
+	PUSHINT 2112184216
+	EQUAL
+	IFJMPREF {
+		CALL $upgradeTarget$
+	}
 }
 

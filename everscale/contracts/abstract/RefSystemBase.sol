@@ -165,6 +165,17 @@ abstract contract RefSystemBase is
         return _deployRefAccount(recipient, tokenWallet, reward, sender, remainingGasTo);
     }
 
+    function deployRefLast(
+        address lastRefWallet,
+        address lastReferred,
+        address lastReferrer,
+        uint128 lastRefReward,
+        address sender,
+        address remainingGasTo
+    ) public onlyOwner returns (address) {
+        return _deployRefLast(lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
+    }
+    
     function approveProject(address projectOwner) public {
         Project(_deriveProject(projectOwner)).acceptInit();
     }
@@ -197,7 +208,14 @@ abstract contract RefSystemBase is
         }(_accountCode, version_, tokenWallet, reward, sender, remainingGasTo);
     }
     
-    function _deployRefLast(address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo) internal returns (address) {
+    function _deployRefLast(
+        address lastRefWallet,
+        address lastReferred,
+        address lastReferrer,
+        uint128 lastRefReward,
+        address sender,
+        address remainingGasTo
+    ) internal returns (address) {
         return new RefLastPlatform {
             stateInit: _buildRefLastInitData(address(this)),
             value: 0.5 ton,

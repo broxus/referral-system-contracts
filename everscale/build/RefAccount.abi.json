@@ -43,6 +43,16 @@
 			]
 		},
 		{
+			"name": "acceptUpgrade",
+			"inputs": [
+				{"name":"newCode","type":"cell"},
+				{"name":"newVersion","type":"uint32"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "requestTransfer",
 			"inputs": [
 				{"name":"tokenWallet","type":"address"},

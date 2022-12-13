@@ -7,13 +7,14 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
 import "./RefLastPlatform.sol";
 import "./RefSystemUpgradeable.sol";
+import "./interfaces/IUpgradeable.sol";
 
-contract RefLast {
+contract RefLast is IUpgradeable{
 
     uint32 version_;
     TvmCell _platformCode;
 
-    address public _root;
+    address public _refSystem;
 
     address public _lastReferrer;
     address public _lastReferred;
@@ -29,7 +30,7 @@ contract RefLast {
     external
     functionID(0x15A038FB)
     {
-        require(msg.sender == _root, 400, "Must be root");
+        require(msg.sender == _refSystem, 400, "Must be RefSystem");
         _lastRefWallet = lastRefWallet;
         _lastReferred = lastReferred;
         _lastReferrer = lastReferrer;
@@ -72,13 +73,41 @@ contract RefLast {
         });
     }
 
+    function acceptUpgrade(TvmCell newCode, uint32 newVersion, address remainingGasTo) override external {
+        require(msg.sender == _refSystem, 400, "Must be Ref System");
+        if (version_ == newVersion) {
+            tvm.rawReserve(_reserve(), 0);
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        } else {
+            TvmCell inputData = abi.encode(
+                _refSystem,
+                version_,
+                newVersion,
+                _lastRefWallet,
+                _lastReferred,
+                _lastReferrer,
+                _lastRefReward,
+                remainingGasTo,
+                _platformCode
+            );
+
+            tvm.setcode(newCode);
+            tvm.setCurrentCode(newCode);
+            onCodeUpgrade(inputData);
+        }
+    }
+
     function onCodeUpgrade(TvmCell data) private {
         tvm.rawReserve(_reserve(), 2);
         tvm.resetStorage();
 
         uint32 oldVersion;
         address remainingGasTo;
-        (_root,
+        (_refSystem,
         oldVersion,
         version_,
         _lastRefWallet,
