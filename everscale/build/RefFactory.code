@@ -226,12 +226,6 @@ PUSHCONT {
 IF
 LDMSGADDR
 LDREF
-LDREF
-LDU 32
-LDREF
-ENDS
-CTOS
-LDMSGADDR
 ENDS
 .loc ../contracts/RefFactory.sol, 0
 CALLREF {
@@ -252,7 +246,7 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST x94935deb
+	STSLICECONST xc47bb0b9
 	STSLICE
 	STBREFR
 	ENDC
@@ -293,132 +287,17 @@ THROWIFNOT 1101
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefFactory.sol, 65
-REVERSE 6, 0
+.loc ../contracts/RefFactory.sol, 62
+XCHG S2
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
 NEWC
 STSLICECONST x62_
 STSLICE
-PUSHINT 1
-STUR 111
-ROLLREV 4
-NEWC
-STSLICECONST x787ecfd5
+PUSHSLICE x00000000000000000000000000002e461875_
+STSLICER
 STREF
-STREF
-STU 32
-STSLICE
-STBREFR
-ENDC
-PUSHINT 128
-SENDRAWMSG
-.loc ../contracts/RefFactory.sol, 0
-
-.macro upgradeTarget
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../contracts/RefFactory.sol, 68
-OVER
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-}
-IF
-LDMSGADDR
-LDREF
-LDREF
-LDU 32
-LDREF
-ENDS
-CTOS
-LDMSGADDR
-ENDS
-.loc ../contracts/RefFactory.sol, 0
-CALLREF {
-	CALL $upgradeTarget_internal_macro$
-}
-OVER
-PUSHCONT {
-	PUSH S3
-	CTOS
-	LDU 2
-	LDMSGADDR
-	DROP
-	NIP
-	NEWC
-	STSLICECONST xc
-	STSLICE
-	PUSHINT 1
-	STUR 98
-	SWAP
-	NEWC
-	STSLICECONST xe73bc412
-	STSLICE
-	STBREFR
-	ENDC
-	PUSHINT 0
-	SENDRAWMSG
-}
-PUSHCONT {
-	DROP
-}
-IFELSE
-DROP
-CALLREF {
-	CALL $c7_to_c4$
-}
-THROW 0
-
-.globl	upgradeTarget_internal
-.type	upgradeTarget_internal, @function
-CALL $upgradeTarget_internal_macro$
-
-.macro upgradeTarget_internal_macro
-.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
-GETGLOB 9
-GETGLOB 10
-SDEQ
-DUP
-PUSHCONT {
-	DROP
-	GETGLOB 9
-	PARSEMSGADDR
-	INDEX 3
-	PLDU 256
-	NEQINT 0
-}
-IF
-THROWIFNOT 1101
-.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 16
-PUSHREFSLICE {
-	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-}
-.loc ../contracts/RefFactory.sol, 75
-ACCEPT
-.loc ../contracts/RefFactory.sol, 76
-REVERSE 6, 0
-NEWC
-STSLICECONST x62_
-STSLICE
-PUSHINT 1
-STUR 111
-ROLLREV 4
-NEWC
-STSLICECONST x787ecfd5
-STREF
-STREF
-STU 32
-STSLICE
-STBREFR
 ENDC
 PUSHINT 128
 SENDRAWMSG
@@ -433,7 +312,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 79
+.loc ../contracts/RefFactory.sol, 65
 OVER
 PUSHCONT {
 	LDREF
@@ -484,7 +363,7 @@ THROW 0
 CALL $deriveRefSystem_internal_macro$
 
 .macro deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 80
+.loc ../contracts/RefFactory.sol, 66
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
@@ -495,7 +374,7 @@ CALLREF {
 CALL $_deriveRefSystem_internal_macro$
 
 .macro _deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 84
+.loc ../contracts/RefFactory.sol, 70
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -512,7 +391,7 @@ CTOS
 CALL $_buildRefSystemInitData_internal_macro$
 
 .macro _buildRefSystemInitData_internal_macro
-.loc ../contracts/RefFactory.sol, 88
+.loc ../contracts/RefFactory.sol, 74
 PUSHINT 0
 NEWC
 STU 256
@@ -926,7 +805,7 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 515925350
+PUSHINT 666029341
 LEQ
 IFJMPREF {
 	DUP
@@ -942,16 +821,16 @@ IFJMPREF {
 		CALL $deriveRefSystem$
 	}
 	DUP
-	PUSHINT 345202155
-	EQUAL
-	IFJMPREF {
-		CALL $upgradeRefSystem$
-	}
-	DUP
 	PUSHINT 515925350
 	EQUAL
 	IFJMPREF {
 		CALL $_refSystemPlatformCode$
+	}
+	DUP
+	PUSHINT 666029341
+	EQUAL
+	IFJMPREF {
+		CALL $constructor$
 	}
 }
 DUP
@@ -959,16 +838,16 @@ PUSHINT 1729444094
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 666029341
-	EQUAL
-	IFJMPREF {
-		CALL $constructor$
-	}
-	DUP
 	PUSHINT 995308319
 	EQUAL
 	IFJMPREF {
 		CALL $_randomNonce$
+	}
+	DUP
+	PUSHINT 1148956857
+	EQUAL
+	IFJMPREF {
+		CALL $upgradeRefSystem$
 	}
 	DUP
 	PUSHINT 1594609630
@@ -985,19 +864,8 @@ IFJMPREF {
 }
 DUP
 PUSHINT 1885262905
-LEQ
+EQUAL
 IFJMPREF {
-	DUP
-	PUSHINT 1731970066
-	EQUAL
-	IFJMPREF {
-		CALL $upgradeTarget$
-	}
-	DUP
-	PUSHINT 1885262905
-	EQUAL
-	IFJMPREF {
-		CALL $deployRefSystem$
-	}
+	CALL $deployRefSystem$
 }
 

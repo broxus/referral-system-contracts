@@ -10,7 +10,7 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/Project.sol, 26
+.loc ../contracts/Project.sol, 29
 THROW 100
 .loc ../contracts/Project.sol, 0
 
@@ -23,7 +23,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/Project.sol, 29
+.loc ../contracts/Project.sol, 32
 OVER
 PUSHCONT {
 	LDREF
@@ -60,7 +60,7 @@ CALLREF {
 THROW 0
 
 .macro onDeployOrUpdate_internal_macro
-.loc ../contracts/Project.sol, 33
+.loc ../contracts/Project.sol, 36
 PUSHREF {
 	.blob x4d75737420626520726f6f74
 }
@@ -68,7 +68,7 @@ GETGLOB 9
 GETGLOB 14
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/Project.sol, 34
+.loc ../contracts/Project.sol, 37
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -80,7 +80,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/Project.sol, 35
+	.loc ../contracts/Project.sol, 38
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -98,6 +98,165 @@ IF
 .loc ../contracts/Project.sol, 0
 BLKDROP 7
 
+.macro version
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Project.sol, 46
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../contracts/Project.sol, 0
+CALLREF {
+	CALL $version_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHSLICE x00000000000000000000000024ccaa4c6_
+	STSLICER
+	STU 32
+	ENDC
+	PUSHINT 0
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	THIRD
+	GETGLOB 9
+	ROLL 3
+	SECOND
+	NEWC
+	PUSHINT 2
+	STZEROES
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 106
+	STZEROES
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STU 32
+	ENDC
+	GETGLOB 4
+	INDEX 4
+}
+IFELSE
+SENDRAWMSG
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.macro version_internal_macro
+.loc ../contracts/Project.sol, 47
+GETGLOB 4
+PUSHINT 0
+SETINDEXQ 2
+PUSHINT 64
+SETINDEXQ 4
+FALSE
+SETINDEXQ 1
+SETGLOB 4
+GETGLOB 11
+.loc ../contracts/Project.sol, 0
+
+.macro upgrade
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/Project.sol, 50
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../contracts/Project.sol, 0
+CALLREF {
+	CALL $upgrade_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro upgrade_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+GETGLOB 9
+GETGLOB 10
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+}
+IF
+THROWIFNOT 1101
+.loc ../contracts/Project.sol, 51
+GETGLOB 10
+GETGLOB 11
+GETGLOB 14
+FALSE
+NEWC
+STSLICECONST x6_
+STI 1
+PUSHINT 3
+STZEROES
+STSLICE
+PUSHINT 1
+STUR 111
+ROLLREV 3
+NEWC
+STSLICECONST x10a1e2c8
+STU 32
+STSLICE
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+ENDC
+PUSHINT 64
+SENDRAWMSG
+.loc ../contracts/Project.sol, 0
+
 .macro acceptUpgrade
 DROP
 GETGLOB 6
@@ -107,10 +266,9 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/Project.sol, 43
+.loc ../contracts/Project.sol, 58
 OVER
 PUSHCONT {
-	LDREF
 	LDREF
 	LDU 32
 	LDREF
@@ -118,7 +276,6 @@ PUSHCONT {
 	CTOS
 }
 PUSHCONT {
-	LDREF
 	LDREF
 	LDU 32
 }
@@ -136,7 +293,7 @@ CALLREF {
 THROW 0
 
 .macro acceptUpgrade_internal_macro
-.loc ../contracts/Project.sol, 44
+.loc ../contracts/Project.sol, 59
 PUSHREF {
 	.blob x4d757374206265205265662053797374656d
 }
@@ -148,18 +305,18 @@ GETGLOB 13
 SDEQ
 OR
 THROWARGIFNOT 400
-.loc ../contracts/Project.sol, 45
+.loc ../contracts/Project.sol, 60
 GETGLOB 11
 PUSH S2
 EQUAL
 PUSHCONT {
-	.loc ../contracts/Project.sol, 46
+	.loc ../contracts/Project.sol, 61
 	CALLREF {
 		CALL $_reserve_internal_macro$
 	}
 	PUSHINT 0
 	RAWRESERVE
-	.loc ../contracts/Project.sol, 47
+	.loc ../contracts/Project.sol, 62
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -173,10 +330,9 @@ PUSHCONT {
 	SENDRAWMSG
 }
 PUSHCONT {
-	.loc ../contracts/Project.sol, 53
-	PUSH S2
+	.loc ../contracts/Project.sol, 68
 	GETGLOB 12
-	PUSH2 S2, S3
+	PUSH2 S1, S2
 	GETGLOB 11
 	GETGLOB 15
 	GETGLOB 10
@@ -184,29 +340,28 @@ PUSHCONT {
 	GETGLOB 13
 	NEWC
 	STSLICE
-	ROLLREV 8
+	ROLLREV 7
 	NEWC
 	STSLICE
-	ROLLREV 7
+	ROLLREV 6
 	NEWC
 	STSLICE
 	STI 1
 	STU 32
 	STU 32
-	ROLLREV 3
+	ROTREV
 	NEWC
 	STSLICE
-	STREF
 	STREF
 	STBREFR
 	STBREFR
 	STBREFR
 	ENDC
-	.loc ../contracts/Project.sol, 65
-	PUSH S4
+	.loc ../contracts/Project.sol, 79
+	PUSH S3
 	SETCODE
-	.loc ../contracts/Project.sol, 66
-	PUSH S4
+	.loc ../contracts/Project.sol, 80
+	PUSH S3
 	CTOS
 	DUP
 	PUSHSLICE x8adb35
@@ -220,24 +375,24 @@ PUSHCONT {
 	CTOS
 	BLESS
 	POP C3
-	.loc ../contracts/Project.sol, 67
+	.loc ../contracts/Project.sol, 81
 	CALLREF {
 		CALL $:onCodeUpgrade$
 	}
 }
 IFELSE
 .loc ../contracts/Project.sol, 0
-BLKDROP 4
+BLKDROP 3
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
-.loc ../contracts/Project.sol, 72
+.loc ../contracts/Project.sol, 86
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/Project.sol, 73
+.loc ../contracts/Project.sol, 87
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
@@ -261,12 +416,12 @@ PUSHINT 0
 SETGLOB 16
 PUSHINT 0
 SETGLOB 17
-.loc ../contracts/Project.sol, 75
+.loc ../contracts/Project.sol, 89
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
 DUP
-.loc ../contracts/Project.sol, 78
+.loc ../contracts/Project.sol, 92
 ROT
 CTOS
 LDMSGADDR
@@ -298,12 +453,12 @@ SETGLOB 16
 SETGLOB 17
 POP S2
 SETGLOB 12
-.loc ../contracts/Project.sol, 100
+.loc ../contracts/Project.sol, 114
 SWAP
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../contracts/Project.sol, 102
+.loc ../contracts/Project.sol, 116
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -315,7 +470,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/Project.sol, 103
+	.loc ../contracts/Project.sol, 117
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -347,7 +502,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/Project.sol, 111
+.loc ../contracts/Project.sol, 125
 ENDS
 .loc ../contracts/Project.sol, 0
 CALLREF {
@@ -364,7 +519,7 @@ THROW 0
 CALL $acceptInit_internal_macro$
 
 .macro acceptInit_internal_macro
-.loc ../contracts/Project.sol, 112
+.loc ../contracts/Project.sol, 126
 PUSHREF {
 	.blob x4d7573742062652052656653797374656d
 }
@@ -372,7 +527,7 @@ GETGLOB 9
 GETGLOB 14
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/Project.sol, 113
+.loc ../contracts/Project.sol, 127
 TRUE
 SETGLOB 15
 .loc ../contracts/Project.sol, 0
@@ -382,7 +537,7 @@ SETGLOB 15
 CALL $_reserve_internal_macro$
 
 .macro _reserve_internal_macro
-.loc ../contracts/Project.sol, 123
+.loc ../contracts/Project.sol, 137
 PUSHINT 0
 .loc ../contracts/Project.sol, 0
 
@@ -395,7 +550,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/Project.sol, 126
+.loc ../contracts/Project.sol, 140
 LDU 32
 GETGLOB 4
 ROT
@@ -472,7 +627,7 @@ IFREF {
 THROW 0
 
 .macro meta_internal_macro
-.loc ../contracts/Project.sol, 127
+.loc ../contracts/Project.sol, 141
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -1006,113 +1161,130 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 247105269
-LEQ
-IFJMPREF {
-	DUP
-	PUSHINT 202536740
-	EQUAL
-	IFJMPREF {
-		CALL $acceptInit$
-	}
-	DUP
-	PUSHINT 202752988
-	EQUAL
-	IFJMPREF {
-		CALL $version_$
-	}
-	DUP
-	PUSHINT 235197086
-	EQUAL
-	IFJMPREF {
-		CALL $transferOwnership$
-	}
-	DUP
-	PUSHINT 247105269
-	EQUAL
-	IFJMPREF {
-		CALL $meta$
-	}
-}
-DUP
-PUSHINT 788714980
-LEQ
-IFJMPREF {
-	DUP
-	PUSHINT 347119463
-	EQUAL
-	IFJMPREF {
-		CALL $_platformCode$
-	}
-	DUP
-	PUSHINT 362821883
-	EQUAL
-	IFJMPREF {
-		CALL $onDeployOrUpdate$
-	}
-	DUP
-	PUSHINT 365069606
-	EQUAL
-	IFJMPREF {
-		CALL $_projectFee$
-	}
-	DUP
-	PUSHINT 788714980
-	EQUAL
-	IFJMPREF {
-		CALL $_isApproved$
-	}
-}
-DUP
-PUSHINT 1735404542
-LEQ
-IFJMPREF {
-	DUP
-	PUSHINT 1508584193
-	EQUAL
-	IFJMPREF {
-		CALL $_refFactory$
-	}
-	DUP
-	PUSHINT 1594609630
-	EQUAL
-	IFJMPREF {
-		CALL $owner$
-	}
-	DUP
-	PUSHINT 1729444094
-	EQUAL
-	IFJMPREF {
-		CALL $renounceOwnership$
-	}
-	DUP
-	PUSHINT 1735404542
-	EQUAL
-	IFJMPREF {
-		CALL $_cashbackFee$
-	}
-}
-DUP
 PUSHINT 2035007365
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 1756716863
-	EQUAL
+	PUSHINT 235197086
+	LEQ
 	IFJMPREF {
-		CALL $constructor$
+		DUP
+		PUSHINT 53907865
+		EQUAL
+		IFJMPREF {
+			CALL $acceptUpgrade$
+		}
+		DUP
+		PUSHINT 202536740
+		EQUAL
+		IFJMPREF {
+			CALL $acceptInit$
+		}
+		DUP
+		PUSHINT 202752988
+		EQUAL
+		IFJMPREF {
+			CALL $version_$
+		}
+		DUP
+		PUSHINT 235197086
+		EQUAL
+		IFJMPREF {
+			CALL $transferOwnership$
+		}
 	}
 	DUP
-	PUSHINT 2021576661
-	EQUAL
+	PUSHINT 362821883
+	LEQ
 	IFJMPREF {
-		CALL $acceptUpgrade$
+		DUP
+		PUSHINT 247105269
+		EQUAL
+		IFJMPREF {
+			CALL $meta$
+		}
+		DUP
+		PUSHINT 322087217
+		EQUAL
+		IFJMPREF {
+			CALL $version$
+		}
+		DUP
+		PUSHINT 347119463
+		EQUAL
+		IFJMPREF {
+			CALL $_platformCode$
+		}
+		DUP
+		PUSHINT 362821883
+		EQUAL
+		IFJMPREF {
+			CALL $onDeployOrUpdate$
+		}
+	}
+	DUP
+	PUSHINT 1594609630
+	LEQ
+	IFJMPREF {
+		DUP
+		PUSHINT 365069606
+		EQUAL
+		IFJMPREF {
+			CALL $_projectFee$
+		}
+		DUP
+		PUSHINT 788714980
+		EQUAL
+		IFJMPREF {
+			CALL $_isApproved$
+		}
+		DUP
+		PUSHINT 1508584193
+		EQUAL
+		IFJMPREF {
+			CALL $_refFactory$
+		}
+		DUP
+		PUSHINT 1594609630
+		EQUAL
+		IFJMPREF {
+			CALL $owner$
+		}
 	}
 	DUP
 	PUSHINT 2035007365
-	EQUAL
+	LEQ
 	IFJMPREF {
-		CALL $_refSystem$
+		DUP
+		PUSHINT 1729444094
+		EQUAL
+		IFJMPREF {
+			CALL $renounceOwnership$
+		}
+		DUP
+		PUSHINT 1735404542
+		EQUAL
+		IFJMPREF {
+			CALL $_cashbackFee$
+		}
+		DUP
+		PUSHINT 1756716863
+		EQUAL
+		IFJMPREF {
+			CALL $constructor$
+		}
+		DUP
+		PUSHINT 2035007365
+		EQUAL
+		IFJMPREF {
+			CALL $_refSystem$
+		}
 	}
+}
+DUP
+PUSHINT 2104488532
+EQUAL
+IFJMPREF {
+	CALL $upgrade$
 }
 

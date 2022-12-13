@@ -6,6 +6,7 @@ pragma AbiHeader pubkey;
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensBurnCallback.sol";
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensTransferCallback.sol";
 import "ton-eth-bridge-token-contracts/contracts/interfaces/ITokenWallet.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IVersioned.sol";
 
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
 import '@broxus/contracts/contracts/utils/CheckPubKey.sol';
@@ -23,10 +24,11 @@ import "../interfaces/IUpgradeable.sol";
 
 abstract contract RefSystemBase is
     IRefSystem,
+    IVersioned,
     InternalOwner,
-    IUpgradeable,
     IAcceptTokensTransferCallback
 {   
+    uint32 version_;
     TvmCell public _platformCode;
     
     address public _refFactory;
@@ -46,7 +48,6 @@ abstract contract RefSystemBase is
     function _reserve() virtual internal returns (uint128) {
         return 0.2 ton;
     }
-    function version() virtual public returns (uint32);
 
     function onAcceptTokensTransfer(
         address tokenRoot,
@@ -145,13 +146,23 @@ abstract contract RefSystemBase is
             flag: MsgFlag.REMAINING_GAS
         }(
             _projectCode,
-            version(),
+            version_,
             _refFactory,
             projectFee,
             cashbackFee,
             sender,
             remainingGasTo
         );
+    }
+
+    function deployRefAccount(
+        address recipient,
+        address tokenWallet,
+        uint128 reward,
+        address sender,
+        address remainingGasTo
+    ) public onlyOwner returns (address) {
+        return _deployRefAccount(recipient, tokenWallet, reward, sender, remainingGasTo);
     }
 
     function approveProject(address projectOwner) public {
@@ -183,7 +194,7 @@ abstract contract RefSystemBase is
             wid: address(this).wid,
             flag: 0,
             bounce: true
-        }(_accountCode, version(), tokenWallet, reward, sender, remainingGasTo);
+        }(_accountCode, version_, tokenWallet, reward, sender, remainingGasTo);
     }
     
     function _deployRefLast(address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo) internal returns (address) {
@@ -193,7 +204,7 @@ abstract contract RefSystemBase is
             wid: address(this).wid,
             flag: 0,
             bounce: true
-        }(_refLastCode, version(), lastRefWallet, lastReferred, lastReferrer, lastRefReward, sender, remainingGasTo);
+        }(_refLastCode, version_, lastRefWallet, lastReferred, lastReferrer, lastRefReward, sender, remainingGasTo);
     }
 
     function _buildProjectInitData(address owner) internal returns (TvmCell) {

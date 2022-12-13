@@ -34,24 +34,8 @@
 		{
 			"name": "upgradeRefSystem",
 			"inputs": [
-				{"name":"owner","type":"address"},
-				{"name":"newRefSystemCode","type":"cell"},
-				{"name":"newParams","type":"cell"},
-				{"name":"newVersion","type":"uint32"},
-				{"name":"remainingGasTo","type":"address"}
-			],
-			"outputs": [
-				{"name":"value0","type":"address"}
-			]
-		},
-		{
-			"name": "upgradeTarget",
-			"inputs": [
-				{"name":"target","type":"address"},
-				{"name":"targetCode","type":"cell"},
-				{"name":"params","type":"cell"},
-				{"name":"newVersion","type":"uint32"},
-				{"name":"remainingGasTo","type":"address"}
+				{"name":"refSysOwner","type":"address"},
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}

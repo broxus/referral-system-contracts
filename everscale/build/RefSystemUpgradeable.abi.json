@@ -32,18 +32,96 @@
 		{
 			"name": "version",
 			"inputs": [
+				{"name":"answerId","type":"uint32"}
 			],
 			"outputs": [
 				{"name":"value0","type":"uint32"}
 			]
 		},
 		{
-			"name": "acceptUpgrade",
+			"name": "accountVersion",
 			"inputs": [
-				{"name":"newCode","type":"cell"},
-				{"name":"newParams","type":"cell"},
-				{"name":"newVersion","type":"uint32"},
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint32"}
+			]
+		},
+		{
+			"name": "refLastVersion",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint32"}
+			]
+		},
+		{
+			"name": "projectVersion",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint32"}
+			]
+		},
+		{
+			"name": "platformCode",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"cell"}
+			]
+		},
+		{
+			"name": "setAccountCode",
+			"inputs": [
+				{"name":"code","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setProjectCode",
+			"inputs": [
+				{"name":"code","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setRefLastCode",
+			"inputs": [
+				{"name":"code","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "requestUpgradeAccount",
+			"inputs": [
+				{"name":"currentVersion","type":"uint32"},
+				{"name":"accountOwner","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "requestUpgradeProject",
+			"inputs": [
+				{"name":"currentVersion","type":"uint32"},
+				{"name":"projectOwner","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "upgrade",
+			"inputs": [
+				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -133,6 +211,19 @@
 				{"name":"refSystem","type":"address"},
 				{"name":"projectFee","type":"uint128"},
 				{"name":"cashbackFee","type":"uint128"},
+				{"name":"sender","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
+			"name": "deployRefAccount",
+			"inputs": [
+				{"name":"recipient","type":"address"},
+				{"name":"tokenWallet","type":"address"},
+				{"name":"reward","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
@@ -262,6 +353,7 @@
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"owner","type":"address"},
+		{"name":"version_","type":"uint32"},
 		{"name":"_platformCode","type":"cell"},
 		{"name":"_refFactory","type":"address"},
 		{"name":"_refLastCode","type":"cell"},
@@ -273,7 +365,6 @@
 		{"name":"_deployRefAccountValue","type":"uint128"},
 		{"name":"_deployLastRefValue","type":"uint128"},
 		{"name":"_deployProjectValue","type":"uint128"},
-		{"name":"_approvalFee","type":"uint128"},
-		{"name":"version_","type":"uint32"}
+		{"name":"_approvalFee","type":"uint128"}
 	]
 }

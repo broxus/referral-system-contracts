@@ -26,10 +26,26 @@
 			]
 		},
 		{
+			"name": "version",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint32"}
+			]
+		},
+		{
+			"name": "upgrade",
+			"inputs": [
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "acceptUpgrade",
 			"inputs": [
 				{"name":"newCode","type":"cell"},
-				{"name":"newParams","type":"cell"},
 				{"name":"newVersion","type":"uint32"},
 				{"name":"remainingGasTo","type":"address"}
 			],

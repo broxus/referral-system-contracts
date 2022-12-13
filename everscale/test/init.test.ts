@@ -57,10 +57,9 @@ describe('Ref Init', function () {
     
                 const TestUpgrade = await locklift.factory.getContractArtifacts('TestUpgrade');
     
-                await refFactory.methods.upgradeRefSystem({ owner: refSysOwner.address, newRefSystemCode: TestUpgrade.code, newParams: '', newVersion: 1, remainingGasTo: refSysOwner.address }).send({ from: refFactoryOwner.address, amount: toNano(4) })
+                await refFactory.methods.upgradeRefSystem({ refSysOwner: refSysOwner.address, code: TestUpgrade.code}).send({ from: refFactoryOwner.address, amount: toNano(4) })
     
                 let testUpgrade = await locklift.factory.getDeployedContract("TestUpgrade", refSystem.address);
-    
                 expect((await testUpgrade.methods._isUpgraded().call())._isUpgraded).to.be.equal("true");
     
             })
@@ -76,7 +75,7 @@ describe('Ref Init', function () {
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
                 logContract(refSystem, "refSystem")
     
-                expect((await refSystem.methods.version().call()).value0).to.be.equal('0');
+                expect((await refSystem.methods.version({answerId: 0}).call()).value0).to.be.equal('0');
             })
         })
 
@@ -98,7 +97,7 @@ describe('Ref Init', function () {
                 refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
                 logContract(refSystem, "RefSystem");
 
-                project = await deployProject(projectOwner, refSystem, 5, 5, 100);
+                project = await deployProject(projectOwner, refSystem, 5, 5);
                 logContract(project, "Project");
 
                 let { owner } = await project.methods.owner().call()
@@ -112,6 +111,72 @@ describe('Ref Init', function () {
                 expect(((await project.methods._isApproved().call())._isApproved)).to.be.true;
             })
         })
+
+        describe('requestUpgradeProject', function() {
+            it('should upgrade project', async function() {
+                let refFactoryOwnerPair = await locklift.keystore.getSigner("0")
+                let projectOwnerPair = await locklift.keystore.getSigner("1")
+                let refOwnerPair = await locklift.keystore.getSigner("2")
+
+                let refFactoryOwner = await deployAccount(refFactoryOwnerPair!, 50);
+                let projectOwner = await deployAccount(projectOwnerPair!, 50, "projectOwner");
+                let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
+            
+                let refFactory = await deployRefFactory(refFactoryOwner)
+                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                
+                let project = await deployProject(projectOwner, refSystem, 5, 5);
+                
+                let TestUpgrade = locklift.factory.getContractArtifacts("TestUpgrade")
+                
+                /// Set New Project Code
+                await refSystem.methods.setProjectCode({code: TestUpgrade.code }).send({from: refSysOwner.address, amount: toNano(5)})
+                await refSystem.methods.requestUpgradeProject({
+                    currentVersion: 99,
+                    projectOwner: projectOwner.address,
+                    remainingGasTo: refSysOwner.address
+                }).send({ from: refSysOwner.address, amount: toNano(5)})
+                logContract(project, "Project")
+                let newProject = locklift.factory.getDeployedContract("TestUpgrade", project.address)
+                let {_isUpgraded } = await newProject.methods._isUpgraded().call()
+                expect(_isUpgraded).to.be("true")
+            
+            })
+        })
+
+        describe('requestUpgradeAccount', function() {
+            it('should upgrade account', async function() {
+                let refFactoryOwnerPair = await locklift.keystore.getSigner("0")
+                let projectOwnerPair = await locklift.keystore.getSigner("1")
+                let refOwnerPair = await locklift.keystore.getSigner("2")
+
+                let refFactoryOwner = await deployAccount(refFactoryOwnerPair!, 50);
+                let projectOwner = await deployAccount(projectOwnerPair!, 50, "projectOwner");
+                let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
+            
+                let refFactory = await deployRefFactory(refFactoryOwner)
+                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                
+                let project = await deployProject(projectOwner, refSystem, 5, 5);
+                
+                let TestUpgrade = locklift.factory.getContractArtifacts("TestUpgrade")
+                
+                /// Set New Project Code
+                await refSystem.methods.setProjectCode({code: TestUpgrade.code }).send({from: refSysOwner.address, amount: toNano(5)})
+                await refSystem.methods.requestUpgradeProject({
+                    currentVersion: 99,
+                    projectOwner: projectOwner.address,
+                    remainingGasTo: refSysOwner.address
+                }).send({ from: refSysOwner.address, amount: toNano(5)})
+                logContract(project, "Project")
+                let newProject = locklift.factory.getDeployedContract("TestUpgrade", project.address)
+                let {_isUpgraded } = await newProject.methods._isUpgraded().call()
+                expect(_isUpgraded).to.be("true")
+            
+            })
+        })
+
+
 
         describe('_deployRefAccount', function() {
             it('should deploy RefAccount')

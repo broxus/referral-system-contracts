@@ -7,10 +7,13 @@ import '@broxus/contracts/contracts/utils/RandomNonce.sol';
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
 import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IVersioned.sol";
+
 import "./interfaces/IRefSystem.sol";
 import "./interfaces/IUpgradeable.sol";
+import "./interfaces/IRefSystemUpgradeable.sol";
 
-contract Project is InternalOwner, IUpgradeable {
+contract Project is InternalOwner, IUpgradeable, IVersioned {
 
     uint32 public version_;
     TvmCell public _platformCode;
@@ -40,7 +43,19 @@ contract Project is InternalOwner, IUpgradeable {
         }
     }
 
-    function acceptUpgrade(TvmCell newCode, TvmCell newParams, uint32 newVersion, address remainingGasTo) override external {
+    function version() override external view responsible returns (uint32) {
+        return { value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false } version_;
+    }
+
+    function upgrade(address remainingGasTo) external onlyOwner {
+        IRefSystemUpgradeable(_refSystem).requestUpgradeProject{ value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false }(
+            version_,
+            owner,
+            remainingGasTo
+        );
+    }
+
+    function acceptUpgrade(TvmCell newCode, uint32 newVersion, address remainingGasTo) override external {
         require(msg.sender == _refSystem || msg.sender == _refFactory, 400, "Must be Ref System");
         if (version_ == newVersion) {
             tvm.rawReserve(_reserve(), 0);
@@ -58,8 +73,7 @@ contract Project is InternalOwner, IUpgradeable {
                 version_,
                 newVersion,
                 remainingGasTo,
-                _platformCode,
-                newParams
+                _platformCode
             );
 
             tvm.setcode(newCode);

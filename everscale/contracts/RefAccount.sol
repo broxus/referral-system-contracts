@@ -71,7 +71,7 @@ contract RefAccount is InternalOwner {
             code: _platformCode
         });
     }
-
+    
     function onCodeUpgrade(TvmCell data) private {
         tvm.rawReserve(_reserve(), 2);
         tvm.resetStorage();

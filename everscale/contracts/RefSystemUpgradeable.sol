@@ -6,6 +6,7 @@ pragma AbiHeader pubkey;
 
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensBurnCallback.sol";
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensTransferCallback.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/IVersioned.sol";
 
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
 import '@broxus/contracts/contracts/utils/CheckPubKey.sol';
@@ -17,13 +18,12 @@ import "./RefLastPlatform.sol";
 import "./ProjectPlatform.sol";
 import "./Project.sol";
 
-import "./interfaces/IRefSystem.sol";
+import "./interfaces/IRefSystemUpgradeable.sol";
 import "./interfaces/IUpgradeable.sol";
 
 import "./abstract/RefSystemBase.sol";
 
-contract RefSystemUpgradeable is RefSystemBase {   
-    uint32 version_;
+contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {   
     constructor() public {
         revert();
     }
@@ -53,35 +53,97 @@ contract RefSystemUpgradeable is RefSystemBase {
             });
         }
     }
+
     
-    function version() override public returns (uint32) {
+    function version() override external view responsible returns (uint32) {
         return version_;
     }
 
-    function acceptUpgrade(TvmCell newCode, TvmCell newParams, uint32 newVersion, address remainingGasTo) override external {
-        require(msg.sender == _refFactory, 400, "Must be Ref Factory");
-        if (version_ == newVersion) {
-            tvm.rawReserve(_reserve(), 0);
-            remainingGasTo.transfer({
-                value: 0,
-                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
-                bounce: false
-            });
-        } else {
-            TvmCell inputData = abi.encode(
-                _refFactory,
-                owner,
-                version(),
-                newVersion,
-                remainingGasTo,
-                _platformCode,
-                newParams
-            );
+    function accountVersion() override external view responsible returns (uint32) {
+        return version_;
+    }
 
-            tvm.setcode(newCode);
-            tvm.setCurrentCode(newCode);
-            onCodeUpgrade(inputData);
+    function refLastVersion() override external view responsible returns (uint32) {
+        return version_;
+    }
+
+    function projectVersion() override external view responsible returns (uint32) {
+        return version_;
+    }
+
+    function platformCode() override external view responsible returns (TvmCell) {
+        return _platformCode;
+    }
+
+
+    function setAccountCode(TvmCell code) override external onlyOwner {
+        _accountCode = code;
+    }
+    function setProjectCode(TvmCell code) override external onlyOwner {
+        _projectCode = code;
+    }
+    function setRefLastCode(TvmCell code) override external onlyOwner {
+        _refLastCode = code;
+    }
+
+    function requestUpgradeAccount(uint32 currentVersion, address accountOwner, address remainingGasTo) override external {
+        require(msg.sender == _deriveRefAccount(accountOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
+        
+        tvm.rawReserve(_reserve(), 0);
+
+        if (currentVersion == version_) {
+            remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
+        } else {
+            IUpgradeable(msg.sender).acceptUpgrade{
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED,
+                bounce: false
+            }(
+                _accountCode,
+                version_,
+                remainingGasTo
+            );
         }
+    }
+
+    function requestUpgradeProject(uint32 currentVersion, address projectOwner, address remainingGasTo) override external {
+        require(msg.sender == _deriveProject(projectOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
+                
+        tvm.rawReserve(_reserve(), 0);
+
+        if (currentVersion == version_) {
+            remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
+        } else {
+            IUpgradeable(msg.sender).acceptUpgrade{
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED,
+                bounce: false
+            }(
+                _projectCode,
+                version_,
+                remainingGasTo
+            );
+        }
+    }
+    
+
+    function upgrade(TvmCell code) override external {
+        require(msg.sender == _refFactory, 400, "Must be Ref Factory");
+        TvmCell initData = abi.encode(
+            _refFactory,
+            owner,
+            version_,
+            _platformCode,
+            _projectPlatformCode,
+            _projectCode,
+            _refLastPlatformCode,
+            _refLastCode,
+            _accountPlatformCode,
+            _accountCode
+        );
+        tvm.setcode(code);
+        tvm.setCurrentCode(code);
+        onCodeUpgrade(initData);
     }
 
     function onCodeUpgrade(TvmCell data) private {
@@ -133,4 +195,5 @@ contract RefSystemUpgradeable is RefSystemBase {
             });
         }
     }
+
 }

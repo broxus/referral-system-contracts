@@ -16,7 +16,7 @@ import "./RefLast.sol";
 import "./RefLastPlatform.sol";
 import "./ProjectPlatform.sol";
 import "./Project.sol";
-import "./RefSystemUpgradeable.sol";
+import "./interfaces/IRefSystemUpgradeable.sol";
 import "./RefSystemPlatform.sol";
 
 import "./interfaces/IRefSystem.sol";
@@ -56,24 +56,10 @@ contract RefFactory is InternalOwner, RandomNonce {
     }
 
     function upgradeRefSystem(
-        address owner,
-        TvmCell newRefSystemCode,
-        TvmCell newParams,
-        uint32 newVersion,
-        address remainingGasTo
+        address refSysOwner,
+        TvmCell code
     ) public onlyOwner returns (address) {
-        RefSystemUpgradeable(_deriveRefSystem(owner)).acceptUpgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(newRefSystemCode, newParams, newVersion, remainingGasTo);
-    }
-
-    function upgradeTarget(
-        address target,
-        TvmCell targetCode,
-        TvmCell params,
-        uint32 newVersion,
-        address remainingGasTo
-    ) public onlyOwner returns (address) {
-        tvm.accept();
-        IUpgradeable(target).acceptUpgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(targetCode, params, newVersion, remainingGasTo);
+        IRefSystemUpgradeable(_deriveRefSystem(refSysOwner)).upgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(code);
     }
 
     function deriveRefSystem(address owner) public returns (address) {
