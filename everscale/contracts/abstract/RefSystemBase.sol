@@ -58,9 +58,11 @@ abstract contract RefSystemBase is
         TvmCell payload
     ) override external {
         // TODO: Check if Valid Wallet
+        require(amount != 0, 401, "Invalid Amount");
         (address projectOwner, address referred, address referrer) = abi.decode(payload, (address, address, address));
         address targetProject = _deriveProject(projectOwner);
         TvmCell acceptParams = abi.encode(msg.sender, tokenRoot, amount, sender, senderWallet, remainingGasTo, projectOwner, referred, referrer);
+        
         Project(targetProject).meta{
             callback: RefSystemBase.getProjectMeta,
             flag: MsgFlag.ALL_NOT_RESERVED
@@ -87,10 +89,11 @@ abstract contract RefSystemBase is
         address referred,
         address referrer) = abi.decode(acceptParams, (address, address, uint128, address, address, address, address, address, address));
         require(msg.sender == _deriveProject(projectOwner), 400, "Not a valid Project");
+        require(amount != 0, 400, "Invalid Amount");
 
         // If Project Invalid, simply receive full reward
         if(!isApproved) {
-            _deployRefAccount(owner, tokenWallet, fee, sender, remainingGasTo);
+            _deployRefAccount(owner, tokenWallet, amount, sender, remainingGasTo);
             return;
         }
 
