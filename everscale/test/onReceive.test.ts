@@ -52,26 +52,27 @@ describe('RefSystem On Receive', function () {
             alice = await deployAccount(alicePair!, 50, 'alice');
             jerry = await deployAccount(jerryPair!, 50, 'jerry');
 
-            FIRST_REWARD = 100;
+            FIRST_REWARD = 100_000_000;
             FIRST_REFERRED = alice.address;
             FIRST_REFERRER = bob.address;
 
-            const REFSYS_FEE = 1;
-            const PROJECT_FEE = 5;
-            const CASHBACK_FEE = 5;
+            const BPS = 1_000_000;
+            const REFSYS_FEE = 10_000; // 1%;
+            const PROJECT_FEE = 50_000; // 5%
+            const CASHBACK_FEE = 50_000; // 5%
 
             let refFactory = await deployRefFactory(refFactoryOwner)
-            refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, toNano(REFSYS_FEE));
-            project = await deployProject(projectOwner, refSystem, toNano(PROJECT_FEE), toNano(CASHBACK_FEE));
+            refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, REFSYS_FEE);
+            project = await deployProject(projectOwner, refSystem, PROJECT_FEE, CASHBACK_FEE);
 
             await approveProject(project, refSysOwner, refSystem)
             logContract(refSystem, "RefSystem")
             logContract(project, "Project")
 
-            let tokenRoot = await deployTokenRoot(tokenRootOwner, { name: "Test", symbol: "TST", decimals: "1000000" })
+            let tokenRoot = await deployTokenRoot(tokenRootOwner, { name: "Test", symbol: "TST", decimals: 0 })
             logContract(tokenRoot, "tokenRoot " + "Test")
 
-            await mint(tokenRootOwner, tokenRoot, toNano(100), app.address);
+            await mint(tokenRootOwner, tokenRoot, FIRST_REWARD, app.address);
 
             refSystemWallet = await walletOf(tokenRoot, refSystem.address, "RefSystemWallet")
             let refSysOwnerWallet = await walletOf(tokenRoot, refSysOwner.address)
@@ -93,7 +94,7 @@ describe('RefSystem On Receive', function () {
             let jerryRefAccount = await getRefAccount(jerry)
 
             let { value0: appWalletBalance } = await appWallet.methods.balance({ answerId: 0 }).call()
-            expect(appWalletBalance).to.equal(toNano(100))
+            expect(appWalletBalance).to.be.bignumber.equal(FIRST_REWARD)
 
             /// Encode Payload
             let { value0: payload } = await refSystem.methods.onAcceptTokensTransferPayloadEncoder({
@@ -105,7 +106,7 @@ describe('RefSystem On Receive', function () {
 
             // Run Wallet
             await appWallet.methods.transfer({
-                amount: toNano(FIRST_REWARD),
+                amount: FIRST_REWARD,
                 recipient: refSystem.address,
                 deployWalletValue: toNano(2),
                 remainingGasTo: app.address,
@@ -114,7 +115,7 @@ describe('RefSystem On Receive', function () {
             }).send({ from: app.address, amount: toNano(10) })
 
             let { value0: appWalletBalanceNew } = await appWallet.methods.balance({ answerId: 0 }).call()
-            let { value0: refSysteWalletmBalance } = await refSystemWallet.methods.balance({ answerId: 0 }).call()
+            let { value0: refSysteWalletBalance } = await refSystemWallet.methods.balance({ answerId: 0 }).call()
 
             // let { value0: projectWalletBalance } = await projectWallet.methods.balance({ answerId: 0 }).call()
             // let { value0: refSysOwnerBalance } = await refSysOwnerWallet.methods.balance({ answerId: 0 }).call()
@@ -124,14 +125,14 @@ describe('RefSystem On Receive', function () {
             // let { value0: jerryWalletBalance } = await jerryWallet.methods.balance({ answerId: 0 }).call()
 
             expect(appWalletBalanceNew).to.be.bignumber.equal(0)
-            expect(refSysteWalletmBalance).to.be.bignumber.equal(appWalletBalance)
+            expect(refSysteWalletBalance).to.be.bignumber.equal(appWalletBalance)
 
             logContract(refSysOwnerRefAccount, "refSysOwnerAcc")
             logContract(bobRefAccount, 'bobAccount')
 
             const getBalances = async (refAccount: Contract<FactorySource['RefAccount']>) => {
                 let { _tokenBalance: arr } = await refAccount.methods._tokenBalance().call()
-                return Number(fromNano(arr[0][1]))
+                return Number(arr[0][1])
                 // return new Map(arr.map(([k, v]) => [k.toString(), v]))
             }
 
@@ -140,10 +141,17 @@ describe('RefSystem On Receive', function () {
             let refSysOwnerAccountBalance = await getBalances(refSysOwnerRefAccount)
             let projectOwnerAccountBalance = await getBalances(projectOwnerRefAccount)
 
-            expect(refSysOwnerAccountBalance).to.be.equal(REFSYS_FEE)
-            expect(projectOwnerAccountBalance).to.be.equal(PROJECT_FEE)
-            expect(aliceAccountBalance).to.be.equal(CASHBACK_FEE)
-            expect(bobAccountBalance).to.be.equal(FIRST_REWARD - REFSYS_FEE - PROJECT_FEE - CASHBACK_FEE)
+            const EXPECTED_REWARD = {
+                REFSYS: 1_000_000,
+                PROJECT: 5_000_000,
+                CASHBACK: 5_000_000,
+                REFERRER: 89_000_000
+            };
+
+            expect(refSysOwnerAccountBalance).to.be.equal(EXPECTED_REWARD.REFSYS)
+            expect(projectOwnerAccountBalance).to.be.equal(EXPECTED_REWARD.PROJECT)
+            expect(aliceAccountBalance).to.be.equal(EXPECTED_REWARD.CASHBACK)
+            expect(bobAccountBalance).to.be.equal(EXPECTED_REWARD.REFERRER)
         })
         describe('LastRef on Update', function() {
             it('should be updated refLast referred with last reward', async function() {
@@ -154,7 +162,7 @@ describe('RefSystem On Receive', function () {
                 let { wallet, referrer, referred, reward, time } = await lastRef.methods.meta({answerId: 0}).call()
                 expect(referrer.toString()).to.be.equal(FIRST_REFERRER.toString())
                 expect(referred.toString()).to.be.equal(FIRST_REFERRED.toString())
-                expect(reward).to.be.equal(toNano(FIRST_REWARD));
+                expect(reward).to.be.equal(FIRST_REWARD.toString());
             })
         })
 

@@ -41,7 +41,7 @@ export async function deployTokenRoot(
   config: { 
     name: string;
     symbol: string; 
-    decimals: string;
+    decimals: number;
     initialSupply?: number | string;
     initialSupplyTo?: Address;
     deployWalletValue?: number |string;
@@ -50,7 +50,6 @@ export async function deployTokenRoot(
   const TokenWallet = locklift.factory.getContractArtifacts("TokenWallet");
 
   let { name, symbol, decimals, initialSupply, initialSupplyTo, deployWalletValue, value } = config;
-  decimals = decimals || '4';
   initialSupply = initialSupply || 0;
   initialSupplyTo = initialSupplyTo || account.address;
   value = value || toNano(2)
@@ -71,7 +70,7 @@ export async function deployTokenRoot(
     initParams: {
       name_: name,
       symbol_: symbol,
-      decimals_: 9,
+      decimals_: decimals || 9,
       rootOwner_: account.address,
       walletCode_: TokenWallet.code,
       randomNonce_: getRandomNonce(),

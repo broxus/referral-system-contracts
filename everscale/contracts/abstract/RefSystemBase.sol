@@ -34,6 +34,8 @@ abstract contract RefSystemBase is
     uint32 version_;
     TvmCell public _platformCode;
     
+    uint128 constant BPS = 1_000_000;
+
     address public _refFactory;
     TvmCell public _refLastCode;
     TvmCell public _refLastPlatformCode;
@@ -98,21 +100,25 @@ abstract contract RefSystemBase is
         address referrer) = abi.decode(acceptParams, (address, address, uint128, address, address, address, address, address, address));
         require(msg.sender == _deriveProject(projectOwner), 400, "Not a valid Project");
         require(amount != 0, 400, "Invalid Amount");
-
+        
         // If Amount or Project Invalid, simply receive full reward
-        if(!isApproved || amount < _systemFee + projectFee + cashback) {
+        if(!isApproved || BPS < _systemFee + projectFee + cashback) {
             _deployRefAccount(owner, tokenWallet, amount, sender, remainingGasTo);
             return;
         }
         // Allocate to System Owner
-        _deployRefAccount(owner, tokenWallet, _systemFee, sender, remainingGasTo);
+        uint128 systemReward = uint128((uint(amount)*uint(_systemFee))/uint(BPS));
+        _deployRefAccount(owner, tokenWallet, systemReward, sender, remainingGasTo);
         // Allocate to Project Owner
-        _deployRefAccount(projectOwner, tokenWallet, projectFee, sender, remainingGasTo);
-        // Allocate Rewards
-        _deployRefAccount(referred, tokenWallet, cashback, sender, remainingGasTo);
+        uint128 projectReward = uint128((uint(amount)*uint(projectFee))/uint(BPS));
+        _deployRefAccount(projectOwner, tokenWallet, projectReward, sender, remainingGasTo);
         
-        uint128 reward = amount - _systemFee - projectFee - cashback;
-        _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
+        // Allocate Rewards
+        uint128 cashbackReward = uint128((uint(amount)*uint(cashback))/uint(BPS));
+        _deployRefAccount(referred, tokenWallet, (amount*cashback)/BPS, sender, remainingGasTo);
+        
+        uint128 reward = amount - systemReward - projectReward - cashbackReward;
+        if (reward != 0) _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
         
         // Update referred
         _deployRefLast(referred, tokenWallet, referred, referrer, amount, sender, remainingGasTo);
