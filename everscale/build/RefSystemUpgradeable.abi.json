@@ -149,6 +149,14 @@
 			]
 		},
 		{
+			"name": "setSystemFee",
+			"inputs": [
+				{"name":"fee","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "setDeployAccountValue",
 			"inputs": [
 				{"name":"value","type":"uint128"}

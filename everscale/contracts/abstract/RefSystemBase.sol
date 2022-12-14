@@ -52,6 +52,11 @@ abstract contract RefSystemBase is
         return 0.2 ton;
     }
 
+    function setSystemFee(uint128 fee) external onlyOwner {
+        require(fee <= BPS, 500, "Invalid Param");
+        _systemFee = fee;
+    }
+
     function setDeployAccountValue(uint128 value) external onlyOwner {
         _deployAccountValue = value;
     }
