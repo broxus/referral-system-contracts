@@ -12,8 +12,11 @@ import "ton-eth-bridge-token-contracts/contracts/interfaces/IVersioned.sol";
 import "./interfaces/IRefSystem.sol";
 import "./interfaces/IUpgradeable.sol";
 import "./interfaces/IRefSystemUpgradeable.sol";
+import "./interfaces/IRefProject.sol";
 
-contract Project is InternalOwner, IUpgradeable, IVersioned {
+contract Project is InternalOwner, IRefProject {
+
+    uint128 constant BPS = 1_000_000;
 
     uint32 public version_;
     TvmCell public _platformCode;
@@ -47,7 +50,17 @@ contract Project is InternalOwner, IUpgradeable, IVersioned {
         return { value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false } version_;
     }
 
-    function upgrade(address remainingGasTo) external onlyOwner {
+    function setProjectFee(uint128 fee) override external onlyOwner {
+        require(fee < BPS, 500, "Invalid Parameter");
+        _projectFee = fee;
+    }
+
+    function setCashbackFee(uint128 fee) override external onlyOwner {
+        require(fee < BPS, 500, "Invalid Parameter");
+        _cashbackFee = fee;
+    }
+
+    function upgrade(address remainingGasTo) override external onlyOwner {
         IRefSystemUpgradeable(_refSystem).requestUpgradeProject{ value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false }(
             version_,
             owner,
@@ -122,7 +135,7 @@ contract Project is InternalOwner, IUpgradeable, IVersioned {
         }
     }
 
-    function acceptInit() public {
+    function acceptInit() override external {
         require(msg.sender == _refSystem, 400, "Must be RefSystem");
         _isApproved = true;
     }
@@ -137,7 +150,7 @@ contract Project is InternalOwner, IUpgradeable, IVersioned {
         return 0;
     }
 
-    function meta(TvmCell payload) view external responsible returns (bool, uint128, uint128, TvmCell) {
+    function meta(TvmCell payload) override view external responsible returns (bool, uint128, uint128, TvmCell) {
         return {value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(_isApproved, _cashbackFee, _projectFee, payload);
     }
 }

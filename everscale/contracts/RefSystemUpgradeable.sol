@@ -16,7 +16,6 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 import "./RefLast.sol";
 import "./RefLastPlatform.sol";
 import "./ProjectPlatform.sol";
-import "./Project.sol";
 
 import "./interfaces/IRefSystemUpgradeable.sol";
 import "./interfaces/IUpgradeable.sol";

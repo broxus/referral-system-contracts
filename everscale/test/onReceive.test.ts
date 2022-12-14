@@ -3,7 +3,7 @@ import { afterRun, logContract, deployRefFactory, deployAccount, deriveRef, depl
 import { FactorySource } from "../build/factorySource";
 
 import logger from "mocha-logger"
-import { Address, Contract, fromNano, toNano } from "locklift";
+import { Address, Contract, fromNano, getRandomNonce, toNano } from "locklift";
 import { Account } from "everscale-standalone-client";
 import { deployTokenFactory, deployTokenRoot, mint } from "./utils/tokenRoot";
 import { walletOf } from "./utils/tokenWallet";
@@ -13,21 +13,29 @@ if (locklift.context.network.name === "main") throw "NOT IN TEST MODE"
 
 describe('RefSystem On Receive', function () {
     this.timeout(10000000);
-    describe('onAcceptTokensTransfer()', function () {
+    describe.only('onAcceptTokensTransfer()', function () {
         let FIRST_REWARD: number;
         let FIRST_REFERRED: Address;
         let FIRST_REFERRER: Address;
 
-        let refSystemOwner: Account;
+        let refSysOwner: Account;
+        let projectOwner: Account;
+        let tokenRootOwner: Account;
         let bob: Account;
         let alice: Account;
         let jerry: Account;
+        let app: Account;
 
         let refSystem: Contract<FactorySource["RefSystemUpgradeable"]>;
         let project: Contract<FactorySource["Project"]>;
+
         let refSystemWallet: Contract<FactorySource["TokenWallet"]>;
+        let appWallet: Contract<FactorySource["TokenWallet"]>
         let bobWallet: Contract<FactorySource["TokenWallet"]>
+        let aliceWallet: Contract<FactorySource["TokenWallet"]>
+
         let bobRefAccount: Contract<FactorySource["RefAccount"]>;
+        let aliceRefAccount: Contract<FactorySource["RefAccount"]>;
 
         it('should assign rewards to accounts', async function () {
             let refFactoryOwnerPair = await locklift.keystore.getSigner("0")
@@ -42,12 +50,12 @@ describe('RefSystem On Receive', function () {
             let jerryPair = await locklift.keystore.getSigner("8")
 
             let refFactoryOwner = await deployAccount(refFactoryOwnerPair!, 50, 'refSysOwner');
-            let refSysOwner = await deployAccount(refOwnerPair!, 50, 'refSysOwner');
-            let projectOwner = await deployAccount(projectOwnerPair!, 50, 'projectOwner');
-            let tokenRootOwner = await deployAccount(tokenRootOwnerPair!, 50, 'tokenRootOwner');
+            refSysOwner = await deployAccount(refOwnerPair!, 50, 'refSysOwner');
+            projectOwner = await deployAccount(projectOwnerPair!, 50, 'projectOwner');
+            tokenRootOwner = await deployAccount(tokenRootOwnerPair!, 50, 'tokenRootOwner');
             let tokenWalletOwner = await deployAccount(tokenWalletOwnerPair!, 50, 'tokenWalletOwner');
 
-            let app = await deployAccount(appPair!, 50, 'app');
+            app = await deployAccount(appPair!, 50, 'app');
             bob = await deployAccount(bobPair!, 50, 'bob');
             alice = await deployAccount(alicePair!, 50, 'alice');
             jerry = await deployAccount(jerryPair!, 50, 'jerry');
@@ -58,14 +66,20 @@ describe('RefSystem On Receive', function () {
 
             const BPS = 1_000_000;
             const REFSYS_FEE = 10_000; // 1%;
-            const PROJECT_FEE = 50_000; // 5%
+            const PROJECT_FEE = 50_000;
             const CASHBACK_FEE = 50_000; // 5%
+            const EXPECTED_REWARD = {
+                REFSYS: 1_000_000,
+                PROJECT: 5_000_000,
+                CASHBACK: 5_000_000,
+                REFERRER: 89_000_000
+            };
 
             let refFactory = await deployRefFactory(refFactoryOwner)
             refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, REFSYS_FEE);
             project = await deployProject(projectOwner, refSystem, PROJECT_FEE, CASHBACK_FEE);
-
             await approveProject(project, refSysOwner, refSystem)
+
             logContract(refSystem, "RefSystem")
             logContract(project, "Project")
 
@@ -77,9 +91,9 @@ describe('RefSystem On Receive', function () {
             refSystemWallet = await walletOf(tokenRoot, refSystem.address, "RefSystemWallet")
             let refSysOwnerWallet = await walletOf(tokenRoot, refSysOwner.address)
             let projectOwnerWallet = await walletOf(tokenRoot, projectOwner.address)
-            let appWallet = await walletOf(tokenRoot, app.address, "AppWallet")
+            appWallet = await walletOf(tokenRoot, app.address, "AppWallet")
             bobWallet = await walletOf(tokenRoot, bob.address)
-            let aliceWallet = await walletOf(tokenRoot, alice.address)
+            aliceWallet = await walletOf(tokenRoot, alice.address)
             let jerryWallet = await walletOf(tokenRoot, jerry.address)
 
             const getRefAccount = async (acc: Account) => {
@@ -90,7 +104,7 @@ describe('RefSystem On Receive', function () {
             let refSysOwnerRefAccount = await getRefAccount(refSysOwner)
             let projectOwnerRefAccount = await getRefAccount(projectOwner)
             bobRefAccount = await getRefAccount(bob)
-            let aliceRefAccount = await getRefAccount(alice)
+            aliceRefAccount = await getRefAccount(alice)
             let jerryRefAccount = await getRefAccount(jerry)
 
             let { value0: appWalletBalance } = await appWallet.methods.balance({ answerId: 0 }).call()
@@ -117,13 +131,6 @@ describe('RefSystem On Receive', function () {
             let { value0: appWalletBalanceNew } = await appWallet.methods.balance({ answerId: 0 }).call()
             let { value0: refSysteWalletBalance } = await refSystemWallet.methods.balance({ answerId: 0 }).call()
 
-            // let { value0: projectWalletBalance } = await projectWallet.methods.balance({ answerId: 0 }).call()
-            // let { value0: refSysOwnerBalance } = await refSysOwnerWallet.methods.balance({ answerId: 0 }).call()
-            // let { value0: projectOwnerWalletBalance } = await projectOwnerWallet.methods.balance({ answerId: 0 }).call()
-            // let { value0: bobWalletBalance } = await bobWallet.methods.balance({ answerId: 0 }).call()
-            // let { value0: aliceWalletBalance } = await aliceWallet.methods.balance({ answerId: 0 }).call()
-            // let { value0: jerryWalletBalance } = await jerryWallet.methods.balance({ answerId: 0 }).call()
-
             expect(appWalletBalanceNew).to.be.bignumber.equal(0)
             expect(refSysteWalletBalance).to.be.bignumber.equal(appWalletBalance)
 
@@ -141,25 +148,19 @@ describe('RefSystem On Receive', function () {
             let refSysOwnerAccountBalance = await getBalances(refSysOwnerRefAccount)
             let projectOwnerAccountBalance = await getBalances(projectOwnerRefAccount)
 
-            const EXPECTED_REWARD = {
-                REFSYS: 1_000_000,
-                PROJECT: 5_000_000,
-                CASHBACK: 5_000_000,
-                REFERRER: 89_000_000
-            };
-
             expect(refSysOwnerAccountBalance).to.be.equal(EXPECTED_REWARD.REFSYS)
             expect(projectOwnerAccountBalance).to.be.equal(EXPECTED_REWARD.PROJECT)
             expect(aliceAccountBalance).to.be.equal(EXPECTED_REWARD.CASHBACK)
             expect(bobAccountBalance).to.be.equal(EXPECTED_REWARD.REFERRER)
         })
-        describe('LastRef on Update', function() {
-            it('should be updated refLast referred with last reward', async function() {
-                let {value0: lastRefAddr} = await refSystem.methods.deriveRefLast({answerId: 0, owner: FIRST_REFERRED}).call();
+
+        describe('LastRef on Update', function () {
+            it('should be updated refLast referred with last reward', async function () {
+                let { value0: lastRefAddr } = await refSystem.methods.deriveRefLast({ answerId: 0, owner: FIRST_REFERRED }).call();
                 let lastRef = locklift.factory.getDeployedContract("RefLast", lastRefAddr)
                 logContract(lastRef, "RefLast");
 
-                let { wallet, referrer, referred, reward, time } = await lastRef.methods.meta({answerId: 0}).call()
+                let { wallet, referrer, referred, reward, time } = await lastRef.methods.meta({ answerId: 0 }).call()
                 expect(referrer.toString()).to.be.equal(FIRST_REFERRER.toString())
                 expect(referred.toString()).to.be.equal(FIRST_REFERRED.toString())
                 expect(reward).to.be.equal(FIRST_REWARD.toString());
@@ -181,18 +182,120 @@ describe('RefSystem On Receive', function () {
                     notify: true,
                     payload: ''
                 }).send({ from: bob.address, amount: toNano(3) })
-                
+
                 logContract(bobWallet, 'bobWallet')
                 let { value0: bobWalletBalance } = await bobWallet.methods.balance({ answerId: 0 }).call()
                 expect(bobWalletBalance).to.be.bignumber.equal(toNano(bobAccountBalance))
             })
 
-            it('should zero out after claim', async function() {
+            it('should zero out after claim', async function () {
                 let { _tokenBalance } = await bobRefAccount.methods._tokenBalance().call()
                 expect(_tokenBalance).to.be.deep.equal([])
             })
         })
-    })
 
+        async function runRewardTest(param: {
+            REWARD: number
+            REFSYS_FEE: number
+            PROJECT_FEE: number
+            CASHBACK_FEE: number
+            EXPECTED: {
+                REFSYS: number,
+                PROJECT: number,
+                CASHBACK: number,
+                REFERRER: number
+            }
+        }) {
+            it(`should assign reward with: reward=${param.REWARD} refsys_fee=${param.REFSYS_FEE} project_fee=${param.PROJECT_FEE} cashback_fee=${param.CASHBACK_FEE}`, async function () {
+                // SET FEES
+                await refSystem.methods.setSystemFee({
+                    fee: param.REFSYS_FEE
+                }).send({ from: refSysOwner.address, amount: toNano(0.1) });
+                await project.methods.setCashbackFee({
+                    fee: param.CASHBACK_FEE
+                }).send({ from: projectOwner.address, amount: toNano(0.1) })
+                await project.methods.setProjectFee({
+                    fee: param.PROJECT_FEE
+                }).send({ from: projectOwner.address, amount: toNano(0.1) })
+
+                let tokenRoot = await deployTokenRoot(tokenRootOwner, { name: "Test" + getRandomNonce(), symbol: "TST"+getRandomNonce(), decimals: 0 })
+                await mint(tokenRootOwner, tokenRoot, param.REWARD, app.address);
+
+                let refSysWallet = await walletOf(tokenRoot, refSystem.address)
+                let appWallet = await walletOf(tokenRoot, app.address)
+                /// Encode Payload
+                let { value0: payload } = await refSystem.methods.onAcceptTokensTransferPayloadEncoder({
+                    projectOwner: projectOwner.address,
+                    referred: alice.address,
+                    referrer: bob.address,
+                    answerId: 0
+                }).call();
+
+                // Run Wallet
+                await appWallet.methods.transfer({
+                    amount: param.REWARD,
+                    recipient: refSystem.address,
+                    deployWalletValue: toNano(2),
+                    remainingGasTo: app.address,
+                    notify: true, // Must Be Set to Trigger Project#onAcceptTokensTransfer
+                    payload
+                }).send({ from: app.address, amount: toNano(10) })
+
+                const getBalances = async (acc: Account) => {
+                    let { value0: addr } = await refSystem.methods.deriveRefAccount({ owner: acc.address, answerId: 0 }).call()
+                    let refAccount = locklift.factory.getDeployedContract("RefAccount", addr);
+                    let { _tokenBalance: arr } = await refAccount.methods._tokenBalance().call()
+                    let m = Object.fromEntries(arr.map(([k, v]) => [k.toString(), Number(v)]))
+                    return m[refSysWallet.address.toString()] || 0
+                }
+
+                let bobBalance = await getBalances(bob)
+                let aliceBalance = await getBalances(alice)
+                let refSysOwnerBalance = await getBalances(refSysOwner)
+                let projectOwnerBalance = await getBalances(projectOwner)
+
+                expect(refSysOwnerBalance).to.be.equal(param.EXPECTED.REFSYS)
+                expect(bobBalance).to.be.equal(param.EXPECTED.REFERRER)
+                expect(aliceBalance).to.be.equal(param.EXPECTED.CASHBACK)
+                expect(projectOwnerBalance).to.be.equal(param.EXPECTED.PROJECT)
+            })
+        }
+
+        describe('Break Tests', function() {
+            runRewardTest({
+                REWARD: 100_000_000,
+                REFSYS_FEE: 500_000,
+                CASHBACK_FEE: 250_000,
+                PROJECT_FEE: 250_000,
+                EXPECTED: { REFSYS: 50_000_000, CASHBACK: 25_000_000, PROJECT: 25_000_000, REFERRER: 0}
+            })
+    
+            runRewardTest({
+                REWARD: 100_000_000,
+                REFSYS_FEE: 1_000_000,
+                CASHBACK_FEE: 250_000,
+                PROJECT_FEE: 250_000,
+                EXPECTED: { REFSYS: 100_000_000, CASHBACK: 0, PROJECT: 0, REFERRER: 0}
+            })
+    
+            runRewardTest({
+                REWARD: 100_000_000,
+                REFSYS_FEE: 1_500_000,
+                CASHBACK_FEE: 250_000,
+                PROJECT_FEE: 250_000,
+                EXPECTED: { REFSYS: 100_000_000, CASHBACK: 0, PROJECT: 0, REFERRER: 0}
+            })
+
+            runRewardTest({
+                REWARD: 100,
+                REFSYS_FEE: 500_000,
+                CASHBACK_FEE: 1,
+                PROJECT_FEE: 9_999,
+                EXPECTED: { REFSYS: 50, CASHBACK: 0, PROJECT: 0, REFERRER: 50}
+            })
+
+        })
+
+    })
 
 })

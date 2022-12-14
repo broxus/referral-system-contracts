@@ -35,6 +35,22 @@
 			]
 		},
 		{
+			"name": "setProjectFee",
+			"inputs": [
+				{"name":"fee","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCashbackFee",
+			"inputs": [
+				{"name":"fee","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "upgrade",
 			"inputs": [
 				{"name":"remainingGasTo","type":"address"}

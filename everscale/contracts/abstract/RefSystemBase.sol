@@ -19,17 +19,16 @@ import "../RefLast.sol";
 import "../RefLastPlatform.sol";
 import "../RefAccountPlatform.sol";
 import "../ProjectPlatform.sol";
-import "../Project.sol";
 
 import "../interfaces/IRefSystem.sol";
 import "../interfaces/IUpgradeable.sol";
+import "../interfaces/IRefProject.sol";
 
 abstract contract RefSystemBase is
     IRefSystem,
     IVersioned,
     InternalOwner,
-    SID,
-    IAcceptTokensTransferCallback
+    SID
 {   
     uint32 version_;
     TvmCell public _platformCode;
@@ -52,16 +51,16 @@ abstract contract RefSystemBase is
         return 0.2 ton;
     }
 
-    function setSystemFee(uint128 fee) external onlyOwner {
+    function setSystemFee(uint128 fee) override external onlyOwner {
         require(fee <= BPS, 500, "Invalid Param");
         _systemFee = fee;
     }
 
-    function setDeployAccountValue(uint128 value) external onlyOwner {
+    function setDeployAccountValue(uint128 value) override external onlyOwner {
         _deployAccountValue = value;
     }
 
-    function setDeployRefLastValue(uint128 value) external onlyOwner {
+    function setDeployRefLastValue(uint128 value) override external onlyOwner {
         _deployRefLastValue = value;
     }
 
@@ -78,13 +77,13 @@ abstract contract RefSystemBase is
         address targetProject = _deriveProject(projectOwner);
         TvmCell acceptParams = abi.encode(msg.sender, tokenRoot, amount, sender, senderWallet, remainingGasTo, projectOwner, referred, referrer);
         
-        Project(targetProject).meta{
+        IRefProject(targetProject).meta{
             callback: RefSystemBase.getProjectMeta,
             flag: MsgFlag.ALL_NOT_RESERVED
         }(acceptParams);
     }
 
-    function onAcceptTokensTransferPayloadEncoder(address projectOwner, address referred, address referrer) responsible external returns (TvmCell) {
+    function onAcceptTokensTransferPayloadEncoder(address projectOwner, address referred, address referrer) override responsible external returns (TvmCell) {
         return abi.encode(projectOwner, referred, referrer);
     }
 
@@ -107,23 +106,26 @@ abstract contract RefSystemBase is
         require(amount != 0, 400, "Invalid Amount");
         
         // If Amount or Project Invalid, simply receive full reward
-        if(!isApproved || BPS < _systemFee + projectFee + cashback) {
+        if(!isApproved || (uint(BPS) < uint(_systemFee) + uint(projectFee) + uint(cashback))) {
             _deployRefAccount(owner, tokenWallet, amount, sender, remainingGasTo);
             return;
         }
+
         // Allocate to System Owner
-        uint128 systemReward = uint128((uint(amount)*uint(_systemFee))/uint(BPS));
-        _deployRefAccount(owner, tokenWallet, systemReward, sender, remainingGasTo);
+        uint128 systemReward = uint128(math.muldiv(uint(amount),uint(_systemFee),uint(BPS)));
+        if(systemReward != 0) { _deployRefAccount(owner, tokenWallet, systemReward, sender, remainingGasTo); }
+        
         // Allocate to Project Owner
-        uint128 projectReward = uint128((uint(amount)*uint(projectFee))/uint(BPS));
-        _deployRefAccount(projectOwner, tokenWallet, projectReward, sender, remainingGasTo);
+        uint128 projectReward = uint128(math.muldiv(uint(amount),uint(projectFee),uint(BPS)));
+        if(projectReward != 0) { _deployRefAccount(projectOwner, tokenWallet, projectReward, sender, remainingGasTo); }
         
-        // Allocate Rewards
-        uint128 cashbackReward = uint128((uint(amount)*uint(cashback))/uint(BPS));
-        _deployRefAccount(referred, tokenWallet, (amount*cashback)/BPS, sender, remainingGasTo);
+        // Allocate to Referred
+        uint128 cashbackReward = uint128(math.muldiv(uint(amount),uint(cashback),uint(BPS)));
+        if(cashbackReward != 0) { _deployRefAccount(referred, tokenWallet, (amount*cashback)/BPS, sender, remainingGasTo); }
         
+        // Allocate to Referrer
         uint128 reward = amount - systemReward - projectReward - cashbackReward;
-        if (reward != 0) _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
+        if (reward != 0) { _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo); }
         
         // Update referred
         _deployRefLast(referred, tokenWallet, referred, referrer, amount, sender, remainingGasTo);
@@ -141,15 +143,15 @@ abstract contract RefSystemBase is
         ITokenWallet(tokenWallet).transfer{flag: MsgFlag.REMAINING_GAS, value: 0 }(balance, recipient, 0.5 ton, remainingGasTo, notify, payload);
     }
 
-    function deriveProject(address owner) external responsible returns (address) {
+    function deriveProject(address owner) override external responsible returns (address) {
        return _deriveProject(owner);
     }
 
-    function deriveRefAccount(address owner) external responsible returns (address) {
+    function deriveRefAccount(address owner) override external responsible returns (address) {
        return _deriveRefAccount(owner);
     }
 
-    function deriveRefLast(address owner) external responsible returns (address) {
+    function deriveRefLast(address owner) override external responsible returns (address) {
         return _deriveRefLast(owner);
     }
 
@@ -199,8 +201,8 @@ abstract contract RefSystemBase is
         return _deployRefLast(owner, lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
     }
 
-    function approveProject(address projectOwner) onlyOwner public {
-        Project(_deriveProject(projectOwner)).acceptInit();
+    function approveProject(address projectOwner) override external onlyOwner  {
+        IRefProject(_deriveProject(projectOwner)).acceptInit();
     }
 
     function _deriveProject(address owner) internal returns (address) {
