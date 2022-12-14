@@ -30,5 +30,6 @@ npx locklift test --network local
 
 ## Deployment
 ```bash
-npm run script
+# Deploy RefFactory 
+npx locklift run --script scripts/1-deploy-ref-factory.ts --network main
 ```
