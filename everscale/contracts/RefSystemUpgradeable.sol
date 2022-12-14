@@ -38,6 +38,8 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 approvalFee,
+        uint128 deployAccountValue,
+        uint128 deployRefLastValue,
         address sender,
         address remainingGasTo
     ) 
@@ -54,6 +56,11 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         }
     }
 
+    function supportsInterface(bytes4 interfaceID) override external view responsible returns (bool) {
+        return { value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false } (
+            interfaceID == bytes4(0x3204ec29)   // SID
+        );
+    }
     
     function version() override external view responsible returns (uint32) {
         return version_;
@@ -152,7 +159,13 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         TvmCell initData = abi.encode(
             _refFactory,
             owner,
+            uint32(0),
             version_,
+            _approvalFee,
+            _deployAccountValue,
+            _deployRefLastValue,
+            msg.sender,
+            msg.sender,
             _platformCode,
             _projectPlatformCode,
             _projectCode,
@@ -180,6 +193,8 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         oldVersion,
         version_,
         _approvalFee,
+        _deployAccountValue,
+        _deployRefLastValue,
         sender,
         remainingGasTo,
         _platformCode,
@@ -195,6 +210,8 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
             uint32,
             uint32, 
             uint128,
+            uint128,
+            uint128,
             address,
             address,
             TvmCell,
@@ -205,7 +222,6 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
             TvmCell,
             TvmCell
         ));
-
         setOwnership(owner);
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({

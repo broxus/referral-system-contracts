@@ -23,10 +23,22 @@
 				{"name":"projectPlatformCode","type":"cell"},
 				{"name":"projectCode","type":"cell"},
 				{"name":"approvalFee","type":"uint128"},
+				{"name":"deployAccountValue","type":"uint128"},
+				{"name":"deployRefLastValue","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
+			]
+		},
+		{
+			"name": "supportsInterface",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"interfaceID","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"bool"}
 			]
 		},
 		{
@@ -132,6 +144,22 @@
 			"name": "upgrade",
 			"inputs": [
 				{"name":"code","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setDeployAccountValue",
+			"inputs": [
+				{"name":"value","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setDeployRefLastValue",
+			"inputs": [
+				{"name":"value","type":"uint128"}
 			],
 			"outputs": [
 			]
@@ -352,6 +380,22 @@
 			]
 		},
 		{
+			"name": "_deployAccountValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_deployAccountValue","type":"uint128"}
+			]
+		},
+		{
+			"name": "_deployRefLastValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_deployRefLastValue","type":"uint128"}
+			]
+		},
+		{
 			"name": "_approvalFee",
 			"inputs": [
 			],
@@ -387,9 +431,8 @@
 		{"name":"_accountPlatformCode","type":"cell"},
 		{"name":"_projectCode","type":"cell"},
 		{"name":"_projectPlatformCode","type":"cell"},
-		{"name":"_deployRefAccountValue","type":"uint128"},
-		{"name":"_deployLastRefValue","type":"uint128"},
-		{"name":"_deployProjectValue","type":"uint128"},
+		{"name":"_deployAccountValue","type":"uint128"},
+		{"name":"_deployRefLastValue","type":"uint128"},
 		{"name":"_approvalFee","type":"uint128"}
 	]
 }

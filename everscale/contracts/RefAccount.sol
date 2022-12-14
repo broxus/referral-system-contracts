@@ -90,6 +90,7 @@ contract RefAccount is InternalOwner, IUpgradeable {
                 owner,
                 version_,
                 newVersion,
+                _tokenBalance,
                 remainingGasTo,
                 _platformCode
             );

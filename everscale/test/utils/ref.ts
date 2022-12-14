@@ -6,7 +6,7 @@ import { Account } from 'everscale-standalone-client';
 
 type RefFactory = Contract<FactorySource["RefFactory"]>
 
-export async function deployRefFactory(owner:Account) {
+export async function deployRefFactory(owner: Account) {
     const RefFactory = await locklift.factory.getContractArtifacts('RefFactory')
     const RefSystem = await locklift.factory.getContractArtifacts('RefSystemUpgradeable');
     const RefSystemPlatform = await locklift.factory.getContractArtifacts('RefSystemPlatform');
@@ -28,16 +28,24 @@ export async function deployRefFactory(owner:Account) {
 
     return refFactory;
 }
-export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefFactory, owner: Account, approvalFee: string | number) {
-    
+export async function deployRefSystem(
+    refFactoryOwner: Account,
+    refFactory: RefFactory,
+    owner: Account,
+    approvalFee: string | number,
+    // onDeploy: string | number = toNano(2),
+    // deployProjectValue: string | number = toNano(1),
+    deployAccountValue: string | number = toNano(0.4),
+    deployRefLastValue: string | number = toNano(0.4)) {
+
     const RefSystem = await locklift.factory.getContractArtifacts('RefSystemUpgradeable');
-    
+
     const RefLast = await locklift.factory.getContractArtifacts('RefLast');
     const RefLastPlatform = await locklift.factory.getContractArtifacts('RefLastPlatform');
-    
+
     const RefAccount = await locklift.factory.getContractArtifacts("RefAccount")
     const RefAccountPlatform = await locklift.factory.getContractArtifacts("RefAccountPlatform")
-    
+
     const ProjectPlatform = await locklift.factory.getContractArtifacts('ProjectPlatform');
     const Project = await locklift.factory.getContractArtifacts('Project');
 
@@ -48,6 +56,8 @@ export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefF
         owner: owner.address,
         refSystemCode: RefSystem.code,
         approvalFee,
+        deployAccountValue,
+        deployRefLastValue,
         refLastPlatformCode: RefLastPlatform.code,
         refLastCode: RefLast.code,
         accountPlatformCode: RefAccountPlatform.code,
@@ -56,16 +66,16 @@ export async function deployRefSystem(refFactoryOwner: Account, refFactory: RefF
         projectPlatformCode: ProjectPlatform.code,
         sender: owner.address,
         remainingGasTo: owner.address,
-    }).send({ from : refFactoryOwner.address, amount: toNano(3)})
-    
-    let {value0: refSysAddr } = await refFactory.methods.deriveRefSystem({owner: owner.address}).call();
+    }).send({ from: refFactoryOwner.address, amount: toNano(3) })
+
+    let { value0: refSysAddr } = await refFactory.methods.deriveRefSystem({ owner: owner.address }).call();
     return locklift.factory.getDeployedContract("RefSystemUpgradeable", refSysAddr)
 }
 
 export async function deriveRef(factory: Contract<FactorySource["RefSystem"]>, recipient: Address): Promise<Contract<FactorySource["RefLast"]>> {
     const RefLast = await locklift.factory.getContractArtifacts('RefLast');
-    const {value0: refAddr} = await factory.methods.deriveRef({ recipient, answerId: 0 }).call();
+    const { value0: refAddr } = await factory.methods.deriveRef({ recipient, answerId: 0 }).call();
 
-    const refInstance = new Contract(locklift.provider,RefLast.abi, refAddr )
+    const refInstance = new Contract(locklift.provider, RefLast.abi, refAddr)
     return refInstance
 }

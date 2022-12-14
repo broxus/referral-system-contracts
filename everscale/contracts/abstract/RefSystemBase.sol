@@ -7,6 +7,8 @@ import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensBurnCal
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IAcceptTokensTransferCallback.sol";
 import "ton-eth-bridge-token-contracts/contracts/interfaces/ITokenWallet.sol";
 import "ton-eth-bridge-token-contracts/contracts/interfaces/IVersioned.sol";
+import "ton-eth-bridge-token-contracts/contracts/interfaces/SID.sol";
+
 
 import '@broxus/contracts/contracts/access/InternalOwner.sol';
 import '@broxus/contracts/contracts/utils/CheckPubKey.sol';
@@ -26,6 +28,7 @@ abstract contract RefSystemBase is
     IRefSystem,
     IVersioned,
     InternalOwner,
+    SID,
     IAcceptTokensTransferCallback
 {   
     uint32 version_;
@@ -39,14 +42,20 @@ abstract contract RefSystemBase is
     TvmCell public _projectCode;
     TvmCell public _projectPlatformCode;
 
-    uint128 _deployRefAccountValue;
-    uint128 _deployLastRefValue;
-    uint128 _deployProjectValue;
-
+    uint128 public _deployAccountValue;
+    uint128 public _deployRefLastValue;
     uint128 public _approvalFee;
     
     function _reserve() virtual internal returns (uint128) {
         return 0.2 ton;
+    }
+
+    function setDeployAccountValue(uint128 value) external onlyOwner {
+        _deployAccountValue = value;
+    }
+
+    function setDeployRefLastValue(uint128 value) external onlyOwner {
+        _deployRefLastValue = value;
     }
 
     function onAcceptTokensTransfer(
@@ -204,7 +213,7 @@ abstract contract RefSystemBase is
     ) internal returns (address) {
         return new RefAccountPlatform {
             stateInit: _buildRefAccountInitData(recipient),
-            value: 0.5 ton,
+            value: _deployAccountValue,
             wid: address(this).wid,
             flag: 0,
             bounce: true
@@ -222,7 +231,7 @@ abstract contract RefSystemBase is
     ) internal returns (address) {
         return new RefLastPlatform {
             stateInit: _buildRefLastInitData(owner),
-            value: 0.5 ton,
+            value: _deployRefLastValue,
             wid: address(this).wid,
             flag: 0,
             bounce: true

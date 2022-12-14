@@ -21,8 +21,11 @@ import "./RefSystemPlatform.sol";
 
 import "./interfaces/IRefSystem.sol";
 
-contract RefFactory is InternalOwner, RandomNonce {
+contract RefFactory is RandomNonce {
     TvmCell public _refSystemPlatformCode;
+
+    address _internalOwner;
+    uint256 _externalOwner;
 
     constructor(
         address owner,
@@ -30,7 +33,20 @@ contract RefFactory is InternalOwner, RandomNonce {
     ) public {
         tvm.accept();
         _refSystemPlatformCode = refSystemPlatformCode;
-        setOwnership(owner);
+        _internalOwner = owner;
+        _externalOwner = msg.pubkey();
+    }
+
+    modifier onlyOwner {
+        require(
+            (msg.sender == _internalOwner && _internalOwner.value != 0) || 
+            (msg.pubkey() == _externalOwner && _externalOwner != 0),
+         400, "NOT OWNER");
+         _;
+    }
+
+    function owner() external view responsible returns (address owner) {
+        return _internalOwner;
     }
 
     function deployRefSystem(
@@ -43,6 +59,8 @@ contract RefFactory is InternalOwner, RandomNonce {
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 approvalFee,
+        uint128 deployAccountValue,
+        uint128 deployRefLastValue,
         address sender,
         address remainingGasTo
     ) public onlyOwner returns (address) {
@@ -52,7 +70,7 @@ contract RefFactory is InternalOwner, RandomNonce {
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(refSystemCode, 0, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, sender, remainingGasTo);
+        }(refSystemCode, 0, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
     }
 
     function upgradeRefSystem(

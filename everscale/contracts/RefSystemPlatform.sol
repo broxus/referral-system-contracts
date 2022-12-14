@@ -31,6 +31,8 @@ contract RefSystemPlatform {
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 approvalFee,
+        uint128 deployAccountValue,
+        uint128 deployRefLastValue,
         address sender,
         address remainingGasTo
     )
@@ -40,7 +42,7 @@ contract RefSystemPlatform {
         tvm.accept();
 
         if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
-            initialize(initCode, initVersion, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode,projectPlatformCode, projectCode, approvalFee, sender, remainingGasTo);
+            initialize(initCode, initVersion, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode,projectPlatformCode, projectCode, approvalFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -74,6 +76,8 @@ contract RefSystemPlatform {
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 approvalFee,
+        uint128 deployAccountValue,
+        uint128 deployRefLastValue,
         address sender,
         address remainingGasTo
     ) private {
@@ -84,6 +88,8 @@ contract RefSystemPlatform {
             uint32(0),
             initVersion,
             approvalFee,
+            deployAccountValue,
+            deployRefLastValue,
             sender,
             remainingGasTo,
             tvm.code(),
