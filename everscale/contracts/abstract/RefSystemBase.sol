@@ -101,11 +101,12 @@ abstract contract RefSystemBase is
         _deployRefAccount(projectOwner, tokenWallet, projectFee, sender, remainingGasTo);
         // Allocate Rewards
         _deployRefAccount(referred, tokenWallet, cashback, sender, remainingGasTo);
+        
         uint128 reward = amount - _approvalFee - projectFee - cashback;
         _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
-
-        // Update/Deploy RefLast
-        _deployRefLast(tokenWallet, referred, referrer, amount, sender, remainingGasTo);
+        
+        // Update referred
+        _deployRefLast(referred, tokenWallet, referred, referrer, amount, sender, remainingGasTo);
     }
 
     function requestTransfer(
@@ -128,8 +129,8 @@ abstract contract RefSystemBase is
        return _deriveRefAccount(owner);
     }
 
-    function deriveRefLast(address root) external responsible returns (address) {
-        return _deriveRefLast(root);
+    function deriveRefLast(address owner) external responsible returns (address) {
+        return _deriveRefLast(owner);
     }
 
     function deployProject(
@@ -167,6 +168,7 @@ abstract contract RefSystemBase is
     }
 
     function deployRefLast(
+        address owner,
         address lastRefWallet,
         address lastReferred,
         address lastReferrer,
@@ -174,7 +176,7 @@ abstract contract RefSystemBase is
         address sender,
         address remainingGasTo
     ) external onlyOwner returns (address) {
-        return _deployRefLast(lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
+        return _deployRefLast(owner, lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
     }
 
     function approveProject(address projectOwner) onlyOwner public {
@@ -189,8 +191,8 @@ abstract contract RefSystemBase is
         return address(tvm.hash(_buildRefAccountInitData(owner)));
     }
 
-    function _deriveRefLast(address root) internal returns (address) {
-        return address(tvm.hash(_buildRefLastInitData(root)));
+    function _deriveRefLast(address owner) internal returns (address) {
+        return address(tvm.hash(_buildRefLastInitData(owner)));
     }
 
     function _deployRefAccount(
@@ -210,6 +212,7 @@ abstract contract RefSystemBase is
     }
     
     function _deployRefLast(
+        address owner,
         address lastRefWallet,
         address lastReferred,
         address lastReferrer,
@@ -218,7 +221,7 @@ abstract contract RefSystemBase is
         address remainingGasTo
     ) internal returns (address) {
         return new RefLastPlatform {
-            stateInit: _buildRefLastInitData(address(this)),
+            stateInit: _buildRefLastInitData(owner),
             value: 0.5 ton,
             wid: address(this).wid,
             flag: 0,
@@ -237,11 +240,12 @@ abstract contract RefSystemBase is
             code: _projectPlatformCode
         });
     }
-    function _buildRefLastInitData(address root) internal returns (TvmCell) {
+    function _buildRefLastInitData(address owner) internal returns (TvmCell) {
         return tvm.buildStateInit({
             contr: RefLastPlatform,
             varInit: {
-                root: root
+                root: address(this),
+                owner: owner
             },
             pubkey: 0,
             code: _refLastPlatformCode

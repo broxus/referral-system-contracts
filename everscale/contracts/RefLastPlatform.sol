@@ -7,8 +7,9 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
 contract RefLastPlatform {
     address static root;
+    address static owner;
 
-    constructor(TvmCell initCode, uint32 initVersion,address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo)
+    constructor(TvmCell initCode, uint32 initVersion, address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo)
         public
         functionID(0x15A038FB)
     {   
@@ -24,11 +25,12 @@ contract RefLastPlatform {
         }
     }
 
-    function _getExpectedAddress(address owner_) private view returns (address) {
+    function _getExpectedAddress(address _owner) private view returns (address) {
         TvmCell stateInit = tvm.buildStateInit({
             contr: RefLastPlatform,
             varInit: {
-                root: root
+                root: root,
+                owner: _owner
             },
             pubkey: 0,
             code: tvm.code()
@@ -41,6 +43,7 @@ contract RefLastPlatform {
         
         TvmCell inputData = abi.encode(
             root,
+            owner,
             uint32(0),
             initVersion,
             lastRefWallet,

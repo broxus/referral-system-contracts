@@ -11,7 +11,7 @@ interface IRefSystemUpgradeable is IRefSystem {
 
     function requestUpgradeAccount(uint32 currentVersion, address accountOwner, address remainingGasTo) external;
     function requestUpgradeProject(uint32 currentVersion, address projectOwner, address remainingGasTo) external;
-    function requestUpgradeRefLast(uint32 currentVersion, address remainingGasTo) external;
+    function requestUpgradeRefLast(uint32 currentVersion, address refLastOwner, address remainingGasTo) external;
     
     function setProjectCode(TvmCell code) external;
     function setAccountCode(TvmCell code) external;

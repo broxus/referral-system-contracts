@@ -21,7 +21,8 @@
 		}
 	],
 	"data": [
-		{"key":1,"name":"root","type":"address"}
+		{"key":1,"name":"root","type":"address"},
+		{"key":2,"name":"owner","type":"address"}
 	],
 	"events": [
 	],
@@ -29,6 +30,7 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"root","type":"address"}
+		{"name":"root","type":"address"},
+		{"name":"owner","type":"address"}
 	]
 }

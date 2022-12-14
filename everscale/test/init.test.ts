@@ -36,7 +36,7 @@ describe('Ref Init', function () {
                 let refOwnerPair = await locklift.keystore.getSigner("1")
                 let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
 
-                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, "refSystem")
 
                 expect((await refSystem.methods._approvalFee().call())._approvalFee)
@@ -52,7 +52,7 @@ describe('Ref Init', function () {
                 let refOwnerPair = await locklift.keystore.getSigner("1")
                 let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
 
-                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, "refSystem")
 
                 const TestUpgrade = await locklift.factory.getContractArtifacts('TestUpgrade');
@@ -72,7 +72,7 @@ describe('Ref Init', function () {
                 let refOwnerPair = await locklift.keystore.getSigner("1")
                 let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
 
-                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, "refSystem")
 
                 expect((await refSystem.methods.version({ answerId: 0 }).call()).value0).to.be.equal('0');
@@ -94,7 +94,7 @@ describe('Ref Init', function () {
                 refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
 
                 let refFactory = await deployRefFactory(refFactoryOwner)
-                refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, "RefSystem");
 
                 project = await deployProject(projectOwner, refSystem, 5, 5);
@@ -123,7 +123,7 @@ describe('Ref Init', function () {
                 let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
 
                 let refFactory = await deployRefFactory(refFactoryOwner)
-                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, "refSystem")
                 let project = await deployProject(projectOwner, refSystem, 5, 5);
 
@@ -209,6 +209,7 @@ describe('Ref Init', function () {
                 let TestUpgrade = locklift.factory.getContractArtifacts("TestUpgrade")
 
                 await refSystem.methods.deployRefLast({
+                    owner: refSysOwner.address,
                     lastRefWallet: zeroAddress,
                     lastReferred: zeroAddress,
                     lastReferrer: zeroAddress,
@@ -217,7 +218,7 @@ describe('Ref Init', function () {
                     remainingGasTo: refSysOwner.address
                 }).send({ from: refSysOwner.address, amount: toNano(2) })
 
-                let {value0: refLastAddr} = await refSystem.methods.deriveRefLast({answerId: 0, root: refSystem.address}).call()
+                let {value0: refLastAddr} = await refSystem.methods.deriveRefLast({answerId: 0, owner: refSysOwner.address}).call()
                 let refLast = locklift.factory.getDeployedContract("RefLast", refLastAddr)
 
                 /// Set New RefLast Code
@@ -228,7 +229,8 @@ describe('Ref Init', function () {
                 // Run Upgrade Request
                 await refSystem.methods.requestUpgradeRefLast({
                     currentVersion: 99,
-                    remainingGasTo: refSysOwner.address
+                    refLastOwner: refSysOwner.address,
+                    remainingGasTo: refSysOwner.address,
                 }).send({ from: refSysOwner.address, amount: toNano(2) })
 
                 let newAccount = locklift.factory.getDeployedContract("TestUpgrade", refLast.address)
@@ -285,6 +287,7 @@ describe('Ref Init', function () {
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, 'refSystem')
                 await refSystem.methods.deployRefLast({
+                    owner: refSysOwner.address,
                     lastRefWallet: zeroAddress,
                     lastReferred: zeroAddress,
                     lastReferrer: zeroAddress,
@@ -293,7 +296,7 @@ describe('Ref Init', function () {
                     remainingGasTo: refSysOwner.address
                 }).send({ from: refSysOwner.address, amount: toNano(2) })
 
-                let {value0: refLastAddr} = await refSystem.methods.deriveRefLast({answerId: 0, root: refSystem.address}).call()
+                let {value0: refLastAddr} = await refSystem.methods.deriveRefLast({answerId: 0, owner: refSysOwner.address}).call()
                 let refLast = locklift.factory.getDeployedContract("RefLast", refLastAddr)
                 logContract(refLast, 'refLast')
                 expect((await refLast.methods._refSystem().call())._refSystem.equals(refSystem.address)).to.be.true
@@ -320,10 +323,10 @@ describe('Ref Init', function () {
                 refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
 
                 let refFactory = await deployRefFactory(refFactoryOwner)
-                refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300, 1000);
+                refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, "RefSystem");
 
-                project = await deployProject(projectOwner, refSystem, 5, 5, 100);
+                project = await deployProject(projectOwner, refSystem, 5, 5);
                 logContract(project, "Project");
 
                 const TestUpgrade = locklift.factory.getContractArtifacts('TestUpgrade');

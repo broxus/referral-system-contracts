@@ -15,6 +15,7 @@ contract RefLast is IUpgradeable{
     TvmCell _platformCode;
 
     address public _refSystem;
+    address public _owner;
 
     address public _lastReferrer;
     address public _lastReferred;
@@ -62,11 +63,12 @@ contract RefLast is IUpgradeable{
         return { value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false } _platformCode;
     }
 
-    function _buildRefLastInitData(address root) internal returns (TvmCell) {
+    function _buildRefLastInitData(address root, address owner) internal returns (TvmCell) {
         return tvm.buildStateInit({
             contr: RefLastPlatform,
             varInit: {
-                root: root
+                root: root,
+                owner: owner
             },
             pubkey: 0,
             code: _platformCode
@@ -85,6 +87,7 @@ contract RefLast is IUpgradeable{
         } else {
             TvmCell inputData = abi.encode(
                 _refSystem,
+                _owner,
                 version_,
                 newVersion,
                 _lastRefWallet,
@@ -108,6 +111,7 @@ contract RefLast is IUpgradeable{
         uint32 oldVersion;
         address remainingGasTo;
         (_refSystem,
+        _owner,
         oldVersion,
         version_,
         _lastRefWallet,
@@ -116,7 +120,7 @@ contract RefLast is IUpgradeable{
         _lastRefReward,
         remainingGasTo,
         _platformCode
-        ) = abi.decode(data,(address,uint32,uint32,address,address,address,uint128,address,TvmCell));
+        ) = abi.decode(data,(address,address,uint32,uint32,address,address,address,uint128,address,TvmCell));
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({

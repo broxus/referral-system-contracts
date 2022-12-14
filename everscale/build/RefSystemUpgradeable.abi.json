@@ -122,6 +122,7 @@
 			"name": "requestUpgradeRefLast",
 			"inputs": [
 				{"name":"currentVersion","type":"uint32"},
+				{"name":"refLastOwner","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
@@ -208,7 +209,7 @@
 			"name": "deriveRefLast",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},
-				{"name":"root","type":"address"}
+				{"name":"owner","type":"address"}
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}
@@ -243,6 +244,7 @@
 		{
 			"name": "deployRefLast",
 			"inputs": [
+				{"name":"owner","type":"address"},
 				{"name":"lastRefWallet","type":"address"},
 				{"name":"lastReferred","type":"address"},
 				{"name":"lastReferrer","type":"address"},

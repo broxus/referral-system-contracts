@@ -67,6 +67,14 @@
 			]
 		},
 		{
+			"name": "_owner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_owner","type":"address"}
+			]
+		},
+		{
 			"name": "_lastReferrer",
 			"inputs": [
 			],
@@ -118,6 +126,7 @@
 		{"name":"version_","type":"uint32"},
 		{"name":"_platformCode","type":"cell"},
 		{"name":"_refSystem","type":"address"},
+		{"name":"_owner","type":"address"},
 		{"name":"_lastReferrer","type":"address"},
 		{"name":"_lastReferred","type":"address"},
 		{"name":"_lastRefWallet","type":"address"},

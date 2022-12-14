@@ -146,8 +146,8 @@ describe('RefSystem On Receive', function () {
             expect(bobAccountBalance).to.be.equal(FIRST_REWARD - REFSYS_FEE - PROJECT_FEE - CASHBACK_FEE)
         })
         describe('LastRef on Update', function() {
-            it('should be updated with last reward', async function() {
-                let {value0: lastRefAddr} = await refSystem.methods.deriveRefLast({answerId: 0, root: refSystem.address}).call();
+            it('should be updated refLast referred with last reward', async function() {
+                let {value0: lastRefAddr} = await refSystem.methods.deriveRefLast({answerId: 0, owner: FIRST_REFERRED}).call();
                 let lastRef = locklift.factory.getDeployedContract("RefLast", lastRefAddr)
                 logContract(lastRef, "RefLast");
 

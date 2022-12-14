@@ -43,12 +43,12 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/RefLastPlatform.sol, 15
+.loc ../contracts/RefLastPlatform.sol, 16
 GETGLOB 9
 GETGLOB 10
 SDEQ
 PUSHCONT {
-	.loc ../contracts/RefLastPlatform.sol, 17
+	.loc ../contracts/RefLastPlatform.sol, 18
 	BLKPUSH 6, 7
 	PUSH S6
 	CALLREF {
@@ -56,7 +56,7 @@ PUSHCONT {
 	}
 }
 PUSHCONT {
-	.loc ../contracts/RefLastPlatform.sol, 19
+	.loc ../contracts/RefLastPlatform.sol, 20
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -82,8 +82,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/RefLastPlatform.sol, 28
-DROP
+.loc ../contracts/RefLastPlatform.sol, 29
 PUSHINT 0
 NEWC
 STU 256
@@ -93,6 +92,11 @@ PUSHINT 64
 DICTUSETB
 GETGLOB 10
 PUSHINT 1
+ROT
+PUSHINT 64
+DICTUSET
+SWAP
+PUSHINT 2
 ROT
 PUSHINT 64
 DICTUSET
@@ -117,7 +121,7 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/RefLastPlatform.sol, 37
+.loc ../contracts/RefLastPlatform.sol, 39
 HASHCU
 NEWC
 STSLICECONST x801_
@@ -131,7 +135,7 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/RefLastPlatform.sol, 42
+.loc ../contracts/RefLastPlatform.sol, 44
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -146,7 +150,11 @@ STSLICE
 ENDC
 REVERSE 7, 0
 PUSHINT 0
+GETGLOB 11
 GETGLOB 10
+NEWC
+STSLICE
+ROLLREV 9
 NEWC
 STSLICE
 STU 32
@@ -169,11 +177,12 @@ STBREFR
 STBREFR
 STBREFR
 STBREFR
+STBREFR
 ENDC
-.loc ../contracts/RefLastPlatform.sol, 54
+.loc ../contracts/RefLastPlatform.sol, 57
 OVER
 SETCODE
-.loc ../contracts/RefLastPlatform.sol, 55
+.loc ../contracts/RefLastPlatform.sol, 58
 SWAP
 CTOS
 DUP
@@ -188,7 +197,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/RefLastPlatform.sol, 57
+.loc ../contracts/RefLastPlatform.sol, 60
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
@@ -212,7 +221,12 @@ LDU 64 ; pubkey timestamp c4
 LDU 1 ; ctor flag
 NIP
 LDMSGADDR
+LDREF
 ENDS
+CTOS
+LDMSGADDR
+ENDS
+SETGLOB 11
 SETGLOB 10
 SETGLOB 3
 SETGLOB 2
@@ -237,6 +251,17 @@ PUSHCONT {
 		}
 	}
 	IFNOT
+	PUSHINT 2
+	PUSH S2
+	PUSHINT 64
+	DICTUGET
+	PUSHCONT {
+		PUSHREFSLICE {
+			.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+		}
+	}
+	IFNOT
+	SETGLOB 11
 	SETGLOB 10
 	PUSHINT 64
 	DICTUGET
@@ -259,6 +284,10 @@ STU 256
 STU 64
 STONE
 STSLICE
+GETGLOB 11
+NEWC
+STSLICE
+STBREFR
 ENDC
 POPROOT
 
