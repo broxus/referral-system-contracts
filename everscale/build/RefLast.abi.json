@@ -27,6 +27,15 @@
 			]
 		},
 		{
+			"name": "version",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint32"}
+			]
+		},
+		{
 			"name": "meta",
 			"inputs": [
 				{"name":"answerId","type":"uint32"}

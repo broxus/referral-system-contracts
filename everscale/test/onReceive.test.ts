@@ -13,7 +13,7 @@ if (locklift.context.network.name === "main") throw "NOT IN TEST MODE"
 
 describe('RefSystem On Receive', function () {
     this.timeout(10000000);
-    describe.only('onAcceptTokensTransfer()', function () {
+    describe('onAcceptTokensTransfer()', function () {
         let FIRST_REWARD: number;
         let FIRST_REFERRED: Address;
         let FIRST_REFERRER: Address;

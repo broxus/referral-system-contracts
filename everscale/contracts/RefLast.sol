@@ -8,8 +8,9 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 import "./RefLastPlatform.sol";
 import "./RefSystemUpgradeable.sol";
 import "./interfaces/IUpgradeable.sol";
+import "./interfaces/IRefLast.sol";
 
-contract RefLast is IUpgradeable{
+contract RefLast is IRefLast {
 
     uint32 version_;
     TvmCell _platformCode;
@@ -47,7 +48,11 @@ contract RefLast is IUpgradeable{
         }
     }
 
-    function meta() responsible external returns (address wallet, address referred, address referrer, uint128 reward, uint64 time) {
+    function version() override external view responsible returns (uint32) {
+        return version_;
+    }
+
+    function meta() override responsible external returns (address wallet, address referred, address referrer, uint128 reward, uint64 time) {
         wallet = _lastRefWallet;
         referred = _lastReferred;
         referrer = _lastReferrer;

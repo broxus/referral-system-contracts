@@ -10,7 +10,7 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/RefLast.sol, 27
+.loc ../contracts/RefLast.sol, 28
 THROW 100
 .loc ../contracts/RefLast.sol, 0
 
@@ -23,7 +23,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefLast.sol, 30
+.loc ../contracts/RefLast.sol, 31
 OVER
 PUSHCONT {
 	LDREF
@@ -67,7 +67,7 @@ CALLREF {
 THROW 0
 
 .macro onDeployOrUpdate_internal_macro
-.loc ../contracts/RefLast.sol, 34
+.loc ../contracts/RefLast.sol, 35
 PUSHREF {
 	.blob x4d7573742062652052656653797374656d
 }
@@ -75,22 +75,22 @@ GETGLOB 9
 GETGLOB 12
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/RefLast.sol, 35
+.loc ../contracts/RefLast.sol, 36
 ROLL 5
 SETGLOB 16
-.loc ../contracts/RefLast.sol, 36
+.loc ../contracts/RefLast.sol, 37
 ROLL 4
 SETGLOB 15
-.loc ../contracts/RefLast.sol, 37
+.loc ../contracts/RefLast.sol, 38
 ROLL 3
 SETGLOB 14
-.loc ../contracts/RefLast.sol, 38
+.loc ../contracts/RefLast.sol, 39
 ROT
 SETGLOB 17
-.loc ../contracts/RefLast.sol, 39
+.loc ../contracts/RefLast.sol, 40
 BLOCKLT
 SETGLOB 18
-.loc ../contracts/RefLast.sol, 41
+.loc ../contracts/RefLast.sol, 42
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -102,7 +102,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/RefLast.sol, 42
+	.loc ../contracts/RefLast.sol, 43
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -120,6 +120,84 @@ IF
 .loc ../contracts/RefLast.sol, 0
 BLKDROP 4
 
+.macro version
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/RefLast.sol, 51
+LDU 32
+GETGLOB 4
+ROT
+SETINDEXQ 5
+SETGLOB 4
+ENDS
+.loc ../contracts/RefLast.sol, 0
+CALLREF {
+	CALL $version_internal_macro$
+}
+OVER
+PUSHCONT {
+	PUSH S3
+	CTOS
+	LDU 2
+	LDMSGADDR
+	DROP
+	NIP
+	NEWC
+	STSLICECONST xc
+	STSLICE
+	PUSHSLICE x00000000000000000000000024ccaa4c6_
+	STSLICER
+	STU 32
+	ENDC
+	PUSHINT 0
+}
+PUSHCONT {
+	GETGLOB 4
+	DUP
+	INDEX 3
+	OVER
+	THIRD
+	GETGLOB 9
+	ROLL 3
+	SECOND
+	NEWC
+	PUSHINT 2
+	STZEROES
+	STI 1
+	PUSHINT 3
+	STZEROES
+	STSLICE
+	SWAP
+	STGRAMS
+	STDICT
+	PUSHINT 106
+	STZEROES
+	GETGLOB 4
+	INDEX 5
+	STUR 32
+	STU 32
+	ENDC
+	GETGLOB 4
+	INDEX 4
+}
+IFELSE
+SENDRAWMSG
+IFREF {
+	CALL $upd_only_time_in_c4$
+}
+THROW 0
+
+.macro version_internal_macro
+.loc ../contracts/RefLast.sol, 52
+GETGLOB 10
+.loc ../contracts/RefLast.sol, 0
+
 .macro meta
 DROP
 GETGLOB 6
@@ -129,7 +207,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefLast.sol, 50
+.loc ../contracts/RefLast.sol, 55
 LDU 32
 GETGLOB 4
 ROT
@@ -222,15 +300,15 @@ CALLREF {
 THROW 0
 
 .macro meta_internal_macro
-.loc ../contracts/RefLast.sol, 51
+.loc ../contracts/RefLast.sol, 56
 GETGLOB 16
-.loc ../contracts/RefLast.sol, 52
+.loc ../contracts/RefLast.sol, 57
 GETGLOB 15
-.loc ../contracts/RefLast.sol, 53
+.loc ../contracts/RefLast.sol, 58
 GETGLOB 14
-.loc ../contracts/RefLast.sol, 54
+.loc ../contracts/RefLast.sol, 59
 GETGLOB 17
-.loc ../contracts/RefLast.sol, 55
+.loc ../contracts/RefLast.sol, 60
 GETGLOB 18
 .loc ../contracts/RefLast.sol, 0
 
@@ -239,7 +317,7 @@ GETGLOB 18
 CALL $_reserve_internal_macro$
 
 .macro _reserve_internal_macro
-.loc ../contracts/RefLast.sol, 59
+.loc ../contracts/RefLast.sol, 64
 PUSHINT 0
 .loc ../contracts/RefLast.sol, 0
 
@@ -252,7 +330,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefLast.sol, 62
+.loc ../contracts/RefLast.sol, 67
 LDU 32
 GETGLOB 4
 ROT
@@ -317,7 +395,7 @@ IFREF {
 THROW 0
 
 .macro platformCode_internal_macro
-.loc ../contracts/RefLast.sol, 63
+.loc ../contracts/RefLast.sol, 68
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -334,7 +412,7 @@ GETGLOB 11
 CALL $_buildRefLastInitData_internal_macro$
 
 .macro _buildRefLastInitData_internal_macro
-.loc ../contracts/RefLast.sol, 67
+.loc ../contracts/RefLast.sol, 72
 PUSHINT 0
 NEWC
 STU 256
@@ -373,7 +451,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefLast.sol, 78
+.loc ../contracts/RefLast.sol, 83
 OVER
 PUSHCONT {
 	LDREF
@@ -400,7 +478,7 @@ CALLREF {
 THROW 0
 
 .macro acceptUpgrade_internal_macro
-.loc ../contracts/RefLast.sol, 79
+.loc ../contracts/RefLast.sol, 84
 PUSHREF {
 	.blob x4d757374206265205265662053797374656d
 }
@@ -408,18 +486,18 @@ GETGLOB 9
 GETGLOB 12
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/RefLast.sol, 80
+.loc ../contracts/RefLast.sol, 85
 GETGLOB 10
 PUSH S2
 EQUAL
 PUSHCONT {
-	.loc ../contracts/RefLast.sol, 81
+	.loc ../contracts/RefLast.sol, 86
 	CALLREF {
 		CALL $_reserve_internal_macro$
 	}
 	PUSHINT 0
 	RAWRESERVE
-	.loc ../contracts/RefLast.sol, 82
+	.loc ../contracts/RefLast.sol, 87
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -433,7 +511,7 @@ PUSHCONT {
 	SENDRAWMSG
 }
 PUSHCONT {
-	.loc ../contracts/RefLast.sol, 88
+	.loc ../contracts/RefLast.sol, 93
 	GETGLOB 11
 	OVER
 	GETGLOB 17
@@ -471,10 +549,10 @@ PUSHCONT {
 	STBREFR
 	STBREFR
 	ENDC
-	.loc ../contracts/RefLast.sol, 101
+	.loc ../contracts/RefLast.sol, 106
 	PUSH S3
 	SETCODE
-	.loc ../contracts/RefLast.sol, 102
+	.loc ../contracts/RefLast.sol, 107
 	PUSH S3
 	CTOS
 	DUP
@@ -489,7 +567,7 @@ PUSHCONT {
 	CTOS
 	BLESS
 	POP C3
-	.loc ../contracts/RefLast.sol, 103
+	.loc ../contracts/RefLast.sol, 108
 	CALLREF {
 		CALL $:onCodeUpgrade$
 	}
@@ -500,13 +578,13 @@ BLKDROP 3
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
-.loc ../contracts/RefLast.sol, 108
+.loc ../contracts/RefLast.sol, 113
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/RefLast.sol, 109
+.loc ../contracts/RefLast.sol, 114
 PUSHINT 0
 SETGLOB 10
 PUSHREF {
@@ -536,11 +614,11 @@ PUSHINT 0
 SETGLOB 17
 PUSHINT 0
 SETGLOB 18
-.loc ../contracts/RefLast.sol, 112
+.loc ../contracts/RefLast.sol, 117
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefLast.sol, 113
+.loc ../contracts/RefLast.sol, 118
 SWAP
 CTOS
 LDMSGADDR
@@ -580,7 +658,7 @@ SETGLOB 14
 SETGLOB 17
 POP S2
 SETGLOB 11
-.loc ../contracts/RefLast.sol, 125
+.loc ../contracts/RefLast.sol, 130
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -592,7 +670,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/RefLast.sol, 126
+	.loc ../contracts/RefLast.sol, 131
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -1026,9 +1104,15 @@ IFJMPREF {
 	}
 }
 DUP
-PUSHINT 1180373212
+PUSHINT 1051551343
 LEQ
 IFJMPREF {
+	DUP
+	PUSHINT 322087217
+	EQUAL
+	IFJMPREF {
+		CALL $version$
+	}
 	DUP
 	PUSHINT 362821883
 	EQUAL
@@ -1047,17 +1131,17 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $_lastRefWallet$
 	}
+}
+DUP
+PUSHINT 1810538513
+LEQ
+IFJMPREF {
 	DUP
 	PUSHINT 1180373212
 	EQUAL
 	IFJMPREF {
 		CALL $_lastRefReward$
 	}
-}
-DUP
-PUSHINT 2035007365
-LEQ
-IFJMPREF {
 	DUP
 	PUSHINT 1481374887
 	EQUAL
@@ -1076,11 +1160,11 @@ IFJMPREF {
 	IFJMPREF {
 		CALL $_lastRefUpdate$
 	}
-	DUP
-	PUSHINT 2035007365
-	EQUAL
-	IFJMPREF {
-		CALL $_refSystem$
-	}
+}
+DUP
+PUSHINT 2035007365
+EQUAL
+IFJMPREF {
+	CALL $_refSystem$
 }
 
