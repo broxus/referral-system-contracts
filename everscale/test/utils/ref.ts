@@ -8,16 +8,34 @@ type RefFactory = Contract<FactorySource["RefFactory"]>
 
 export async function deployRefFactory(owner: Account) {
     const RefFactory = await locklift.factory.getContractArtifacts('RefFactory')
+    
     const RefSystem = await locklift.factory.getContractArtifacts('RefSystemUpgradeable');
     const RefSystemPlatform = await locklift.factory.getContractArtifacts('RefSystemPlatform');
+    
+    const RefLast = await locklift.factory.getContractArtifacts('RefLast');
+    const RefLastPlatform = await locklift.factory.getContractArtifacts('RefLastPlatform');
+
+    const RefAccount = await locklift.factory.getContractArtifacts("RefAccount")
+    const RefAccountPlatform = await locklift.factory.getContractArtifacts("RefAccountPlatform")
+
+    const ProjectPlatform = await locklift.factory.getContractArtifacts('ProjectPlatform');
+    const Project = await locklift.factory.getContractArtifacts('Project');
 
     const _randomNonce = locklift.utils.getRandomNonce();
     const signer = await locklift.keystore.getSigner("0")
+    
     const { contract: refFactory } = await locklift.factory.deployContract({
         contract: "RefFactory",
         constructorParams: {
             owner: owner.address,
-            refSystemPlatformCode: RefSystemPlatform.code
+            refSystemPlatformCode: RefSystemPlatform.code,
+            refSystemCode: RefSystem.code,
+            refLastPlatformCode: RefLastPlatform.code,
+            refLastCode: RefLast.code,
+            accountPlatformCode: RefAccountPlatform.code,
+            accountCode: RefAccount.code,
+            projectCode: Project.code,
+            projectPlatformCode: ProjectPlatform.code,
         },
         initParams: {
             _randomNonce
@@ -33,37 +51,20 @@ export async function deployRefSystem(
     refFactory: RefFactory,
     owner: Account,
     approvalFee: string | number,
-    // onDeploy: string | number = toNano(2),
-    // deployProjectValue: string | number = toNano(1),
+    onDeploy: string | number = toNano(2),
+    deployProjectValue: string | number = toNano(1),
     deployAccountValue: string | number = toNano(0.4),
-    deployRefLastValue: string | number = toNano(0.4)) {
+    deployRefLastValue: string | number = toNano(0.4),
+    projectVersion: number = 0,
+    accountVersion: number = 0,
+    refLastVersion: number = 0) {
 
-    const RefSystem = await locklift.factory.getContractArtifacts('RefSystemUpgradeable');
-
-    const RefLast = await locklift.factory.getContractArtifacts('RefLast');
-    const RefLastPlatform = await locklift.factory.getContractArtifacts('RefLastPlatform');
-
-    const RefAccount = await locklift.factory.getContractArtifacts("RefAccount")
-    const RefAccountPlatform = await locklift.factory.getContractArtifacts("RefAccountPlatform")
-
-    const ProjectPlatform = await locklift.factory.getContractArtifacts('ProjectPlatform');
-    const Project = await locklift.factory.getContractArtifacts('Project');
-
-    const _randomNonce = locklift.utils.getRandomNonce();
-    const signer = await locklift.keystore.getSigner("0")
-
-    await refFactory.methods.deployRefSystem({
+    await refFactory.methods.deployRefSystemAuto({
         owner: owner.address,
-        refSystemCode: RefSystem.code,
-        approvalFee,
+        version: 0,
         deployAccountValue,
         deployRefLastValue,
-        refLastPlatformCode: RefLastPlatform.code,
-        refLastCode: RefLast.code,
-        accountPlatformCode: RefAccountPlatform.code,
-        accountCode: RefAccount.code,
-        projectCode: Project.code,
-        projectPlatformCode: ProjectPlatform.code,
+        approvalFee,
         sender: owner.address,
         remainingGasTo: owner.address,
     }).send({ from: refFactoryOwner.address, amount: toNano(3) })

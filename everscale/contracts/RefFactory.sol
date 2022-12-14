@@ -21,36 +21,65 @@ import "./RefSystemPlatform.sol";
 
 import "./interfaces/IRefSystem.sol";
 
-contract RefFactory is RandomNonce {
+contract RefFactory is InternalOwner, RandomNonce {
+
     TvmCell public _refSystemPlatformCode;
-
-    address _internalOwner;
-    uint256 _externalOwner;
-
+    TvmCell public _refSystemCode;
+    TvmCell public _refLastPlatformCode;
+    TvmCell public _refLastCode;
+    TvmCell public _accountPlatformCode;
+    TvmCell public _accountCode;
+    TvmCell public _projectPlatformCode;
+    TvmCell public _projectCode;
+    uint128 public _approvalFee;
+    uint128 public _deployAccountValue;
+    uint128 public _deployRefLastValue;
+    
     constructor(
         address owner,
-        TvmCell refSystemPlatformCode
+        TvmCell refSystemPlatformCode,
+        TvmCell refSystemCode,
+        TvmCell refLastPlatformCode,
+        TvmCell refLastCode,
+        TvmCell accountPlatformCode,
+        TvmCell accountCode,
+        TvmCell projectPlatformCode,
+        TvmCell projectCode
     ) public {
         tvm.accept();
         _refSystemPlatformCode = refSystemPlatformCode;
-        _internalOwner = owner;
-        _externalOwner = msg.pubkey();
+        _refSystemPlatformCode = refSystemPlatformCode;
+        _refSystemCode = refSystemCode;
+        _refLastPlatformCode = refLastPlatformCode;
+        _refLastCode = refLastCode;
+        _accountPlatformCode = accountPlatformCode;
+        _accountCode = accountCode;
+        _projectPlatformCode = projectPlatformCode;
+        _projectCode = projectCode;
+        setOwnership(owner);
     }
 
-    modifier onlyOwner {
-        require(
-            (msg.sender == _internalOwner && _internalOwner.value != 0) || 
-            (msg.pubkey() == _externalOwner && _externalOwner != 0),
-         400, "NOT OWNER");
-         _;
-    }
-
-    function owner() external view responsible returns (address owner) {
-        return _internalOwner;
+    function deployRefSystemAuto(
+        address owner,
+        uint32 version,
+        uint128 approvalFee,
+        uint128 deployAccountValue,
+        uint128 deployRefLastValue,
+        address sender,
+        address remainingGasTo
+    ) public onlyOwner returns (address) {
+        return new RefSystemPlatform {
+            stateInit: _buildRefSystemInitData(owner),
+            wid: address(this).wid,
+            value: 0,
+            bounce: true,
+            flag: MsgFlag.ALL_NOT_RESERVED
+        }(_refSystemCode, version, _refLastPlatformCode, _refLastCode, _accountPlatformCode, _accountCode, _projectPlatformCode, _projectCode, approvalFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
     }
 
     function deployRefSystem(
         address owner,
+        uint32 version,
         TvmCell refSystemCode,
         TvmCell refLastPlatformCode,
         TvmCell refLastCode,
@@ -70,7 +99,7 @@ contract RefFactory is RandomNonce {
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(refSystemCode, 0, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
+        }(refSystemCode, version, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, approvalFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
     }
 
     function upgradeRefSystem(

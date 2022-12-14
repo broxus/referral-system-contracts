@@ -20,7 +20,7 @@ describe('Ref Init', function () {
                 let refFactory = await deployRefFactory(refFactoryOwner)
                 logContract(refFactory, "RefFactory")
 
-                expect((await refFactory.methods.owner({answerId: 0}).call()).owner.equals(refFactoryOwner.address)).to.be.true
+                expect((await refFactory.methods.owner().call()).owner.equals(refFactoryOwner.address)).to.be.true
             })
         })
     })

@@ -7,24 +7,38 @@
 			"name": "constructor",
 			"inputs": [
 				{"name":"owner","type":"address"},
-				{"name":"refSystemPlatformCode","type":"cell"}
+				{"name":"refSystemPlatformCode","type":"cell"},
+				{"name":"refSystemCode","type":"cell"},
+				{"name":"refLastPlatformCode","type":"cell"},
+				{"name":"refLastCode","type":"cell"},
+				{"name":"accountPlatformCode","type":"cell"},
+				{"name":"accountCode","type":"cell"},
+				{"name":"projectPlatformCode","type":"cell"},
+				{"name":"projectCode","type":"cell"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "owner",
+			"name": "deployRefSystemAuto",
 			"inputs": [
-				{"name":"answerId","type":"uint32"}
+				{"name":"owner","type":"address"},
+				{"name":"version","type":"uint32"},
+				{"name":"approvalFee","type":"uint128"},
+				{"name":"deployAccountValue","type":"uint128"},
+				{"name":"deployRefLastValue","type":"uint128"},
+				{"name":"sender","type":"address"},
+				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
-				{"name":"owner","type":"address"}
+				{"name":"value0","type":"address"}
 			]
 		},
 		{
 			"name": "deployRefSystem",
 			"inputs": [
 				{"name":"owner","type":"address"},
+				{"name":"version","type":"uint32"},
 				{"name":"refSystemCode","type":"cell"},
 				{"name":"refLastPlatformCode","type":"cell"},
 				{"name":"refLastCode","type":"cell"},
@@ -74,6 +88,29 @@
 			]
 		},
 		{
+			"name": "transferOwnership",
+			"inputs": [
+				{"name":"newOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "renounceOwnership",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "owner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"owner","type":"address"}
+			]
+		},
+		{
 			"name": "_randomNonce",
 			"inputs": [
 			],
@@ -88,20 +125,118 @@
 			"outputs": [
 				{"name":"_refSystemPlatformCode","type":"cell"}
 			]
+		},
+		{
+			"name": "_refSystemCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refSystemCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_refLastPlatformCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refLastPlatformCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_refLastCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_refLastCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_accountPlatformCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_accountPlatformCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_accountCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_accountCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_projectPlatformCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_projectPlatformCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_projectCode",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_projectCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_approvalFee",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_approvalFee","type":"uint128"}
+			]
+		},
+		{
+			"name": "_deployAccountValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_deployAccountValue","type":"uint128"}
+			]
+		},
+		{
+			"name": "_deployRefLastValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_deployRefLastValue","type":"uint128"}
+			]
 		}
 	],
 	"data": [
 		{"key":1,"name":"_randomNonce","type":"uint256"}
 	],
 	"events": [
+		{
+			"name": "OwnershipTransferred",
+			"inputs": [
+				{"name":"previousOwner","type":"address"},
+				{"name":"newOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		}
 	],
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
+		{"name":"owner","type":"address"},
 		{"name":"_randomNonce","type":"uint256"},
 		{"name":"_refSystemPlatformCode","type":"cell"},
-		{"name":"_internalOwner","type":"address"},
-		{"name":"_externalOwner","type":"uint256"}
+		{"name":"_refSystemCode","type":"cell"},
+		{"name":"_refLastPlatformCode","type":"cell"},
+		{"name":"_refLastCode","type":"cell"},
+		{"name":"_accountPlatformCode","type":"cell"},
+		{"name":"_accountCode","type":"cell"},
+		{"name":"_projectPlatformCode","type":"cell"},
+		{"name":"_projectCode","type":"cell"},
+		{"name":"_approvalFee","type":"uint128"},
+		{"name":"_deployAccountValue","type":"uint128"},
+		{"name":"_deployRefLastValue","type":"uint128"}
 	]
 }
