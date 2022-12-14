@@ -22,7 +22,7 @@
 				{"name":"accountCode","type":"cell"},
 				{"name":"projectPlatformCode","type":"cell"},
 				{"name":"projectCode","type":"cell"},
-				{"name":"approvalFee","type":"uint128"},
+				{"name":"systemFee","type":"uint128"},
 				{"name":"deployAccountValue","type":"uint128"},
 				{"name":"deployRefLastValue","type":"uint128"},
 				{"name":"sender","type":"address"},
@@ -396,11 +396,11 @@
 			]
 		},
 		{
-			"name": "_approvalFee",
+			"name": "_systemFee",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_approvalFee","type":"uint128"}
+				{"name":"_systemFee","type":"uint128"}
 			]
 		}
 	],
@@ -433,6 +433,6 @@
 		{"name":"_projectPlatformCode","type":"cell"},
 		{"name":"_deployAccountValue","type":"uint128"},
 		{"name":"_deployRefLastValue","type":"uint128"},
-		{"name":"_approvalFee","type":"uint128"}
+		{"name":"_systemFee","type":"uint128"}
 	]
 }

@@ -50,7 +50,7 @@ export async function deployRefSystem(
     refFactoryOwner: Account,
     refFactory: RefFactory,
     owner: Account,
-    approvalFee: string | number,
+    systemFee: string | number,
     onDeploy: string | number = toNano(2),
     deployProjectValue: string | number = toNano(1),
     deployAccountValue: string | number = toNano(0.4),
@@ -64,7 +64,7 @@ export async function deployRefSystem(
         version: 0,
         deployAccountValue,
         deployRefLastValue,
-        approvalFee,
+        systemFee,
         sender: owner.address,
         remainingGasTo: owner.address,
     }).send({ from: refFactoryOwner.address, amount: toNano(3) })

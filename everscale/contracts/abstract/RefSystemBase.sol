@@ -44,7 +44,7 @@ abstract contract RefSystemBase is
 
     uint128 public _deployAccountValue;
     uint128 public _deployRefLastValue;
-    uint128 public _approvalFee;
+    uint128 public _systemFee;
     
     function _reserve() virtual internal returns (uint128) {
         return 0.2 ton;
@@ -100,18 +100,18 @@ abstract contract RefSystemBase is
         require(amount != 0, 400, "Invalid Amount");
 
         // If Amount or Project Invalid, simply receive full reward
-        if(!isApproved || amount < _approvalFee + projectFee + cashback) {
+        if(!isApproved || amount < _systemFee + projectFee + cashback) {
             _deployRefAccount(owner, tokenWallet, amount, sender, remainingGasTo);
             return;
         }
         // Allocate to System Owner
-        _deployRefAccount(owner, tokenWallet, _approvalFee, sender, remainingGasTo);
+        _deployRefAccount(owner, tokenWallet, _systemFee, sender, remainingGasTo);
         // Allocate to Project Owner
         _deployRefAccount(projectOwner, tokenWallet, projectFee, sender, remainingGasTo);
         // Allocate Rewards
         _deployRefAccount(referred, tokenWallet, cashback, sender, remainingGasTo);
         
-        uint128 reward = amount - _approvalFee - projectFee - cashback;
+        uint128 reward = amount - _systemFee - projectFee - cashback;
         _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo);
         
         // Update referred

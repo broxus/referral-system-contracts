@@ -39,7 +39,7 @@ describe('Ref Init', function () {
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, "refSystem")
 
-                expect((await refSystem.methods._approvalFee().call())._approvalFee)
+                expect((await refSystem.methods._systemFee().call())._systemFee)
                     .to.be.bignumber.equal(300, 'Wrong Value');
             })
 
