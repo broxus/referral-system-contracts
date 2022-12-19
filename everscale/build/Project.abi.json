@@ -52,14 +52,6 @@
 			]
 		},
 		{
-			"name": "upgrade",
-			"inputs": [
-				{"name":"remainingGasTo","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
 			"name": "acceptUpgrade",
 			"inputs": [
 				{"name":"newCode","type":"cell"},

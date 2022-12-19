@@ -134,8 +134,8 @@ abstract contract RefSystemBase is
         uint128 reward = amount - systemReward - projectReward - cashbackReward;
         if (reward != 0) { _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo); }
         
-        // Update referred
-        _deployRefLast(referred, tokenWallet, referred, referrer, amount, sender, remainingGasTo);
+        // Update referrer
+        _deployRefLast(referrer, tokenWallet, referred, referrer, amount, sender, remainingGasTo);
     }
 
     function requestTransfer(
@@ -188,13 +188,16 @@ abstract contract RefSystemBase is
     }
 
     function deployRefAccount(
-        address recipient,
+        address[] recipients,
         address tokenWallet,
-        uint128 reward,
+        uint128[] rewards,
         address sender,
         address remainingGasTo
     ) external onlyOwner returns (address) {
-        return _deployRefAccount(recipient, tokenWallet, reward, sender, remainingGasTo);
+        require(recipients.length == rewards.length, 405, "Invalid Params");
+        for (uint256 i = 0; i < recipients.length; i++) {
+            _deployRefAccount(recipients[i], tokenWallet, rewards[i], sender, remainingGasTo);
+        }
     }
 
     function deployRefLast(
@@ -238,7 +241,7 @@ abstract contract RefSystemBase is
             wid: address(this).wid,
             flag: 0,
             bounce: true
-        }(_accountCode, version_, tokenWallet, reward, sender, remainingGasTo);
+        }(_accountCode, version_, _refFactory, tokenWallet, reward, sender, remainingGasTo);
     }
     
     function _deployRefLast(
@@ -256,7 +259,7 @@ abstract contract RefSystemBase is
             wid: address(this).wid,
             flag: 0,
             bounce: true
-        }(_refLastCode, version_, lastRefWallet, lastReferred, lastReferrer, lastRefReward, sender, remainingGasTo);
+        }(_refLastCode, version_, _refFactory, lastRefWallet, lastReferred, lastReferrer, lastRefReward, sender, remainingGasTo);
     }
 
     function _buildProjectInitData(uint256 id) internal returns (TvmCell) {

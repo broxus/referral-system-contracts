@@ -9,6 +9,7 @@
 			"inputs": [
 				{"name":"initCode","type":"cell"},
 				{"name":"initVersion","type":"uint32"},
+				{"name":"refFactory","type":"address"},
 				{"name":"lastRefWallet","type":"address"},
 				{"name":"lastReferred","type":"address"},
 				{"name":"lastReferrer","type":"address"},

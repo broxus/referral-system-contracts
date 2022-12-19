@@ -18,7 +18,6 @@ import "./RefLastPlatform.sol";
 import "./ProjectPlatform.sol";
 
 import "./interfaces/IRefSystemUpgradeable.sol";
-import "./interfaces/IUpgradeable.sol";
 
 import "./abstract/RefSystemBase.sol";
 
@@ -92,68 +91,68 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         _refLastCode = code;
     }
 
-    function requestUpgradeAccount(uint32 currentVersion, address accountOwner, address remainingGasTo) override external {
-        require(msg.sender == _deriveRefAccount(accountOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
+    // function requestUpgradeAccount(uint32 currentVersion, address accountOwner, address remainingGasTo) override external {
+    //     require(msg.sender == _deriveRefAccount(accountOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
         
-        tvm.rawReserve(_reserve(), 0);
+    //     tvm.rawReserve(_reserve(), 0);
 
-        if (currentVersion == version_) {
-            remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
-        } else {
-            IUpgradeable(_deriveRefAccount(accountOwner)).acceptUpgrade{
-                value: 0,
-                flag: MsgFlag.ALL_NOT_RESERVED,
-                bounce: false
-            }(
-                _accountCode,
-                currentVersion,
-                remainingGasTo
-            );
-        }
-    }
+    //     if (currentVersion == version_) {
+    //         remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
+    //     } else {
+    //         IUpgradeable(_deriveRefAccount(accountOwner)).acceptUpgrade{
+    //             value: 0,
+    //             flag: MsgFlag.ALL_NOT_RESERVED,
+    //             bounce: false
+    //         }(
+    //             _accountCode,
+    //             currentVersion,
+    //             remainingGasTo
+    //         );
+    //     }
+    // }
 
-    function requestUpgradeProject(uint32 currentVersion, uint256 projectId, address remainingGasTo) override external {
-        require(msg.sender == _deriveProject(projectId) || msg.sender == _refFactory || msg.sender == owner, 400);
+    // function requestUpgradeProject(uint32 currentVersion, uint256 projectId, address remainingGasTo) override external {
+    //     require(msg.sender == _deriveProject(projectId) || msg.sender == _refFactory || msg.sender == owner, 400);
                 
-        tvm.rawReserve(_reserve(), 0);
+    //     tvm.rawReserve(_reserve(), 0);
 
-        if (currentVersion == version_) {
-            remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
-        } else {
-            IUpgradeable(_deriveProject(projectId)).acceptUpgrade{
-                value: 0,
-                flag: MsgFlag.ALL_NOT_RESERVED,
-                bounce: false
-            }(
-                _projectCode,
-                currentVersion,
-                remainingGasTo
-            );
-        }
-    }
+    //     if (currentVersion == version_) {
+    //         remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
+    //     } else {
+    //         IUpgradeable(_deriveProject(projectId)).acceptUpgrade{
+    //             value: 0,
+    //             flag: MsgFlag.ALL_NOT_RESERVED,
+    //             bounce: false
+    //         }(
+    //             _projectCode,
+    //             currentVersion,
+    //             remainingGasTo
+    //         );
+    //     }
+    // }
 
-    function requestUpgradeRefLast(uint32 currentVersion,address refLastOwner, address remainingGasTo) override external {
-        require(msg.sender == _deriveRefLast(refLastOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
+    // function requestUpgradeRefLast(uint32 currentVersion,address refLastOwner, address remainingGasTo) override external {
+    //     require(msg.sender == _deriveRefLast(refLastOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
                 
-        tvm.rawReserve(_reserve(), 0);
+    //     tvm.rawReserve(_reserve(), 0);
 
-        if (currentVersion == version_) {
-            remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
-        } else {
-            IUpgradeable(_deriveRefLast(refLastOwner)).acceptUpgrade{
-                value: 0,
-                flag: MsgFlag.ALL_NOT_RESERVED,
-                bounce: false
-            }(
-                _refLastCode,
-                currentVersion,
-                remainingGasTo
-            );
-        }
-    }
+    //     if (currentVersion == version_) {
+    //         remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
+    //     } else {
+    //         IUpgradeable(_deriveRefLast(refLastOwner)).acceptUpgrade{
+    //             value: 0,
+    //             flag: MsgFlag.ALL_NOT_RESERVED,
+    //             bounce: false
+    //         }(
+    //             _refLastCode,
+    //             currentVersion,
+    //             remainingGasTo
+    //         );
+    //     }
+    // }
     
 
-    function upgrade(TvmCell code) override external {
+    function acceptUpgrade(TvmCell code, uint32 currentVersion, address remainingGasTo) override external {
         require(msg.sender == _refFactory, 400, "Must be Ref Factory");
         TvmCell initData = abi.encode(
             _refFactory,
@@ -164,7 +163,7 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
             _deployAccountValue,
             _deployRefLastValue,
             msg.sender,
-            msg.sender,
+            remainingGasTo,
             _platformCode,
             _projectPlatformCode,
             _projectCode,

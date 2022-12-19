@@ -32,35 +32,35 @@ CTOS
 LDREF
 LDREF
 ENDS
-.loc ../contracts/RefFactory.sol, 49
-ACCEPT
-.loc ../contracts/RefFactory.sol, 50
-PUSH S7
-SETGLOB 12
-.loc ../contracts/RefFactory.sol, 51
-ROLL 7
-SETGLOB 12
-.loc ../contracts/RefFactory.sol, 52
-ROLL 6
-SETGLOB 13
-.loc ../contracts/RefFactory.sol, 53
-ROLL 5
-SETGLOB 14
-.loc ../contracts/RefFactory.sol, 54
-ROLL 4
-SETGLOB 15
 .loc ../contracts/RefFactory.sol, 55
-ROLL 3
-SETGLOB 16
+ACCEPT
 .loc ../contracts/RefFactory.sol, 56
-ROT
-SETGLOB 17
+PUSH S7
+SETGLOB 13
 .loc ../contracts/RefFactory.sol, 57
-SWAP
-SETGLOB 18
+ROLL 7
+SETGLOB 13
 .loc ../contracts/RefFactory.sol, 58
-SETGLOB 19
+ROLL 6
+SETGLOB 14
 .loc ../contracts/RefFactory.sol, 59
+ROLL 5
+SETGLOB 15
+.loc ../contracts/RefFactory.sol, 60
+ROLL 4
+SETGLOB 16
+.loc ../contracts/RefFactory.sol, 61
+ROLL 3
+SETGLOB 17
+.loc ../contracts/RefFactory.sol, 62
+ROT
+SETGLOB 18
+.loc ../contracts/RefFactory.sol, 63
+SWAP
+SETGLOB 19
+.loc ../contracts/RefFactory.sol, 64
+SETGLOB 20
+.loc ../contracts/RefFactory.sol, 65
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
@@ -69,6 +69,134 @@ CALLREF {
 	CALL $c7_to_c4$
 }
 THROW 0
+
+.macro setManager
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/RefFactory.sol, 68
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDMSGADDR
+ENDS
+.loc ../contracts/RefFactory.sol, 0
+CALLREF {
+	CALL $setManager_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro setManager_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+GETGLOB 9
+GETGLOB 10
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+}
+IF
+THROWIFNOT 1101
+.loc ../contracts/RefFactory.sol, 69
+SETGLOB 12
+.loc ../contracts/RefFactory.sol, 0
+
+.macro setCode
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/RefFactory.sol, 72
+LDREF
+LDREF
+LDREF
+LDREF
+ENDS
+CTOS
+LDREF
+LDREF
+LDREF
+LDREF
+ENDS
+CTOS
+LDREF
+LDREF
+ENDS
+.loc ../contracts/RefFactory.sol, 0
+CALLREF {
+	CALL $setCode_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro setCode_internal_macro
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+GETGLOB 9
+GETGLOB 10
+SDEQ
+DUP
+PUSHCONT {
+	DROP
+	GETGLOB 9
+	PARSEMSGADDR
+	INDEX 3
+	PLDU 256
+	NEQINT 0
+}
+IF
+THROWIFNOT 1101
+.loc ../contracts/RefFactory.sol, 82
+PUSH S7
+SETGLOB 13
+.loc ../contracts/RefFactory.sol, 83
+ROLL 7
+SETGLOB 13
+.loc ../contracts/RefFactory.sol, 84
+ROLL 6
+SETGLOB 14
+.loc ../contracts/RefFactory.sol, 85
+ROLL 5
+SETGLOB 15
+.loc ../contracts/RefFactory.sol, 86
+ROLL 4
+SETGLOB 16
+.loc ../contracts/RefFactory.sol, 87
+ROLL 3
+SETGLOB 17
+.loc ../contracts/RefFactory.sol, 88
+ROT
+SETGLOB 18
+.loc ../contracts/RefFactory.sol, 89
+SWAP
+SETGLOB 19
+.loc ../contracts/RefFactory.sol, 90
+SETGLOB 20
+.loc ../contracts/RefFactory.sol, 0
 
 .macro deployRefSystemAuto
 DROP
@@ -79,7 +207,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 62
+.loc ../contracts/RefFactory.sol, 93
 OVER
 PUSHCONT {
 	LDREF
@@ -152,31 +280,28 @@ THROW 0
 CALL $deployRefSystemAuto_internal_macro$
 
 .macro deployRefSystemAuto_internal_macro
-.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../contracts/RefFactory.sol, 41
+PUSHREF {
+	.blob x4d757374206265204f776e6572206f72204d616e61676572
+}
 GETGLOB 9
 GETGLOB 10
 SDEQ
-DUP
-PUSHCONT {
-	DROP
-	GETGLOB 9
-	PARSEMSGADDR
-	INDEX 3
-	PLDU 256
-	NEQINT 0
-}
-IF
-THROWIFNOT 1101
-.loc ../contracts/RefFactory.sol, 71
+GETGLOB 9
+GETGLOB 12
+SDEQ
+OR
+THROWARGIFNOT 400
+.loc ../contracts/RefFactory.sol, 102
 REVERSE 5, 0
+GETGLOB 20
 GETGLOB 19
 GETGLOB 18
 GETGLOB 17
 GETGLOB 16
 GETGLOB 15
-GETGLOB 14
 ROLL 11
-GETGLOB 13
+GETGLOB 14
 ROLL 13
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
@@ -264,7 +389,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 80
+.loc ../contracts/RefFactory.sol, 111
 OVER
 PUSHCONT {
 	LDREF
@@ -352,7 +477,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/RefFactory.sol, 96
+.loc ../contracts/RefFactory.sol, 127
 ROLLREV 10
 REVERSE 10, 0
 BLKSWAP 2, 11
@@ -434,102 +559,6 @@ PUSHINT 128
 SENDRAWMSG
 .loc ../contracts/RefFactory.sol, 0
 
-.macro upgradeRefSystem
-DROP
-GETGLOB 6
-THROWIFNOT 76
-GETGLOB 2
-ISNULL
-IFREF {
-	CALL $c4_to_c7$
-}
-.loc ../contracts/RefFactory.sol, 105
-OVER
-PUSHCONT {
-	LDREF
-	ENDS
-	CTOS
-}
-IF
-LDMSGADDR
-LDREF
-ENDS
-.loc ../contracts/RefFactory.sol, 0
-CALLREF {
-	CALL $upgradeRefSystem_internal_macro$
-}
-OVER
-PUSHCONT {
-	PUSH S3
-	CTOS
-	LDU 2
-	LDMSGADDR
-	DROP
-	NIP
-	NEWC
-	STSLICECONST xc
-	STSLICE
-	PUSHINT 1
-	STUR 98
-	SWAP
-	NEWC
-	STSLICECONST xc47bb0b9
-	STSLICE
-	STBREFR
-	ENDC
-	PUSHINT 0
-	SENDRAWMSG
-}
-PUSHCONT {
-	DROP
-}
-IFELSE
-DROP
-CALLREF {
-	CALL $c7_to_c4$
-}
-THROW 0
-
-.globl	upgradeRefSystem_internal
-.type	upgradeRefSystem_internal, @function
-CALL $upgradeRefSystem_internal_macro$
-
-.macro upgradeRefSystem_internal_macro
-.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
-GETGLOB 9
-GETGLOB 10
-SDEQ
-DUP
-PUSHCONT {
-	DROP
-	GETGLOB 9
-	PARSEMSGADDR
-	INDEX 3
-	PLDU 256
-	NEQINT 0
-}
-IF
-THROWIFNOT 1101
-.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 16
-PUSHREFSLICE {
-	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-}
-.loc ../contracts/RefFactory.sol, 109
-XCHG S2
-CALLREF {
-	CALL $_deriveRefSystem_internal_macro$
-}
-NEWC
-STSLICECONST x62_
-STSLICE
-PUSHSLICE x00000000000000000000000000002e461875_
-STSLICER
-STREF
-ENDC
-PUSHINT 128
-SENDRAWMSG
-.loc ../contracts/RefFactory.sol, 0
-
 .macro upgradeTarget
 DROP
 GETGLOB 6
@@ -539,20 +568,30 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 112
+.loc ../contracts/RefFactory.sol, 136
 OVER
 PUSHCONT {
+	LDU 32
+	LDDICT
+	ROTREV
+	PAIR
+	SWAP
+	LDU 32
+	LDREF
 	LDREF
 	ENDS
 	CTOS
 }
-IF
-LDMSGADDR
-LDU 32
-LDREF
-LDREF
-ENDS
-CTOS
+PUSHCONT {
+	LDU 32
+	LDDICT
+	ROTREV
+	PAIR
+	SWAP
+	LDU 32
+	LDREF
+}
+IFELSE
 LDMSGADDR
 ENDS
 .loc ../contracts/RefFactory.sol, 0
@@ -574,7 +613,7 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST xfde55f98
+	STSLICECONST xcb706764
 	STSLICE
 	STBREFR
 	ENDC
@@ -596,44 +635,107 @@ THROW 0
 CALL $upgradeTarget_internal_macro$
 
 .macro upgradeTarget_internal_macro
-.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 15
+.loc ../contracts/RefFactory.sol, 41
+PUSHREF {
+	.blob x4d757374206265204f776e6572206f72204d616e61676572
+}
 GETGLOB 9
 GETGLOB 10
 SDEQ
-DUP
-PUSHCONT {
-	DROP
-	GETGLOB 9
-	PARSEMSGADDR
-	INDEX 3
-	PLDU 256
-	NEQINT 0
-}
-IF
-THROWIFNOT 1101
-.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 16
+GETGLOB 9
+GETGLOB 12
+SDEQ
+OR
+THROWARGIFNOT 400
+.loc ../contracts/RefFactory.sol, 42
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefFactory.sol, 118
-ROLLREV 4
-XCHG S3
-NEWC
-STSLICECONST x62_
-STSLICE
-PUSHINT 1
-STUR 111
-ROLLREV 3
-NEWC
-STSLICECONST x03369199
-STREF
-STU 32
-STSLICE
-STBREFR
-ENDC
-PUSHINT 128
-SENDRAWMSG
+.loc ../contracts/RefFactory.sol, 142
+DEPTH
+ADDCONST -2
+PICK
+PUSHINT 300000000
+SUB
+UFITS 128
+.loc ../contracts/RefFactory.sol, 143
+PUSH S5
+FIRST
+UFITS 128
+DIV
+.loc ../contracts/RefFactory.sol, 144
+ROLL 5
+SECOND
+PUSHINT 0
+NULL
+PUSHCONT {
+	PUSH2 S1, S2
+	PUSHINT 32
+	DICTUGET
+	NULLSWAPIFNOT
+	DROP
+	DUP
+	POP S2
+	ISNULL
+	NOT
+}
+PUSHCONT {
+	.loc ../contracts/RefFactory.sol, 145
+	PUSH3 S5, S7, S6
+	PUSH2 S6, S3
+	NEWC
+	STSLICECONST x62_
+	STSLICE
+	SWAP
+	STGRAMS
+	PUSHINT 1
+	STUR 107
+	ROLLREV 3
+	NEWC
+	STSLICECONST x03369199
+	STREF
+	STU 32
+	STSLICE
+	STBREFR
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+	.loc ../contracts/RefFactory.sol, 0
+	OVER
+	INC
+	POP S2
+}
+WHILE
+BLKDROP 4
+.loc ../contracts/RefFactory.sol, 148
+OVER
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+NEQINT 0
+PUSH S2
+MYADDR
+SDEQ
+NOT
+AND
+PUSHCONT {
+	.loc ../contracts/RefFactory.sol, 149
+	OVER
+	NEWC
+	STSLICECONST x42_
+	STSLICE
+	PUSHINT 111
+	STZEROES
+	ENDC
+	PUSHINT 128
+	ADDCONST 2
+	UFITS 8
+	SENDRAWMSG
+	.loc ../contracts/RefFactory.sol, 0
+}
+IF
 .loc ../contracts/RefFactory.sol, 0
+BLKDROP2 3, 1
 
 .macro deriveRefSystem
 DROP
@@ -644,7 +746,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 121
+.loc ../contracts/RefFactory.sol, 157
 OVER
 PUSHCONT {
 	LDREF
@@ -695,7 +797,7 @@ THROW 0
 CALL $deriveRefSystem_internal_macro$
 
 .macro deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 122
+.loc ../contracts/RefFactory.sol, 158
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
@@ -706,7 +808,7 @@ CALLREF {
 CALL $_deriveRefSystem_internal_macro$
 
 .macro _deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 126
+.loc ../contracts/RefFactory.sol, 162
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -723,7 +825,7 @@ CTOS
 CALL $_buildRefSystemInitData_internal_macro$
 
 .macro _buildRefSystemInitData_internal_macro
-.loc ../contracts/RefFactory.sol, 130
+.loc ../contracts/RefFactory.sol, 166
 PUSHINT 0
 NEWC
 STU 256
@@ -744,7 +846,7 @@ DICTUSET
 NEWC
 STDICT
 ENDC
-GETGLOB 12
+GETGLOB 13
 NEWC
 STSLICECONST x2_
 STOPTREF
@@ -898,6 +1000,7 @@ LDREF
 ENDS
 CTOS
 LDU 256
+LDMSGADDR
 LDREF
 LDREF
 LDREF
@@ -916,6 +1019,7 @@ LDU 128
 LDU 128
 LDU 128
 ENDS
+SETGLOB 23
 SETGLOB 22
 SETGLOB 21
 SETGLOB 20
@@ -956,11 +1060,15 @@ PUSHCONT {
 		PUSHINT 0
 	}
 	IFELSE
+	PUSHREFSLICE {
+		.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+	}
 	PUSHREF {
 	}
 	BLKPUSH 7, 0
 	PUSHINT 0
 	BLKPUSH 2, 0
+	SETGLOB 23
 	SETGLOB 22
 	SETGLOB 21
 	SETGLOB 20
@@ -987,6 +1095,7 @@ IFREFELSE {
 }
 
 .macro c7_to_c4
+GETGLOB 23
 GETGLOB 22
 GETGLOB 21
 GETGLOB 20
@@ -1007,9 +1116,10 @@ STU 256
 STU 64
 STONE
 STSLICE
-ROLLREV 12
+ROLLREV 13
 NEWC
 STU 256
+STSLICE
 STREF
 STREF
 STREF
@@ -1180,13 +1290,33 @@ PUSHCONT {
 IF
 THROW 0
 
-.macro _refSystemPlatformCode
+.macro _manager
 DROP
 ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
 GETGLOB 12
+OVER
+PUSHCONT {
+	PUSHSLICE xc0000000000000000000000000f71f7e03
+	NEWC
+	STSLICE
+	STSLICE
+	ENDC
+	PUSHINT 0
+	SENDRAWMSG
+}
+IF
+THROW 0
+
+.macro _refSystemPlatformCode
+DROP
+ENDS
+CALLREF {
+	CALL $c4_to_c7$
+}
+GETGLOB 13
 OVER
 PUSHCONT {
 	PUSHSLICE xc00000000000000000000000009ec06566
@@ -1206,7 +1336,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 13
+GETGLOB 14
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000f3fc89ce
@@ -1226,7 +1356,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 14
+GETGLOB 15
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000ca89f3e8
@@ -1246,7 +1376,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 15
+GETGLOB 16
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000df286550
@@ -1266,7 +1396,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 16
+GETGLOB 17
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000c918ff94
@@ -1286,7 +1416,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 17
+GETGLOB 18
 OVER
 PUSHCONT {
 	PUSHSLICE xc00000000000000000000000008b85dc00
@@ -1306,7 +1436,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 18
+GETGLOB 19
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000efb84add
@@ -1326,7 +1456,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 19
+GETGLOB 20
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000938c668c
@@ -1346,7 +1476,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 20
+GETGLOB 21
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000f871b13a
@@ -1366,7 +1496,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 21
+GETGLOB 22
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000d6c5ef3b
@@ -1386,7 +1516,7 @@ ENDS
 CALLREF {
 	CALL $c4_to_c7$
 }
-GETGLOB 22
+GETGLOB 23
 OVER
 PUSHCONT {
 	PUSHSLICE xc0000000000000000000000000fe0995ed
@@ -1402,7 +1532,7 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 1873528529
+PUSHINT 1683144781
 LEQ
 IFJMPREF {
 	DUP
@@ -1451,10 +1581,10 @@ IFJMPREF {
 			CALL $_randomNonce$
 		}
 		DUP
-		PUSHINT 1148956857
+		PUSHINT 1057860719
 		EQUAL
 		IFJMPREF {
-			CALL $upgradeRefSystem$
+			CALL $setCode$
 		}
 		DUP
 		PUSHINT 1186745597
@@ -1464,7 +1594,7 @@ IFJMPREF {
 		}
 	}
 	DUP
-	PUSHINT 1594609630
+	PUSHINT 1320360074
 	LEQ
 	IFJMPREF {
 		DUP
@@ -1480,6 +1610,23 @@ IFJMPREF {
 			CALL $_refLastPlatformCode$
 		}
 		DUP
+		PUSHINT 1265657700
+		EQUAL
+		IFJMPREF {
+			CALL $upgradeTarget$
+		}
+		DUP
+		PUSHINT 1320360074
+		EQUAL
+		IFJMPREF {
+			CALL $setManager$
+		}
+	}
+	DUP
+	PUSHINT 1683144781
+	LEQ
+	IFJMPREF {
+		DUP
 		PUSHINT 1455812411
 		EQUAL
 		IFJMPREF {
@@ -1491,11 +1638,6 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $owner$
 		}
-	}
-	DUP
-	PUSHINT 1873528529
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1596482896
 		EQUAL
@@ -1508,6 +1650,16 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $deployRefSystemAuto$
 		}
+	}
+}
+DUP
+PUSHINT 2114557421
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 1945930190
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1729444094
 		EQUAL
@@ -1520,16 +1672,6 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $constructor$
 		}
-	}
-}
-DUP
-PUSHINT 2114557421
-LEQ
-IFJMPREF {
-	DUP
-	PUSHINT 2112184216
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1874348765
 		EQUAL
@@ -1542,6 +1684,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_refSystemCode$
 		}
+	}
+	DUP
+	PUSHINT 2114557421
+	LEQ
+	IFJMPREF {
+		DUP
+		PUSHINT 1998552579
+		EQUAL
+		IFJMPREF {
+			CALL $_manager$
+		}
 		DUP
 		PUSHINT 2020716858
 		EQUAL
@@ -1549,17 +1702,11 @@ IFJMPREF {
 			CALL $_systemFee$
 		}
 		DUP
-		PUSHINT 2112184216
+		PUSHINT 2114557421
 		EQUAL
 		IFJMPREF {
-			CALL $upgradeTarget$
+			CALL $_deployRefLastValue$
 		}
-	}
-	DUP
-	PUSHINT 2114557421
-	EQUAL
-	IFJMPREF {
-		CALL $_deployRefLastValue$
 	}
 }
 

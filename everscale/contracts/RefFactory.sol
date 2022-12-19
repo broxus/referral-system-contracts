@@ -23,6 +23,8 @@ import "./interfaces/IRefSystem.sol";
 
 contract RefFactory is InternalOwner, RandomNonce {
 
+    address public _manager;
+
     TvmCell public _refSystemPlatformCode;
     TvmCell public _refSystemCode;
     TvmCell public _refLastPlatformCode;
@@ -35,6 +37,10 @@ contract RefFactory is InternalOwner, RandomNonce {
     uint128 public _deployAccountValue;
     uint128 public _deployRefLastValue;
 
+    modifier onlyManager {
+        require(msg.sender == owner || msg.sender == _manager, 400, "Must be Owner or Manager");
+        _;
+    }
     constructor(
         address owner,
         TvmCell refSystemPlatformCode,
@@ -59,6 +65,31 @@ contract RefFactory is InternalOwner, RandomNonce {
         setOwnership(owner);
     }
 
+    function setManager(address newManager) external onlyOwner {
+        _manager = newManager;
+    }
+
+    function setCode(
+        TvmCell refSystemPlatformCode,
+        TvmCell refSystemCode,
+        TvmCell refLastPlatformCode,
+        TvmCell refLastCode,
+        TvmCell accountPlatformCode,
+        TvmCell accountCode,
+        TvmCell projectPlatformCode,
+        TvmCell projectCode
+    ) external onlyOwner {
+        _refSystemPlatformCode = refSystemPlatformCode;
+        _refSystemPlatformCode = refSystemPlatformCode;
+        _refSystemCode = refSystemCode;
+        _refLastPlatformCode = refLastPlatformCode;
+        _refLastCode = refLastCode;
+        _accountPlatformCode = accountPlatformCode;
+        _accountCode = accountCode;
+        _projectPlatformCode = projectPlatformCode;
+        _projectCode = projectCode;
+    }
+
     function deployRefSystemAuto(
         address owner,
         uint32 version,
@@ -67,7 +98,7 @@ contract RefFactory is InternalOwner, RandomNonce {
         uint128 deployRefLastValue,
         address sender,
         address remainingGasTo
-    ) public onlyOwner returns (address) {
+    ) public onlyManager returns (address) {
         return new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,
@@ -102,20 +133,25 @@ contract RefFactory is InternalOwner, RandomNonce {
         }(refSystemCode, version, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, systemFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
     }
 
-    function upgradeRefSystem(
-        address refSysOwner,
-        TvmCell code
-    ) public onlyOwner returns (address) {
-        IRefSystemUpgradeable(_deriveRefSystem(refSysOwner)).upgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(code);
-    }
-
     function upgradeTarget(
-        address target,
+        address[] targets,
         uint32 version,
         TvmCell code,
         address remainingGasTo
-    ) public onlyOwner returns (address) {
-        IUpgradeable(target).acceptUpgrade{value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(code, version, remainingGasTo);
+    ) public onlyManager returns (address) {
+        uint128 res = msg.value - 0.3 ton;
+        uint128 perUpgrade = res / uint128(targets.length);
+        for (address target : targets) {
+        IUpgradeable(target).acceptUpgrade{value: perUpgrade, flag: 0}(code, version, remainingGasTo);
+        }
+
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 
     function deriveRefSystem(address owner) public returns (address) {

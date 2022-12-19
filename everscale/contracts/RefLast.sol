@@ -15,6 +15,7 @@ contract RefLast is IRefLast {
     uint32 version_;
     TvmCell _platformCode;
 
+    address public _refFactory;
     address public _refSystem;
     address public _owner;
 
@@ -28,7 +29,7 @@ contract RefLast is IRefLast {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo) 
+    function onDeployOrUpdate(TvmCell, uint32, address, address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
@@ -81,7 +82,7 @@ contract RefLast is IRefLast {
     }
 
     function acceptUpgrade(TvmCell newCode, uint32 newVersion, address remainingGasTo) override external {
-        require(msg.sender == _refSystem, 400, "Must be Ref System");
+        require(msg.sender == _refFactory, 400, "Must be Ref Factory");
         if (version_ == newVersion) {
             tvm.rawReserve(_reserve(), 0);
             remainingGasTo.transfer({
@@ -91,6 +92,7 @@ contract RefLast is IRefLast {
             });
         } else {
             TvmCell inputData = abi.encode(
+                _refFactory,
                 _refSystem,
                 _owner,
                 version_,
@@ -115,7 +117,8 @@ contract RefLast is IRefLast {
 
         uint32 oldVersion;
         address remainingGasTo;
-        (_refSystem,
+        (_refFactory,
+        _refSystem,
         _owner,
         oldVersion,
         version_,
@@ -125,7 +128,7 @@ contract RefLast is IRefLast {
         _lastRefReward,
         remainingGasTo,
         _platformCode
-        ) = abi.decode(data,(address,address,uint32,uint32,address,address,address,uint128,address,TvmCell));
+        ) = abi.decode(data,(address,address,address,uint32,uint32,address,address,address,uint128,address,TvmCell));
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({

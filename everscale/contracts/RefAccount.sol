@@ -13,20 +13,27 @@ import "./RefAccountPlatform.sol";
 import "./interfaces/IUpgradeable.sol";
 
 
-contract RefAccount is InternalOwner, IUpgradeable {
+contract RefAccount is IUpgradeable {
 
     mapping (address => uint128) public _tokenBalance;
 
     uint32 public version_;
     TvmCell public _platformCode;
+    address public owner;
 
+    address public _refFactory;
     address public _refSystem;
 
     constructor() public {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell initCode, uint32 initVersion, address tokenWallet, uint128 reward, address sender, address remainingGasTo) 
+    modifier onlyOwner {
+        require(msg.sender == owner, 400, "Must Be Owner");
+        _;
+    }
+
+    function onDeployOrUpdate(TvmCell initCode, uint32 initVersion, address refFactory, address tokenWallet, uint128 reward, address sender, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
@@ -71,7 +78,7 @@ contract RefAccount is InternalOwner, IUpgradeable {
     }
 
     function acceptUpgrade(TvmCell newCode, uint32 newVersion, address remainingGasTo) override external {
-        require(msg.sender == _refSystem, 400, "Must be Ref System");
+        require(msg.sender == _refFactory, 400, "Must be Ref Factory");
         if (version_ == newVersion) {
             tvm.rawReserve(_reserve(), 0);
             remainingGasTo.transfer({
@@ -81,9 +88,10 @@ contract RefAccount is InternalOwner, IUpgradeable {
             });
         } else {
             TvmCell inputData = abi.encode(
-                // _refFactory,
+                _refFactory,
                 _refSystem,
                 owner,
+                _refFactory,
                 version_,
                 newVersion,
                 _tokenBalance,
@@ -103,26 +111,36 @@ contract RefAccount is InternalOwner, IUpgradeable {
 
         address firstWallet;
         uint128 firstReward;
-        address newOwner;
+        address remainingGasTo;
         (
+            _refFactory,
             _refSystem,
-            newOwner,
+            owner,
             version_,
             firstWallet,
             firstReward,
+            // remainingGasTo,
             _platformCode
         ) = abi.decode(data,(
+            address,
             address,
             address,
             uint32,
             address,
             uint128,
+            // address,
             TvmCell
         ));
 
-        setOwnership(newOwner);
         _tokenBalance[firstWallet] = firstReward;
 
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 
     function requestTransfer(

@@ -156,8 +156,8 @@ describe('RefSystem On Receive', function () {
         })
 
         describe('LastRef on Update', function () {
-            it('should be updated refLast referred with last reward', async function () {
-                let { value0: lastRefAddr } = await refSystem.methods.deriveRefLast({ answerId: 0, owner: FIRST_REFERRED }).call();
+            it('should be updated refLast referrer with last reward', async function () {
+                let { value0: lastRefAddr } = await refSystem.methods.deriveRefLast({ answerId: 0, owner: FIRST_REFERRER }).call();
                 let lastRef = locklift.factory.getDeployedContract("RefLast", lastRefAddr)
                 logContract(lastRef, "RefLast");
 
@@ -256,10 +256,16 @@ describe('RefSystem On Receive', function () {
                 let refSysOwnerBalance = await getBalances(refSysOwner)
                 let projectOwnerBalance = await getBalances(projectOwner)
 
+                let {value0: bobRefLastAddr} = await refSystem.methods.deriveRefLast({answerId: 0, owner: bob.address}).call();
+                let bobRefLast = locklift.factory.getDeployedContract("RefLast", bobRefLastAddr)
+                logContract(bobRefLast, "refLast")
+                let {reward: lastReward} = await bobRefLast.methods.meta({answerId: 0}).call()
+
                 expect(refSysOwnerBalance).to.be.equal(param.EXPECTED.REFSYS)
                 expect(bobBalance).to.be.equal(param.EXPECTED.REFERRER)
                 expect(aliceBalance).to.be.equal(param.EXPECTED.CASHBACK)
                 expect(projectOwnerBalance).to.be.equal(param.EXPECTED.PROJECT)
+                expect(lastReward).to.be.bignumber.equal(param.REWARD)
             })
         }
 

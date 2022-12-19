@@ -111,39 +111,11 @@
 			]
 		},
 		{
-			"name": "requestUpgradeAccount",
+			"name": "acceptUpgrade",
 			"inputs": [
+				{"name":"code","type":"cell"},
 				{"name":"currentVersion","type":"uint32"},
-				{"name":"accountOwner","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "requestUpgradeProject",
-			"inputs": [
-				{"name":"currentVersion","type":"uint32"},
-				{"name":"projectId","type":"uint256"},
-				{"name":"remainingGasTo","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "requestUpgradeRefLast",
-			"inputs": [
-				{"name":"currentVersion","type":"uint32"},
-				{"name":"refLastOwner","type":"address"},
-				{"name":"remainingGasTo","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "upgrade",
-			"inputs": [
-				{"name":"code","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -268,9 +240,9 @@
 		{
 			"name": "deployRefAccount",
 			"inputs": [
-				{"name":"recipient","type":"address"},
+				{"name":"recipients","type":"address[]"},
 				{"name":"tokenWallet","type":"address"},
-				{"name":"reward","type":"uint128"},
+				{"name":"rewards","type":"uint128[]"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],

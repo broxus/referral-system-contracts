@@ -61,16 +61,8 @@ contract Project is InternalOwner, IRefProject {
         _cashbackFee = fee;
     }
 
-    function upgrade(address remainingGasTo) override external onlyOwner {
-        IRefSystemUpgradeable(_refSystem).requestUpgradeProject{ value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false }(
-            version_,
-            _id,
-            remainingGasTo
-        );
-    }
-
     function acceptUpgrade(TvmCell newCode, uint32 newVersion, address remainingGasTo) override external {
-        require(msg.sender == _refSystem || msg.sender == _refFactory, 400, "Must be Ref System");
+        require(msg.sender == _refFactory, 400, "Must be Ref Factory");
         if (version_ == newVersion) {
             tvm.rawReserve(_reserve(), 0);
             remainingGasTo.transfer({

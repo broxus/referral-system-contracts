@@ -9,6 +9,7 @@
 			"inputs": [
 				{"name":"initCode","type":"cell"},
 				{"name":"initVersion","type":"uint32"},
+				{"name":"refFactory","type":"address"},
 				{"name":"tokenWallet","type":"address"},
 				{"name":"reward","type":"uint128"},
 				{"name":"sender","type":"address"},

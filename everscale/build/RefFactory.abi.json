@@ -20,6 +20,29 @@
 			]
 		},
 		{
+			"name": "setManager",
+			"inputs": [
+				{"name":"newManager","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setCode",
+			"inputs": [
+				{"name":"refSystemPlatformCode","type":"cell"},
+				{"name":"refSystemCode","type":"cell"},
+				{"name":"refLastPlatformCode","type":"cell"},
+				{"name":"refLastCode","type":"cell"},
+				{"name":"accountPlatformCode","type":"cell"},
+				{"name":"accountCode","type":"cell"},
+				{"name":"projectPlatformCode","type":"cell"},
+				{"name":"projectCode","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "deployRefSystemAuto",
 			"inputs": [
 				{"name":"owner","type":"address"},
@@ -57,19 +80,9 @@
 			]
 		},
 		{
-			"name": "upgradeRefSystem",
-			"inputs": [
-				{"name":"refSysOwner","type":"address"},
-				{"name":"code","type":"cell"}
-			],
-			"outputs": [
-				{"name":"value0","type":"address"}
-			]
-		},
-		{
 			"name": "upgradeTarget",
 			"inputs": [
-				{"name":"target","type":"address"},
+				{"name":"targets","type":"address[]"},
 				{"name":"version","type":"uint32"},
 				{"name":"code","type":"cell"},
 				{"name":"remainingGasTo","type":"address"}
@@ -116,6 +129,14 @@
 			],
 			"outputs": [
 				{"name":"_randomNonce","type":"uint256"}
+			]
+		},
+		{
+			"name": "_manager",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_manager","type":"address"}
 			]
 		},
 		{
@@ -227,6 +248,7 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"owner","type":"address"},
 		{"name":"_randomNonce","type":"uint256"},
+		{"name":"_manager","type":"address"},
 		{"name":"_refSystemPlatformCode","type":"cell"},
 		{"name":"_refSystemCode","type":"cell"},
 		{"name":"_refLastPlatformCode","type":"cell"},

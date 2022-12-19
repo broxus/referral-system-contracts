@@ -33,6 +33,10 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
 LDU 128
 LDREF
 ENDS
@@ -48,15 +52,15 @@ GETGLOB 9
 GETGLOB 10
 SDEQ
 PUSHCONT {
-	.loc ../contracts/RefLastPlatform.sol, 18
-	BLKPUSH 6, 7
-	PUSH S6
+	.loc ../contracts/RefLastPlatform.sol, 17
+	BLKPUSH 7, 8
+	PUSH S7
 	CALLREF {
 		CALL $initialize_internal_macro$
 	}
 }
 PUSHCONT {
-	.loc ../contracts/RefLastPlatform.sol, 20
+	.loc ../contracts/RefLastPlatform.sol, 19
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -71,7 +75,7 @@ PUSHCONT {
 }
 IFELSE
 .loc ../contracts/RefLastPlatform.sol, 0
-BLKDROP 8
+BLKDROP 9
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -82,7 +86,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/RefLastPlatform.sol, 29
+.loc ../contracts/RefLastPlatform.sol, 28
 PUSHINT 0
 NEWC
 STU 256
@@ -121,7 +125,7 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/RefLastPlatform.sol, 39
+.loc ../contracts/RefLastPlatform.sol, 38
 HASHCU
 NEWC
 STSLICECONST x801_
@@ -135,7 +139,7 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/RefLastPlatform.sol, 44
+.loc ../contracts/RefLastPlatform.sol, 43
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -148,10 +152,15 @@ STSLICECONST x8adb35
 STREF
 STSLICE
 ENDC
-REVERSE 7, 0
+ROLL 6
+REVERSE 8, 0
 PUSHINT 0
 GETGLOB 11
 GETGLOB 10
+ROLL 10
+NEWC
+STSLICE
+ROLLREV 10
 NEWC
 STSLICE
 ROLLREV 9
@@ -173,6 +182,7 @@ ROTREV
 NEWC
 STSLICE
 STREF
+STBREFR
 STBREFR
 STBREFR
 STBREFR
