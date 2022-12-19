@@ -25,6 +25,10 @@ PUSHCONT {
 }
 IFELSE
 LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
 LDU 128
 LDU 128
 LDREF
@@ -36,9 +40,9 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/ProjectPlatform.sol, 24
+.loc ../contracts/ProjectPlatform.sol, 25
 ACCEPT
-.loc ../contracts/ProjectPlatform.sol, 26
+.loc ../contracts/ProjectPlatform.sol, 27
 GETGLOB 9
 GETGLOB 10
 SDEQ
@@ -53,7 +57,7 @@ PUSHCONT {
 	DUP
 	PUSHCONT {
 		DROP
-		OVER
+		GETGLOB 11
 		CALLREF {
 			CALL $_getExpectedAddress_internal_macro$
 		}
@@ -64,14 +68,14 @@ PUSHCONT {
 }
 IFNOT
 PUSHCONT {
-	.loc ../contracts/ProjectPlatform.sol, 27
-	BLKPUSH 7, 6
+	.loc ../contracts/ProjectPlatform.sol, 28
+	BLKPUSH 8, 7
 	CALLREF {
 		CALL $initialize_internal_macro$
 	}
 }
 PUSHCONT {
-	.loc ../contracts/ProjectPlatform.sol, 29
+	.loc ../contracts/ProjectPlatform.sol, 30
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -86,7 +90,7 @@ PUSHCONT {
 }
 IFELSE
 .loc ../contracts/ProjectPlatform.sol, 0
-BLKDROP 7
+BLKDROP 8
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -97,7 +101,7 @@ THROW 0
 CALL $_getExpectedAddress_internal_macro$
 
 .macro _getExpectedAddress_internal_macro
-.loc ../contracts/ProjectPlatform.sol, 38
+.loc ../contracts/ProjectPlatform.sol, 39
 PUSHINT 0
 NEWC
 STU 256
@@ -111,10 +115,12 @@ ROT
 PUSHINT 64
 DICTUSET
 SWAP
+NEWC
+STU 256
 PUSHINT 2
 ROT
 PUSHINT 64
-DICTUSET
+DICTUSETB
 NEWC
 STDICT
 ENDC
@@ -136,7 +142,7 @@ STOPTREF
 STOPTREF
 STZERO
 ENDC
-.loc ../contracts/ProjectPlatform.sol, 48
+.loc ../contracts/ProjectPlatform.sol, 49
 HASHCU
 NEWC
 STSLICECONST x801_
@@ -150,7 +156,7 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/ProjectPlatform.sol, 52
+.loc ../contracts/ProjectPlatform.sol, 53
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -164,17 +170,19 @@ STREF
 STSLICE
 ENDC
 ROT
-ROLL 5
-REVERSE 7, 0
+ROLL 7
+REVERSE 5, 1
 PUSHINT 0
+ROLL 7
 GETGLOB 11
 GETGLOB 10
-ROLL 9
+ROLL 10
 NEWC
 STSLICE
-ROLLREV 8
+ROLLREV 9
 NEWC
 STSLICE
+STU 256
 ROLLREV 7
 NEWC
 STSLICE
@@ -190,10 +198,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/ProjectPlatform.sol, 64
+.loc ../contracts/ProjectPlatform.sol, 66
 PUSH S2
 SETCODE
-.loc ../contracts/ProjectPlatform.sol, 65
+.loc ../contracts/ProjectPlatform.sol, 67
 ROT
 CTOS
 DUP
@@ -208,7 +216,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/ProjectPlatform.sol, 67
+.loc ../contracts/ProjectPlatform.sol, 69
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
@@ -236,7 +244,7 @@ LDMSGADDR
 LDREF
 ENDS
 CTOS
-LDMSGADDR
+LDU 256
 ENDS
 SETGLOB 11
 SETGLOB 10
@@ -268,11 +276,12 @@ PUSHCONT {
 	PUSHINT 64
 	DICTUGET
 	PUSHCONT {
-		PUSHREFSLICE {
-			.blob x8000000000000000000000000000000000000000000000000000000000000000001_
-		}
+		PLDU 256
 	}
-	IFNOT
+	PUSHCONT {
+		PUSHINT 0
+	}
+	IFELSE
 	SETGLOB 11
 	SETGLOB 10
 	PUSHINT 64
@@ -298,7 +307,7 @@ STONE
 STSLICE
 GETGLOB 11
 NEWC
-STSLICE
+STU 256
 STBREFR
 ENDC
 POPROOT

@@ -34,6 +34,7 @@ abstract contract RefSystemBase is
     TvmCell public _platformCode;
     
     uint128 constant BPS = 1_000_000;
+    uint256 public _projectCounter;
 
     address public _refFactory;
     TvmCell public _refLastCode;
@@ -49,6 +50,11 @@ abstract contract RefSystemBase is
     
     function _reserve() virtual internal returns (uint128) {
         return 0.2 ton;
+    }
+
+    function _nextProjectId() internal returns (uint256 id) {
+        id = _projectCounter;
+        _projectCounter += 1;
     }
 
     function setSystemFee(uint128 fee) override external onlyOwner {
@@ -73,9 +79,9 @@ abstract contract RefSystemBase is
         TvmCell payload
     ) override external {
         require(amount != 0, 401, "Invalid Amount");
-        (address projectOwner, address referred, address referrer) = abi.decode(payload, (address, address, address));
-        address targetProject = _deriveProject(projectOwner);
-        TvmCell acceptParams = abi.encode(msg.sender, tokenRoot, amount, sender, senderWallet, remainingGasTo, projectOwner, referred, referrer);
+        (uint256 projectId, address referred, address referrer) = abi.decode(payload, (uint256, address, address));
+        address targetProject = _deriveProject(projectId);
+        TvmCell acceptParams = abi.encode(msg.sender, tokenRoot, amount, sender, senderWallet, remainingGasTo, projectId, referred, referrer);
         
         IRefProject(targetProject).meta{
             callback: RefSystemBase.getProjectMeta,
@@ -83,12 +89,13 @@ abstract contract RefSystemBase is
         }(acceptParams);
     }
 
-    function onAcceptTokensTransferPayloadEncoder(address projectOwner, address referred, address referrer) override responsible external returns (TvmCell) {
-        return abi.encode(projectOwner, referred, referrer);
+    function onAcceptTokensTransferPayloadEncoder(uint256 projectId, address referred, address referrer) override responsible external returns (TvmCell) {
+        return abi.encode(projectId, referred, referrer);
     }
 
     function getProjectMeta(
         bool isApproved,
+        address projectOwner,
         uint128 cashback,
         uint128 projectFee,
         TvmCell acceptParams
@@ -99,10 +106,10 @@ abstract contract RefSystemBase is
         address sender,
         address senderWallet,
         address remainingGasTo,
-        address projectOwner,
+        uint256 projectId,
         address referred,
-        address referrer) = abi.decode(acceptParams, (address, address, uint128, address, address, address, address, address, address));
-        require(msg.sender == _deriveProject(projectOwner), 400, "Not a valid Project");
+        address referrer) = abi.decode(acceptParams, (address, address, uint128, address, address, address, uint256, address, address));
+        require(msg.sender == _deriveProject(projectId), 400, "Not a valid Project");
         require(amount != 0, 400, "Invalid Amount");
         
         // If Amount or Project Invalid, simply receive full reward
@@ -143,8 +150,8 @@ abstract contract RefSystemBase is
         ITokenWallet(tokenWallet).transfer{flag: MsgFlag.REMAINING_GAS, value: 0 }(balance, recipient, 0.5 ton, remainingGasTo, notify, payload);
     }
 
-    function deriveProject(address owner) override external responsible returns (address) {
-       return _deriveProject(owner);
+    function deriveProject(uint256 id) override external responsible returns (address) {
+       return _deriveProject(id);
     }
 
     function deriveRefAccount(address owner) override external responsible returns (address) {
@@ -163,7 +170,7 @@ abstract contract RefSystemBase is
         address remainingGasTo
     ) override external returns (address) {
         return new ProjectPlatform {
-            stateInit: _buildProjectInitData(msg.sender),
+            stateInit: _buildProjectInitData(_nextProjectId()),
             value: 0,
             wid: address(this).wid,
             bounce: true,
@@ -172,6 +179,7 @@ abstract contract RefSystemBase is
             _projectCode,
             version_,
             _refFactory,
+            msg.sender,
             projectFee,
             cashbackFee,
             sender,
@@ -201,12 +209,12 @@ abstract contract RefSystemBase is
         return _deployRefLast(owner, lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
     }
 
-    function approveProject(address projectOwner) override external onlyOwner  {
-        IRefProject(_deriveProject(projectOwner)).acceptInit();
+    function approveProject(uint256 projectId) override external onlyOwner  {
+        IRefProject(_deriveProject(projectId)).acceptInit();
     }
 
-    function _deriveProject(address owner) internal returns (address) {
-        return address(tvm.hash(_buildProjectInitData(owner)));
+    function _deriveProject(uint256 id) internal returns (address) {
+        return address(tvm.hash(_buildProjectInitData(id)));
     }
 
     function _deriveRefAccount(address owner) internal returns (address) {
@@ -251,12 +259,12 @@ abstract contract RefSystemBase is
         }(_refLastCode, version_, lastRefWallet, lastReferred, lastReferrer, lastRefReward, sender, remainingGasTo);
     }
 
-    function _buildProjectInitData(address owner) internal returns (TvmCell) {
+    function _buildProjectInitData(uint256 id) internal returns (TvmCell) {
         return tvm.buildStateInit({
             contr: ProjectPlatform,
             varInit: {
                 root: address(this),
-                owner: owner
+                id: id
             },
             pubkey: 0,
             code: _projectPlatformCode

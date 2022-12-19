@@ -23,6 +23,7 @@ contract Project is InternalOwner, IRefProject {
 
     address public _refFactory;
     address public _refSystem; // root
+    uint256 public _id; // id
     bool public _isApproved;
 
     uint128 public _projectFee; 
@@ -32,7 +33,7 @@ contract Project is InternalOwner, IRefProject {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address, uint128, uint128, address sender, address remainingGasTo) 
+    function onDeployOrUpdate(TvmCell, uint32, address, address, uint128, uint128, address sender, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
@@ -63,7 +64,7 @@ contract Project is InternalOwner, IRefProject {
     function upgrade(address remainingGasTo) override external onlyOwner {
         IRefSystemUpgradeable(_refSystem).requestUpgradeProject{ value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false }(
             version_,
-            owner,
+            _id,
             remainingGasTo
         );
     }
@@ -105,6 +106,7 @@ contract Project is InternalOwner, IRefProject {
         (
             _refFactory,
             _refSystem,
+            _id,
             owner,
             oldVersion,
             version_,
@@ -115,6 +117,7 @@ contract Project is InternalOwner, IRefProject {
         ) = abi.decode(data, (
             address,
             address,
+            uint256,
             address,
             uint32,
             uint32,
@@ -150,7 +153,7 @@ contract Project is InternalOwner, IRefProject {
         return 0;
     }
 
-    function meta(TvmCell payload) override view external responsible returns (bool, uint128, uint128, TvmCell) {
-        return {value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(_isApproved, _cashbackFee, _projectFee, payload);
+    function meta(TvmCell payload) override view external responsible returns (bool, address, uint128, uint128, TvmCell) {
+        return {value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(_isApproved, owner, _cashbackFee, _projectFee, payload);
     }
 }

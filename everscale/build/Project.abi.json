@@ -17,8 +17,9 @@
 				{"name":"value0","type":"cell"},
 				{"name":"value1","type":"uint32"},
 				{"name":"value2","type":"address"},
-				{"name":"value3","type":"uint128"},
+				{"name":"value3","type":"address"},
 				{"name":"value4","type":"uint128"},
+				{"name":"value5","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
@@ -83,9 +84,10 @@
 			],
 			"outputs": [
 				{"name":"value0","type":"bool"},
-				{"name":"value1","type":"uint128"},
+				{"name":"value1","type":"address"},
 				{"name":"value2","type":"uint128"},
-				{"name":"value3","type":"cell"}
+				{"name":"value3","type":"uint128"},
+				{"name":"value4","type":"cell"}
 			]
 		},
 		{
@@ -144,6 +146,14 @@
 			]
 		},
 		{
+			"name": "_id",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_id","type":"uint256"}
+			]
+		},
+		{
 			"name": "_isApproved",
 			"inputs": [
 			],
@@ -190,6 +200,7 @@
 		{"name":"_platformCode","type":"cell"},
 		{"name":"_refFactory","type":"address"},
 		{"name":"_refSystem","type":"address"},
+		{"name":"_id","type":"uint256"},
 		{"name":"_isApproved","type":"bool"},
 		{"name":"_projectFee","type":"uint128"},
 		{"name":"_cashbackFee","type":"uint128"}

@@ -112,15 +112,15 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         }
     }
 
-    function requestUpgradeProject(uint32 currentVersion, address projectOwner, address remainingGasTo) override external {
-        require(msg.sender == _deriveProject(projectOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
+    function requestUpgradeProject(uint32 currentVersion, uint256 projectId, address remainingGasTo) override external {
+        require(msg.sender == _deriveProject(projectId) || msg.sender == _refFactory || msg.sender == owner, 400);
                 
         tvm.rawReserve(_reserve(), 0);
 
         if (currentVersion == version_) {
             remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
         } else {
-            IUpgradeable(_deriveProject(projectOwner)).acceptUpgrade{
+            IUpgradeable(_deriveProject(projectId)).acceptUpgrade{
                 value: 0,
                 flag: MsgFlag.ALL_NOT_RESERVED,
                 bounce: false

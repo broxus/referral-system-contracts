@@ -124,7 +124,7 @@
 			"name": "requestUpgradeProject",
 			"inputs": [
 				{"name":"currentVersion","type":"uint32"},
-				{"name":"projectOwner","type":"address"},
+				{"name":"projectId","type":"uint256"},
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
@@ -189,7 +189,7 @@
 			"name": "onAcceptTokensTransferPayloadEncoder",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},
-				{"name":"projectOwner","type":"address"},
+				{"name":"projectId","type":"uint256"},
 				{"name":"referred","type":"address"},
 				{"name":"referrer","type":"address"}
 			],
@@ -201,6 +201,7 @@
 			"name": "getProjectMeta",
 			"inputs": [
 				{"name":"isApproved","type":"bool"},
+				{"name":"projectOwner","type":"address"},
 				{"name":"cashback","type":"uint128"},
 				{"name":"projectFee","type":"uint128"},
 				{"name":"acceptParams","type":"cell"}
@@ -225,7 +226,7 @@
 			"name": "deriveProject",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},
-				{"name":"owner","type":"address"}
+				{"name":"id","type":"uint256"}
 			],
 			"outputs": [
 				{"name":"value0","type":"address"}
@@ -295,7 +296,7 @@
 		{
 			"name": "approveProject",
 			"inputs": [
-				{"name":"projectOwner","type":"address"}
+				{"name":"projectId","type":"uint256"}
 			],
 			"outputs": [
 			]
@@ -329,6 +330,14 @@
 			],
 			"outputs": [
 				{"name":"_platformCode","type":"cell"}
+			]
+		},
+		{
+			"name": "_projectCounter",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_projectCounter","type":"uint256"}
 			]
 		},
 		{
@@ -432,6 +441,7 @@
 		{"name":"owner","type":"address"},
 		{"name":"version_","type":"uint32"},
 		{"name":"_platformCode","type":"cell"},
+		{"name":"_projectCounter","type":"uint256"},
 		{"name":"_refFactory","type":"address"},
 		{"name":"_refLastCode","type":"cell"},
 		{"name":"_refLastPlatformCode","type":"cell"},

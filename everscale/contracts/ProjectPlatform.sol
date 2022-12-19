@@ -7,12 +7,13 @@ import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
 
 contract ProjectPlatform {
     address static root;
-    address static owner;
+    uint256 static id;
     
     constructor(
         TvmCell initCode,
         uint32 initVersion,
         address refFactory,
+        address owner,
         uint128 projectFee,
         uint128 cashbackFee,
         address sender,
@@ -23,8 +24,8 @@ contract ProjectPlatform {
     {   
         tvm.accept();
 
-        if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
-           initialize(initCode, initVersion, refFactory, projectFee, cashbackFee, sender, remainingGasTo);
+        if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(id) == msg.sender)) {
+           initialize(initCode, initVersion, refFactory, owner, projectFee, cashbackFee, sender, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -34,12 +35,12 @@ contract ProjectPlatform {
         }
     }
 
-    function _getExpectedAddress(address owner_) private view returns (address) {
+    function _getExpectedAddress(uint256 target) private view returns (address) {
         TvmCell stateInit = tvm.buildStateInit({
             contr: ProjectPlatform,
             varInit: {
                 root: root,
-                owner: owner_
+                id: target
             },
             pubkey: 0,
             code: tvm.code()
@@ -48,10 +49,11 @@ contract ProjectPlatform {
         return address(tvm.hash(stateInit));
     }
 
-    function initialize(TvmCell initCode, uint32 initVersion, address refFactory, uint128 projectFee, uint128 cashbackFee, address sender, address remainingGasTo) private {
+    function initialize(TvmCell initCode, uint32 initVersion, address refFactory, address owner, uint128 projectFee, uint128 cashbackFee, address sender, address remainingGasTo) private {
         TvmCell inputData = abi.encode(
             refFactory,
             root,
+            id,
             owner,
             uint32(0),
             initVersion,

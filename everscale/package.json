@@ -19,6 +19,7 @@
     "@types/node": "^18.11.11",
     "chai": "^4.3.7",
     "chai-bignumber": "^3.1.0",
+    "everdev": "^1.4.1",
     "everscale-standalone-client": "^2.1.5",
     "locklift": "^2.4.5",
     "mocha-logger": "^1.0.8",

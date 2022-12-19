@@ -8,5 +8,5 @@ interface IRefProject is IVersioned, IUpgradeable{
     function setCashbackFee(uint128 fee) external;
     function upgrade(address remainingGasTo) external;
     function acceptInit() external;
-    function meta(TvmCell payload) view external responsible returns (bool isApproved, uint128 cashbackFee, uint128 projectFee, TvmCell forwardedPayload);
+    function meta(TvmCell payload) view external responsible returns (bool isApproved, address projectOwner, uint128 cashbackFee, uint128 projectFee, TvmCell forwardedPayload);
 }

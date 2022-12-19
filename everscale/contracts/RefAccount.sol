@@ -31,11 +31,7 @@ contract RefAccount is InternalOwner, IUpgradeable {
     functionID(0x15A038FB)
     {
         require(msg.sender == _refSystem, 400, "Must be root");
-        if(reward == 0) {
-            delete _tokenBalance[tokenWallet];
-        } else {
-            _tokenBalance[tokenWallet] += reward;
-        }
+        _tokenBalance[tokenWallet] += reward;
         
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({

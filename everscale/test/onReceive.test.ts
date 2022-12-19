@@ -110,9 +110,10 @@ describe('RefSystem On Receive', function () {
             let { value0: appWalletBalance } = await appWallet.methods.balance({ answerId: 0 }).call()
             expect(appWalletBalance).to.be.bignumber.equal(FIRST_REWARD)
 
+            let {_id: projectId} = await project.methods._id().call()
             /// Encode Payload
             let { value0: payload } = await refSystem.methods.onAcceptTokensTransferPayloadEncoder({
-                projectOwner: projectOwner.address,
+                projectId,
                 referred: alice.address,
                 referrer: bob.address,
                 answerId: 0
@@ -223,9 +224,10 @@ describe('RefSystem On Receive', function () {
 
                 let refSysWallet = await walletOf(tokenRoot, refSystem.address)
                 let appWallet = await walletOf(tokenRoot, app.address)
+                let { _id: projectId } = await project.methods._id().call()
                 /// Encode Payload
                 let { value0: payload } = await refSystem.methods.onAcceptTokensTransferPayloadEncoder({
-                    projectOwner: projectOwner.address,
+                    projectId,
                     referred: alice.address,
                     referrer: bob.address,
                     answerId: 0

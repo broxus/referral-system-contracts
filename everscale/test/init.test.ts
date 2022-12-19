@@ -99,9 +99,12 @@ describe('Ref Init', function () {
 
                 project = await deployProject(projectOwner, refSystem, 5, 5);
                 logContract(project, "Project");
-
+                
                 let { owner } = await project.methods.owner().call()
                 logger.log(owner, projectOwner.address);
+                
+                let {_id: projectId } = await project.methods._id().call()
+                expect(projectId).to.be.bignumber.equal(0);
                 expect(owner.equals(projectOwner.address)).to.be.true
                 expect((await (await project.methods._isApproved().call())._isApproved)).to.be.false;
             })
@@ -133,7 +136,7 @@ describe('Ref Init', function () {
                 await refSystem.methods.setProjectCode({ code: TestUpgrade.code }).send({ from: refSysOwner.address, amount: toNano(5) })
                 await refSystem.methods.requestUpgradeProject({
                     currentVersion: 99,
-                    projectOwner: projectOwner.address,
+                    projectId: (await project.methods._id().call())._id,
                     remainingGasTo: refSysOwner.address
                 }).send({ from: refSysOwner.address, amount: toNano(5) })
                 logContract(project, "Project")

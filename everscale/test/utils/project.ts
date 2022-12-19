@@ -10,7 +10,7 @@ chai.use(require('chai-bignumber')())
 
 const { expect } = chai;
 
-async function sleep(ms) {
+async function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -19,11 +19,13 @@ export async function deployProject(
     refSystem: Contract<FactorySource["RefSystemUpgradeable"]>,
     projectFee: string | number,
     cashbackFee: string | number
-    ): Promise<Contract<FactorySource["Project"]>> {
-    
+): Promise<Contract<FactorySource["Project"]>> {
+
     const Project = await locklift.factory.getContractArtifacts("Project");
     const ProjectPlatform = await locklift.factory.getContractArtifacts('ProjectPlatform');
 
+    let { _projectCounter } = await refSystem.methods._projectCounter().call()
+    let { value0: projectAddr } = await refSystem.methods.deriveProject({ id: _projectCounter, answerId: 0 }).call();
     await refSystem.methods.deployProject({
         refSystem: refSystem.address,
         projectFee,
@@ -32,19 +34,16 @@ export async function deployProject(
         remainingGasTo: projectOwner.address
     }).send({ from: projectOwner.address, amount: locklift.utils.toNano(5) })
 
-    let { value0: projectAddr } = await refSystem.methods.deriveProject({owner: projectOwner.address, answerId: 0}).call();
-    // let projectAddr = await refSystem.call({ method: 'deriveProject', params: { owner: projectOwner.address, answerId: 0 } })
-
     let project = new Contract(locklift.provider, Project.abi, projectAddr);
 
     return project;
 }
 
 export async function approveProject(project: Contract<FactorySource["Project"]>, refSystemOwner: Account, refSystem: Contract<FactorySource["RefSystemUpgradeable"]>) {
-    let {owner: projectOwner } = await project.methods.owner().call()
-    
+    let { _id } = await project.methods._id().call()
+
     return refSystem.methods.approveProject({
-        projectOwner
+        projectId: _id
     }).send({ from: refSystemOwner.address, amount: locklift.utils.toNano(0.1) })
 }
 

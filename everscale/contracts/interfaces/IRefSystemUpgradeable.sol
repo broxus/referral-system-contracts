@@ -10,7 +10,7 @@ interface IRefSystemUpgradeable is IRefSystem {
     function platformCode() external view responsible returns (TvmCell);
 
     function requestUpgradeAccount(uint32 currentVersion, address accountOwner, address remainingGasTo) external;
-    function requestUpgradeProject(uint32 currentVersion, address projectOwner, address remainingGasTo) external;
+    function requestUpgradeProject(uint32 currentVersion, uint256 projectId, address remainingGasTo) external;
     function requestUpgradeRefLast(uint32 currentVersion, address refLastOwner, address remainingGasTo) external;
     
     function setProjectCode(TvmCell code) external;
