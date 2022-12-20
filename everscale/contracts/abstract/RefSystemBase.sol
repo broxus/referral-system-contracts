@@ -47,6 +47,8 @@ abstract contract RefSystemBase is
     uint128 public _deployAccountValue;
     uint128 public _deployRefLastValue;
     uint128 public _systemFee;
+
+    event OnReferral(uint256 projectId, address tokenWallet, address referred, address referrer, uint128 amount);
     
     function _reserve() virtual internal returns (uint128) {
         return 0.2 ton;
@@ -134,8 +136,12 @@ abstract contract RefSystemBase is
         uint128 reward = amount - systemReward - projectReward - cashbackReward;
         if (reward != 0) { _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo); }
         
-        // Update referrer
-        _deployRefLast(referrer, tokenWallet, referred, referrer, amount, sender, remainingGasTo);
+        emit OnReferral(projectId, tokenWallet, referred, referrer, amount);
+    }
+
+    function updateRefLast(uint256 projectId, address tokenWallet, address referred, address referrer, uint128 amount, address remainingGasTo) override external {
+        require(msg.sender == _deriveProject(projectId), 400, "Must be Valid Project");
+        _deployRefLast(referrer, tokenWallet, referred, referrer, amount, address(0), remainingGasTo);
     }
 
     function requestTransfer(

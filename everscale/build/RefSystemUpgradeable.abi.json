@@ -182,6 +182,19 @@
 			]
 		},
 		{
+			"name": "updateRefLast",
+			"inputs": [
+				{"name":"projectId","type":"uint256"},
+				{"name":"tokenWallet","type":"address"},
+				{"name":"referred","type":"address"},
+				{"name":"referrer","type":"address"},
+				{"name":"amount","type":"uint128"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "requestTransfer",
 			"inputs": [
 				{"name":"recipient","type":"address"},
@@ -397,6 +410,18 @@
 	"data": [
 	],
 	"events": [
+		{
+			"name": "OnReferral",
+			"inputs": [
+				{"name":"projectId","type":"uint256"},
+				{"name":"tokenWallet","type":"address"},
+				{"name":"referred","type":"address"},
+				{"name":"referrer","type":"address"},
+				{"name":"amount","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
 		{
 			"name": "OwnershipTransferred",
 			"inputs": [

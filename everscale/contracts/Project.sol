@@ -29,6 +29,8 @@ contract Project is InternalOwner, IRefProject {
     uint128 public _projectFee; 
     uint128 public _cashbackFee;
 
+    address public _manager;
+
     constructor() public {
         revert();
     }
@@ -59,6 +61,10 @@ contract Project is InternalOwner, IRefProject {
     function setCashbackFee(uint128 fee) override external onlyOwner {
         require(fee < BPS, 500, "Invalid Parameter");
         _cashbackFee = fee;
+    }
+
+    function setManager(address manager) external onlyOwner {
+        _manager = manager;
     }
 
     function acceptUpgrade(TvmCell newCode, uint32 newVersion, address remainingGasTo) override external {
@@ -147,5 +153,10 @@ contract Project is InternalOwner, IRefProject {
 
     function meta(TvmCell payload) override view external responsible returns (bool, address, uint128, uint128, TvmCell) {
         return {value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(_isApproved, owner, _cashbackFee, _projectFee, payload);
+    }
+
+    function onRefLastUpdate(address tokenWallet, address referred, address referrer, uint128 amount, address remainingGasTo) override external {
+        require(msg.sender == _manager && _isApproved, 400, "Must be Manager");
+        IRefSystem(_refSystem).updateRefLast{flag: MsgFlag.ALL_NOT_RESERVED}(_id, tokenWallet, referred, referrer, amount, remainingGasTo);
     }
 }

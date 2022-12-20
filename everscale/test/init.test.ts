@@ -394,6 +394,51 @@ describe('Ref Init', function () {
             })
         })
 
+        describe('updateRefLast', function() {
+            it('should deploy refLast by project manager', async function() {
+                let refFactoryOwnerPair = await locklift.keystore.getSigner("0")
+                let projectOwnerPair = await locklift.keystore.getSigner("1")
+                let refOwnerPair = await locklift.keystore.getSigner("2")
+                let projectManagerPair = await locklift.keystore.getSigner("3")
+
+
+                let refFactoryOwner = await deployAccount(refFactoryOwnerPair!, 50);
+                let projectOwner = await deployAccount(projectOwnerPair!, 50, "projectOwner");
+                let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
+                let projectManager = await deployAccount(projectManagerPair!, 50);
+
+                let refFactory = await deployRefFactory(refFactoryOwner)
+                let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
+                logContract(refSystem, "RefSystem");
+
+                let project = await deployProject(projectOwner, refSystem, 5, 5);
+                logContract(project, "Project");
+
+                await refSystem.methods.setProjectApproval({
+                    projectId: 0,
+                    value: true
+                }).send({ from: refSysOwner.address, amount: toNano(0.8)})
+
+                await project.methods.setManager({
+                    manager: projectManager.address
+                }).send({from: projectOwner.address, amount: toNano(0.6)});
+
+                await project.methods.onRefLastUpdate({
+                    tokenWallet: zeroAddress,
+                    referred: zeroAddress,
+                    referrer: project.address,
+                    amount: 123,
+                    remainingGasTo: projectManager.address
+                }).send({from: projectManager.address, amount: toNano(1)})
+
+                let {value0: refLastAddr} = await refSystem.methods.deriveRefLast({answerId: 0, owner: project.address}).call()
+                let refLast = locklift.factory.getDeployedContract("RefLast", refLastAddr)
+
+                let {_owner} = await refLast.methods._owner().call()
+                expect(_owner.equals(project.address)).to.be.true
+            })
+        })
+
     })
 
 })

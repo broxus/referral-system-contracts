@@ -966,7 +966,7 @@ THROW 0
 CALL $_reserve_internal_macro$
 
 .macro _reserve_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 52
+.loc ../contracts/abstract/RefSystemBase.sol, 54
 PUSHINT 200000000
 .loc ../contracts/abstract/RefSystemBase.sol, 0
 
@@ -975,10 +975,10 @@ PUSHINT 200000000
 CALL $_nextProjectId_internal_macro$
 
 .macro _nextProjectId_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 56
+.loc ../contracts/abstract/RefSystemBase.sol, 58
 GETGLOB 13
 DUP
-.loc ../contracts/abstract/RefSystemBase.sol, 57
+.loc ../contracts/abstract/RefSystemBase.sol, 59
 INC
 SETGLOB 13
 .loc ../contracts/abstract/RefSystemBase.sol, 0
@@ -992,7 +992,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 60
+.loc ../contracts/abstract/RefSystemBase.sol, 62
 OVER
 PUSHCONT {
 	LDREF
@@ -1028,7 +1028,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/abstract/RefSystemBase.sol, 61
+.loc ../contracts/abstract/RefSystemBase.sol, 63
 PUSHREF {
 	.blob x496e76616c696420506172616d
 }
@@ -1036,7 +1036,7 @@ OVER
 PUSHINT 1000000
 LEQ
 THROWARGIFNOT 500
-.loc ../contracts/abstract/RefSystemBase.sol, 62
+.loc ../contracts/abstract/RefSystemBase.sol, 64
 SETGLOB 23
 .loc ../contracts/abstract/RefSystemBase.sol, 0
 
@@ -1049,7 +1049,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 65
+.loc ../contracts/abstract/RefSystemBase.sol, 67
 OVER
 PUSHCONT {
 	LDREF
@@ -1085,7 +1085,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/abstract/RefSystemBase.sol, 66
+.loc ../contracts/abstract/RefSystemBase.sol, 68
 SETGLOB 21
 .loc ../contracts/abstract/RefSystemBase.sol, 0
 
@@ -1098,7 +1098,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 69
+.loc ../contracts/abstract/RefSystemBase.sol, 71
 OVER
 PUSHCONT {
 	LDREF
@@ -1134,7 +1134,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/abstract/RefSystemBase.sol, 70
+.loc ../contracts/abstract/RefSystemBase.sol, 72
 SETGLOB 22
 .loc ../contracts/abstract/RefSystemBase.sol, 0
 
@@ -1147,7 +1147,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 73
+.loc ../contracts/abstract/RefSystemBase.sol, 75
 OVER
 PUSHCONT {
 	LDREF
@@ -1182,14 +1182,14 @@ CALLREF {
 THROW 0
 
 .macro onAcceptTokensTransfer_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 81
+.loc ../contracts/abstract/RefSystemBase.sol, 83
 PUSHREF {
 	.blob x496e76616c696420416d6f756e74
 }
 PUSH S5
 NEQINT 0
 THROWARGIFNOT 401
-.loc ../contracts/abstract/RefSystemBase.sol, 82
+.loc ../contracts/abstract/RefSystemBase.sol, 84
 CTOS
 LDU 256
 LDMSGADDR
@@ -1198,12 +1198,12 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/abstract/RefSystemBase.sol, 83
+.loc ../contracts/abstract/RefSystemBase.sol, 85
 PUSH S2
 CALLREF {
 	CALL $_deriveProject_internal_macro$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 84
+.loc ../contracts/abstract/RefSystemBase.sol, 86
 REVERSE 9, 0
 GETGLOB 9
 NEWC
@@ -1235,7 +1235,7 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/abstract/RefSystemBase.sol, 86
+.loc ../contracts/abstract/RefSystemBase.sol, 88
 SWAP
 NEWC
 STSLICECONST x62_
@@ -1257,7 +1257,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 92
+.loc ../contracts/abstract/RefSystemBase.sol, 94
 LDU 32
 GETGLOB 4
 ROT
@@ -1336,7 +1336,7 @@ CALLREF {
 THROW 0
 
 .macro onAcceptTokensTransferPayloadEncoder_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 93
+.loc ../contracts/abstract/RefSystemBase.sol, 95
 XCHG S2
 NEWC
 STU 256
@@ -1357,7 +1357,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 96
+.loc ../contracts/abstract/RefSystemBase.sol, 98
 OVER
 PUSHCONT {
 	LDI 1
@@ -1385,7 +1385,7 @@ CALLREF {
 THROW 0
 
 .macro getProjectMeta_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 103
+.loc ../contracts/abstract/RefSystemBase.sol, 105
 CTOS
 LDMSGADDR
 LDREF
@@ -1415,65 +1415,65 @@ ENDS
 CTOS
 LDMSGADDR
 ENDS
-.loc ../contracts/abstract/RefSystemBase.sol, 112
+.loc ../contracts/abstract/RefSystemBase.sol, 114
 PUSHREF {
 	.blob x4e6f7420612076616c69642050726f6a656374
 }
 GETGLOB 9
-ROLL 4
+PUSH S4
 CALLREF {
 	CALL $_deriveProject_internal_macro$
 }
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/abstract/RefSystemBase.sol, 113
+.loc ../contracts/abstract/RefSystemBase.sol, 115
 PUSHREF {
 	.blob x496e76616c696420416d6f756e74
 }
-PUSH S6
+PUSH S7
 NEQINT 0
 THROWARGIFNOT 400
-.loc ../contracts/abstract/RefSystemBase.sol, 116
-ROLL 11
+.loc ../contracts/abstract/RefSystemBase.sol, 118
+ROLL 12
 NOT
 DUP
 PUSHCONT {
 	DROP
 	PUSHINT 1000000
 	GETGLOB 23
-	PUSH S10
-	ADD
 	PUSH S11
+	ADD
+	PUSH S12
 	ADD
 	LESS
 }
 IFNOT
 PUSHCONT {
-	.loc ../contracts/abstract/RefSystemBase.sol, 117
+	.loc ../contracts/abstract/RefSystemBase.sol, 119
 	GETGLOB 10
-	BLKSWAP 3, 5
-	ROLL 6
-	XCHG S3, S8
+	ROLL 9
+	BLKSWAP 2, 7
+	ROLL 7
 	CALLREF {
 		CALL $_deployRefAccount_internal_macro$
 	}
-	BLKDROP 8
+	BLKDROP 9
 	.loc ../contracts/abstract/RefSystemBase.sol, 0
 }
 IFJMP
-.loc ../contracts/abstract/RefSystemBase.sol, 122
-PUSH S5
+.loc ../contracts/abstract/RefSystemBase.sol, 124
+PUSH S6
 GETGLOB 23
 PUSHINT 1000000
 MULDIV
 UFITS 128
-.loc ../contracts/abstract/RefSystemBase.sol, 123
+.loc ../contracts/abstract/RefSystemBase.sol, 125
 DUP
 PUSHCONT {
-	.loc ../contracts/abstract/RefSystemBase.sol, 123
+	.loc ../contracts/abstract/RefSystemBase.sol, 125
 	GETGLOB 10
-	PUSH3 S9, S1, S6
-	PUSH S7
+	PUSH3 S10, S1, S7
+	PUSH S8
 	CALLREF {
 		CALL $_deployRefAccount_internal_macro$
 	}
@@ -1481,40 +1481,17 @@ PUSHCONT {
 	.loc ../contracts/abstract/RefSystemBase.sol, 0
 }
 IF
-.loc ../contracts/abstract/RefSystemBase.sol, 126
-PUSH S6
-ROLL 10
+.loc ../contracts/abstract/RefSystemBase.sol, 128
+PUSH S7
+ROLL 11
 PUSHINT 1000000
 MULDIV
 UFITS 128
-.loc ../contracts/abstract/RefSystemBase.sol, 127
+.loc ../contracts/abstract/RefSystemBase.sol, 129
 DUP
 PUSHCONT {
-	.loc ../contracts/abstract/RefSystemBase.sol, 127
-	PUSH3 S11, S9, S0
-	PUSH2 S9, S7
-	CALLREF {
-		CALL $_deployRefAccount_internal_macro$
-	}
-	DROP
-	.loc ../contracts/abstract/RefSystemBase.sol, 0
-}
-IF
-.loc ../contracts/abstract/RefSystemBase.sol, 130
-PUSH2 S7, S10
-PUSHINT 1000000
-MULDIV
-UFITS 128
-.loc ../contracts/abstract/RefSystemBase.sol, 131
-DUP
-PUSHCONT {
-	.loc ../contracts/abstract/RefSystemBase.sol, 131
-	PUSH3 S4, S10, S8
-	PUSH S14
-	MUL
-	UFITS 128
-	PUSHINT 1000000
-	DIV
+	.loc ../contracts/abstract/RefSystemBase.sol, 129
+	PUSH3 S12, S10, S0
 	PUSH2 S10, S8
 	CALLREF {
 		CALL $_deployRefAccount_internal_macro$
@@ -1523,8 +1500,31 @@ PUSHCONT {
 	.loc ../contracts/abstract/RefSystemBase.sol, 0
 }
 IF
-.loc ../contracts/abstract/RefSystemBase.sol, 134
-PUSH S8
+.loc ../contracts/abstract/RefSystemBase.sol, 132
+PUSH2 S8, S11
+PUSHINT 1000000
+MULDIV
+UFITS 128
+.loc ../contracts/abstract/RefSystemBase.sol, 133
+DUP
+PUSHCONT {
+	.loc ../contracts/abstract/RefSystemBase.sol, 133
+	PUSH3 S4, S11, S9
+	PUSH S15
+	MUL
+	UFITS 128
+	PUSHINT 1000000
+	DIV
+	PUSH2 S11, S9
+	CALLREF {
+		CALL $_deployRefAccount_internal_macro$
+	}
+	DROP
+	.loc ../contracts/abstract/RefSystemBase.sol, 0
+}
+IF
+.loc ../contracts/abstract/RefSystemBase.sol, 136
+PUSH S9
 ROLL 3
 SUB
 UFITS 128
@@ -1533,12 +1533,12 @@ SUB
 UFITS 128
 SUBR
 UFITS 128
-.loc ../contracts/abstract/RefSystemBase.sol, 135
+.loc ../contracts/abstract/RefSystemBase.sol, 137
 DUP
 PUSHCONT {
-	.loc ../contracts/abstract/RefSystemBase.sol, 135
-	PUSH3 S1, S8, S0
-	PUSH2 S8, S6
+	.loc ../contracts/abstract/RefSystemBase.sol, 137
+	PUSH3 S1, S9, S0
+	PUSH2 S9, S7
 	CALLREF {
 		CALL $_deployRefAccount_internal_macro$
 	}
@@ -1546,17 +1546,102 @@ PUSHCONT {
 	.loc ../contracts/abstract/RefSystemBase.sol, 0
 }
 IF
-.loc ../contracts/abstract/RefSystemBase.sol, 138
+.loc ../contracts/abstract/RefSystemBase.sol, 139
 DROP
-DUP
+ROLL 6
+XCHG S2
 ROLL 8
-SWAP2
-BLKSWAP 2, 6
+ROLL 4
+PUSHSLICE xc0000000000000000000000001
+NEWC
+STSLICE
+ROLLREV 5
+NEWC
+STSLICECONST x78d20099
+STU 256
+STSLICE
+ROLLREV 3
+NEWC
+STSLICE
+ROTREV
+NEWC
+STSLICE
+STU 128
+STBREFR
+STBREFR
+STBREFR
+ENDC
+PUSHINT 0
+SENDRAWMSG
+BLKDROP 6
+.loc ../contracts/abstract/RefSystemBase.sol, 0
+
+.macro updateRefLast
+DROP
+GETGLOB 6
+THROWIFNOT 76
+GETGLOB 2
+ISNULL
+IFREF {
+	CALL $c4_to_c7$
+}
+.loc ../contracts/abstract/RefSystemBase.sol, 142
+OVER
+PUSHCONT {
+	LDREF
+	ENDS
+	CTOS
+}
+IF
+LDU 256
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+LDU 128
+LDREF
+ENDS
+CTOS
+LDMSGADDR
+ENDS
+.loc ../contracts/abstract/RefSystemBase.sol, 0
+CALLREF {
+	CALL $updateRefLast_internal_macro$
+}
+DROP
+CALLREF {
+	CALL $c7_to_c4$
+}
+THROW 0
+
+.macro updateRefLast_internal_macro
+.loc ../contracts/abstract/RefSystemBase.sol, 143
+PUSHREF {
+	.blob x4d7573742062652056616c69642050726f6a656374
+}
+GETGLOB 9
+ROLL 7
+CALLREF {
+	CALL $_deriveProject_internal_macro$
+}
+SDEQ
+THROWARGIFNOT 400
+.loc ../contracts/abstract/RefSystemBase.sol, 144
+PUSH S2
+BLKSWAP 4, 2
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
+}
 ROLL 6
 CALLREF {
 	CALL $_deployRefLast_internal_macro$
 }
-BLKDROP 5
+DROP
 .loc ../contracts/abstract/RefSystemBase.sol, 0
 
 .macro requestTransfer
@@ -1568,7 +1653,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 141
+.loc ../contracts/abstract/RefSystemBase.sol, 147
 OVER
 PUSHCONT {
 	LDREF
@@ -1600,7 +1685,7 @@ CALLREF {
 THROW 0
 
 .macro requestTransfer_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 149
+.loc ../contracts/abstract/RefSystemBase.sol, 155
 PUSHREF {
 	.blob x496e76616c6964204163636f756e74
 }
@@ -1611,7 +1696,7 @@ CALLREF {
 }
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/abstract/RefSystemBase.sol, 150
+.loc ../contracts/abstract/RefSystemBase.sol, 156
 XCHG S2
 PUSHINT 500000000
 BLKSWAP 3, 4
@@ -1648,7 +1733,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 153
+.loc ../contracts/abstract/RefSystemBase.sol, 159
 LDU 32
 GETGLOB 4
 ROT
@@ -1729,7 +1814,7 @@ CALLREF {
 THROW 0
 
 .macro deriveProject_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 154
+.loc ../contracts/abstract/RefSystemBase.sol, 160
 CALLREF {
 	CALL $_deriveProject_internal_macro$
 }
@@ -1744,7 +1829,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 157
+.loc ../contracts/abstract/RefSystemBase.sol, 163
 LDU 32
 GETGLOB 4
 ROT
@@ -1825,7 +1910,7 @@ CALLREF {
 THROW 0
 
 .macro deriveRefAccount_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 158
+.loc ../contracts/abstract/RefSystemBase.sol, 164
 CALLREF {
 	CALL $_deriveRefAccount_internal_macro$
 }
@@ -1840,7 +1925,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 161
+.loc ../contracts/abstract/RefSystemBase.sol, 167
 LDU 32
 GETGLOB 4
 ROT
@@ -1921,7 +2006,7 @@ CALLREF {
 THROW 0
 
 .macro deriveRefLast_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 162
+.loc ../contracts/abstract/RefSystemBase.sol, 168
 CALLREF {
 	CALL $_deriveRefLast_internal_macro$
 }
@@ -1936,7 +2021,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 165
+.loc ../contracts/abstract/RefSystemBase.sol, 171
 OVER
 PUSHCONT {
 	LDREF
@@ -1993,7 +2078,7 @@ CALLREF {
 THROW 0
 
 .macro deployProject_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 172
+.loc ../contracts/abstract/RefSystemBase.sol, 178
 REVERSE 4, 0
 GETGLOB 9
 GETGLOB 14
@@ -2084,7 +2169,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 190
+.loc ../contracts/abstract/RefSystemBase.sol, 196
 OVER
 PUSHCONT {
 	LDU 32
@@ -2175,7 +2260,7 @@ THROWIFNOT 1101
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 197
+.loc ../contracts/abstract/RefSystemBase.sol, 203
 PUSHREF {
 	.blob x496e76616c696420506172616d73
 }
@@ -2185,7 +2270,7 @@ PUSH S5
 FIRST
 EQUAL
 THROWARGIFNOT 405
-.loc ../contracts/abstract/RefSystemBase.sol, 198
+.loc ../contracts/abstract/RefSystemBase.sol, 204
 PUSHINT 0
 PUSHCONT {
 	PUSH2 S0, S6
@@ -2193,7 +2278,7 @@ PUSHCONT {
 	LESS
 }
 PUSHCONT {
-	.loc ../contracts/abstract/RefSystemBase.sol, 199
+	.loc ../contracts/abstract/RefSystemBase.sol, 205
 	PUSH2 S0, S6
 	SECOND
 	PUSHINT 32
@@ -2210,7 +2295,7 @@ PUSHCONT {
 		CALL $_deployRefAccount_internal_macro$
 	}
 	DROP
-	.loc ../contracts/abstract/RefSystemBase.sol, 198
+	.loc ../contracts/abstract/RefSystemBase.sol, 204
 	INC
 	.loc ../contracts/abstract/RefSystemBase.sol, 0
 }
@@ -2228,7 +2313,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 203
+.loc ../contracts/abstract/RefSystemBase.sol, 209
 OVER
 PUSHCONT {
 	LDREF
@@ -2311,7 +2396,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/abstract/RefSystemBase.sol, 212
+.loc ../contracts/abstract/RefSystemBase.sol, 218
 CALLREF {
 	CALL $_deployRefLast_internal_macro$
 }
@@ -2326,7 +2411,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 215
+.loc ../contracts/abstract/RefSystemBase.sol, 221
 OVER
 PUSHCONT {
 	LDREF
@@ -2363,7 +2448,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/abstract/RefSystemBase.sol, 216
+.loc ../contracts/abstract/RefSystemBase.sol, 222
 SWAP
 CALLREF {
 	CALL $_deriveProject_internal_macro$
@@ -2384,7 +2469,7 @@ SENDRAWMSG
 CALL $_deriveProject_internal_macro$
 
 .macro _deriveProject_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 222
+.loc ../contracts/abstract/RefSystemBase.sol, 228
 CALLREF {
 	CALL $_buildProjectInitData_internal_macro$
 }
@@ -2401,7 +2486,7 @@ CTOS
 CALL $_deriveRefAccount_internal_macro$
 
 .macro _deriveRefAccount_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 226
+.loc ../contracts/abstract/RefSystemBase.sol, 232
 CALLREF {
 	CALL $_buildRefAccountInitData_internal_macro$
 }
@@ -2418,7 +2503,7 @@ CTOS
 CALL $_deriveRefLast_internal_macro$
 
 .macro _deriveRefLast_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 230
+.loc ../contracts/abstract/RefSystemBase.sol, 236
 CALLREF {
 	CALL $_buildRefLastInitData_internal_macro$
 }
@@ -2435,7 +2520,7 @@ CTOS
 CALL $_deployRefAccount_internal_macro$
 
 .macro _deployRefAccount_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 240
+.loc ../contracts/abstract/RefSystemBase.sol, 246
 REVERSE 4, 0
 GETGLOB 14
 GETGLOB 11
@@ -2520,7 +2605,7 @@ SENDRAWMSG
 CALL $_deployRefLast_internal_macro$
 
 .macro _deployRefLast_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 258
+.loc ../contracts/abstract/RefSystemBase.sol, 264
 REVERSE 6, 0
 GETGLOB 14
 GETGLOB 11
@@ -2613,7 +2698,7 @@ SENDRAWMSG
 CALL $_buildProjectInitData_internal_macro$
 
 .macro _buildProjectInitData_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 268
+.loc ../contracts/abstract/RefSystemBase.sol, 274
 PUSHINT 0
 NEWC
 STU 256
@@ -2650,7 +2735,7 @@ ENDC
 CALL $_buildRefLastInitData_internal_macro$
 
 .macro _buildRefLastInitData_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 279
+.loc ../contracts/abstract/RefSystemBase.sol, 285
 PUSHINT 0
 NEWC
 STU 256
@@ -2685,7 +2770,7 @@ ENDC
 CALL $_buildRefAccountInitData_internal_macro$
 
 .macro _buildRefAccountInitData_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 291
+.loc ../contracts/abstract/RefSystemBase.sol, 297
 PUSHINT 0
 NEWC
 STU 256
@@ -3369,11 +3454,11 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 878864287
+PUSHINT 839183401
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 185307145
+	PUSHINT 108646449
 	LEQ
 	IFJMPREF {
 		DUP
@@ -3395,16 +3480,22 @@ IFJMPREF {
 			CALL $deployRefAccount$
 		}
 		DUP
+		PUSHINT 108646449
+		EQUAL
+		IFJMPREF {
+			CALL $updateRefLast$
+		}
+	}
+	DUP
+	PUSHINT 249954112
+	LEQ
+	IFJMPREF {
+		DUP
 		PUSHINT 185307145
 		EQUAL
 		IFJMPREF {
 			CALL $requestTransfer$
 		}
-	}
-	DUP
-	PUSHINT 252364770
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 193321984
 		EQUAL
@@ -3423,17 +3514,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $deployRefLast$
 		}
+	}
+	DUP
+	PUSHINT 347119463
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 252364770
 		EQUAL
 		IFJMPREF {
 			CALL $projectVersion$
 		}
-	}
-	DUP
-	PUSHINT 362821883
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 322087217
 		EQUAL
@@ -3452,17 +3543,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_platformCode$
 		}
+	}
+	DUP
+	PUSHINT 839183401
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 362821883
 		EQUAL
 		IFJMPREF {
 			CALL $onDeployOrUpdate$
 		}
-	}
-	DUP
-	PUSHINT 878864287
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 415767192
 		EQUAL
@@ -3481,22 +3572,22 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $supportsInterface$
 		}
+	}
+}
+DUP
+PUSHINT 1596482896
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 1081409323
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 878864287
 		EQUAL
 		IFJMPREF {
 			CALL $setProjectApproval$
 		}
-	}
-}
-DUP
-PUSHINT 1729444094
-LEQ
-IFJMPREF {
-	DUP
-	PUSHINT 1164997441
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1003205163
 		EQUAL
@@ -3515,17 +3606,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $setDeployAccountValue$
 		}
+	}
+	DUP
+	PUSHINT 1226375060
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1164997441
 		EQUAL
 		IFJMPREF {
 			CALL $deriveRefLast$
 		}
-	}
-	DUP
-	PUSHINT 1250554856
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1172846727
 		EQUAL
@@ -3544,17 +3635,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_accountPlatformCode$
 		}
+	}
+	DUP
+	PUSHINT 1508584193
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1250554856
 		EQUAL
 		IFJMPREF {
 			CALL $_refLastPlatformCode$
 		}
-	}
-	DUP
-	PUSHINT 1534344756
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1394806608
 		EQUAL
@@ -3573,17 +3664,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_refFactory$
 		}
+	}
+	DUP
+	PUSHINT 1596482896
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1534344756
 		EQUAL
 		IFJMPREF {
 			CALL $refLastVersion$
 		}
-	}
-	DUP
-	PUSHINT 1729444094
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1541354545
 		EQUAL
@@ -3602,12 +3693,6 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_refLastCode$
 		}
-		DUP
-		PUSHINT 1729444094
-		EQUAL
-		IFJMPREF {
-			CALL $renounceOwnership$
-		}
 	}
 }
 DUP
@@ -3615,9 +3700,15 @@ PUSHINT 2114557421
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 1893244873
+	PUSHINT 1874348765
 	LEQ
 	IFJMPREF {
+		DUP
+		PUSHINT 1729444094
+		EQUAL
+		IFJMPREF {
+			CALL $renounceOwnership$
+		}
 		DUP
 		PUSHINT 1756716863
 		EQUAL
@@ -3636,17 +3727,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_projectPlatformCode$
 		}
+	}
+	DUP
+	PUSHINT 2101529068
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1893244873
 		EQUAL
 		IFJMPREF {
 			CALL $onAcceptTokensTransfer$
 		}
-	}
-	DUP
-	PUSHINT 2103634091
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1961550479
 		EQUAL
@@ -3665,18 +3756,23 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $setAccountCode$
 		}
+	}
+	DUP
+	PUSHINT 2114557421
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 2103634091
 		EQUAL
 		IFJMPREF {
 			CALL $deriveProject$
 		}
-	}
-	DUP
-	PUSHINT 2114557421
-	EQUAL
-	IFJMPREF {
-		CALL $_deployRefLastValue$
+		DUP
+		PUSHINT 2114557421
+		EQUAL
+		IFJMPREF {
+			CALL $_deployRefLastValue$
+		}
 	}
 }
 

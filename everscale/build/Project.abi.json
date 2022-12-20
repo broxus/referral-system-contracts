@@ -52,6 +52,14 @@
 			]
 		},
 		{
+			"name": "setManager",
+			"inputs": [
+				{"name":"manager","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "acceptUpgrade",
 			"inputs": [
 				{"name":"newCode","type":"cell"},
@@ -81,6 +89,18 @@
 				{"name":"value2","type":"uint128"},
 				{"name":"value3","type":"uint128"},
 				{"name":"value4","type":"cell"}
+			]
+		},
+		{
+			"name": "onRefLastUpdate",
+			"inputs": [
+				{"name":"tokenWallet","type":"address"},
+				{"name":"referred","type":"address"},
+				{"name":"referrer","type":"address"},
+				{"name":"amount","type":"uint128"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
 			]
 		},
 		{
@@ -169,6 +189,14 @@
 			"outputs": [
 				{"name":"_cashbackFee","type":"uint128"}
 			]
+		},
+		{
+			"name": "_manager",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_manager","type":"address"}
+			]
 		}
 	],
 	"data": [
@@ -196,6 +224,7 @@
 		{"name":"_id","type":"uint256"},
 		{"name":"_isApproved","type":"bool"},
 		{"name":"_projectFee","type":"uint128"},
-		{"name":"_cashbackFee","type":"uint128"}
+		{"name":"_cashbackFee","type":"uint128"},
+		{"name":"_manager","type":"address"}
 	]
 }
