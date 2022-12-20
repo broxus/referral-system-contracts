@@ -80,7 +80,9 @@ abstract contract RefSystemBase is
         address remainingGasTo,
         TvmCell payload
     ) override external {
+        tvm.rawReserve(_reserve(), 2);
         require(amount != 0, 401, "Invalid Amount");
+
         (uint256 projectId, address referred, address referrer) = abi.decode(payload, (uint256, address, address));
         address targetProject = _deriveProject(projectId);
         TvmCell acceptParams = abi.encode(msg.sender, tokenRoot, amount, sender, senderWallet, remainingGasTo, projectId, referred, referrer);
@@ -102,6 +104,8 @@ abstract contract RefSystemBase is
         uint128 projectFee,
         TvmCell acceptParams
     ) external {
+        tvm.rawReserve(_reserve(), 2);
+
         (address tokenWallet,
         address tokenRoot,
         uint128 amount,
@@ -137,11 +141,29 @@ abstract contract RefSystemBase is
         if (reward != 0) { _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo); }
         
         emit OnReferral(projectId, tokenWallet, referred, referrer, amount);
+
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 
     function updateRefLast(uint256 projectId, address tokenWallet, address referred, address referrer, uint128 amount, address remainingGasTo) override external {
+        tvm.rawReserve(_reserve(), 2);
+        
         require(msg.sender == _deriveProject(projectId), 400, "Must be Valid Project");
         _deployRefLast(referrer, tokenWallet, referred, referrer, amount, address(0), remainingGasTo);
+
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 
     function requestTransfer(
@@ -200,9 +222,19 @@ abstract contract RefSystemBase is
         address sender,
         address remainingGasTo
     ) external onlyOwner returns (address) {
+        tvm.rawReserve(_reserve(), 2);
+
         require(recipients.length == rewards.length, 405, "Invalid Params");
         for (uint256 i = 0; i < recipients.length; i++) {
             _deployRefAccount(recipients[i], tokenWallet, rewards[i], sender, remainingGasTo);
+        }
+
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
         }
     }
 
@@ -223,7 +255,6 @@ abstract contract RefSystemBase is
     }
 
     
-
     function _deriveProject(uint256 id) internal returns (address) {
         return address(tvm.hash(_buildProjectInitData(id)));
     }

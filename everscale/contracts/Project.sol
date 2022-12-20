@@ -81,6 +81,7 @@ contract Project is InternalOwner, IRefProject {
                 _refFactory,
                 _refSystem,
                 owner,
+                _manager,
                 _isApproved,
                 version_,
                 newVersion,

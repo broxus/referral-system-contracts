@@ -111,6 +111,7 @@ describe('RefSystem On Receive', function () {
             expect(appWalletBalance).to.be.bignumber.equal(FIRST_REWARD)
 
             let {_id: projectId} = await project.methods._id().call()
+            
             /// Encode Payload
             let { value0: payload } = await refSystem.methods.onAcceptTokensTransferPayloadEncoder({
                 projectId,
@@ -149,10 +150,14 @@ describe('RefSystem On Receive', function () {
             let refSysOwnerAccountBalance = await getBalances(refSysOwnerRefAccount)
             let projectOwnerAccountBalance = await getBalances(projectOwnerRefAccount)
 
+            let appBalance = await locklift.provider.getBalance(app.address)
+
             expect(refSysOwnerAccountBalance).to.be.equal(EXPECTED_REWARD.REFSYS)
             expect(projectOwnerAccountBalance).to.be.equal(EXPECTED_REWARD.PROJECT)
             expect(aliceAccountBalance).to.be.equal(EXPECTED_REWARD.CASHBACK)
             expect(bobAccountBalance).to.be.equal(EXPECTED_REWARD.REFERRER)
+            expect(fromNano(appBalance)).to.be.bignumber.greaterThan(47)
+            logger.log(`Current Rountrip cost: ${50 - Number(fromNano(appBalance))}`)
         })
 
         describe.skip('LastRef on Update', function () {
