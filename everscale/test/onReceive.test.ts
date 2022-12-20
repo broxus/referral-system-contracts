@@ -189,6 +189,7 @@ describe('RefSystem On Receive', function () {
                     payload: ''
                 }).send({ from: bob.address, amount: toNano(3) })
 
+
                 logContract(bobWallet, 'bobWallet')
                 let { value0: bobWalletBalance } = await bobWallet.methods.balance({ answerId: 0 }).call()
                 expect(bobWalletBalance).to.be.bignumber.equal(bobAccountBalance.get(refSystemWallet.address.toString())!)

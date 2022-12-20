@@ -142,7 +142,7 @@ contract RefFactory is InternalOwner, RandomNonce {
         uint128 res = msg.value - 0.3 ton;
         uint128 perUpgrade = res / uint128(targets.length);
         for (address target : targets) {
-        IUpgradeable(target).acceptUpgrade{value: perUpgrade, flag: 0}(code, version, remainingGasTo);
+            IUpgradeable(target).acceptUpgrade{value: perUpgrade, flag: 0}(code, version, remainingGasTo);
         }
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {

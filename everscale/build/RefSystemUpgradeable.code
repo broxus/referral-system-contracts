@@ -10,7 +10,7 @@ IFREF {
 GETGLOB 6
 THROWIF 51
 ENDS
-.loc ../contracts/RefSystemUpgradeable.sol, 26
+.loc ../contracts/RefSystemUpgradeable.sol, 29
 THROW 100
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -23,7 +23,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 29
+.loc ../contracts/RefSystemUpgradeable.sol, 32
 LDREF
 LDU 32
 LDREF
@@ -62,7 +62,7 @@ THROW 0
 CALL $onDeployOrUpdate_internal_macro$
 
 .macro onDeployOrUpdate_internal_macro
-.loc ../contracts/RefSystemUpgradeable.sol, 47
+.loc ../contracts/RefSystemUpgradeable.sol, 50
 PUSHREF {
 	.blob x4d7573742062652052656620466163746f7279
 }
@@ -70,7 +70,7 @@ GETGLOB 9
 GETGLOB 14
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/RefSystemUpgradeable.sol, 48
+.loc ../contracts/RefSystemUpgradeable.sol, 51
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -82,7 +82,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/RefSystemUpgradeable.sol, 49
+	.loc ../contracts/RefSystemUpgradeable.sol, 52
 	DUP
 	NEWC
 	STSLICECONST x42_
@@ -109,7 +109,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 57
+.loc ../contracts/RefSystemUpgradeable.sol, 60
 LDU 32
 GETGLOB 4
 ROT
@@ -175,7 +175,7 @@ IFREF {
 THROW 0
 
 .macro supportsInterface_internal_macro
-.loc ../contracts/RefSystemUpgradeable.sol, 58
+.loc ../contracts/RefSystemUpgradeable.sol, 61
 GETGLOB 4
 PUSHINT 0
 SETINDEXQ 2
@@ -184,8 +184,57 @@ SETINDEXQ 4
 FALSE
 SETINDEXQ 1
 SETGLOB 4
+DUP
 PUSHINT 839183401
 EQUAL
+OVER
+PUSHINT 185307145
+PUSHINT 1793192912
+XOR
+PUSHINT 2103634091
+XOR
+PUSHINT 1394806608
+XOR
+PUSHINT 1164997441
+XOR
+PUSHINT 1961550479
+XOR
+PUSHINT 1081409323
+XOR
+PUSHINT 1172846727
+XOR
+PUSHINT 455681131
+XOR
+PUSHINT 878864287
+XOR
+PUSHINT 108646449
+XOR
+EQUAL
+PUSH S2
+PUSHINT 1003205163
+PUSHINT 252364770
+XOR
+PUSHINT 1534344756
+XOR
+PUSHINT 8748794
+XOR
+PUSHINT 1211473583
+XOR
+PUSHINT 2101529068
+XOR
+PUSHINT 1045331296
+XOR
+EQUAL
+PUSH S3
+PUSHINT 53907865
+EQUAL
+ROLL 4
+PUSHINT 1893244873
+EQUAL
+OR
+OR
+OR
+OR
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
 .macro version
@@ -197,7 +246,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 63
+.loc ../contracts/RefSystemUpgradeable.sol, 90
 LDU 32
 GETGLOB 4
 ROT
@@ -262,7 +311,7 @@ IFREF {
 THROW 0
 
 .macro version_internal_macro
-.loc ../contracts/RefSystemUpgradeable.sol, 64
+.loc ../contracts/RefSystemUpgradeable.sol, 91
 GETGLOB 11
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -275,7 +324,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 67
+.loc ../contracts/RefSystemUpgradeable.sol, 94
 LDU 32
 GETGLOB 4
 ROT
@@ -340,7 +389,7 @@ IFREF {
 THROW 0
 
 .macro accountVersion_internal_macro
-.loc ../contracts/RefSystemUpgradeable.sol, 68
+.loc ../contracts/RefSystemUpgradeable.sol, 95
 GETGLOB 11
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -353,7 +402,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 71
+.loc ../contracts/RefSystemUpgradeable.sol, 98
 LDU 32
 GETGLOB 4
 ROT
@@ -418,7 +467,7 @@ IFREF {
 THROW 0
 
 .macro refLastVersion_internal_macro
-.loc ../contracts/RefSystemUpgradeable.sol, 72
+.loc ../contracts/RefSystemUpgradeable.sol, 99
 GETGLOB 11
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -431,7 +480,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 75
+.loc ../contracts/RefSystemUpgradeable.sol, 102
 LDU 32
 GETGLOB 4
 ROT
@@ -496,7 +545,7 @@ IFREF {
 THROW 0
 
 .macro projectVersion_internal_macro
-.loc ../contracts/RefSystemUpgradeable.sol, 76
+.loc ../contracts/RefSystemUpgradeable.sol, 103
 GETGLOB 11
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -509,7 +558,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 79
+.loc ../contracts/RefSystemUpgradeable.sol, 106
 LDU 32
 GETGLOB 4
 ROT
@@ -574,7 +623,7 @@ IFREF {
 THROW 0
 
 .macro platformCode_internal_macro
-.loc ../contracts/RefSystemUpgradeable.sol, 80
+.loc ../contracts/RefSystemUpgradeable.sol, 107
 GETGLOB 12
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -587,7 +636,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 84
+.loc ../contracts/RefSystemUpgradeable.sol, 110
 LDREF
 ENDS
 .loc ../contracts/RefSystemUpgradeable.sol, 0
@@ -616,7 +665,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/RefSystemUpgradeable.sol, 85
+.loc ../contracts/RefSystemUpgradeable.sol, 111
 SETGLOB 17
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -629,7 +678,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 87
+.loc ../contracts/RefSystemUpgradeable.sol, 113
 LDREF
 ENDS
 .loc ../contracts/RefSystemUpgradeable.sol, 0
@@ -658,7 +707,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/RefSystemUpgradeable.sol, 88
+.loc ../contracts/RefSystemUpgradeable.sol, 114
 SETGLOB 19
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -671,7 +720,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 90
+.loc ../contracts/RefSystemUpgradeable.sol, 116
 LDREF
 ENDS
 .loc ../contracts/RefSystemUpgradeable.sol, 0
@@ -700,7 +749,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/RefSystemUpgradeable.sol, 91
+.loc ../contracts/RefSystemUpgradeable.sol, 117
 SETGLOB 15
 .loc ../contracts/RefSystemUpgradeable.sol, 0
 
@@ -713,7 +762,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 155
+.loc ../contracts/RefSystemUpgradeable.sol, 121
 OVER
 PUSHCONT {
 	LDREF
@@ -740,7 +789,7 @@ CALLREF {
 THROW 0
 
 .macro acceptUpgrade_internal_macro
-.loc ../contracts/RefSystemUpgradeable.sol, 156
+.loc ../contracts/RefSystemUpgradeable.sol, 122
 PUSHREF {
 	.blob x4d7573742062652052656620466163746f7279
 }
@@ -748,7 +797,7 @@ GETGLOB 9
 GETGLOB 14
 SDEQ
 THROWARGIFNOT 400
-.loc ../contracts/RefSystemUpgradeable.sol, 157
+.loc ../contracts/RefSystemUpgradeable.sol, 123
 GETGLOB 17
 GETGLOB 18
 GETGLOB 15
@@ -795,10 +844,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/RefSystemUpgradeable.sol, 175
+.loc ../contracts/RefSystemUpgradeable.sol, 141
 PUSH S2
 SETCODE
-.loc ../contracts/RefSystemUpgradeable.sol, 176
+.loc ../contracts/RefSystemUpgradeable.sol, 142
 ROT
 CTOS
 DUP
@@ -813,7 +862,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/RefSystemUpgradeable.sol, 177
+.loc ../contracts/RefSystemUpgradeable.sol, 143
 CALLREF {
 	CALL $:onCodeUpgrade$
 }
@@ -822,13 +871,13 @@ DROP
 
 .internal-alias :onCodeUpgrade, 2
 .internal :onCodeUpgrade
-.loc ../contracts/RefSystemUpgradeable.sol, 181
+.loc ../contracts/RefSystemUpgradeable.sol, 147
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/RefSystemUpgradeable.sol, 182
+.loc ../contracts/RefSystemUpgradeable.sol, 148
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
@@ -868,12 +917,12 @@ PUSHINT 0
 SETGLOB 22
 PUSHINT 0
 SETGLOB 23
-.loc ../contracts/RefSystemUpgradeable.sol, 185
+.loc ../contracts/RefSystemUpgradeable.sol, 151
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
 DUP
-.loc ../contracts/RefSystemUpgradeable.sol, 189
+.loc ../contracts/RefSystemUpgradeable.sol, 155
 ROT
 CTOS
 LDMSGADDR
@@ -922,11 +971,11 @@ SETGLOB 16
 SETGLOB 15
 SETGLOB 18
 SETGLOB 17
-.loc ../contracts/RefSystemUpgradeable.sol, 223
+.loc ../contracts/RefSystemUpgradeable.sol, 189
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
-.loc ../contracts/RefSystemUpgradeable.sol, 224
+.loc ../contracts/RefSystemUpgradeable.sol, 190
 DUP
 PARSEMSGADDR
 INDEX 3
@@ -938,7 +987,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/RefSystemUpgradeable.sol, 225
+	.loc ../contracts/RefSystemUpgradeable.sol, 191
 	DUP
 	NEWC
 	STSLICECONST x42_

@@ -18,6 +18,9 @@ import "./RefLastPlatform.sol";
 import "./ProjectPlatform.sol";
 
 import "./interfaces/IRefSystemUpgradeable.sol";
+import "./interfaces/IRefSystem.sol";
+import "./interfaces/IUpgradeable.sol";
+
 
 import "./abstract/RefSystemBase.sol";
 
@@ -56,7 +59,31 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
 
     function supportsInterface(bytes4 interfaceID) override external view responsible returns (bool) {
         return { value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false } (
-            interfaceID == bytes4(0x3204ec29)   // SID
+            interfaceID == bytes4(0x3204ec29) || // SID
+            interfaceID == bytes4(
+                tvm.functionId(IRefSystem.requestTransfer)^
+                tvm.functionId(IRefSystem.deployProject)^
+                tvm.functionId(IRefSystem.deriveProject)^
+                tvm.functionId(IRefSystem.deriveRefAccount)^
+                tvm.functionId(IRefSystem.deriveRefLast)^
+                tvm.functionId(IRefSystem.setSystemFee)^
+                tvm.functionId(IRefSystem.setDeployAccountValue)^
+                tvm.functionId(IRefSystem.setDeployRefLastValue)^
+                tvm.functionId(IRefSystem.onAcceptTokensTransferPayloadEncoder)^
+                tvm.functionId(IRefSystem.setProjectApproval)^
+                tvm.functionId(IRefSystem.updateRefLast)
+            ) || // IRefSystem
+            interfaceID == bytes4(
+                tvm.functionId(IRefSystemUpgradeable.accountVersion)^
+                tvm.functionId(IRefSystemUpgradeable.projectVersion)^
+                tvm.functionId(IRefSystemUpgradeable.refLastVersion)^
+                tvm.functionId(IRefSystemUpgradeable.platformCode)^
+                tvm.functionId(IRefSystemUpgradeable.setProjectCode)^
+                tvm.functionId(IRefSystemUpgradeable.setAccountCode)^
+                tvm.functionId(IRefSystemUpgradeable.setRefLastCode)
+            ) || // IRefSystemUpgradeable
+            interfaceID == bytes4(tvm.functionId(IUpgradeable.acceptUpgrade)) || // IRefSystemUpgradeable
+            interfaceID == bytes4(tvm.functionId(IAcceptTokensTransferCallback.onAcceptTokensTransfer)) // IAcceptTokensTransferCallback
         );
     }
     
@@ -80,7 +107,6 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         return _platformCode;
     }
 
-
     function setAccountCode(TvmCell code) override external onlyOwner {
         _accountCode = code;
     }
@@ -90,66 +116,6 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
     function setRefLastCode(TvmCell code) override external onlyOwner {
         _refLastCode = code;
     }
-
-    // function requestUpgradeAccount(uint32 currentVersion, address accountOwner, address remainingGasTo) override external {
-    //     require(msg.sender == _deriveRefAccount(accountOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
-        
-    //     tvm.rawReserve(_reserve(), 0);
-
-    //     if (currentVersion == version_) {
-    //         remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
-    //     } else {
-    //         IUpgradeable(_deriveRefAccount(accountOwner)).acceptUpgrade{
-    //             value: 0,
-    //             flag: MsgFlag.ALL_NOT_RESERVED,
-    //             bounce: false
-    //         }(
-    //             _accountCode,
-    //             currentVersion,
-    //             remainingGasTo
-    //         );
-    //     }
-    // }
-
-    // function requestUpgradeProject(uint32 currentVersion, uint256 projectId, address remainingGasTo) override external {
-    //     require(msg.sender == _deriveProject(projectId) || msg.sender == _refFactory || msg.sender == owner, 400);
-                
-    //     tvm.rawReserve(_reserve(), 0);
-
-    //     if (currentVersion == version_) {
-    //         remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
-    //     } else {
-    //         IUpgradeable(_deriveProject(projectId)).acceptUpgrade{
-    //             value: 0,
-    //             flag: MsgFlag.ALL_NOT_RESERVED,
-    //             bounce: false
-    //         }(
-    //             _projectCode,
-    //             currentVersion,
-    //             remainingGasTo
-    //         );
-    //     }
-    // }
-
-    // function requestUpgradeRefLast(uint32 currentVersion,address refLastOwner, address remainingGasTo) override external {
-    //     require(msg.sender == _deriveRefLast(refLastOwner) || msg.sender == _refFactory || msg.sender == owner, 400);
-                
-    //     tvm.rawReserve(_reserve(), 0);
-
-    //     if (currentVersion == version_) {
-    //         remainingGasTo.transfer({ value: 0, flag: MsgFlag.ALL_NOT_RESERVED });
-    //     } else {
-    //         IUpgradeable(_deriveRefLast(refLastOwner)).acceptUpgrade{
-    //             value: 0,
-    //             flag: MsgFlag.ALL_NOT_RESERVED,
-    //             bounce: false
-    //         }(
-    //             _refLastCode,
-    //             currentVersion,
-    //             remainingGasTo
-    //         );
-    //     }
-    // }
     
 
     function acceptUpgrade(TvmCell code, uint32 currentVersion, address remainingGasTo) override external {
