@@ -327,9 +327,11 @@ describe('Ref Init', function () {
             })
 
             it('should be approved by RefSystem', async function () {
-                await approveProject(project, refSysOwner, refSystem)
+                let { _id: projectId } = await project.methods._id().call()
+                await refSystem.methods.setProjectApproval({ projectId, value: true }).send({from: refSysOwner.address, amount: toNano(0.6)})
                 expect(((await project.methods._isApproved().call())._isApproved)).to.be.true;
             })
+
         })
 
         describe('_deployRefAccount', function () {

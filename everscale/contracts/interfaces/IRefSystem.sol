@@ -28,5 +28,5 @@ interface IRefSystem is IAcceptTokensTransferCallback {
     function setDeployAccountValue(uint128 value) external;
     function setDeployRefLastValue(uint128 value) external;
     function onAcceptTokensTransferPayloadEncoder(uint256 projectId, address referred, address referrer) responsible external returns (TvmCell);
-    function approveProject(uint256 projectId) external;
+    function setProjectApproval(uint256 projectId, bool value) external;
 }

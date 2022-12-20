@@ -212,9 +212,11 @@ abstract contract RefSystemBase is
         return _deployRefLast(owner, lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
     }
 
-    function approveProject(uint256 projectId) override external onlyOwner  {
-        IRefProject(_deriveProject(projectId)).acceptInit();
+    function setProjectApproval(uint256 projectId, bool value) override external onlyOwner  {
+        IRefProject(_deriveProject(projectId)).setApproval(value);
     }
+
+    
 
     function _deriveProject(uint256 id) internal returns (address) {
         return address(tvm.hash(_buildProjectInitData(id)));

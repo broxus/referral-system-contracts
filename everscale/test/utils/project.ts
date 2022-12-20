@@ -42,8 +42,8 @@ export async function deployProject(
 export async function approveProject(project: Contract<FactorySource["Project"]>, refSystemOwner: Account, refSystem: Contract<FactorySource["RefSystemUpgradeable"]>) {
     let { _id } = await project.methods._id().call()
 
-    return refSystem.methods.approveProject({
-        projectId: _id
+    return refSystem.methods.setProjectApproval({
+        projectId: _id, value: true,
     }).send({ from: refSystemOwner.address, amount: locklift.utils.toNano(0.1) })
 }
 

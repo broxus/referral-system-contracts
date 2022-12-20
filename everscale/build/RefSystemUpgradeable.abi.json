@@ -266,9 +266,10 @@
 			]
 		},
 		{
-			"name": "approveProject",
+			"name": "setProjectApproval",
 			"inputs": [
-				{"name":"projectId","type":"uint256"}
+				{"name":"projectId","type":"uint256"},
+				{"name":"value","type":"bool"}
 			],
 			"outputs": [
 			]

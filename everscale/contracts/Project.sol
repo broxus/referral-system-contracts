@@ -130,9 +130,9 @@ contract Project is InternalOwner, IRefProject {
         }
     }
 
-    function acceptInit() override external {
+    function setApproval(bool value) override external {
         require(msg.sender == _refSystem, 400, "Must be RefSystem");
-        _isApproved = true;
+        _isApproved = value;
     }
 
 

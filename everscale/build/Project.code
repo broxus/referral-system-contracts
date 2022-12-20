@@ -538,7 +538,7 @@ CALLREF {
 COMMIT
 THROW 0
 
-.macro acceptInit
+.macro setApproval
 DROP
 GETGLOB 6
 THROWIFNOT 76
@@ -548,10 +548,11 @@ IFREF {
 	CALL $c4_to_c7$
 }
 .loc ../contracts/Project.sol, 133
+LDI 1
 ENDS
 .loc ../contracts/Project.sol, 0
 CALLREF {
-	CALL $acceptInit_internal_macro$
+	CALL $setApproval_internal_macro$
 }
 DROP
 CALLREF {
@@ -559,7 +560,7 @@ CALLREF {
 }
 THROW 0
 
-.macro acceptInit_internal_macro
+.macro setApproval_internal_macro
 .loc ../contracts/Project.sol, 134
 PUSHREF {
 	.blob x4d7573742062652052656653797374656d
@@ -569,7 +570,6 @@ GETGLOB 14
 SDEQ
 THROWARGIFNOT 400
 .loc ../contracts/Project.sol, 135
-TRUE
 SETGLOB 16
 .loc ../contracts/Project.sol, 0
 
@@ -1238,11 +1238,11 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 1729444094
+PUSHINT 1735404542
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 235197086
+	PUSHINT 322087217
 	LEQ
 	IFJMPREF {
 		DUP
@@ -1250,12 +1250,6 @@ IFJMPREF {
 		EQUAL
 		IFJMPREF {
 			CALL $acceptUpgrade$
-		}
-		DUP
-		PUSHINT 202536740
-		EQUAL
-		IFJMPREF {
-			CALL $acceptInit$
 		}
 		DUP
 		PUSHINT 202752988
@@ -1269,17 +1263,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $transferOwnership$
 		}
-	}
-	DUP
-	PUSHINT 365069606
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 322087217
 		EQUAL
 		IFJMPREF {
 			CALL $version$
 		}
+	}
+	DUP
+	PUSHINT 432569655
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 347119463
 		EQUAL
@@ -1298,17 +1292,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_projectFee$
 		}
-	}
-	DUP
-	PUSHINT 962865693
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 432569655
 		EQUAL
 		IFJMPREF {
 			CALL $meta$
 		}
+	}
+	DUP
+	PUSHINT 1508584193
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 788714980
 		EQUAL
@@ -1327,17 +1321,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_id$
 		}
-	}
-	DUP
-	PUSHINT 1729444094
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1508584193
 		EQUAL
 		IFJMPREF {
 			CALL $_refFactory$
 		}
+	}
+	DUP
+	PUSHINT 1735404542
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1594609630
 		EQUAL
@@ -1356,6 +1350,12 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $renounceOwnership$
 		}
+		DUP
+		PUSHINT 1735404542
+		EQUAL
+		IFJMPREF {
+			CALL $_cashbackFee$
+		}
 	}
 }
 DUP
@@ -1363,16 +1363,16 @@ PUSHINT 2035007365
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 1735404542
-	EQUAL
-	IFJMPREF {
-		CALL $_cashbackFee$
-	}
-	DUP
 	PUSHINT 1756716863
 	EQUAL
 	IFJMPREF {
 		CALL $constructor$
+	}
+	DUP
+	PUSHINT 1766765872
+	EQUAL
+	IFJMPREF {
+		CALL $setApproval$
 	}
 	DUP
 	PUSHINT 2035007365

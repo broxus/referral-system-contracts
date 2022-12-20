@@ -62,8 +62,9 @@
 			]
 		},
 		{
-			"name": "acceptInit",
+			"name": "setApproval",
 			"inputs": [
+				{"name":"value","type":"bool"}
 			],
 			"outputs": [
 			]
