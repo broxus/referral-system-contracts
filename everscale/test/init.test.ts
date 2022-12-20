@@ -210,7 +210,7 @@ describe('Ref Init', function () {
                 expect(_isUpgraded).to.be.equal("true")
             })
 
-            it.only('should upgrade multiple targets', async function() {
+            it('should upgrade multiple targets', async function() {
                 let refFactoryOwnerPair = await locklift.keystore.getSigner("0")
                 let refOwnerPair = await locklift.keystore.getSigner("2")
 
@@ -222,7 +222,7 @@ describe('Ref Init', function () {
                 logContract(refSystem, "RefSystem");
                 logContract(refFactory, "RefFactory");
                 
-                let userAccounts = await Promise.all(["4", "5", "6", "7", "8"].map(async v => {
+                let userAccounts = await Promise.all(["4", "5", "6", "7", "8", "9", "10", "11", "12"].map(async v => {
                     let pair = await locklift.keystore.getSigner(v)
                     let user = await deployAccount(pair!, 10);
 
@@ -232,7 +232,7 @@ describe('Ref Init', function () {
                 await refSystem.methods.deployRefAccount({
                     recipients: userAccounts.map(a => a.address),
                     tokenWallet: zeroAddress,
-                    rewards: [12,12,12],
+                    rewards: userAccounts.map(() => 12),
                     sender: refSysOwner.address,
                     remainingGasTo: refSysOwner.address
                 }).send({ from: refSysOwner.address, amount: toNano(16) })
