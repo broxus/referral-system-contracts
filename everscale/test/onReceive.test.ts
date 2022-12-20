@@ -171,8 +171,8 @@ describe('RefSystem On Receive', function () {
         describe('RefAccount with Balance', function () {
             it('should allow account to claim reward', async function () {
                 const getBalances = async (refAccount: Contract<FactorySource['RefAccount']>) => {
-                    let { _tokenBalance: arr } = await refAccount.methods._tokenBalance().call()
-                    return Number(fromNano(arr[0][1]))
+                    let { _tokenBalance } = await refAccount.methods._tokenBalance().call()
+                    return new Map(_tokenBalance.map(([k,v]) => [k.toString(), Number(v)]));
                 }
 
                 let bobAccountBalance = await getBalances(bobRefAccount)
@@ -186,7 +186,7 @@ describe('RefSystem On Receive', function () {
 
                 logContract(bobWallet, 'bobWallet')
                 let { value0: bobWalletBalance } = await bobWallet.methods.balance({ answerId: 0 }).call()
-                expect(bobWalletBalance).to.be.bignumber.equal(toNano(bobAccountBalance))
+                expect(bobWalletBalance).to.be.bignumber.equal(bobAccountBalance.get(refSystemWallet.address.toString())!)
             })
 
             it('should zero out after claim', async function () {

@@ -119,7 +119,7 @@ contract RefAccount is IUpgradeable {
             version_,
             firstWallet,
             firstReward,
-            // remainingGasTo,
+            remainingGasTo,
             _platformCode
         ) = abi.decode(data,(
             address,
@@ -128,7 +128,7 @@ contract RefAccount is IUpgradeable {
             uint32,
             address,
             uint128,
-            // address,
+            address,
             TvmCell
         ));
 
@@ -151,7 +151,7 @@ contract RefAccount is IUpgradeable {
     ) public onlyOwner {
         uint128 amount = _tokenBalance[tokenWallet];
         delete _tokenBalance[tokenWallet];
-        IRefSystem(_refSystem).requestTransfer{flag: MsgFlag.REMAINING_GAS}(owner, tokenWallet, amount, remainingGasTo, notify, payload);
+        IRefSystem(_refSystem).requestTransfer{flag: MsgFlag.ALL_NOT_RESERVED, value: 0}(owner, tokenWallet, amount, remainingGasTo, notify, payload);
     }
 
 }

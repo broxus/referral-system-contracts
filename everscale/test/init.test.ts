@@ -210,7 +210,7 @@ describe('Ref Init', function () {
                 expect(_isUpgraded).to.be.equal("true")
             })
 
-            it('should upgrade multiple targets', async function() {
+            it.only('should upgrade multiple targets', async function() {
                 let refFactoryOwnerPair = await locklift.keystore.getSigner("0")
                 let refOwnerPair = await locklift.keystore.getSigner("2")
 

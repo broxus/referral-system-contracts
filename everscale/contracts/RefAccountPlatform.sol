@@ -54,7 +54,7 @@ contract RefAccountPlatform {
             initVersion,
             tokenWallet,
             reward,
-            // remainingGasTo,
+            remainingGasTo,
             tvm.code()
         );
 
