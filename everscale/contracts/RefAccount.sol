@@ -91,7 +91,6 @@ contract RefAccount is IUpgradeable {
                 _refFactory,
                 _refSystem,
                 owner,
-                _refFactory,
                 version_,
                 newVersion,
                 _tokenBalance,
@@ -114,7 +113,7 @@ contract RefAccount is IUpgradeable {
         address remainingGasTo;
         (
             _refFactory,
-            _refSystem,
+            _refSystem, 
             owner,
             version_,
             firstWallet,

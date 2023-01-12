@@ -121,6 +121,14 @@ abstract contract RefSystemBase is
         // If Amount or Project Invalid, simply receive full reward
         if(!isApproved || (uint(BPS) < uint(_systemFee) + uint(projectFee) + uint(cashback))) {
             _deployRefAccount(owner, tokenWallet, amount, sender, remainingGasTo);
+
+            if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+                remainingGasTo.transfer({
+                    value: 0,
+                    flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                    bounce: false
+                });
+            }
             return;
         }
 
@@ -221,12 +229,11 @@ abstract contract RefSystemBase is
         uint128[] rewards,
         address sender,
         address remainingGasTo
-    ) external onlyOwner returns (address) {
+    ) external onlyOwner returns (address[] accounts) {
         tvm.rawReserve(_reserve(), 2);
-
         require(recipients.length == rewards.length, 405, "Invalid Params");
         for (uint256 i = 0; i < recipients.length; i++) {
-            _deployRefAccount(recipients[i], tokenWallet, rewards[i], sender, remainingGasTo);
+            accounts.push(_deployRefAccount(recipients[i], tokenWallet, rewards[i], sender, remainingGasTo));
         }
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
@@ -246,8 +253,15 @@ abstract contract RefSystemBase is
         uint128 lastRefReward,
         address sender,
         address remainingGasTo
-    ) external onlyOwner returns (address) {
-        return _deployRefLast(owner, lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
+    ) external onlyOwner returns (address refLast) {
+        refLast = _deployRefLast(owner, lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 
     function setProjectApproval(uint256 projectId, bool value) override external onlyOwner  {

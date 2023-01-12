@@ -53,8 +53,8 @@ export async function deployRefSystem(
     systemFee: string | number,
     onDeploy: string | number = toNano(2),
     deployProjectValue: string | number = toNano(1),
-    deployAccountValue: string | number = toNano(0.4),
-    deployRefLastValue: string | number = toNano(0.4),
+    deployAccountValue: string | number = toNano(0.05),
+    deployRefLastValue: string | number = toNano(0.1),
     projectVersion: number = 0,
     accountVersion: number = 0,
     refLastVersion: number = 0) {

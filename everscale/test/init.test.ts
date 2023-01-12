@@ -3,7 +3,7 @@ import { afterRun, logContract, deployRefFactory, deployAccount, deriveRef, depl
 import { FactorySource } from "../build/factorySource";
 
 import logger from "mocha-logger"
-import { Contract, toNano, zeroAddress } from "locklift";
+import { Contract, fromNano, toNano, zeroAddress } from "locklift";
 import { Account } from "everscale-standalone-client";
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
@@ -377,6 +377,8 @@ describe('Ref Init', function () {
                 let refFactory = await deployRefFactory(refFactoryOwner)
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 logContract(refSystem, 'refSystem')
+                let prev_balance = Number(await locklift.provider.getBalance(refSysOwner.address))
+
                 await refSystem.methods.deployRefLast({
                     owner: refSysOwner.address,
                     lastRefWallet: zeroAddress,
@@ -385,8 +387,9 @@ describe('Ref Init', function () {
                     lastRefReward: 0,
                     sender: zeroAddress,
                     remainingGasTo: refSysOwner.address
-                }).send({ from: refSysOwner.address, amount: toNano(2) })
-
+                }).send({ from: refSysOwner.address, amount: toNano(0.6) })
+                let new_balance = Number(await locklift.provider.getBalance(refSysOwner.address))
+                logger.log(prev_balance, new_balance, fromNano(prev_balance - new_balance))
                 let { value0: refLastAddr } = await refSystem.methods.deriveRefLast({ answerId: 0, owner: refSysOwner.address }).call()
                 let refLast = locklift.factory.getDeployedContract("RefLast", refLastAddr)
                 logContract(refLast, 'refLast')
@@ -423,17 +426,29 @@ describe('Ref Init', function () {
                     manager: projectManager.address
                 }).send({from: projectOwner.address, amount: toNano(0.6)});
 
+
+                let prev_balance = Number(await locklift.provider.getBalance(projectManager.address))
+                let p_prev_balance = Number(await locklift.provider.getBalance(project.address))
+                let s_prev_balance = Number(await locklift.provider.getBalance(refSystem.address))
+                
                 await project.methods.onRefLastUpdate({
                     tokenWallet: zeroAddress,
                     referred: zeroAddress,
                     referrer: project.address,
                     amount: 123,
                     remainingGasTo: projectManager.address
-                }).send({from: projectManager.address, amount: toNano(1)})
+                }).send({from: projectManager.address, amount: toNano(0.5)})
+                
+                let s_new_balance = Number(await locklift.provider.getBalance(refSystem.address))
 
+                let p_new_balance = Number(await locklift.provider.getBalance(project.address))
+                let new_balance = Number(await locklift.provider.getBalance(projectManager.address))
+                
+                logger.log(prev_balance+p_prev_balance, p_new_balance+new_balance, fromNano((prev_balance+p_prev_balance+s_prev_balance) - (s_new_balance + new_balance + p_new_balance)))
+                
                 let {value0: refLastAddr} = await refSystem.methods.deriveRefLast({answerId: 0, owner: project.address}).call()
                 let refLast = locklift.factory.getDeployedContract("RefLast", refLastAddr)
-
+                logContract(refLast, 'RefLast')
                 let {_owner} = await refLast.methods._owner().call()
                 expect(_owner.equals(project.address)).to.be.true
             })

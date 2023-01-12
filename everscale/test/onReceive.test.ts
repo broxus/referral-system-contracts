@@ -239,15 +239,22 @@ describe('RefSystem On Receive', function () {
                     answerId: 0
                 }).call();
 
+                const get_bal = async (addr: Address) => Number(await locklift.provider.getBalance(addr))
+                
+                let app_bal_p = await get_bal(app.address)
+                let sys_bal_p = await get_bal(refSystem.address)
+                let proj_bal_p = await get_bal(project.address)
+
+
                 // Run Wallet
                 await appWallet.methods.transfer({
                     amount: param.REWARD,
                     recipient: refSystem.address,
-                    deployWalletValue: toNano(2),
+                    deployWalletValue: toNano(0.008),
                     remainingGasTo: app.address,
                     notify: true, // Must Be Set to Trigger Project#onAcceptTokensTransfer
                     payload
-                }).send({ from: app.address, amount: toNano(10) })
+                }).send({ from: app.address, amount: toNano(0.3) })
 
                 const getBalances = async (acc: Account) => {
                     let { value0: addr } = await refSystem.methods.deriveRefAccount({ owner: acc.address, answerId: 0 }).call()
@@ -265,8 +272,20 @@ describe('RefSystem On Receive', function () {
                 let {value0: bobRefLastAddr} = await refSystem.methods.deriveRefLast({answerId: 0, owner: bob.address}).call();
                 let bobRefLast = locklift.factory.getDeployedContract("RefLast", bobRefLastAddr)
                 logContract(bobRefLast, "refLast")
-                // let {reward: lastReward} = await bobRefLast.methods.meta({answerId: 0}).call()
+                logContract(refSystem, "refSys")
 
+                // let {reward: lastReward} = await bobRefLast.methods.meta({answerId: 0}).call()
+                
+                let app_bal_n = await get_bal(app.address)
+                let sys_bal_n = await get_bal(refSystem.address)
+                let wall_bal_n = await get_bal(refSystemWallet.address)
+                let proj_bal_n = await get_bal(project.address)
+
+                logger.log(`Prev: ${fromNano(app_bal_p)}, new: ${fromNano(app_bal_n)}, diff: ${fromNano(-app_bal_p + app_bal_n)}`)
+                // console.log(`Prev: ${fromNano(sys_bal_p)}, new: ${fromNano(sys_bal_n)}, diff: ${fromNano(-sys_bal_p + sys_bal_n)}`)
+                // console.log(`Prev: ${fromNano(proj_bal_p)}, new: ${fromNano(proj_bal_n)}, diff: ${fromNano(-proj_bal_p + proj_bal_n)}`)
+                
+                logger.log(`Wallet ${wall_bal_n}`)
                 expect(refSysOwnerBalance).to.be.equal(param.EXPECTED.REFSYS)
                 expect(bobBalance).to.be.equal(param.EXPECTED.REFERRER)
                 expect(aliceBalance).to.be.equal(param.EXPECTED.CASHBACK)

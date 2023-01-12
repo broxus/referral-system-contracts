@@ -260,7 +260,7 @@
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
+				{"name":"accounts","type":"address[]"}
 			]
 		},
 		{
@@ -275,7 +275,7 @@
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
-				{"name":"value0","type":"address"}
+				{"name":"refLast","type":"address"}
 			]
 		},
 		{
