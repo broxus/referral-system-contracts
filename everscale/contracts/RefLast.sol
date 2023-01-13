@@ -21,23 +21,19 @@ contract RefLast is IRefLast {
 
     address public _lastReferrer;
     address public _lastReferred;
-    address public _lastRefWallet;
-    uint128 public _lastRefReward;
     uint64 public _lastRefUpdate;
 
     constructor() public {
         revert();
     }
 
-    function onDeployOrUpdate(TvmCell, uint32, address, address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo) 
+    function onDeployOrUpdate(TvmCell, uint32, address, address lastReferred, address lastReferrer, address sender, address remainingGasTo) 
     external
     functionID(0x15A038FB)
     {
         require(msg.sender == _refSystem, 400, "Must be RefSystem");
-        _lastRefWallet = lastRefWallet;
         _lastReferred = lastReferred;
         _lastReferrer = lastReferrer;
-        _lastRefReward = lastRefReward;
         _lastRefUpdate = block.timestamp;
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
@@ -53,11 +49,9 @@ contract RefLast is IRefLast {
         return version_;
     }
 
-    function meta() override responsible external returns (address wallet, address referred, address referrer, uint128 reward, uint64 time) {
-        wallet = _lastRefWallet;
+    function meta() override responsible external returns (address referred, address referrer, uint64 time) {
         referred = _lastReferred;
         referrer = _lastReferrer;
-        reward = _lastRefReward;
         time = _lastRefUpdate;
     }
 
@@ -97,10 +91,8 @@ contract RefLast is IRefLast {
                 _owner,
                 version_,
                 newVersion,
-                _lastRefWallet,
                 _lastReferred,
                 _lastReferrer,
-                _lastRefReward,
                 remainingGasTo,
                 _platformCode
             );
@@ -122,13 +114,11 @@ contract RefLast is IRefLast {
         _owner,
         oldVersion,
         version_,
-        _lastRefWallet,
         _lastReferred,
         _lastReferrer,
-        _lastRefReward,
         remainingGasTo,
         _platformCode
-        ) = abi.decode(data,(address,address,address,uint32,uint32,address,address,address,uint128,address,TvmCell));
+        ) = abi.decode(data,(address,address,address,uint32,uint32,address,address,address,TvmCell));
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({

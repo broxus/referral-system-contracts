@@ -9,12 +9,12 @@ contract RefLastPlatform {
     address static root;
     address static owner;
 
-    constructor(TvmCell initCode, uint32 initVersion, address refFactory, address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address sender, address remainingGasTo)
+    constructor(TvmCell initCode, uint32 initVersion, address refFactory, address lastReferred, address lastReferrer, address sender, address remainingGasTo)
         public
         functionID(0x15A038FB)
     {   
         if (msg.sender == root) {
-           initialize(initCode, initVersion, refFactory, lastRefWallet, lastReferred, lastReferrer, lastRefReward, remainingGasTo);
+           initialize(initCode, initVersion, refFactory, lastReferred, lastReferrer, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -38,7 +38,7 @@ contract RefLastPlatform {
         return address(tvm.hash(stateInit));
     }
 
-    function initialize(TvmCell initCode, uint32 initVersion, address refFactory, address lastRefWallet, address lastReferred, address lastReferrer, uint128 lastRefReward, address remainingGasTo) private {
+    function initialize(TvmCell initCode, uint32 initVersion, address refFactory, address lastReferred, address lastReferrer, address remainingGasTo) private {
         
         TvmCell inputData = abi.encode(
             refFactory, 
@@ -46,10 +46,8 @@ contract RefLastPlatform {
             owner,
             uint32(0),
             initVersion,
-            lastRefWallet,
             lastReferred,
             lastReferrer,
-            lastRefReward,
             remainingGasTo,
             tvm.code()
         );

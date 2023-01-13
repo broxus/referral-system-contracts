@@ -185,10 +185,8 @@
 			"name": "updateRefLast",
 			"inputs": [
 				{"name":"projectId","type":"uint256"},
-				{"name":"tokenWallet","type":"address"},
 				{"name":"referred","type":"address"},
 				{"name":"referrer","type":"address"},
-				{"name":"amount","type":"uint128"},
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
@@ -267,10 +265,8 @@
 			"name": "deployRefLast",
 			"inputs": [
 				{"name":"owner","type":"address"},
-				{"name":"lastRefWallet","type":"address"},
 				{"name":"lastReferred","type":"address"},
 				{"name":"lastReferrer","type":"address"},
-				{"name":"lastRefReward","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],

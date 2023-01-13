@@ -207,7 +207,7 @@ PUSHINT 455681131
 XOR
 PUSHINT 878864287
 XOR
-PUSHINT 108646449
+PUSHINT 367953398
 XOR
 EQUAL
 PUSH S2
@@ -1720,11 +1720,6 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
-LDU 128
-LDREF
-ENDS
-CTOS
-LDMSGADDR
 ENDS
 .loc ../contracts/abstract/RefSystemBase.sol, 0
 CALLREF {
@@ -1748,19 +1743,19 @@ PUSHREF {
 	.blob x4d7573742062652056616c69642050726f6a656374
 }
 GETGLOB 9
-ROLL 7
+ROLL 5
 CALLREF {
 	CALL $_deriveProject_internal_macro$
 }
 SDEQ
 THROWARGIFNOT 400
 .loc ../contracts/abstract/RefSystemBase.sol, 166
-PUSH S2
-BLKSWAP 4, 2
+OVER
+SWAP2
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-PUSH S6
+PUSH S4
 CALLREF {
 	CALL $_deployRefLast_internal_macro$
 }
@@ -2527,11 +2522,6 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
-LDU 128
-LDREF
-ENDS
-CTOS
-LDMSGADDR
 LDREF
 ENDS
 CTOS
@@ -2556,7 +2546,7 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST x8ee5ff40
+	STSLICECONST xfd98026d
 	STSLICE
 	STBREFR
 	ENDC
@@ -2589,13 +2579,13 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/abstract/RefSystemBase.sol, 257
-ROLLREV 6
-PUSH S6
+.loc ../contracts/abstract/RefSystemBase.sol, 256
+ROLLREV 4
+PUSH S4
 CALLREF {
 	CALL $_deployRefLast_internal_macro$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 258
+.loc ../contracts/abstract/RefSystemBase.sol, 257
 OVER
 PARSEMSGADDR
 INDEX 3
@@ -2607,7 +2597,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/abstract/RefSystemBase.sol, 259
+	.loc ../contracts/abstract/RefSystemBase.sol, 258
 	OVER
 	NEWC
 	STSLICECONST x42_
@@ -2634,7 +2624,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/abstract/RefSystemBase.sol, 267
+.loc ../contracts/abstract/RefSystemBase.sol, 266
 OVER
 PUSHCONT {
 	LDREF
@@ -2671,7 +2661,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/abstract/RefSystemBase.sol, 268
+.loc ../contracts/abstract/RefSystemBase.sol, 267
 SWAP
 CALLREF {
 	CALL $_deriveProject_internal_macro$
@@ -2692,7 +2682,7 @@ SENDRAWMSG
 CALL $_deriveProject_internal_macro$
 
 .macro _deriveProject_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 273
+.loc ../contracts/abstract/RefSystemBase.sol, 272
 CALLREF {
 	CALL $_buildProjectInitData_internal_macro$
 }
@@ -2709,7 +2699,7 @@ CTOS
 CALL $_deriveRefAccount_internal_macro$
 
 .macro _deriveRefAccount_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 277
+.loc ../contracts/abstract/RefSystemBase.sol, 276
 CALLREF {
 	CALL $_buildRefAccountInitData_internal_macro$
 }
@@ -2726,7 +2716,7 @@ CTOS
 CALL $_deriveRefLast_internal_macro$
 
 .macro _deriveRefLast_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 281
+.loc ../contracts/abstract/RefSystemBase.sol, 280
 CALLREF {
 	CALL $_buildRefLastInitData_internal_macro$
 }
@@ -2743,7 +2733,7 @@ CTOS
 CALL $_deployRefAccount_internal_macro$
 
 .macro _deployRefAccount_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 291
+.loc ../contracts/abstract/RefSystemBase.sol, 290
 REVERSE 4, 0
 GETGLOB 14
 GETGLOB 11
@@ -2828,12 +2818,12 @@ SENDRAWMSG
 CALL $_deployRefLast_internal_macro$
 
 .macro _deployRefLast_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 309
-REVERSE 6, 0
+.loc ../contracts/abstract/RefSystemBase.sol, 306
+REVERSE 4, 0
 GETGLOB 14
 GETGLOB 11
 GETGLOB 15
-ROLL 9
+ROLL 7
 CALLREF {
 	CALL $_buildRefLastInitData_internal_macro$
 }
@@ -2848,9 +2838,9 @@ STI 8
 STU 256
 ENDC
 CTOS
-ROLLREV 10
+ROLLREV 8
 GETGLOB 22
-PUSH S11
+PUSH S9
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -2883,29 +2873,24 @@ CALLREF {
 }
 STREF
 STSLICECONST 1
-ROLLREV 9
+ROLLREV 7
 NEWC
 STSLICECONST x15a038fb
 STREF
 STU 32
 STSLICE
-ROLLREV 6
-NEWC
-STSLICE
-ROLLREV 5
-NEWC
-STSLICE
 ROLLREV 4
 NEWC
 STSLICE
-STU 128
+ROLLREV 3
+NEWC
+STSLICE
 ROTREV
 NEWC
 STSLICE
 SWAP
 NEWC
 STSLICE
-STBREFR
 STBREFR
 STBREFR
 STBREFR
@@ -2921,7 +2906,7 @@ SENDRAWMSG
 CALL $_buildProjectInitData_internal_macro$
 
 .macro _buildProjectInitData_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 319
+.loc ../contracts/abstract/RefSystemBase.sol, 316
 PUSHINT 0
 NEWC
 STU 256
@@ -2958,7 +2943,7 @@ ENDC
 CALL $_buildRefLastInitData_internal_macro$
 
 .macro _buildRefLastInitData_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 330
+.loc ../contracts/abstract/RefSystemBase.sol, 327
 PUSHINT 0
 NEWC
 STU 256
@@ -2993,7 +2978,7 @@ ENDC
 CALL $_buildRefAccountInitData_internal_macro$
 
 .macro _buildRefAccountInitData_internal_macro
-.loc ../contracts/abstract/RefSystemBase.sol, 342
+.loc ../contracts/abstract/RefSystemBase.sol, 339
 PUSHINT 0
 NEWC
 STU 256
@@ -3677,11 +3662,11 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 878864287
+PUSHINT 929221964
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 185307145
+	PUSHINT 193321984
 	LEQ
 	IFJMPREF {
 		DUP
@@ -3697,28 +3682,22 @@ IFJMPREF {
 			CALL $acceptUpgrade$
 		}
 		DUP
-		PUSHINT 108646449
-		EQUAL
-		IFJMPREF {
-			CALL $updateRefLast$
-		}
-		DUP
 		PUSHINT 185307145
 		EQUAL
 		IFJMPREF {
 			CALL $requestTransfer$
 		}
-	}
-	DUP
-	PUSHINT 252364770
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 193321984
 		EQUAL
 		IFJMPREF {
 			CALL $_accountCode$
 		}
+	}
+	DUP
+	PUSHINT 327968396
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 235197086
 		EQUAL
@@ -3726,22 +3705,11 @@ IFJMPREF {
 			CALL $transferOwnership$
 		}
 		DUP
-		PUSHINT 249954112
-		EQUAL
-		IFJMPREF {
-			CALL $deployRefLast$
-		}
-		DUP
 		PUSHINT 252364770
 		EQUAL
 		IFJMPREF {
 			CALL $projectVersion$
 		}
-	}
-	DUP
-	PUSHINT 362821883
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 322087217
 		EQUAL
@@ -3754,6 +3722,11 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_projectCode$
 		}
+	}
+	DUP
+	PUSHINT 415767192
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 347119463
 		EQUAL
@@ -3766,17 +3739,23 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $onDeployOrUpdate$
 		}
-	}
-	DUP
-	PUSHINT 878864287
-	LEQ
-	IFJMPREF {
+		DUP
+		PUSHINT 367953398
+		EQUAL
+		IFJMPREF {
+			CALL $updateRefLast$
+		}
 		DUP
 		PUSHINT 415767192
 		EQUAL
 		IFJMPREF {
 			CALL $_projectCounter$
 		}
+	}
+	DUP
+	PUSHINT 929221964
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 455681131
 		EQUAL
@@ -3795,22 +3774,22 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $setProjectApproval$
 		}
-	}
-}
-DUP
-PUSHINT 1596482896
-LEQ
-IFJMPREF {
-	DUP
-	PUSHINT 1081409323
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 929221964
 		EQUAL
 		IFJMPREF {
 			CALL $deployRefAccount$
 		}
+	}
+}
+DUP
+PUSHINT 1729444094
+LEQ
+IFJMPREF {
+	DUP
+	PUSHINT 1164997441
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1003205163
 		EQUAL
@@ -3829,17 +3808,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $setDeployAccountValue$
 		}
-	}
-	DUP
-	PUSHINT 1226375060
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1164997441
 		EQUAL
 		IFJMPREF {
 			CALL $deriveRefLast$
 		}
+	}
+	DUP
+	PUSHINT 1250554856
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1172846727
 		EQUAL
@@ -3858,17 +3837,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_accountPlatformCode$
 		}
-	}
-	DUP
-	PUSHINT 1508584193
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1250554856
 		EQUAL
 		IFJMPREF {
 			CALL $_refLastPlatformCode$
 		}
+	}
+	DUP
+	PUSHINT 1534344756
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1394806608
 		EQUAL
@@ -3887,17 +3866,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_refFactory$
 		}
-	}
-	DUP
-	PUSHINT 1596482896
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1534344756
 		EQUAL
 		IFJMPREF {
 			CALL $refLastVersion$
 		}
+	}
+	DUP
+	PUSHINT 1729444094
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1541354545
 		EQUAL
@@ -3916,6 +3895,12 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_refLastCode$
 		}
+		DUP
+		PUSHINT 1729444094
+		EQUAL
+		IFJMPREF {
+			CALL $renounceOwnership$
+		}
 	}
 }
 DUP
@@ -3923,15 +3908,9 @@ PUSHINT 2114557421
 LEQ
 IFJMPREF {
 	DUP
-	PUSHINT 1874348765
+	PUSHINT 1893244873
 	LEQ
 	IFJMPREF {
-		DUP
-		PUSHINT 1729444094
-		EQUAL
-		IFJMPREF {
-			CALL $renounceOwnership$
-		}
 		DUP
 		PUSHINT 1756716863
 		EQUAL
@@ -3950,17 +3929,17 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $_projectPlatformCode$
 		}
-	}
-	DUP
-	PUSHINT 2101529068
-	LEQ
-	IFJMPREF {
 		DUP
 		PUSHINT 1893244873
 		EQUAL
 		IFJMPREF {
 			CALL $onAcceptTokensTransfer$
 		}
+	}
+	DUP
+	PUSHINT 2103634091
+	LEQ
+	IFJMPREF {
 		DUP
 		PUSHINT 1961550479
 		EQUAL
@@ -3979,16 +3958,22 @@ IFJMPREF {
 		IFJMPREF {
 			CALL $setAccountCode$
 		}
+		DUP
+		PUSHINT 2103634091
+		EQUAL
+		IFJMPREF {
+			CALL $deriveProject$
+		}
 	}
 	DUP
 	PUSHINT 2114557421
 	LEQ
 	IFJMPREF {
 		DUP
-		PUSHINT 2103634091
+		PUSHINT 2107114093
 		EQUAL
 		IFJMPREF {
-			CALL $deriveProject$
+			CALL $deployRefLast$
 		}
 		DUP
 		PUSHINT 2114557421

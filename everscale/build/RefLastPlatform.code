@@ -37,11 +37,6 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
-LDU 128
-LDREF
-ENDS
-CTOS
-LDMSGADDR
 LDREF
 ENDS
 CTOS
@@ -53,8 +48,8 @@ GETGLOB 10
 SDEQ
 PUSHCONT {
 	.loc ../contracts/RefLastPlatform.sol, 17
-	BLKPUSH 7, 8
-	PUSH S7
+	BLKPUSH 5, 6
+	PUSH S5
 	CALLREF {
 		CALL $initialize_internal_macro$
 	}
@@ -75,7 +70,7 @@ PUSHCONT {
 }
 IFELSE
 .loc ../contracts/RefLastPlatform.sol, 0
-BLKDROP 9
+BLKDROP 7
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -152,32 +147,28 @@ STSLICECONST x8adb35
 STREF
 STSLICE
 ENDC
-ROLL 6
-REVERSE 8, 0
+ROLL 4
+REVERSE 6, 0
 PUSHINT 0
 GETGLOB 11
 GETGLOB 10
-ROLL 10
+ROLL 8
 NEWC
 STSLICE
-ROLLREV 10
+ROLLREV 8
 NEWC
 STSLICE
-ROLLREV 9
+ROLLREV 7
 NEWC
 STSLICE
 STU 32
 STU 32
-ROLLREV 6
-NEWC
-STSLICE
-ROLLREV 5
-NEWC
-STSLICE
 ROLLREV 4
 NEWC
 STSLICE
-STU 128
+ROLLREV 3
+NEWC
+STSLICE
 ROTREV
 NEWC
 STSLICE
@@ -187,12 +178,11 @@ STBREFR
 STBREFR
 STBREFR
 STBREFR
-STBREFR
 ENDC
-.loc ../contracts/RefLastPlatform.sol, 57
+.loc ../contracts/RefLastPlatform.sol, 55
 OVER
 SETCODE
-.loc ../contracts/RefLastPlatform.sol, 58
+.loc ../contracts/RefLastPlatform.sol, 56
 SWAP
 CTOS
 DUP
@@ -207,7 +197,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/RefLastPlatform.sol, 60
+.loc ../contracts/RefLastPlatform.sol, 58
 CALLREF {
 	CALL $:onCodeUpgrade$
 }

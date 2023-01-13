@@ -156,8 +156,8 @@ contract Project is InternalOwner, IRefProject {
         return {value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(_isApproved, owner, _cashbackFee, _projectFee, payload);
     }
 
-    function onRefLastUpdate(address tokenWallet, address referred, address referrer, uint128 amount, address remainingGasTo) override external {
+    function onRefLastUpdate(address referred, address referrer, address remainingGasTo) override external {
         require(msg.sender == _manager && _isApproved, 400, "Must be Manager");
-        IRefSystem(_refSystem).updateRefLast{flag: MsgFlag.ALL_NOT_RESERVED}(_id, tokenWallet, referred, referrer, amount, remainingGasTo);
+        IRefSystem(_refSystem).updateRefLast{flag: MsgFlag.ALL_NOT_RESERVED}(_id,referred, referrer, remainingGasTo);
     }
 }

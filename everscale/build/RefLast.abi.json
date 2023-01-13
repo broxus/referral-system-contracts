@@ -17,10 +17,8 @@
 				{"name":"value0","type":"cell"},
 				{"name":"value1","type":"uint32"},
 				{"name":"value2","type":"address"},
-				{"name":"lastRefWallet","type":"address"},
 				{"name":"lastReferred","type":"address"},
 				{"name":"lastReferrer","type":"address"},
-				{"name":"lastRefReward","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
@@ -42,10 +40,8 @@
 				{"name":"answerId","type":"uint32"}
 			],
 			"outputs": [
-				{"name":"wallet","type":"address"},
 				{"name":"referred","type":"address"},
 				{"name":"referrer","type":"address"},
-				{"name":"reward","type":"uint128"},
 				{"name":"time","type":"uint64"}
 			]
 		},
@@ -109,22 +105,6 @@
 			]
 		},
 		{
-			"name": "_lastRefWallet",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_lastRefWallet","type":"address"}
-			]
-		},
-		{
-			"name": "_lastRefReward",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_lastRefReward","type":"uint128"}
-			]
-		},
-		{
 			"name": "_lastRefUpdate",
 			"inputs": [
 			],
@@ -148,8 +128,6 @@
 		{"name":"_owner","type":"address"},
 		{"name":"_lastReferrer","type":"address"},
 		{"name":"_lastReferred","type":"address"},
-		{"name":"_lastRefWallet","type":"address"},
-		{"name":"_lastRefReward","type":"uint128"},
 		{"name":"_lastRefUpdate","type":"uint64"}
 	]
 }

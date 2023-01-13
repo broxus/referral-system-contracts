@@ -185,10 +185,8 @@ describe('Ref Init', function () {
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
                 await refSystem.methods.deployRefLast({
                     owner: refSysOwner.address,
-                    lastRefWallet: zeroAddress,
                     lastReferred: zeroAddress,
                     lastReferrer: zeroAddress,
-                    lastRefReward: 0,
                     sender: zeroAddress,
                     remainingGasTo: refSysOwner.address
                 }).send({ from: refSysOwner.address, amount: toNano(2) })
@@ -381,10 +379,8 @@ describe('Ref Init', function () {
 
                 await refSystem.methods.deployRefLast({
                     owner: refSysOwner.address,
-                    lastRefWallet: zeroAddress,
                     lastReferred: zeroAddress,
                     lastReferrer: zeroAddress,
-                    lastRefReward: 0,
                     sender: zeroAddress,
                     remainingGasTo: refSysOwner.address
                 }).send({ from: refSysOwner.address, amount: toNano(0.6) })
@@ -432,12 +428,10 @@ describe('Ref Init', function () {
                 let s_prev_balance = Number(await locklift.provider.getBalance(refSystem.address))
                 
                 await project.methods.onRefLastUpdate({
-                    tokenWallet: zeroAddress,
                     referred: zeroAddress,
                     referrer: project.address,
-                    amount: 123,
                     remainingGasTo: projectManager.address
-                }).send({from: projectManager.address, amount: toNano(0.5)})
+                }).send({from: projectManager.address, amount: toNano(0.15)})
                 
                 let s_new_balance = Number(await locklift.provider.getBalance(refSystem.address))
 

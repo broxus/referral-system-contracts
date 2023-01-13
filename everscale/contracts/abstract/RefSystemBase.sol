@@ -159,11 +159,11 @@ abstract contract RefSystemBase is
         }
     }
 
-    function updateRefLast(uint256 projectId, address tokenWallet, address referred, address referrer, uint128 amount, address remainingGasTo) override external {
+    function updateRefLast(uint256 projectId, address referred, address referrer, address remainingGasTo) override external {
         tvm.rawReserve(_reserve(), 2);
         
         require(msg.sender == _deriveProject(projectId), 400, "Must be Valid Project");
-        _deployRefLast(referrer, tokenWallet, referred, referrer, amount, address(0), remainingGasTo);
+        _deployRefLast(referrer, referred, referrer, address(0), remainingGasTo);
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
@@ -247,14 +247,13 @@ abstract contract RefSystemBase is
 
     function deployRefLast(
         address owner,
-        address lastRefWallet,
         address lastReferred,
         address lastReferrer,
-        uint128 lastRefReward,
+
         address sender,
         address remainingGasTo
     ) external onlyOwner returns (address refLast) {
-        refLast = _deployRefLast(owner, lastRefWallet,lastReferred,lastReferrer,lastRefReward,sender,remainingGasTo);
+        refLast = _deployRefLast(owner,lastReferred,lastReferrer,sender,remainingGasTo);
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
                 value: 0,
@@ -299,10 +298,8 @@ abstract contract RefSystemBase is
     
     function _deployRefLast(
         address owner,
-        address lastRefWallet,
         address lastReferred,
         address lastReferrer,
-        uint128 lastRefReward,
         address sender,
         address remainingGasTo
     ) internal returns (address) {
@@ -312,7 +309,7 @@ abstract contract RefSystemBase is
             wid: address(this).wid,
             flag: 0,
             bounce: true
-        }(_refLastCode, version_, _refFactory, lastRefWallet, lastReferred, lastReferrer, lastRefReward, sender, remainingGasTo);
+        }(_refLastCode, version_, _refFactory, lastReferred, lastReferrer, sender, remainingGasTo);
     }
 
     function _buildProjectInitData(uint256 id) internal returns (TvmCell) {

@@ -5,9 +5,7 @@ import "./IUpgradeable.sol";
 
 interface IRefLast is IVersioned, IUpgradeable{
     function meta() responsible external returns (
-        address wallet,
         address referred,
         address referrer,
-        uint128 reward,
         uint64 time);
 }
