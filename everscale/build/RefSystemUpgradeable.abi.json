@@ -413,7 +413,10 @@
 				{"name":"tokenWallet","type":"address"},
 				{"name":"referred","type":"address"},
 				{"name":"referrer","type":"address"},
-				{"name":"amount","type":"uint128"}
+				{"name":"amount","type":"uint128"},
+				{"name":"systemReward","type":"uint128"},
+				{"name":"projectReward","type":"uint128"},
+				{"name":"cashBackReward","type":"uint128"}
 			],
 			"outputs": [
 			]

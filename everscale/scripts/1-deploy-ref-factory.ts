@@ -24,10 +24,13 @@ const schema = {
 
 async function main() {
   console.log("Deploying RefFactory:")
+  console.log(`Giver Address: ${locklift.giver}`)
   prompt.start()
   let {owner, value, randomNonce} = await prompt.get(schema)
+  console.log(value + ' ' + toNano(value))
   let ownerAddr = new Address(owner);
   const signer = (await locklift.keystore.getSigner("0"))!;
+  
   console.log(`Deploying RefFactory using Signer: ${signer.publicKey} with ${value} Ever to owner: ${owner.toString()}`);
   let { confirm } = await prompt.get([{name: 'confirm', message: 'Confirm? (t(True)/f(False))', type: 'boolean'}])
   if (!confirm) return;
