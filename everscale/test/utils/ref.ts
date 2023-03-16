@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js'
 import { Address, Contract, toNano, WalletTypes } from 'locklift';
 import { FactorySource, WalletAbi } from '../../build/factorySource';
 import { Account } from 'everscale-standalone-client';
+import { valueToGas } from './gas';
 
 type RefFactory = Contract<FactorySource["RefFactory"]>
 
@@ -52,18 +53,26 @@ export async function deployRefSystem(
     owner: Account,
     systemFee: string | number,
     onDeploy: string | number = toNano(2),
-    deployProjectValue: string | number = toNano(1),
     deployAccountValue: string | number = toNano(0.05),
     deployRefLastValue: string | number = toNano(0.1),
+    deployWalletValue: string | number = toNano(0.1),
+    deployAccountGas?: string | number,
+    deployRefLastGas?: string | number,
     projectVersion: number = 0,
     accountVersion: number = 0,
     refLastVersion: number = 0) {
+    
+    // deployAccountGas ??= await valueToGas(deployAccountValue);
+    // deployRefLastGas ??= await valueToGas(deployRefLastValue);
 
     await refFactory.methods.deployRefSystemAuto({
         owner: owner.address,
         version: 0,
-        deployAccountValue,
-        deployRefLastValue,
+        deployAccountGas: 10**5, // DEBUG
+        deployRefLastGas: 10**5, // DEBUG
+        // deployAccountGas,
+        // deployRefLastGas,
+        deployWalletValue,
         systemFee,
         sender: owner.address,
         remainingGasTo: owner.address,

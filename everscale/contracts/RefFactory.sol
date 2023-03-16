@@ -34,8 +34,6 @@ contract RefFactory is InternalOwner, RandomNonce {
     TvmCell public _projectPlatformCode;
     TvmCell public _projectCode;
     uint128 public _systemFee;
-    uint128 public _deployAccountValue;
-    uint128 public _deployRefLastValue;
 
     modifier onlyManager {
         require(msg.sender == owner || msg.sender == _manager, 400, "Must be Owner or Manager");
@@ -94,8 +92,9 @@ contract RefFactory is InternalOwner, RandomNonce {
         address owner,
         uint32 version,
         uint128 systemFee,
-        uint128 deployAccountValue,
-        uint128 deployRefLastValue,
+        uint128 deployAccountGas,
+        uint128 deployRefLastGas,
+        uint128 deployWalletValue,
         address sender,
         address remainingGasTo
     ) public onlyManager returns (address) {
@@ -105,7 +104,7 @@ contract RefFactory is InternalOwner, RandomNonce {
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(_refSystemCode, version, _refLastPlatformCode, _refLastCode, _accountPlatformCode, _accountCode, _projectPlatformCode, _projectCode, systemFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
+        }(_refSystemCode, version, _refLastPlatformCode, _refLastCode, _accountPlatformCode, _accountCode, _projectPlatformCode, _projectCode, systemFee, deployAccountGas, deployRefLastGas, deployWalletValue, sender, remainingGasTo);
     }
 
     function deployRefSystem(
@@ -119,8 +118,9 @@ contract RefFactory is InternalOwner, RandomNonce {
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 systemFee,
-        uint128 deployAccountValue,
-        uint128 deployRefLastValue,
+        uint128 deployAccountGas,
+        uint128 deployRefLastGas,
+        uint128 deployWalletValue,
         address sender,
         address remainingGasTo
     ) public onlyOwner returns (address) {
@@ -130,7 +130,7 @@ contract RefFactory is InternalOwner, RandomNonce {
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(refSystemCode, version, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, systemFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
+        }(refSystemCode, version, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, systemFee, deployAccountGas, deployRefLastGas, deployWalletValue, sender, remainingGasTo);
     }
 
     function upgradeTarget(

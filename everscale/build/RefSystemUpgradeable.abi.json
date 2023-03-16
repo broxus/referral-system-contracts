@@ -25,6 +25,7 @@
 				{"name":"systemFee","type":"uint128"},
 				{"name":"deployAccountValue","type":"uint128"},
 				{"name":"deployRefLastValue","type":"uint128"},
+				{"name":"deployWalletValue","type":"uint128"},
 				{"name":"sender","type":"address"},
 				{"name":"remainingGasTo","type":"address"}
 			],
@@ -129,17 +130,17 @@
 			]
 		},
 		{
-			"name": "setDeployAccountValue",
+			"name": "setDeployAccountGas",
 			"inputs": [
-				{"name":"value","type":"uint128"}
+				{"name":"gas","type":"uint128"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "setDeployRefLastValue",
+			"name": "setDeployRefLastGas",
 			"inputs": [
-				{"name":"value","type":"uint128"}
+				{"name":"gas","type":"uint128"}
 			],
 			"outputs": [
 			]
@@ -379,19 +380,27 @@
 			]
 		},
 		{
-			"name": "_deployAccountValue",
+			"name": "_deployAccountGas",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_deployAccountValue","type":"uint128"}
+				{"name":"_deployAccountGas","type":"uint128"}
 			]
 		},
 		{
-			"name": "_deployRefLastValue",
+			"name": "_deployRefLastGas",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_deployRefLastValue","type":"uint128"}
+				{"name":"_deployRefLastGas","type":"uint128"}
+			]
+		},
+		{
+			"name": "_deployWalletValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_deployWalletValue","type":"uint128"}
 			]
 		},
 		{
@@ -446,8 +455,9 @@
 		{"name":"_accountPlatformCode","type":"cell"},
 		{"name":"_projectCode","type":"cell"},
 		{"name":"_projectPlatformCode","type":"cell"},
-		{"name":"_deployAccountValue","type":"uint128"},
-		{"name":"_deployRefLastValue","type":"uint128"},
+		{"name":"_deployAccountGas","type":"uint128"},
+		{"name":"_deployRefLastGas","type":"uint128"},
+		{"name":"_deployWalletValue","type":"uint128"},
 		{"name":"_systemFee","type":"uint128"}
 	]
 }

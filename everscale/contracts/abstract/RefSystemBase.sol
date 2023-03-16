@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.39.0;
+pragma ton-solidity >= 0.51.0;
 pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
@@ -44,8 +44,9 @@ abstract contract RefSystemBase is
     TvmCell public _projectCode;
     TvmCell public _projectPlatformCode;
 
-    uint128 public _deployAccountValue;
-    uint128 public _deployRefLastValue;
+    uint128 public _deployAccountGas;
+    uint128 public _deployRefLastGas;
+    uint128 public _deployWalletValue;
     uint128 public _systemFee;
 
     event OnReferral(uint256 projectId, address tokenWallet, address referred, address referrer, uint128 amount, uint128 systemReward, uint128 projectReward, uint128 cashBackReward);
@@ -64,12 +65,12 @@ abstract contract RefSystemBase is
         _systemFee = fee;
     }
 
-    function setDeployAccountValue(uint128 value) override external onlyOwner {
-        _deployAccountValue = value;
+    function setDeployAccountGas(uint128 gas) override external onlyOwner {
+        _deployAccountGas = gas;
     }
 
-    function setDeployRefLastValue(uint128 value) override external onlyOwner {
-        _deployRefLastValue = value;
+    function setDeployRefLastGas(uint128 gas) override external onlyOwner {
+        _deployRefLastGas = gas;
     }
 
     function onAcceptTokensTransfer(
@@ -183,7 +184,7 @@ abstract contract RefSystemBase is
         TvmCell payload
     ) override external {
         require(msg.sender == _deriveRefAccount(recipient), 400, "Invalid Account");
-        ITokenWallet(tokenWallet).transfer{flag: MsgFlag.REMAINING_GAS, value: 0 }(balance, recipient, 0.5 ton, remainingGasTo, notify, payload);
+        ITokenWallet(tokenWallet).transfer{flag: MsgFlag.REMAINING_GAS, value: 0 }(balance, recipient, _deployWalletValue, remainingGasTo, notify, payload);
     }
 
     function deriveProject(uint256 id) override external responsible returns (address) {
@@ -289,7 +290,7 @@ abstract contract RefSystemBase is
     ) internal returns (address) {
         return new RefAccountPlatform {
             stateInit: _buildRefAccountInitData(recipient),
-            value: _deployAccountValue,
+            value: gasToValue(_deployAccountGas, address(this).wid),
             wid: address(this).wid,
             flag: 0,
             bounce: true
@@ -305,7 +306,7 @@ abstract contract RefSystemBase is
     ) internal returns (address) {
         return new RefLastPlatform {
             stateInit: _buildRefLastInitData(owner),
-            value: _deployRefLastValue,
+            value: gasToValue(_deployRefLastGas, address(this).wid),
             wid: address(this).wid,
             flag: 0,
             bounce: true

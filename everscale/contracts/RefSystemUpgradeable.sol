@@ -41,6 +41,7 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         uint128 systemFee,
         uint128 deployAccountValue,
         uint128 deployRefLastValue,
+        uint128 deployWalletValue,
         address sender,
         address remainingGasTo
     ) 
@@ -67,8 +68,8 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
                 tvm.functionId(IRefSystem.deriveRefAccount)^
                 tvm.functionId(IRefSystem.deriveRefLast)^
                 tvm.functionId(IRefSystem.setSystemFee)^
-                tvm.functionId(IRefSystem.setDeployAccountValue)^
-                tvm.functionId(IRefSystem.setDeployRefLastValue)^
+                tvm.functionId(IRefSystem.setDeployAccountGas)^
+                tvm.functionId(IRefSystem.setDeployRefLastGas)^
                 tvm.functionId(IRefSystem.onAcceptTokensTransferPayloadEncoder)^
                 tvm.functionId(IRefSystem.setProjectApproval)^
                 tvm.functionId(IRefSystem.updateRefLast)
@@ -126,8 +127,9 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
             uint32(0),
             version_,
             _systemFee,
-            _deployAccountValue,
-            _deployRefLastValue,
+            _deployAccountGas,
+            _deployRefLastGas,
+            _deployWalletValue,
             msg.sender,
             remainingGasTo,
             _platformCode,
@@ -157,8 +159,9 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         oldVersion,
         version_,
         _systemFee,
-        _deployAccountValue,
-        _deployRefLastValue,
+        _deployAccountGas,
+        _deployRefLastGas,
+        _deployWalletValue,
         sender,
         remainingGasTo,
         _platformCode,
@@ -173,6 +176,7 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
             address,
             uint32,
             uint32, 
+            uint128,
             uint128,
             uint128,
             uint128,
