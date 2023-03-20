@@ -3,11 +3,9 @@ import BigNumber from 'bignumber.js'
 import { Address, Contract, toNano, WalletTypes } from 'locklift';
 import { FactorySource, WalletAbi } from '../../build/factorySource';
 import { Account } from 'everscale-standalone-client';
-import { valueToGas } from './gas';
+import { GAS_PRICE } from './locklift';
 
 type RefFactory = Contract<FactorySource["RefFactory"]>
-
-export let GAS_PRICE = 1000;
 
 export async function deployRefFactory(owner: Account) {
     const RefFactory = await locklift.factory.getContractArtifacts('RefFactory')
