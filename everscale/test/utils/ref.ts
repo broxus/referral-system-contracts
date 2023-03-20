@@ -7,6 +7,8 @@ import { valueToGas } from './gas';
 
 type RefFactory = Contract<FactorySource["RefFactory"]>
 
+export let GAS_PRICE = 1000;
+
 export async function deployRefFactory(owner: Account) {
     const RefFactory = await locklift.factory.getContractArtifacts('RefFactory')
     
@@ -53,8 +55,8 @@ export async function deployRefSystem(
     owner: Account,
     systemFee: string | number,
     onDeploy: string | number = toNano(2),
-    deployAccountValue: string | number = toNano(0.05),
-    deployRefLastValue: string | number = toNano(0.1),
+    deployAccountValue: string = toNano(0.05),
+    deployRefLastValue: string = toNano(0.1),
     deployWalletValue: string | number = toNano(0.1),
     deployAccountGas?: string | number,
     deployRefLastGas?: string | number,
@@ -62,16 +64,16 @@ export async function deployRefSystem(
     accountVersion: number = 0,
     refLastVersion: number = 0) {
     
-    // deployAccountGas ??= await valueToGas(deployAccountValue);
-    // deployRefLastGas ??= await valueToGas(deployRefLastValue);
-
+    deployAccountGas ??= parseInt(deployAccountValue) / GAS_PRICE;
+    deployRefLastGas ??= parseInt(deployRefLastValue) / GAS_PRICE;
+    
     await refFactory.methods.deployRefSystemAuto({
         owner: owner.address,
         version: 0,
-        deployAccountGas: 10**5, // DEBUG
-        deployRefLastGas: 10**5, // DEBUG
-        // deployAccountGas,
-        // deployRefLastGas,
+        // deployAccountGas: 10**5, // DEBUG
+        // deployRefLastGas: 10**5, // DEBUG
+        deployAccountGas,
+        deployRefLastGas,
         deployWalletValue,
         systemFee,
         sender: owner.address,

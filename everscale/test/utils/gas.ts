@@ -16,18 +16,20 @@ export async function deployGasUtil(nonce = locklift.utils.getRandomNonce()): Pr
         publicKey: signer!.publicKey,
         value: locklift.utils.toNano(1)
     })
+    logContract(util, "GasUtil")
 
     return util
 }
 
 export let utilSingleton: GasUtil | null = null;
 
-export async function gasToValue(account: Account, gas: string | number): Promise<string | undefined> {
-    utilSingleton ??= await deployGasUtil()
-    logContract(utilSingleton, "GasUtil")
-    return utilSingleton.methods.GetGasToValue({gas}).sendWithResult({ from: account.address, amount: toNano(0.05) }).then(i => i.output?.value)
+export async function gasToValue(util: GasUtil, account: Account, gas: number): Promise<number> {
+    let tx = await util.methods.GetGasToValue({gas}).sendWithResult({ from: account.address, amount: toNano(2) })
+    console.log(tx)
+    return parseInt(tx.output?.value!)
 }
-// export async function valueToGas(value: string | number): Promise<string> {
-//     utilSingleton ??= await deployGasUtil()
-//     return (await utilSingleton.methods.GetValueToGas({value}).call()).gas
-// }
+export async function valueToGas(util: GasUtil, account: Account, value: string | number): Promise<number> {
+    let tx = await util.methods.GetValueToGas({value}).send({ from: account.address, amount: toNano(0.05)})
+    console.log(tx)
+    return parseInt(tx.outMessages[0].value)
+}

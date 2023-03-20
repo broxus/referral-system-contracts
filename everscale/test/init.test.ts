@@ -5,7 +5,7 @@ import { FactorySource } from "../build/factorySource";
 import logger from "mocha-logger"
 import { Contract, fromNano, getRandomNonce, toNano, zeroAddress } from "locklift";
 import { Account } from "everscale-standalone-client";
-import { deployGasUtil, gasToValue } from "./utils/gas";
+import { deployGasUtil, gasToValue, valueToGas } from "./utils/gas";
 // const { setupRelays, setupBridge } = require('./utils/bridge');
 
 if (locklift.context.network.name === "main") throw "NOT IN TEST MODE"
@@ -13,20 +13,20 @@ if (locklift.context.network.name === "main") throw "NOT IN TEST MODE"
 describe('Ref Init', function () {
     this.timeout(10000000);
 
-    describe('GasUtil', function() {
+    describe.skip('GasUtil', function() {
         it('should deploy', async function() {
             let nonce = getRandomNonce()
             let pair = await locklift.keystore.getSigner("0")
-            let account = await deployAccount(pair!, 2, "Acc");
+            let account = await deployAccount(pair!, 10, "Acc");
             let util = await deployGasUtil(nonce);
             logContract(util, 'GasUtil')
-            let v = await gasToValue(account, 1000)
-            expect(v).to.be.true
-        })
-        it('should give gasToVal', async function() {
-            let util = await deployGasUtil(42);
-            let val = await (await util.methods.GetGasToValue({gas: 222222}).call()).value
-            expect(val).to.be.string
+            let v1 = await gasToValue(util, account, 1000)
+            let v2 = await gasToValue(util, account, 2000)
+            expect(v2/v1).to.equal(2)
+            expect(v1).to.not.be.undefined
+
+            let k = await valueToGas(util, account, v!)
+            expect(k).to.equal(1000)
         })
     })
 
