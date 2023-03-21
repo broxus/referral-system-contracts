@@ -50,7 +50,9 @@ abstract contract RefSystemBase is
     uint128 public _systemFee;
 
     event OnReferral(uint256 projectId, address tokenWallet, address referred, address referrer, uint128 amount, uint128 systemReward, uint128 projectReward, uint128 cashBackReward);
-    
+    event OnRefAccountDeployed(address owner, address account, address tokenWallet, uint128 reward);
+    event OnRefAccountWithdraw(address owner, address account, address tokenWallet, uint128 amount);
+
     function _reserve() virtual internal returns (uint128) {
         return 0.2 ton;
     }
@@ -184,6 +186,7 @@ abstract contract RefSystemBase is
         TvmCell payload
     ) override external {
         require(msg.sender == _deriveRefAccount(recipient), 400, "Invalid Account");
+        emit OnRefAccountWithdraw(recipient, msg.sender, tokenWallet, balance);
         ITokenWallet(tokenWallet).transfer{flag: MsgFlag.REMAINING_GAS, value: 0 }(balance, recipient, _deployWalletValue, remainingGasTo, notify, payload);
     }
 
@@ -288,6 +291,7 @@ abstract contract RefSystemBase is
         address sender,
         address remainingGasTo
     ) internal returns (address) {
+        emit OnRefAccountDeployed(recipient, _deriveRefAccount(recipient), tokenWallet, reward);
         return new RefAccountPlatform {
             stateInit: _buildRefAccountInitData(recipient),
             value: gasToValue(_deployAccountGas, address(this).wid),

@@ -23,6 +23,8 @@ import "./interfaces/IRefSystem.sol";
 
 contract RefFactory is InternalOwner, RandomNonce {
 
+    event OnRefSystemDeployed(address owner, address refSystem);
+
     address public _manager;
 
     TvmCell public _refSystemPlatformCode;
@@ -98,6 +100,7 @@ contract RefFactory is InternalOwner, RandomNonce {
         address sender,
         address remainingGasTo
     ) public onlyManager returns (address) {
+        emit OnRefSystemDeployed(owner, _deriveRefSystem(owner));
         return new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,
@@ -124,6 +127,7 @@ contract RefFactory is InternalOwner, RandomNonce {
         address sender,
         address remainingGasTo
     ) public onlyOwner returns (address) {
+        emit OnRefSystemDeployed(owner, _deriveRefSystem(owner));
         return new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,

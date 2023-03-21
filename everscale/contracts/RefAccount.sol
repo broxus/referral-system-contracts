@@ -149,6 +149,7 @@ contract RefAccount is IUpgradeable {
         TvmCell payload
     ) public onlyOwner {
         uint128 amount = _tokenBalance[tokenWallet];
+        if (amount == 0) return;
         delete _tokenBalance[tokenWallet];
         IRefSystem(_refSystem).requestTransfer{flag: MsgFlag.ALL_NOT_RESERVED, value: 0}(owner, tokenWallet, amount, remainingGasTo, notify, payload);
     }

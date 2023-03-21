@@ -431,6 +431,28 @@
 			]
 		},
 		{
+			"name": "OnRefAccountDeployed",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"account","type":"address"},
+				{"name":"tokenWallet","type":"address"},
+				{"name":"reward","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "OnRefAccountWithdraw",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"account","type":"address"},
+				{"name":"tokenWallet","type":"address"},
+				{"name":"amount","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "OwnershipTransferred",
 			"inputs": [
 				{"name":"previousOwner","type":"address"},

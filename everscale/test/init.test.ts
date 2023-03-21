@@ -1,9 +1,9 @@
-import { expect } from "chai";
+import { expect, use } from "chai";
 import { afterRun, logContract, deployRefFactory, deployAccount, deriveRef, deployProject as deployProject, deployRefSystem, approveProject } from './utils';
 import { FactorySource } from "../build/factorySource";
 
 import logger from "mocha-logger"
-import { Contract, fromNano, getRandomNonce, toNano, zeroAddress } from "locklift";
+import { Contract, fromNano, getRandomNonce, lockliftChai, toNano, zeroAddress } from "locklift";
 import { Account } from "everscale-standalone-client";
 
 if (locklift.context.network.name === "main") throw "NOT IN TEST MODE"
@@ -271,9 +271,12 @@ describe('Ref Init', function () {
                 let refOwnerPair = await locklift.keystore.getSigner("1")
                 let refSysOwner = await deployAccount(refOwnerPair!, 50, "refSysOwner");
 
+                let onDeploy = refFactory.waitForEvent<"OnRefSystemDeployed">({filter: e => e.event == "OnRefSystemDeployed"})
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
-                logContract(refSystem, "refSystem")
 
+                logContract(refSystem, "refSystem")
+                
+                expect((await onDeploy)?.data.refSystem.equals(refSystem.address)).to.be.true
                 expect((await refSystem.methods._systemFee().call())._systemFee)
                     .to.be.bignumber.equal(300, 'Wrong Value');
             })
@@ -345,6 +348,7 @@ describe('Ref Init', function () {
                 let refFactory = await deployRefFactory(refFactoryOwner)
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
 
+                let onDeploy = refSystem.waitForEvent<"OnRefAccountDeployed">({filter: e => e.event == "OnRefAccountDeployed"})
                 await refSystem.methods.deployRefAccount({
                     recipients: [refSysOwner.address],
                     tokenWallet: zeroAddress,
@@ -356,6 +360,10 @@ describe('Ref Init', function () {
                 let { value0: refSysAccountAddr } = await refSystem.methods.deriveRefAccount({ answerId: 0, owner: refSysOwner.address }).call()
                 let refSysAccount = locklift.factory.getDeployedContract("RefAccount", refSysAccountAddr)
 
+                let ex = (await onDeploy)?.data!
+                expect(ex.account.equals(refSysAccount.address)).to.be.true
+                expect(ex.owner.equals(refSysOwner.address)).to.be.true
+                expect(ex.tokenWallet.equals(zeroAddress)).to.be.true
                 expect((await refSysAccount.methods._refSystem().call())._refSystem.equals(refSystem.address)).to.be.true
                 expect((await refSysAccount.methods.owner().call()).owner.equals(refSysOwner.address)).to.be.true
 

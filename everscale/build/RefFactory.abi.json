@@ -219,6 +219,15 @@
 	],
 	"events": [
 		{
+			"name": "OnRefSystemDeployed",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"refSystem","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "OwnershipTransferred",
 			"inputs": [
 				{"name":"previousOwner","type":"address"},
