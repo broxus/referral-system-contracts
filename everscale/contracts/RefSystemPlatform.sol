@@ -31,18 +31,35 @@ contract RefSystemPlatform {
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 systemFee,
-        uint128 deployAccountValue,
-        uint128 deployRefLastValue,
+        uint128 deployAccountGas,
+        uint128 deployRefLastGas,
+        uint128 deployWalletValue,
         address sender,
-        address remainingGasTo
+        address remainingGasTo,
+        TvmCell custom
     )
         public
         functionID(0x15A038FB)
     {   
-        tvm.accept();
 
         if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
-            initialize(initCode, initVersion, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode,projectPlatformCode, projectCode, systemFee, deployAccountValue, deployRefLastValue, sender, remainingGasTo);
+            initialize(
+                initCode,
+                initVersion,
+                refLastPlatformCode,
+                refLastCode,
+                accountPlatformCode,
+                accountCode,
+                projectPlatformCode,
+                projectCode,
+                systemFee,
+                deployAccountGas,
+                deployRefLastGas,
+                deployWalletValue,
+                sender,
+                remainingGasTo,
+                custom
+            );
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -76,10 +93,12 @@ contract RefSystemPlatform {
         TvmCell projectPlatformCode,
         TvmCell projectCode,
         uint128 systemFee,
-        uint128 deployAccountValue,
-        uint128 deployRefLastValue,
+        uint128 deployAccountGas,
+        uint128 deployRefLastGas,
+        uint128 deployWalletValue,
         address sender,
-        address remainingGasTo
+        address remainingGasTo,
+        TvmCell custom
     ) private {
 
         TvmCell inputCell = abi.encode(
@@ -88,8 +107,9 @@ contract RefSystemPlatform {
             uint32(0),
             initVersion,
             systemFee,
-            deployAccountValue,
-            deployRefLastValue,
+            deployAccountGas,
+            deployRefLastGas,
+            deployWalletValue,
             sender,
             remainingGasTo,
             tvm.code(),
@@ -98,7 +118,8 @@ contract RefSystemPlatform {
             refLastPlatformCode,
             refLastCode,
             accountPlatformCode,
-            accountCode
+            accountCode,
+            custom
         );
 
         tvm.setcode(initCode);

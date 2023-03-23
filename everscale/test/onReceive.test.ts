@@ -181,6 +181,9 @@ describe('RefSystem On Receive', function () {
                 }
 
                 let bobAccountBalance = await getBalances(bobRefAccount)
+
+                let onWithdraw = refSystem.waitForEvent<"OnRefAccountWithdraw">({filter: e => e.event == "OnRefAccountWithdraw"})
+                
                 // Should Allow Account To Get Reward
                 await bobRefAccount.methods.requestTransfer({
                     tokenWallet: refSystemWallet.address,
@@ -192,6 +195,8 @@ describe('RefSystem On Receive', function () {
 
                 logContract(bobWallet, 'bobWallet')
                 let { value0: bobWalletBalance } = await bobWallet.methods.balance({ answerId: 0 }).call()
+                expect((await onWithdraw)?.data.account.equals(bobRefAccount.address)).to.be.true
+                expect((await onWithdraw)?.data.amount).to.be.bignumber.equal(bobWalletBalance)
                 expect(bobWalletBalance).to.be.bignumber.equal(bobAccountBalance.get(refSystemWallet.address.toString())!)
             })
 

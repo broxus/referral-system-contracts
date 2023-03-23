@@ -5,7 +5,7 @@
   "scripts": {
     "test": "npx locklift test --network local --disable-build",
     "build": "npx locklift build",
-    "script": "npx locklift run --network local --script --"
+    "script": "npx locklift run --network local --disable-build --script"
   },
   "author": "",
   "license": "ISC",

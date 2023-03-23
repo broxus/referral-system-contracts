@@ -25,8 +25,10 @@
 				{"name":"systemFee","type":"uint128"},
 				{"name":"deployAccountValue","type":"uint128"},
 				{"name":"deployRefLastValue","type":"uint128"},
+				{"name":"deployWalletValue","type":"uint128"},
 				{"name":"sender","type":"address"},
-				{"name":"remainingGasTo","type":"address"}
+				{"name":"remainingGasTo","type":"address"},
+				{"name":"value14","type":"cell"}
 			],
 			"outputs": [
 			]
@@ -129,17 +131,17 @@
 			]
 		},
 		{
-			"name": "setDeployAccountValue",
+			"name": "setDeployAccountGas",
 			"inputs": [
-				{"name":"value","type":"uint128"}
+				{"name":"gas","type":"uint128"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "setDeployRefLastValue",
+			"name": "setDeployRefLastGas",
 			"inputs": [
-				{"name":"value","type":"uint128"}
+				{"name":"gas","type":"uint128"}
 			],
 			"outputs": [
 			]
@@ -379,19 +381,27 @@
 			]
 		},
 		{
-			"name": "_deployAccountValue",
+			"name": "_deployAccountGas",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_deployAccountValue","type":"uint128"}
+				{"name":"_deployAccountGas","type":"uint128"}
 			]
 		},
 		{
-			"name": "_deployRefLastValue",
+			"name": "_deployRefLastGas",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_deployRefLastValue","type":"uint128"}
+				{"name":"_deployRefLastGas","type":"uint128"}
+			]
+		},
+		{
+			"name": "_deployWalletValue",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_deployWalletValue","type":"uint128"}
 			]
 		},
 		{
@@ -422,6 +432,28 @@
 			]
 		},
 		{
+			"name": "OnRefAccountDeployed",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"account","type":"address"},
+				{"name":"tokenWallet","type":"address"},
+				{"name":"reward","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "OnRefAccountWithdraw",
+			"inputs": [
+				{"name":"owner","type":"address"},
+				{"name":"account","type":"address"},
+				{"name":"tokenWallet","type":"address"},
+				{"name":"amount","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "OwnershipTransferred",
 			"inputs": [
 				{"name":"previousOwner","type":"address"},
@@ -446,8 +478,9 @@
 		{"name":"_accountPlatformCode","type":"cell"},
 		{"name":"_projectCode","type":"cell"},
 		{"name":"_projectPlatformCode","type":"cell"},
-		{"name":"_deployAccountValue","type":"uint128"},
-		{"name":"_deployRefLastValue","type":"uint128"},
+		{"name":"_deployAccountGas","type":"uint128"},
+		{"name":"_deployRefLastGas","type":"uint128"},
+		{"name":"_deployWalletValue","type":"uint128"},
 		{"name":"_systemFee","type":"uint128"}
 	]
 }

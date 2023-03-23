@@ -6,6 +6,8 @@ const chai = require('chai')
 
 chai.use(require('chai-bignumber')());
 
+export let GAS_PRICE = 1000;
+
 export const getRandomNonce = () => Math.random() * 64000 | 0;
 export const toAddrs = (i: number): Address => {
   let zeroAddrs = zeroAddress

@@ -21,7 +21,7 @@ contract RefAccount is IUpgradeable {
     TvmCell public _platformCode;
     address public owner;
 
-    address public _refFactory;
+\    address public _refFactory;
     address public _refSystem;
 
     constructor() public {
@@ -39,6 +39,7 @@ contract RefAccount is IUpgradeable {
     {
         require(msg.sender == _refSystem, 400, "Must be root");
         _tokenBalance[tokenWallet] += reward;
+        tvm.rawReserve(_reserve(), 2);
         
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
@@ -50,7 +51,7 @@ contract RefAccount is IUpgradeable {
     }
 
     function _reserve() internal returns (uint128) {
-        return 0;
+        return 0.01 ton;
     }
 
     function platformCode() external view responsible returns (TvmCell) {
@@ -111,6 +112,7 @@ contract RefAccount is IUpgradeable {
         address firstWallet;
         uint128 firstReward;
         address remainingGasTo;
+
         (
             _refFactory,
             _refSystem, 
@@ -134,6 +136,7 @@ contract RefAccount is IUpgradeable {
         _tokenBalance[firstWallet] = firstReward;
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+
             remainingGasTo.transfer({
                 value: 0,
                 flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
@@ -149,6 +152,10 @@ contract RefAccount is IUpgradeable {
         TvmCell payload
     ) public onlyOwner {
         uint128 amount = _tokenBalance[tokenWallet];
+        require(amount > 0);
+        require(msg.value >= _reserve());
+        tvm.rawReserve(_reserve(), 0);
+
         delete _tokenBalance[tokenWallet];
         IRefSystem(_refSystem).requestTransfer{flag: MsgFlag.ALL_NOT_RESERVED, value: 0}(owner, tokenWallet, amount, remainingGasTo, notify, payload);
     }

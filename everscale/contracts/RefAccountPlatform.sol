@@ -9,7 +9,7 @@ contract RefAccountPlatform {
     address static root;
     address static owner;
 
-    constructor(TvmCell initCode, uint32 initVersion, address refFactory, address tokenWallet, uint128 reward, address sender, address remainingGasTo)
+    constructor(TvmCell initCode, uint32 initVersion, address refFactory, address tokenWallet, uint128 reward, address sender, address remainingGasTo) 
         public
         functionID(0x15A038FB)
     {   
