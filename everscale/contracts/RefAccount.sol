@@ -21,7 +21,7 @@ contract RefAccount is IUpgradeable {
     TvmCell public _platformCode;
     address public owner;
 
-\    address public _refFactory;
+    address public _refFactory;
     address public _refSystem;
 
     constructor() public {
