@@ -35,12 +35,12 @@ contract RefSystemPlatform {
         uint128 deployRefLastGas,
         uint128 deployWalletValue,
         address sender,
-        address remainingGasTo
+        address remainingGasTo,
+        TvmCell custom
     )
         public
         functionID(0x15A038FB)
     {   
-        tvm.accept();
 
         if (msg.sender == root || (sender.value != 0 && _getExpectedAddress(sender) == msg.sender)) {
             initialize(
@@ -57,7 +57,8 @@ contract RefSystemPlatform {
                 deployRefLastGas,
                 deployWalletValue,
                 sender,
-                remainingGasTo
+                remainingGasTo,
+                custom
             );
         } else {
             remainingGasTo.transfer({
@@ -96,7 +97,8 @@ contract RefSystemPlatform {
         uint128 deployRefLastGas,
         uint128 deployWalletValue,
         address sender,
-        address remainingGasTo
+        address remainingGasTo,
+        TvmCell custom
     ) private {
 
         TvmCell inputCell = abi.encode(
@@ -116,7 +118,8 @@ contract RefSystemPlatform {
             refLastPlatformCode,
             refLastCode,
             accountPlatformCode,
-            accountCode
+            accountCode,
+            custom
         );
 
         tvm.setcode(initCode);

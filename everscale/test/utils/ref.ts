@@ -76,6 +76,7 @@ export async function deployRefSystem(
         systemFee,
         sender: owner.address,
         remainingGasTo: owner.address,
+        custom: ''
     }).send({ from: refFactoryOwner.address, amount: toNano(3) })
 
     let { value0: refSysAddr } = await refFactory.methods.deriveRefSystem({ owner: owner.address }).call();

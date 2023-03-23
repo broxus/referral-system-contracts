@@ -98,16 +98,18 @@ contract RefFactory is InternalOwner, RandomNonce {
         uint128 deployRefLastGas,
         uint128 deployWalletValue,
         address sender,
-        address remainingGasTo
+        address remainingGasTo,
+        TvmCell custom
     ) public onlyManager returns (address) {
-        emit OnRefSystemDeployed(owner, _deriveRefSystem(owner));
-        return new RefSystemPlatform {
+        address refSystem = new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(_refSystemCode, version, _refLastPlatformCode, _refLastCode, _accountPlatformCode, _accountCode, _projectPlatformCode, _projectCode, systemFee, deployAccountGas, deployRefLastGas, deployWalletValue, sender, remainingGasTo);
+        }(_refSystemCode, version, _refLastPlatformCode, _refLastCode, _accountPlatformCode, _accountCode, _projectPlatformCode, _projectCode, systemFee, deployAccountGas, deployRefLastGas, deployWalletValue, sender, remainingGasTo, custom);
+        
+        emit OnRefSystemDeployed(owner, refSystem);
     }
 
     function deployRefSystem(
@@ -125,16 +127,18 @@ contract RefFactory is InternalOwner, RandomNonce {
         uint128 deployRefLastGas,
         uint128 deployWalletValue,
         address sender,
-        address remainingGasTo
+        address remainingGasTo,
+        TvmCell custom
     ) public onlyOwner returns (address) {
-        emit OnRefSystemDeployed(owner, _deriveRefSystem(owner));
-        return new RefSystemPlatform {
+        address refSystem = new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,
             value: 0,
             bounce: true,
             flag: MsgFlag.ALL_NOT_RESERVED
-        }(refSystemCode, version, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, systemFee, deployAccountGas, deployRefLastGas, deployWalletValue, sender, remainingGasTo);
+        }(refSystemCode, version, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, systemFee, deployAccountGas, deployRefLastGas, deployWalletValue, sender, remainingGasTo, custom);
+        
+        emit OnRefSystemDeployed(owner, refSystem);
     }
 
     function upgradeTarget(

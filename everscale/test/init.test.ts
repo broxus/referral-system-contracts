@@ -157,6 +157,8 @@ describe('Ref Init', function () {
 
                 let { value0: refSysAccountAddr } = await refSystem.methods.deriveRefAccount({ answerId: 0, owner: refSysOwner.address }).call()
                 let refSysAccount = locklift.factory.getDeployedContract("RefAccount", refSysAccountAddr)
+                
+                logContract(refSysAccount,"RefAccount")
 
                 let TestUpgrade = locklift.factory.getContractArtifacts("TestUpgrade")
                 await refFactory.methods.upgradeTarget({
@@ -347,7 +349,9 @@ describe('Ref Init', function () {
 
                 let refFactory = await deployRefFactory(refFactoryOwner)
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
-
+                
+                logContract(refSystem, 'RefSystem')
+                
                 let onDeploy = refSystem.waitForEvent<"OnRefAccountDeployed">({filter: e => e.event == "OnRefAccountDeployed"})
                 await refSystem.methods.deployRefAccount({
                     recipients: [refSysOwner.address],
@@ -355,10 +359,12 @@ describe('Ref Init', function () {
                     rewards: [0],
                     sender: refSysOwner.address,
                     remainingGasTo: refSysOwner.address
-                }).send({ from: refSysOwner.address, amount: toNano(2) })
+                }).send({ from: refSysOwner.address, amount: toNano(4) })
 
                 let { value0: refSysAccountAddr } = await refSystem.methods.deriveRefAccount({ answerId: 0, owner: refSysOwner.address }).call()
                 let refSysAccount = locklift.factory.getDeployedContract("RefAccount", refSysAccountAddr)
+
+                logContract(refSysAccount, 'RefAccount')
 
                 let ex = (await onDeploy)?.data!
                 expect(ex.account.equals(refSysAccount.address)).to.be.true

@@ -20,7 +20,8 @@
 				{"name":"deployRefLastGas","type":"uint128"},
 				{"name":"deployWalletValue","type":"uint128"},
 				{"name":"sender","type":"address"},
-				{"name":"remainingGasTo","type":"address"}
+				{"name":"remainingGasTo","type":"address"},
+				{"name":"custom","type":"cell"}
 			],
 			"outputs": [
 			]

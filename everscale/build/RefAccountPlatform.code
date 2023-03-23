@@ -34,6 +34,7 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
+LDU 128
 LDREF
 ENDS
 CTOS
@@ -45,8 +46,8 @@ GETGLOB 10
 SDEQ
 PUSHCONT {
 	.loc ../contracts/RefAccountPlatform.sol, 17
-	BLKPUSH 5, 6
-	PUSH S5
+	BLKPUSH 5, 7
+	BLKPUSH 2, 6
 	CALLREF {
 		CALL $initialize_internal_macro$
 	}
@@ -67,7 +68,7 @@ PUSHCONT {
 }
 IFELSE
 .loc ../contracts/RefAccountPlatform.sol, 0
-BLKDROP 7
+BLKDROP 8
 CALLREF {
 	CALL $c7_to_c4$
 }
@@ -131,7 +132,7 @@ CTOS
 CALL $initialize_internal_macro$
 
 .macro initialize_internal_macro
-.loc ../contracts/RefAccountPlatform.sol, 50
+.loc ../contracts/RefAccountPlatform.sol, 51
 GETGLOB 1
 PUSHREF {
 	DUP
@@ -144,23 +145,24 @@ STSLICECONST x8adb35
 STREF
 STSLICE
 ENDC
-ROLL 4
-REVERSE 6, 0
+ROLL 5
+REVERSE 7, 0
 GETGLOB 11
 GETGLOB 10
-ROLL 7
+ROLL 8
+NEWC
+STSLICE
+ROLLREV 8
 NEWC
 STSLICE
 ROLLREV 7
 NEWC
 STSLICE
-ROLLREV 6
-NEWC
-STSLICE
 STU 32
-ROLLREV 4
+ROLLREV 5
 NEWC
 STSLICE
+STU 128
 STU 128
 ROTREV
 NEWC
@@ -171,10 +173,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-.loc ../contracts/RefAccountPlatform.sol, 61
+.loc ../contracts/RefAccountPlatform.sol, 63
 OVER
 SETCODE
-.loc ../contracts/RefAccountPlatform.sol, 62
+.loc ../contracts/RefAccountPlatform.sol, 64
 SWAP
 CTOS
 DUP
@@ -189,7 +191,7 @@ PLDREF
 CTOS
 BLESS
 POP C3
-.loc ../contracts/RefAccountPlatform.sol, 64
+.loc ../contracts/RefAccountPlatform.sol, 66
 CALLREF {
 	CALL $:onCodeUpgrade$
 }

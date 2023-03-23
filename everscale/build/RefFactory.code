@@ -239,6 +239,7 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
+LDREF
 ENDS
 .loc ../contracts/RefFactory.sol, 0
 CALLREF {
@@ -259,7 +260,7 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST xb7e9d103
+	STSLICECONST xdca913b0
 	STSLICE
 	STBREFR
 	ENDC
@@ -293,38 +294,21 @@ GETGLOB 12
 SDEQ
 OR
 THROWARGIFNOT 400
-.loc ../contracts/RefFactory.sol, 103
-PUSH S7
-CALLREF {
-	CALL $_deriveRefSystem_internal_macro$
+.loc ../contracts/RefFactory.sol, 42
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-PUSH S8
-PUSHSLICE xc0000000000000000000000001
-NEWC
-STSLICE
-ROTREV
-NEWC
-STSLICECONST x6709b020
-STSLICE
-SWAP
-NEWC
-STSLICE
-STBREFR
-STBREFR
-ENDC
-PUSHINT 0
-SENDRAWMSG
 .loc ../contracts/RefFactory.sol, 104
-REVERSE 6, 0
+REVERSE 8, 0
 GETGLOB 20
 GETGLOB 19
 GETGLOB 18
 GETGLOB 17
 GETGLOB 16
 GETGLOB 15
-ROLL 12
-GETGLOB 14
 ROLL 14
+GETGLOB 14
+PUSH S16
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -339,8 +323,8 @@ STI 8
 STU 256
 ENDC
 CTOS
-ROLLREV 15
-PUSH S15
+ROLLREV 16
+PUSH S16
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -371,31 +355,32 @@ CALLREF {
 }
 STREF
 STSLICECONST 1
-ROLLREV 14
+ROLLREV 15
 NEWC
 STSLICECONST x15a038fb
 STREF
 STU 32
 STREF
 STREF
-ROLLREV 10
+ROLLREV 11
 NEWC
 STREF
 STREF
 STREF
-ROLLREV 7
+ROLLREV 8
 NEWC
 STREF
 STU 128
 STU 128
 STU 128
 STU 128
+ROLLREV 3
+NEWC
+STSLICE
 ROTREV
 NEWC
 STSLICE
-SWAP
-NEWC
-STSLICE
+STREF
 STBREFR
 STBREFR
 STBREFR
@@ -403,6 +388,23 @@ STBREFR
 STBREFR
 ENDC
 PUSHINT 128
+SENDRAWMSG
+.loc ../contracts/RefFactory.sol, 112
+ROT
+PUSHSLICE xc0000000000000000000000001
+NEWC
+STSLICE
+ROTREV
+NEWC
+STSLICECONST x6709b020
+STSLICE
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+ENDC
+PUSHINT 0
 SENDRAWMSG
 .loc ../contracts/RefFactory.sol, 0
 
@@ -415,7 +417,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 113
+.loc ../contracts/RefFactory.sol, 115
 OVER
 PUSHCONT {
 	LDREF
@@ -450,6 +452,7 @@ LDREF
 ENDS
 CTOS
 LDMSGADDR
+LDREF
 ENDS
 .loc ../contracts/RefFactory.sol, 0
 CALLREF {
@@ -470,7 +473,7 @@ PUSHCONT {
 	STUR 98
 	SWAP
 	NEWC
-	STSLICECONST xed0711bd
+	STSLICECONST xc107bcf3
 	STSLICE
 	STBREFR
 	ENDC
@@ -507,32 +510,15 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/RefFactory.sol, 130
-PUSH S14
-CALLREF {
-	CALL $_deriveRefSystem_internal_macro$
+.loc ../node_modules/@broxus/contracts/contracts/access/InternalOwner.sol, 16
+PUSHREFSLICE {
+	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-PUSH S15
-PUSHSLICE xc0000000000000000000000001
-NEWC
-STSLICE
-ROTREV
-NEWC
-STSLICECONST x6709b020
-STSLICE
-SWAP
-NEWC
-STSLICE
-STBREFR
-STBREFR
-ENDC
-PUSHINT 0
-SENDRAWMSG
-.loc ../contracts/RefFactory.sol, 131
-ROLLREV 11
-REVERSE 11, 0
-BLKSWAP 2, 12
-ROLL 14
+.loc ../contracts/RefFactory.sol, 133
+ROLLREV 13
+REVERSE 13, 0
+BLKSWAP 2, 14
+PUSH S16
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -547,8 +533,8 @@ STI 8
 STU 256
 ENDC
 CTOS
-ROLLREV 15
-PUSH S15
+ROLLREV 16
+PUSH S16
 NEWC
 STSLICECONST x62_
 STSLICE
@@ -579,31 +565,32 @@ CALLREF {
 }
 STREF
 STSLICECONST 1
-ROLLREV 14
+ROLLREV 15
 NEWC
 STSLICECONST x15a038fb
 STREF
 STU 32
 STREF
 STREF
-ROLLREV 10
+ROLLREV 11
 NEWC
 STREF
 STREF
 STREF
-ROLLREV 7
+ROLLREV 8
 NEWC
 STREF
 STU 128
 STU 128
 STU 128
 STU 128
+ROLLREV 3
+NEWC
+STSLICE
 ROTREV
 NEWC
 STSLICE
-SWAP
-NEWC
-STSLICE
+STREF
 STBREFR
 STBREFR
 STBREFR
@@ -611,6 +598,23 @@ STBREFR
 STBREFR
 ENDC
 PUSHINT 128
+SENDRAWMSG
+.loc ../contracts/RefFactory.sol, 141
+ROT
+PUSHSLICE xc0000000000000000000000001
+NEWC
+STSLICE
+ROTREV
+NEWC
+STSLICECONST x6709b020
+STSLICE
+SWAP
+NEWC
+STSLICE
+STBREFR
+STBREFR
+ENDC
+PUSHINT 0
 SENDRAWMSG
 .loc ../contracts/RefFactory.sol, 0
 
@@ -623,7 +627,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 140
+.loc ../contracts/RefFactory.sol, 144
 OVER
 PUSHCONT {
 	LDU 32
@@ -706,19 +710,19 @@ THROWARGIFNOT 400
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefFactory.sol, 146
+.loc ../contracts/RefFactory.sol, 150
 DEPTH
 ADDCONST -2
 PICK
 PUSHINT 300000000
 SUB
 UFITS 128
-.loc ../contracts/RefFactory.sol, 147
+.loc ../contracts/RefFactory.sol, 151
 PUSH S5
 FIRST
 UFITS 128
 DIV
-.loc ../contracts/RefFactory.sol, 148
+.loc ../contracts/RefFactory.sol, 152
 ROLL 5
 SECOND
 PUSHINT 0
@@ -735,7 +739,7 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/RefFactory.sol, 149
+	.loc ../contracts/RefFactory.sol, 153
 	PUSH3 S5, S7, S6
 	PUSH2 S6, S3
 	NEWC
@@ -762,7 +766,7 @@ PUSHCONT {
 }
 WHILE
 BLKDROP 4
-.loc ../contracts/RefFactory.sol, 152
+.loc ../contracts/RefFactory.sol, 156
 OVER
 PARSEMSGADDR
 INDEX 3
@@ -774,7 +778,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/RefFactory.sol, 153
+	.loc ../contracts/RefFactory.sol, 157
 	OVER
 	NEWC
 	STSLICECONST x42_
@@ -801,7 +805,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 161
+.loc ../contracts/RefFactory.sol, 165
 OVER
 PUSHCONT {
 	LDREF
@@ -852,7 +856,7 @@ THROW 0
 CALL $deriveRefSystem_internal_macro$
 
 .macro deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 162
+.loc ../contracts/RefFactory.sol, 166
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
@@ -863,7 +867,7 @@ CALLREF {
 CALL $_deriveRefSystem_internal_macro$
 
 .macro _deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 166
+.loc ../contracts/RefFactory.sol, 170
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -880,7 +884,7 @@ CTOS
 CALL $_buildRefSystemInitData_internal_macro$
 
 .macro _buildRefSystemInitData_internal_macro
-.loc ../contracts/RefFactory.sol, 170
+.loc ../contracts/RefFactory.sol, 174
 PUSHINT 0
 NEWC
 STU 256
@@ -1536,7 +1540,7 @@ THROW 0
 
 .macro public_function_selector
 DUP
-PUSHINT 1829179837
+PUSHINT 1729444094
 LEQ
 IFJMPREF {
 	DUP
@@ -1569,7 +1573,7 @@ IFJMPREF {
 		}
 	}
 	DUP
-	PUSHINT 1057860719
+	PUSHINT 1091026163
 	LEQ
 	IFJMPREF {
 		DUP
@@ -1577,12 +1581,6 @@ IFJMPREF {
 		EQUAL
 		IFJMPREF {
 			CALL $_refSystemPlatformCode$
-		}
-		DUP
-		PUSHINT 938070275
-		EQUAL
-		IFJMPREF {
-			CALL $deployRefSystemAuto$
 		}
 		DUP
 		PUSHINT 995308319
@@ -1595,6 +1593,12 @@ IFJMPREF {
 		EQUAL
 		IFJMPREF {
 			CALL $setCode$
+		}
+		DUP
+		PUSHINT 1091026163
+		EQUAL
+		IFJMPREF {
+			CALL $deployRefSystem$
 		}
 	}
 	DUP
@@ -1627,9 +1631,15 @@ IFJMPREF {
 		}
 	}
 	DUP
-	PUSHINT 1829179837
+	PUSHINT 1729444094
 	LEQ
 	IFJMPREF {
+		DUP
+		PUSHINT 1554584496
+		EQUAL
+		IFJMPREF {
+			CALL $deployRefSystemAuto$
+		}
 		DUP
 		PUSHINT 1594609630
 		EQUAL
@@ -1647,12 +1657,6 @@ IFJMPREF {
 		EQUAL
 		IFJMPREF {
 			CALL $renounceOwnership$
-		}
-		DUP
-		PUSHINT 1829179837
-		EQUAL
-		IFJMPREF {
-			CALL $deployRefSystem$
 		}
 	}
 }

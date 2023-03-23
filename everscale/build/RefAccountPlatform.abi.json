@@ -13,6 +13,7 @@
 				{"name":"tokenWallet","type":"address"},
 				{"name":"reward","type":"uint128"},
 				{"name":"sender","type":"address"},
+				{"name":"gasOnDeploy","type":"uint128"},
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [

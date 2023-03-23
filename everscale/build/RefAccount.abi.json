@@ -20,6 +20,7 @@
 				{"name":"tokenWallet","type":"address"},
 				{"name":"reward","type":"uint128"},
 				{"name":"sender","type":"address"},
+				{"name":"gasOnDeploy","type":"uint128"},
 				{"name":"remainingGasTo","type":"address"}
 			],
 			"outputs": [
@@ -97,6 +98,14 @@
 			]
 		},
 		{
+			"name": "_gasOnDeploy",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_gasOnDeploy","type":"uint128"}
+			]
+		},
+		{
 			"name": "_refFactory",
 			"inputs": [
 			],
@@ -125,6 +134,7 @@
 		{"name":"version_","type":"uint32"},
 		{"name":"_platformCode","type":"cell"},
 		{"name":"owner","type":"address"},
+		{"name":"_gasOnDeploy","type":"uint128"},
 		{"name":"_refFactory","type":"address"},
 		{"name":"_refSystem","type":"address"}
 	]

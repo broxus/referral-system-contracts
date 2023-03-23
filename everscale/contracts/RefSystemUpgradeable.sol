@@ -43,7 +43,8 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         uint128 deployRefLastValue,
         uint128 deployWalletValue,
         address sender,
-        address remainingGasTo
+        address remainingGasTo,
+        TvmCell
     ) 
     public
     functionID(0x15A038FB)
@@ -121,6 +122,7 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
 
     function acceptUpgrade(TvmCell code, uint32 currentVersion, address remainingGasTo) override external {
         require(msg.sender == _refFactory, 400, "Must be Ref Factory");
+        TvmCell empty;
         TvmCell initData = abi.encode(
             _refFactory,
             owner,
@@ -138,7 +140,8 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
             _refLastPlatformCode,
             _refLastCode,
             _accountPlatformCode,
-            _accountCode
+            _accountCode,
+            empty
         );
         tvm.setcode(code);
         tvm.setCurrentCode(code);
@@ -153,6 +156,7 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         address remainingGasTo;
         address sender;
         address owner;
+        TvmCell custom;
 
         (_refFactory,
         owner,
@@ -170,7 +174,8 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
         _refLastPlatformCode,
         _refLastCode,
         _accountPlatformCode,
-        _accountCode
+        _accountCode,
+        custom
         ) = abi.decode(data,(
             address,
             address,
@@ -182,6 +187,7 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
             uint128,
             address,
             address,
+            TvmCell,
             TvmCell,
             TvmCell,
             TvmCell,

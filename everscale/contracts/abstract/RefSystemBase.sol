@@ -291,14 +291,15 @@ abstract contract RefSystemBase is
         address sender,
         address remainingGasTo
     ) internal returns (address) {
-        emit OnRefAccountDeployed(recipient, _deriveRefAccount(recipient), tokenWallet, reward);
-        return new RefAccountPlatform {
+        address refAccount = new RefAccountPlatform {
             stateInit: _buildRefAccountInitData(recipient),
             value: gasToValue(_deployAccountGas, address(this).wid),
             wid: address(this).wid,
             flag: 0,
             bounce: true
-        }(_accountCode, version_, _refFactory, tokenWallet, reward, sender, remainingGasTo);
+        }(_accountCode, version_, _refFactory, tokenWallet, reward, sender,  _deployAccountGas, remainingGasTo);
+    
+        emit OnRefAccountDeployed(recipient, refAccount, tokenWallet, reward);
     }
     
     function _deployRefLast(
