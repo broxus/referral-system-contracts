@@ -297,7 +297,7 @@ abstract contract RefSystemBase is
             wid: address(this).wid,
             flag: 0,
             bounce: true
-        }(_accountCode, version_, _refFactory, tokenWallet, reward, sender,  _deployAccountGas, remainingGasTo);
+        }(_accountCode, version_, _refFactory, tokenWallet, reward, sender, remainingGasTo);
     
         emit OnRefAccountDeployed(recipient, refAccount, tokenWallet, reward);
     }

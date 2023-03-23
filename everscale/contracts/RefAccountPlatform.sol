@@ -9,12 +9,12 @@ contract RefAccountPlatform {
     address static root;
     address static owner;
 
-    constructor(TvmCell initCode, uint32 initVersion, address refFactory, address tokenWallet, uint128 reward, address sender, uint128 gasOnDeploy, address remainingGasTo) 
+    constructor(TvmCell initCode, uint32 initVersion, address refFactory, address tokenWallet, uint128 reward, address sender, address remainingGasTo) 
         public
         functionID(0x15A038FB)
     {   
         if (msg.sender == root) {
-           initialize(initCode, initVersion, refFactory, tokenWallet, reward, gasOnDeploy, remainingGasTo);
+           initialize(initCode, initVersion, refFactory, tokenWallet, reward, remainingGasTo);
         } else {
             remainingGasTo.transfer({
                 value: 0,
@@ -44,7 +44,6 @@ contract RefAccountPlatform {
         address refFactory,
         address tokenWallet,
         uint128 reward,
-        uint128 gasOnDeploy,
         address remainingGasTo
     ) private {
 
@@ -55,7 +54,6 @@ contract RefAccountPlatform {
             initVersion,
             tokenWallet,
             reward,
-            gasOnDeploy,
             remainingGasTo,
             tvm.code()
         );
