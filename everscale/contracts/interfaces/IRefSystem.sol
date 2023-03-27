@@ -27,6 +27,8 @@ interface IRefSystem is IAcceptTokensTransferCallback {
     function setSystemFee(uint128 fee) external;
     function setDeployAccountGas(uint128 gas) external;
     function setDeployRefLastGas(uint128 gas) external;
+    function setWalletDeployValue(uint128 value) external;
+    
     function onAcceptTokensTransferPayloadEncoder(uint256 projectId, address referred, address referrer) responsible external returns (TvmCell);
     function setProjectApproval(uint256 projectId, bool value) external;
     function updateRefLast(uint256 projectId, address referred, address referrer, address remainingGasTo) external;

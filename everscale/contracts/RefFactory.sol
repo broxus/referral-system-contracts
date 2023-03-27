@@ -41,6 +41,11 @@ contract RefFactory is InternalOwner, RandomNonce {
         require(msg.sender == owner || msg.sender == _manager, 400, "Must be Owner or Manager");
         _;
     }
+
+    function _reserve() internal returns (uint128) {
+        return 0.2 ton;
+    }
+
     constructor(
         address owner,
         TvmCell refSystemPlatformCode,
@@ -53,6 +58,7 @@ contract RefFactory is InternalOwner, RandomNonce {
         TvmCell projectCode
     ) public {
         tvm.accept();
+        tvm.rawReserve(_reserve(), 2);
         _refSystemPlatformCode = refSystemPlatformCode;
         _refSystemPlatformCode = refSystemPlatformCode;
         _refSystemCode = refSystemCode;
@@ -101,6 +107,8 @@ contract RefFactory is InternalOwner, RandomNonce {
         address remainingGasTo,
         TvmCell custom
     ) public onlyManager returns (address) {
+        tvm.rawReserve(_reserve(), 2);
+
         address refSystem = new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,
@@ -130,6 +138,8 @@ contract RefFactory is InternalOwner, RandomNonce {
         address remainingGasTo,
         TvmCell custom
     ) public onlyOwner returns (address) {
+        tvm.rawReserve(_reserve(), 2);
+
         address refSystem = new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,
@@ -147,6 +157,8 @@ contract RefFactory is InternalOwner, RandomNonce {
         TvmCell code,
         address remainingGasTo
     ) public onlyManager returns (address) {
+        tvm.rawReserve(_reserve(), 2);
+
         uint128 res = msg.value - 0.3 ton;
         uint128 perUpgrade = res / uint128(targets.length);
         for (address target : targets) {

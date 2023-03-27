@@ -71,6 +71,7 @@ contract RefSystemUpgradeable is RefSystemBase, IRefSystemUpgradeable {
                 tvm.functionId(IRefSystem.setSystemFee)^
                 tvm.functionId(IRefSystem.setDeployAccountGas)^
                 tvm.functionId(IRefSystem.setDeployRefLastGas)^
+                tvm.functionId(IRefSystem.setWalletDeployValue)^
                 tvm.functionId(IRefSystem.onAcceptTokensTransferPayloadEncoder)^
                 tvm.functionId(IRefSystem.setProjectApproval)^
                 tvm.functionId(IRefSystem.updateRefLast)

@@ -149,7 +149,7 @@ contract Project is InternalOwner, IRefProject {
     }
 
     function _reserve() private returns (uint128) {
-        return 0;
+        return 0.2 ton;
     }
 
     function meta(TvmCell payload) override view external responsible returns (bool, address, uint128, uint128, TvmCell) {

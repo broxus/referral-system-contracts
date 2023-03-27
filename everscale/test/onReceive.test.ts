@@ -128,7 +128,7 @@ describe('RefSystem On Receive', function () {
                 remainingGasTo: app.address,
                 notify: true, // Must Be Set to Trigger Project#onAcceptTokensTransfer
                 payload
-            }).send({ from: app.address, amount: toNano(10) })
+            }).send({ from: app.address, amount: toNano(3) })
 
             let { value0: appWalletBalanceNew } = await appWallet.methods.balance({ answerId: 0 }).call()
             let { value0: refSysteWalletBalance } = await refSystemWallet.methods.balance({ answerId: 0 }).call()

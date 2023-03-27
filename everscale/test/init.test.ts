@@ -23,6 +23,7 @@ describe('Ref Init', function () {
                 expect((await refFactory.methods.owner().call()).owner.equals(refFactoryOwner.address)).to.be.true
             })
         })
+
         describe('setManager', function() {
             it('should set Manager if owner', async function() {
                 let refOwnerPair = await locklift.keystore.getSigner("0")
@@ -277,8 +278,8 @@ describe('Ref Init', function () {
                 let refSystem = await deployRefSystem(refFactoryOwner, refFactory, refSysOwner, 300);
 
                 logContract(refSystem, "refSystem")
-                
-                expect((await onDeploy)?.data.refSystem.equals(refSystem.address)).to.be.true
+
+                expect((await onDeploy)!.data.refSystem.equals(refSystem.address)).to.be.true
                 expect((await refSystem.methods._systemFee().call())._systemFee)
                     .to.be.bignumber.equal(300, 'Wrong Value');
             })

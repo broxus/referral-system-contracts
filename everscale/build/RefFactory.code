@@ -32,35 +32,41 @@ CTOS
 LDREF
 LDREF
 ENDS
-.loc ../contracts/RefFactory.sol, 55
+.loc ../contracts/RefFactory.sol, 60
 ACCEPT
-.loc ../contracts/RefFactory.sol, 56
+.loc ../contracts/RefFactory.sol, 61
+CALLREF {
+	CALL $_reserve_internal_macro$
+}
+PUSHINT 2
+RAWRESERVE
+.loc ../contracts/RefFactory.sol, 62
 PUSH S7
 SETGLOB 13
-.loc ../contracts/RefFactory.sol, 57
+.loc ../contracts/RefFactory.sol, 63
 ROLL 7
 SETGLOB 13
-.loc ../contracts/RefFactory.sol, 58
+.loc ../contracts/RefFactory.sol, 64
 ROLL 6
 SETGLOB 14
-.loc ../contracts/RefFactory.sol, 59
+.loc ../contracts/RefFactory.sol, 65
 ROLL 5
 SETGLOB 15
-.loc ../contracts/RefFactory.sol, 60
+.loc ../contracts/RefFactory.sol, 66
 ROLL 4
 SETGLOB 16
-.loc ../contracts/RefFactory.sol, 61
+.loc ../contracts/RefFactory.sol, 67
 ROLL 3
 SETGLOB 17
-.loc ../contracts/RefFactory.sol, 62
+.loc ../contracts/RefFactory.sol, 68
 ROT
 SETGLOB 18
-.loc ../contracts/RefFactory.sol, 63
+.loc ../contracts/RefFactory.sol, 69
 SWAP
 SETGLOB 19
-.loc ../contracts/RefFactory.sol, 64
+.loc ../contracts/RefFactory.sol, 70
 SETGLOB 20
-.loc ../contracts/RefFactory.sol, 65
+.loc ../contracts/RefFactory.sol, 71
 CALLREF {
 	CALL $setOwnership_internal_macro$
 }
@@ -69,6 +75,15 @@ CALLREF {
 	CALL $c7_to_c4$
 }
 THROW 0
+
+.globl	_reserve_internal
+.type	_reserve_internal, @function
+CALL $_reserve_internal_macro$
+
+.macro _reserve_internal_macro
+.loc ../contracts/RefFactory.sol, 46
+PUSHINT 200000000
+.loc ../contracts/RefFactory.sol, 0
 
 .macro setManager
 DROP
@@ -79,7 +94,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 68
+.loc ../contracts/RefFactory.sol, 74
 OVER
 PUSHCONT {
 	LDREF
@@ -115,7 +130,7 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/RefFactory.sol, 69
+.loc ../contracts/RefFactory.sol, 75
 SETGLOB 12
 .loc ../contracts/RefFactory.sol, 0
 
@@ -128,7 +143,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 72
+.loc ../contracts/RefFactory.sol, 78
 LDREF
 LDREF
 LDREF
@@ -170,31 +185,31 @@ PUSHCONT {
 }
 IF
 THROWIFNOT 1101
-.loc ../contracts/RefFactory.sol, 82
+.loc ../contracts/RefFactory.sol, 88
 PUSH S7
 SETGLOB 13
-.loc ../contracts/RefFactory.sol, 83
+.loc ../contracts/RefFactory.sol, 89
 ROLL 7
 SETGLOB 13
-.loc ../contracts/RefFactory.sol, 84
+.loc ../contracts/RefFactory.sol, 90
 ROLL 6
 SETGLOB 14
-.loc ../contracts/RefFactory.sol, 85
+.loc ../contracts/RefFactory.sol, 91
 ROLL 5
 SETGLOB 15
-.loc ../contracts/RefFactory.sol, 86
+.loc ../contracts/RefFactory.sol, 92
 ROLL 4
 SETGLOB 16
-.loc ../contracts/RefFactory.sol, 87
+.loc ../contracts/RefFactory.sol, 93
 ROLL 3
 SETGLOB 17
-.loc ../contracts/RefFactory.sol, 88
+.loc ../contracts/RefFactory.sol, 94
 ROT
 SETGLOB 18
-.loc ../contracts/RefFactory.sol, 89
+.loc ../contracts/RefFactory.sol, 95
 SWAP
 SETGLOB 19
-.loc ../contracts/RefFactory.sol, 90
+.loc ../contracts/RefFactory.sol, 96
 SETGLOB 20
 .loc ../contracts/RefFactory.sol, 0
 
@@ -207,7 +222,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 93
+.loc ../contracts/RefFactory.sol, 99
 OVER
 PUSHCONT {
 	LDREF
@@ -298,7 +313,13 @@ THROWARGIFNOT 400
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefFactory.sol, 104
+.loc ../contracts/RefFactory.sol, 110
+CALLREF {
+	CALL $_reserve_internal_macro$
+}
+PUSHINT 2
+RAWRESERVE
+.loc ../contracts/RefFactory.sol, 112
 REVERSE 8, 0
 GETGLOB 20
 GETGLOB 19
@@ -389,7 +410,7 @@ STBREFR
 ENDC
 PUSHINT 128
 SENDRAWMSG
-.loc ../contracts/RefFactory.sol, 112
+.loc ../contracts/RefFactory.sol, 120
 ROT
 PUSHSLICE xc0000000000000000000000001
 NEWC
@@ -417,7 +438,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 115
+.loc ../contracts/RefFactory.sol, 123
 OVER
 PUSHCONT {
 	LDREF
@@ -514,7 +535,13 @@ THROWIFNOT 1101
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefFactory.sol, 133
+.loc ../contracts/RefFactory.sol, 141
+CALLREF {
+	CALL $_reserve_internal_macro$
+}
+PUSHINT 2
+RAWRESERVE
+.loc ../contracts/RefFactory.sol, 143
 ROLLREV 13
 REVERSE 13, 0
 BLKSWAP 2, 14
@@ -599,7 +626,7 @@ STBREFR
 ENDC
 PUSHINT 128
 SENDRAWMSG
-.loc ../contracts/RefFactory.sol, 141
+.loc ../contracts/RefFactory.sol, 151
 ROT
 PUSHSLICE xc0000000000000000000000001
 NEWC
@@ -627,7 +654,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 144
+.loc ../contracts/RefFactory.sol, 154
 OVER
 PUSHCONT {
 	LDU 32
@@ -710,19 +737,25 @@ THROWARGIFNOT 400
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefFactory.sol, 150
+.loc ../contracts/RefFactory.sol, 160
+CALLREF {
+	CALL $_reserve_internal_macro$
+}
+PUSHINT 2
+RAWRESERVE
+.loc ../contracts/RefFactory.sol, 162
 DEPTH
 ADDCONST -2
 PICK
 PUSHINT 300000000
 SUB
 UFITS 128
-.loc ../contracts/RefFactory.sol, 151
+.loc ../contracts/RefFactory.sol, 163
 PUSH S5
 FIRST
 UFITS 128
 DIV
-.loc ../contracts/RefFactory.sol, 152
+.loc ../contracts/RefFactory.sol, 164
 ROLL 5
 SECOND
 PUSHINT 0
@@ -739,7 +772,7 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/RefFactory.sol, 153
+	.loc ../contracts/RefFactory.sol, 165
 	PUSH3 S5, S7, S6
 	PUSH2 S6, S3
 	NEWC
@@ -766,7 +799,7 @@ PUSHCONT {
 }
 WHILE
 BLKDROP 4
-.loc ../contracts/RefFactory.sol, 156
+.loc ../contracts/RefFactory.sol, 168
 OVER
 PARSEMSGADDR
 INDEX 3
@@ -778,7 +811,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/RefFactory.sol, 157
+	.loc ../contracts/RefFactory.sol, 169
 	OVER
 	NEWC
 	STSLICECONST x42_
@@ -805,7 +838,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 165
+.loc ../contracts/RefFactory.sol, 177
 OVER
 PUSHCONT {
 	LDREF
@@ -856,7 +889,7 @@ THROW 0
 CALL $deriveRefSystem_internal_macro$
 
 .macro deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 166
+.loc ../contracts/RefFactory.sol, 178
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
@@ -867,7 +900,7 @@ CALLREF {
 CALL $_deriveRefSystem_internal_macro$
 
 .macro _deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 170
+.loc ../contracts/RefFactory.sol, 182
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -884,7 +917,7 @@ CTOS
 CALL $_buildRefSystemInitData_internal_macro$
 
 .macro _buildRefSystemInitData_internal_macro
-.loc ../contracts/RefFactory.sol, 174
+.loc ../contracts/RefFactory.sol, 186
 PUSHINT 0
 NEWC
 STU 256

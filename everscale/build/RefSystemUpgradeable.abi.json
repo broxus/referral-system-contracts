@@ -147,6 +147,14 @@
 			]
 		},
 		{
+			"name": "setWalletDeployValue",
+			"inputs": [
+				{"name":"value","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "onAcceptTokensTransfer",
 			"inputs": [
 				{"name":"tokenRoot","type":"address"},

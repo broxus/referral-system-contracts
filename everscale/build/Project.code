@@ -637,7 +637,7 @@ CALL $_reserve_internal_macro$
 
 .macro _reserve_internal_macro
 .loc ../contracts/Project.sol, 152
-PUSHINT 0
+PUSHINT 200000000
 .loc ../contracts/Project.sol, 0
 
 .macro meta

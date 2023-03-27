@@ -26,7 +26,7 @@ async function main() {
   console.log("Deploying RefFactory:")
   console.log(`Giver Address: ${locklift.giver}`)
   prompt.start()
-  let {owner, value, randomNonce} = await prompt.get(schema)
+  let {owner, value, randomNonce}: any = await prompt.get(schema as any)
   console.log(value + ' ' + toNano(value))
   let ownerAddr = new Address(owner);
   const signer = (await locklift.keystore.getSigner("0"))!;

@@ -75,6 +75,10 @@ abstract contract RefSystemBase is
         _deployRefLastGas = gas;
     }
 
+    function setWalletDeployValue(uint128 value) override external onlyOwner {
+        _deployWalletValue = value;
+    }
+
     function onAcceptTokensTransfer(
         address tokenRoot,
         uint128 amount,

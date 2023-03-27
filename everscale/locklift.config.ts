@@ -10,7 +10,7 @@ const LOCAL_NETWORK_ENDPOINT = process.env.NETWORK_ENDPOINT || "http://localhost
 const DEV_NET_NETWORK_ENDPOINT = process.env.DEV_NET_NETWORK_ENDPOINT || "https://devnet-sandbox.evercloud.dev/graphql";
 
 // Create your own link on https://dashboard.evercloud.dev/
-const MAIN_NET_NETWORK_ENDPOINT = process.env.MAIN_NET_NETWORK_ENDPOINT || "https://mainnet.evercloud.dev/89a3b8f46a484f2ea3bdd364ddaee3a3/graphql";
+const MAIN_NET_NETWORK_ENDPOINT = process.env.MAIN_GQL_ENDPOINT ?? ''
 
 const config: LockliftConfig = {
   compiler: {
@@ -93,29 +93,29 @@ const config: LockliftConfig = {
     },
     main: {
       // Specify connection settings for https://github.com/broxus/everscale-standalone-client/
-      connection: {
-        id: 1,
-        type: "graphql",
-        group: "main",
-        data: {
-          endpoints: [MAIN_NET_NETWORK_ENDPOINT],
-          latencyDetectionInterval: 1000,
-          local: false,
-        },
-      },
+      // connection: {
+      //   id: 1,
+      //   type: "graphql",
+      //   group: "main",
+      //   data: {
+      //     endpoints: [MAIN_NET_NETWORK_ENDPOINT],
+      //     latencyDetectionInterval: 1000,
+      //     local: false,
+      //   },
+      // },
+      connection: 'mainnetJrpc',
       // This giver is default Wallet
       giver: {
-        giverFactory: (ever, keyPair, address) => new GiverWalletV2_3(ever, keyPair, address),
-        address: "0:ece57bcc6c530283becbbd8a3b24d3c5987cdddc3c8b7b33be6e4a6312490415",
-        key: "172af540e43a524763dd53b26a066d472a97c4de37d5498170564510608250c3",
+        giverFactory: (ever, keyPair, address) => new GiverWallet(ever, keyPair, address),
+        address: process.env.MAIN_GIVER_ADDRESS ?? '',
+        phrase: process.env.MAIN_GIVER_SEED ?? '',
+        accountId: 0,
       },
       tracing: {
         endpoint: MAIN_NET_NETWORK_ENDPOINT,
       },
       keys: {
-        // Use everdev to generate your phrase
-        // !!! Never commit it in your repos !!!
-        // phrase: "action inject penalty envelope rabbit element slim tornado dinner pizza off blood",
+        phrase: process.env.MAIN_SEED_PHRASE ?? '',
         amount: 20,
       },
     },
