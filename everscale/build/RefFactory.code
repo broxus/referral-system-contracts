@@ -319,17 +319,32 @@ CALLREF {
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/RefFactory.sol, 112
-REVERSE 8, 0
+.loc ../contracts/RefFactory.sol, 111
+DEPTH
+ADDCONST -2
+PICK
+CALLREF {
+	CALL $_reserve_internal_macro$
+}
+PUSHINT 100000000
+ADD
+UFITS 128
+GREATER
+THROWIFNOT 100
+.loc ../contracts/RefFactory.sol, 113
+SWAP
+PUSH S2
+BLKSWAP 5, 4
+REVERSE 5, 0
 GETGLOB 20
 GETGLOB 19
 GETGLOB 18
 GETGLOB 17
 GETGLOB 16
 GETGLOB 15
-ROLL 14
+ROLL 15
 GETGLOB 14
-PUSH S16
+PUSH S17
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -345,11 +360,24 @@ STU 256
 ENDC
 CTOS
 ROLLREV 16
-PUSH S16
+DEPTH
+ADDCONST -2
+PICK
+CALLREF {
+	CALL $_reserve_internal_macro$
+}
+SUB
+UFITS 128
+PUSHINT 100000000
+SUB
+UFITS 128
+PUSH S17
 NEWC
 STSLICECONST x62_
 STSLICE
-PUSHSLICE x0000000000000000000000000007_
+SWAP
+STGRAMS
+PUSHSLICE x000000000000000000000000007_
 STSLICER
 OVER
 CALLREF {
@@ -408,10 +436,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-PUSHINT 128
+PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/RefFactory.sol, 120
-ROT
+.loc ../contracts/RefFactory.sol, 121
+ROLL 3
 PUSHSLICE xc0000000000000000000000001
 NEWC
 STSLICE
@@ -427,7 +455,35 @@ STBREFR
 ENDC
 PUSHINT 0
 SENDRAWMSG
+.loc ../contracts/RefFactory.sol, 123
+OVER
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+NEQINT 0
+PUSH S2
+MYADDR
+SDEQ
+NOT
+AND
+PUSHCONT {
+	.loc ../contracts/RefFactory.sol, 124
+	OVER
+	NEWC
+	STSLICECONST x42_
+	STSLICE
+	PUSHINT 111
+	STZEROES
+	ENDC
+	PUSHINT 128
+	ADDCONST 2
+	UFITS 8
+	SENDRAWMSG
+	.loc ../contracts/RefFactory.sol, 0
+}
+IF
 .loc ../contracts/RefFactory.sol, 0
+NIP
 
 .macro deployRefSystem
 DROP
@@ -438,7 +494,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 123
+.loc ../contracts/RefFactory.sol, 132
 OVER
 PUSHCONT {
 	LDREF
@@ -535,17 +591,31 @@ THROWIFNOT 1101
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefFactory.sol, 141
+.loc ../contracts/RefFactory.sol, 150
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/RefFactory.sol, 143
-ROLLREV 13
-REVERSE 13, 0
-BLKSWAP 2, 14
-PUSH S16
+.loc ../contracts/RefFactory.sol, 151
+DEPTH
+ADDCONST -2
+PICK
+CALLREF {
+	CALL $_reserve_internal_macro$
+}
+PUSHINT 100000000
+ADD
+UFITS 128
+GREATER
+THROWIFNOT 100
+.loc ../contracts/RefFactory.sol, 153
+SWAP
+PUSH S2
+BLKSWAP 11, 4
+REVERSE 11, 0
+BLKSWAP 2, 15
+PUSH S17
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -561,11 +631,24 @@ STU 256
 ENDC
 CTOS
 ROLLREV 16
-PUSH S16
+DEPTH
+ADDCONST -2
+PICK
+CALLREF {
+	CALL $_reserve_internal_macro$
+}
+SUB
+UFITS 128
+PUSHINT 100000000
+SUB
+UFITS 128
+PUSH S17
 NEWC
 STSLICECONST x62_
 STSLICE
-PUSHSLICE x0000000000000000000000000007_
+SWAP
+STGRAMS
+PUSHSLICE x000000000000000000000000007_
 STSLICER
 OVER
 CALLREF {
@@ -624,10 +707,10 @@ STBREFR
 STBREFR
 STBREFR
 ENDC
-PUSHINT 128
+PUSHINT 0
 SENDRAWMSG
-.loc ../contracts/RefFactory.sol, 151
-ROT
+.loc ../contracts/RefFactory.sol, 161
+ROLL 3
 PUSHSLICE xc0000000000000000000000001
 NEWC
 STSLICE
@@ -643,7 +726,35 @@ STBREFR
 ENDC
 PUSHINT 0
 SENDRAWMSG
+.loc ../contracts/RefFactory.sol, 163
+OVER
+PARSEMSGADDR
+INDEX 3
+PLDU 256
+NEQINT 0
+PUSH S2
+MYADDR
+SDEQ
+NOT
+AND
+PUSHCONT {
+	.loc ../contracts/RefFactory.sol, 164
+	OVER
+	NEWC
+	STSLICECONST x42_
+	STSLICE
+	PUSHINT 111
+	STZEROES
+	ENDC
+	PUSHINT 128
+	ADDCONST 2
+	UFITS 8
+	SENDRAWMSG
+	.loc ../contracts/RefFactory.sol, 0
+}
+IF
 .loc ../contracts/RefFactory.sol, 0
+NIP
 
 .macro upgradeTarget
 DROP
@@ -654,7 +765,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 154
+.loc ../contracts/RefFactory.sol, 172
 OVER
 PUSHCONT {
 	LDU 32
@@ -737,25 +848,25 @@ THROWARGIFNOT 400
 PUSHREFSLICE {
 	.blob x8000000000000000000000000000000000000000000000000000000000000000001_
 }
-.loc ../contracts/RefFactory.sol, 160
+.loc ../contracts/RefFactory.sol, 178
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
 PUSHINT 2
 RAWRESERVE
-.loc ../contracts/RefFactory.sol, 162
+.loc ../contracts/RefFactory.sol, 180
 DEPTH
 ADDCONST -2
 PICK
 PUSHINT 300000000
 SUB
 UFITS 128
-.loc ../contracts/RefFactory.sol, 163
+.loc ../contracts/RefFactory.sol, 181
 PUSH S5
 FIRST
 UFITS 128
 DIV
-.loc ../contracts/RefFactory.sol, 164
+.loc ../contracts/RefFactory.sol, 182
 ROLL 5
 SECOND
 PUSHINT 0
@@ -772,7 +883,7 @@ PUSHCONT {
 	NOT
 }
 PUSHCONT {
-	.loc ../contracts/RefFactory.sol, 165
+	.loc ../contracts/RefFactory.sol, 183
 	PUSH3 S5, S7, S6
 	PUSH2 S6, S3
 	NEWC
@@ -799,7 +910,7 @@ PUSHCONT {
 }
 WHILE
 BLKDROP 4
-.loc ../contracts/RefFactory.sol, 168
+.loc ../contracts/RefFactory.sol, 186
 OVER
 PARSEMSGADDR
 INDEX 3
@@ -811,7 +922,7 @@ SDEQ
 NOT
 AND
 PUSHCONT {
-	.loc ../contracts/RefFactory.sol, 169
+	.loc ../contracts/RefFactory.sol, 187
 	OVER
 	NEWC
 	STSLICECONST x42_
@@ -838,7 +949,7 @@ ISNULL
 IFREF {
 	CALL $c4_to_c7$
 }
-.loc ../contracts/RefFactory.sol, 177
+.loc ../contracts/RefFactory.sol, 195
 OVER
 PUSHCONT {
 	LDREF
@@ -889,7 +1000,7 @@ THROW 0
 CALL $deriveRefSystem_internal_macro$
 
 .macro deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 178
+.loc ../contracts/RefFactory.sol, 196
 CALLREF {
 	CALL $_deriveRefSystem_internal_macro$
 }
@@ -900,7 +1011,7 @@ CALLREF {
 CALL $_deriveRefSystem_internal_macro$
 
 .macro _deriveRefSystem_internal_macro
-.loc ../contracts/RefFactory.sol, 182
+.loc ../contracts/RefFactory.sol, 200
 CALLREF {
 	CALL $_buildRefSystemInitData_internal_macro$
 }
@@ -917,7 +1028,7 @@ CTOS
 CALL $_buildRefSystemInitData_internal_macro$
 
 .macro _buildRefSystemInitData_internal_macro
-.loc ../contracts/RefFactory.sol, 186
+.loc ../contracts/RefFactory.sol, 204
 PUSHINT 0
 NEWC
 STU 256

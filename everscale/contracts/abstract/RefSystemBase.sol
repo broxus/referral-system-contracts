@@ -87,7 +87,7 @@ abstract contract RefSystemBase is
         address remainingGasTo,
         TvmCell payload
     ) override external {
-        tvm.rawReserve(_reserve(), 2);
+        tvm.rawReserve(_reserve(), 0);
         require(amount != 0, 401, "Invalid Amount");
 
         (uint256 projectId, address referred, address referrer) = abi.decode(payload, (uint256, address, address));
@@ -111,7 +111,7 @@ abstract contract RefSystemBase is
         uint128 projectFee,
         TvmCell acceptParams
     ) external {
-        tvm.rawReserve(_reserve(), 2);
+        tvm.rawReserve(_reserve(), 0);
 
         (address tokenWallet,
         address tokenRoot,
@@ -167,7 +167,7 @@ abstract contract RefSystemBase is
     }
 
     function updateRefLast(uint256 projectId, address referred, address referrer, address remainingGasTo) override external {
-        tvm.rawReserve(_reserve(), 2);
+        tvm.rawReserve(_reserve(), 0);
         
         require(msg.sender == _deriveProject(projectId), 400, "Must be Valid Project");
         _deployRefLast(referrer, referred, referrer, address(0), remainingGasTo);
@@ -189,6 +189,7 @@ abstract contract RefSystemBase is
         bool notify,
         TvmCell payload
     ) override external {
+        // tvm.rawReserve(_reserve(), 0);
         require(msg.sender == _deriveRefAccount(recipient), 400, "Invalid Account");
         emit OnRefAccountWithdraw(recipient, msg.sender, tokenWallet, balance);
         ITokenWallet(tokenWallet).transfer{flag: MsgFlag.REMAINING_GAS, value: 0 }(balance, recipient, _deployWalletValue, remainingGasTo, notify, payload);
@@ -213,12 +214,14 @@ abstract contract RefSystemBase is
         address sender,
         address remainingGasTo
     ) override external returns (address) {
+        tvm.rawReserve(_reserve(), 0);
+
         return new ProjectPlatform {
             stateInit: _buildProjectInitData(_nextProjectId()),
             value: 0,
             wid: address(this).wid,
             bounce: true,
-            flag: MsgFlag.REMAINING_GAS
+            flag: MsgFlag.ALL_NOT_RESERVED
         }(
             _projectCode,
             version_,
@@ -238,7 +241,7 @@ abstract contract RefSystemBase is
         address sender,
         address remainingGasTo
     ) external onlyOwner returns (address[] accounts) {
-        tvm.rawReserve(_reserve(), 2);
+        tvm.rawReserve(_reserve(), 0);
         require(recipients.length == rewards.length, 405, "Invalid Params");
         for (uint256 i = 0; i < recipients.length; i++) {
             accounts.push(_deployRefAccount(recipients[i], tokenWallet, rewards[i], sender, remainingGasTo));
@@ -261,6 +264,8 @@ abstract contract RefSystemBase is
         address sender,
         address remainingGasTo
     ) external onlyOwner returns (address refLast) {
+        tvm.rawReserve(_reserve(), 0);
+
         refLast = _deployRefLast(owner,lastReferred,lastReferrer,sender,remainingGasTo);
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({

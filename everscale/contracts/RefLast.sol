@@ -32,6 +32,8 @@ contract RefLast is IRefLast {
     functionID(0x15A038FB)
     {
         require(msg.sender == _refSystem, 400, "Must be RefSystem");
+        tvm.rawReserve(_reserve(), 0);
+        
         _lastReferred = lastReferred;
         _lastReferrer = lastReferrer;
         _lastRefUpdate = block.timestamp;
@@ -56,7 +58,7 @@ contract RefLast is IRefLast {
     }
 
     function _reserve() internal returns (uint128) {
-        return 0;
+        return 0.02 ton;
     }
 
     function platformCode() external view responsible returns (TvmCell) {
@@ -104,7 +106,7 @@ contract RefLast is IRefLast {
     }
 
     function onCodeUpgrade(TvmCell data) private {
-        tvm.rawReserve(_reserve(), 2);
+        tvm.rawReserve(_reserve(), 0);
         tvm.resetStorage();
 
         uint32 oldVersion;

@@ -40,6 +40,8 @@ contract Project is InternalOwner, IRefProject {
     functionID(0x15A038FB)
     {
         require(msg.sender == _refSystem, 400, "Must be root");
+        tvm.rawReserve(_reserve(), 0);
+
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
             remainingGasTo.transfer({
                 value: 0,
@@ -96,7 +98,7 @@ contract Project is InternalOwner, IRefProject {
     }
 
     function onCodeUpgrade(TvmCell data) private {
-        tvm.rawReserve(_reserve(), 2);
+        tvm.rawReserve(_reserve(), 0);
         tvm.resetStorage();
 
         address owner;
@@ -152,12 +154,15 @@ contract Project is InternalOwner, IRefProject {
         return 0.2 ton;
     }
 
-    function meta(TvmCell payload) override view external responsible returns (bool, address, uint128, uint128, TvmCell) {
+    function meta(TvmCell payload) override external responsible returns (bool, address, uint128, uint128, TvmCell) {
+        tvm.rawReserve(_reserve(), 0);
         return {value: 0, flag: MsgFlag.ALL_NOT_RESERVED}(_isApproved, owner, _cashbackFee, _projectFee, payload);
     }
 
     function onRefLastUpdate(address referred, address referrer, address remainingGasTo) override external {
         require(msg.sender == _manager && _isApproved, 400, "Must be Manager");
+        tvm.rawReserve(_reserve(), 0);
+
         IRefSystem(_refSystem).updateRefLast{flag: MsgFlag.ALL_NOT_RESERVED}(_id,referred, referrer, remainingGasTo);
     }
 }

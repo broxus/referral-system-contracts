@@ -108,16 +108,25 @@ contract RefFactory is InternalOwner, RandomNonce {
         TvmCell custom
     ) public onlyManager returns (address) {
         tvm.rawReserve(_reserve(), 2);
+        require(msg.value > _reserve() + 0.1 ton);
 
         address refSystem = new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,
-            value: 0,
+            value: msg.value - _reserve() - 0.1 ton,
             bounce: true,
-            flag: MsgFlag.ALL_NOT_RESERVED
+            flag: 0
         }(_refSystemCode, version, _refLastPlatformCode, _refLastCode, _accountPlatformCode, _accountCode, _projectPlatformCode, _projectCode, systemFee, deployAccountGas, deployRefLastGas, deployWalletValue, sender, remainingGasTo, custom);
         
         emit OnRefSystemDeployed(owner, refSystem);
+
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 
     function deployRefSystem(
@@ -139,16 +148,25 @@ contract RefFactory is InternalOwner, RandomNonce {
         TvmCell custom
     ) public onlyOwner returns (address) {
         tvm.rawReserve(_reserve(), 2);
+        require(msg.value > _reserve() + 0.1 ton);
 
         address refSystem = new RefSystemPlatform {
             stateInit: _buildRefSystemInitData(owner),
             wid: address(this).wid,
-            value: 0,
+            value: msg.value - _reserve() - 0.1 ton,
             bounce: true,
-            flag: MsgFlag.ALL_NOT_RESERVED
+            flag: 0
         }(refSystemCode, version, refLastPlatformCode, refLastCode, accountPlatformCode, accountCode, projectPlatformCode, projectCode, systemFee, deployAccountGas, deployRefLastGas, deployWalletValue, sender, remainingGasTo, custom);
         
         emit OnRefSystemDeployed(owner, refSystem);
+
+        if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
+            remainingGasTo.transfer({
+                value: 0,
+                flag: MsgFlag.ALL_NOT_RESERVED + MsgFlag.IGNORE_ERRORS,
+                bounce: false
+            });
+        }
     }
 
     function upgradeTarget(

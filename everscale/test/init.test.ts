@@ -128,7 +128,7 @@ describe('Ref Init', function () {
                     version: 99,
                     code: TestUpgrade.code,
                     remainingGasTo: refFactoryOwner.address 
-                }).send({ from: refFactoryOwner.address, amount: toNano(3) })
+                }).send({ from: refFactoryOwner.address, amount: toNano(5) })
 
                 let upgraded = locklift.factory.getDeployedContract("TestUpgrade", project.address)
 
@@ -192,18 +192,19 @@ describe('Ref Init', function () {
                     lastReferrer: zeroAddress,
                     sender: zeroAddress,
                     remainingGasTo: refSysOwner.address
-                }).send({ from: refSysOwner.address, amount: toNano(2) })
+                }).send({ from: refSysOwner.address, amount: toNano(3) })
 
                 let { value0: refLastAddr } = await refSystem.methods.deriveRefLast({ answerId: 0, owner: refSysOwner.address }).call()
                 let refLast = locklift.factory.getDeployedContract("RefLast", refLastAddr)
 
+                logContract(refLast, "RefLast")
                 let TestUpgrade = locklift.factory.getContractArtifacts("TestUpgrade")
                 await refFactory.methods.upgradeTarget({
                     targets: [refLast.address],
                     version: 99,
                     code: TestUpgrade.code,
                     remainingGasTo: refFactoryOwner.address 
-                }).send({ from: refFactoryOwner.address, amount: toNano(3) })
+                }).send({ from: refFactoryOwner.address, amount: toNano(4) })
 
                 let upgraded = locklift.factory.getDeployedContract("TestUpgrade", refLast.address)
 

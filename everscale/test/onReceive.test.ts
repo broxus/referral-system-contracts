@@ -80,6 +80,7 @@ describe('RefSystem On Receive', function () {
             project = await deployProject(projectOwner, refSystem, PROJECT_FEE, CASHBACK_FEE);
             await approveProject(project, refSysOwner, refSystem)
 
+            
             logContract(refSystem, "RefSystem")
             logContract(project, "Project")
 
@@ -278,6 +279,7 @@ describe('RefSystem On Receive', function () {
                 let bobRefLast = locklift.factory.getDeployedContract("RefLast", bobRefLastAddr)
                 logContract(bobRefLast, "refLast")
                 logContract(refSystem, "refSys")
+                logContract(project, "project")
 
                 // let {reward: lastReward} = await bobRefLast.methods.meta({answerId: 0}).call()
                 
