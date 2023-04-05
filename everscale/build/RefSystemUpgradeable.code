@@ -1822,7 +1822,7 @@ THROW 0
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
-PUSHINT 0
+PUSHINT 2
 RAWRESERVE
 .loc ../contracts/abstract/RefSystemBase.sol, 172
 PUSHREF {
@@ -2699,7 +2699,7 @@ THROWIFNOT 1101
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
-PUSHINT 0
+PUSHINT 2
 RAWRESERVE
 .loc ../contracts/abstract/RefSystemBase.sol, 269
 ROLLREV 4

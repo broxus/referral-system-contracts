@@ -78,7 +78,7 @@ THROWARGIFNOT 400
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
-PUSHINT 0
+PUSHINT 2
 RAWRESERVE
 .loc ../contracts/RefLast.sol, 37
 ROLL 3
@@ -303,7 +303,7 @@ CALL $_reserve_internal_macro$
 
 .macro _reserve_internal_macro
 .loc ../contracts/RefLast.sol, 61
-PUSHINT 20000000
+PUSHINT 10000000
 .loc ../contracts/RefLast.sol, 0
 
 .macro platformCode
@@ -565,7 +565,7 @@ BLKDROP 3
 CALLREF {
 	CALL $_reserve_internal_macro$
 }
-PUSHINT 0
+PUSHINT 2
 RAWRESERVE
 .loc ../contracts/RefLast.sol, 110
 PUSHINT 0
