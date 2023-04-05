@@ -29,10 +29,10 @@ abstract contract RefSystemBase is
     IVersioned,
     InternalOwner,
     SID
-{   
+{
     uint32 version_;
     TvmCell public _platformCode;
-    
+
     uint128 constant BPS = 1_000_000;
     uint256 public _projectCounter;
 
@@ -93,7 +93,7 @@ abstract contract RefSystemBase is
         (uint256 projectId, address referred, address referrer) = abi.decode(payload, (uint256, address, address));
         address targetProject = _deriveProject(projectId);
         TvmCell acceptParams = abi.encode(msg.sender, tokenRoot, amount, sender, senderWallet, remainingGasTo, projectId, referred, referrer);
-        
+
         IRefProject(targetProject).meta{
             callback: RefSystemBase.getProjectMeta,
             flag: MsgFlag.ALL_NOT_RESERVED
@@ -124,7 +124,7 @@ abstract contract RefSystemBase is
         address referrer) = abi.decode(acceptParams, (address, address, uint128, address, address, address, uint256, address, address));
         require(msg.sender == _deriveProject(projectId), 400, "Not a valid Project");
         require(amount != 0, 400, "Invalid Amount");
-        
+
         // If Amount or Project Invalid, simply receive full reward
         if(!isApproved || (uint(BPS) < uint(_systemFee) + uint(projectFee) + uint(cashback))) {
             _deployRefAccount(owner, tokenWallet, amount, sender, remainingGasTo);
@@ -142,19 +142,19 @@ abstract contract RefSystemBase is
         // Allocate to System Owner
         uint128 systemReward = uint128(math.muldiv(uint(amount),uint(_systemFee),uint(BPS)));
         if(systemReward != 0) { _deployRefAccount(owner, tokenWallet, systemReward, sender, remainingGasTo); }
-        
+
         // Allocate to Project Owner
         uint128 projectReward = uint128(math.muldiv(uint(amount),uint(projectFee),uint(BPS)));
         if(projectReward != 0) { _deployRefAccount(projectOwner, tokenWallet, projectReward, sender, remainingGasTo); }
-        
+
         // Allocate to Referred
         uint128 cashbackReward = uint128(math.muldiv(uint(amount),uint(cashback),uint(BPS)));
         if(cashbackReward != 0) { _deployRefAccount(referred, tokenWallet, (amount*cashback)/BPS, sender, remainingGasTo); }
-        
+
         // Allocate to Referrer
         uint128 reward = amount - systemReward - projectReward - cashbackReward;
         if (reward != 0) { _deployRefAccount(referrer, tokenWallet, reward, sender, remainingGasTo); }
-        
+
         emit OnReferral(projectId, tokenWallet, referred, referrer, amount, systemReward, projectReward, cashbackReward);
 
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
@@ -167,8 +167,8 @@ abstract contract RefSystemBase is
     }
 
     function updateRefLast(uint256 projectId, address referred, address referrer, address remainingGasTo) override external {
-        tvm.rawReserve(_reserve(), 0);
-        
+        tvm.rawReserve(_reserve(), 2);
+
         require(msg.sender == _deriveProject(projectId), 400, "Must be Valid Project");
         _deployRefLast(referrer, referred, referrer, address(0), remainingGasTo);
 
@@ -264,7 +264,7 @@ abstract contract RefSystemBase is
         address sender,
         address remainingGasTo
     ) external onlyOwner returns (address refLast) {
-        tvm.rawReserve(_reserve(), 0);
+        tvm.rawReserve(_reserve(), 2);
 
         refLast = _deployRefLast(owner,lastReferred,lastReferrer,sender,remainingGasTo);
         if (remainingGasTo.value != 0 && remainingGasTo != address(this)) {
@@ -280,7 +280,7 @@ abstract contract RefSystemBase is
         IRefProject(_deriveProject(projectId)).setApproval(value);
     }
 
-    
+
     function _deriveProject(uint256 id) internal returns (address) {
         return address(tvm.hash(_buildProjectInitData(id)));
     }
@@ -307,10 +307,10 @@ abstract contract RefSystemBase is
             flag: 0,
             bounce: true
         }(_accountCode, version_, _refFactory, tokenWallet, reward, sender, remainingGasTo);
-    
+
         emit OnRefAccountDeployed(recipient, refAccount, tokenWallet, reward);
     }
-    
+
     function _deployRefLast(
         address owner,
         address lastReferred,
