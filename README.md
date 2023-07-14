@@ -1,12 +1,12 @@
-# Referall Token System
-Demo Implenetation of a Referall System within a Hooked MultiToken Bridge between EVM-compatible networks, based directly on the erc20 token bridge.
+# Referral Token System
+Demo Implenetation of a Referral System within a Hooked MultiToken Bridge between EVM-compatible networks, based directly on the erc20 token bridge.
 
 # Protocols
 
 Currently Supports [TIP4.1](https://docs.everscale.network/standard/TIP-4.1/)
 
 # Docs
-See basic overview on [Referall System](docs/Referall.md)
+See basic overview on [Referral System](docs/Referral.md)
 
 ## Development
 
